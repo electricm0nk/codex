@@ -636,14 +636,27 @@ fn zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown() {
     let doc: serde_json::Value = serde_json::from_str(&text).expect("inventory is valid JSON");
     let units = doc["units"].as_array().expect("units is an array");
 
-    // Real, verified-by-hand-trace units: zero-magnitude Rage Power records
-    // from acg_abilities_class.lst:2658,2660. Confirmed absent from every
-    // engine table this program has (rules_core, apps/desktop) -- only a
-    // slot-COUNT mechanism (barbarian_features::rage_powers_known) is
-    // wired, never a catalog of the individual named options.
+    // Real, verified-by-hand-trace units: zero-magnitude Discovery (alchemist)
+    // records from apg_abilities_class.lst:123,124. Confirmed absent from
+    // every engine table this program has (rules_core, apps/desktop) -- only
+    // a slot-COUNT mechanism (`alchemist_features`-shaped) is wired, never a
+    // catalog of the individual named options.
+    //
+    // NOT Rage Power any more (`SD31-W23-POOLMEMBER-002`): this test's
+    // original fixture (`rage_power_abyssal_blood`/`_lesser`) went stale the
+    // moment `class_feature_pool_catalog::REGISTERED_POOL_GROUPS` widened to
+    // include "Rage Power" -- both now correctly reach `text-complete` via
+    // the new reference catalog, which is exactly the class of record this
+    // test's own doc comment says should NOT stay `not-ingested`. Re-picked
+    // from "Discovery", a pool this catalog still does not register, so the
+    // fixture's assumption ("no catalog exists for the individual options")
+    // is true again. If a future wave registers "Discovery" too, THIS
+    // fixture will need re-picking the same way -- that is a feature of this
+    // test, not a flaw: it is meant to go red the moment its assumption
+    // stops holding, exactly as it did here.
     for id in [
-        "advanced_class_guide:class_feature:rage_power_abyssal_blood",
-        "advanced_class_guide:class_feature:rage_power_abyssal_blood_lesser",
+        "advanced_players_guide:class_feature:discovery_combine_extracts",
+        "advanced_players_guide:class_feature:discovery_concentrate_poison",
     ] {
         let unit = units.iter().find(|u| u["id"] == id).unwrap_or_else(|| panic!("{id} missing from inventory"));
         assert_eq!(unit["magnitude_token_count"], 0, "{id}: fixture assumption changed, re-check");

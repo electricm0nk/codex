@@ -23,19 +23,41 @@
 //! serves every record's description to a player regardless of whether that
 //! record is currently held — a browsable reference, not a per-character
 //! computation. This module is that catalog for `class_feature` option-pool
-//! records, built for ONE pool (`REGISTERED_POOL_GROUPS`) as the dispatch
-//! brief asked: a precise answer on one pool, not a stub across all of them.
+//! records, built for a small, deliberately-widened set of pools
+//! (`REGISTERED_POOL_GROUPS`) as the dispatch briefs asked: a precise answer
+//! per pool, not a stub across all of them.
 //!
-//! # Scope: Rogue Talent only, deliberately
+//! # Scope: Rogue Talent and Rage Power, deliberately no wider
 //!
 //! `v06_work_inventory.rs`'s `CLASS_FEATURE_POOLS` registers 27 pools.
 //! Widening `REGISTERED_POOL_GROUPS` to all of them is mechanical — the same
 //! walk, the same render-and-refuse gate — but each pool's corpus rows would
-//! need the same one-pool spot-check this cycle ran on Rogue Talent (are the
-//! `%N` argument shapes the same, is `data.class` really the bare pool name
-//! for every book that prints it) before being trusted at scale. Left named,
+//! need the same one-pool spot-check wave 22 ran on Rogue Talent and this
+//! cycle (`SD31-W23-POOLMEMBER-002`) ran on Rage Power (are the `%N`
+//! argument shapes the same, is `data.class` really the bare pool name for
+//! every book that prints it) before being trusted at scale. Left named,
 //! not built, per the dispatch's own "report what it would cost to extend"
 //! ask.
+//!
+//! **Rage Power's own wrinkle, not present for Rogue Talent:** its group
+//! text ("Rage Power") shares no prefix/suffix with its owning class's own
+//! name ("barbarian"), unlike "Rogue Talent" which literally starts with
+//! "Rogue ". `v06_work_inventory.rs`'s `class_feature_owner` (and its
+//! `type_facet` fallback) therefore resolve `None` for every Rage Power
+//! record, which used to route the WHOLE pool through a hard-coded
+//! `not_ingested` regardless of this catalog. `classify()`'s "no owner
+//! resolved" branch now ALSO consults `class_feature_pool_catalog_holds`
+//! before falling back (`SD31-W23-POOLMEMBER-002`), mirroring the check the
+//! "owner resolved" branch already had — without that fix, registering
+//! "Rage Power" here would have changed nothing on the board. Any future
+//! pool needs the SAME check first: does its group text share a
+//! prefix/suffix with its class's name (Rogue Talent, Advanced Talents,
+//! Versatile Performance shape) or not (Rage Power, Discovery, Hex,
+//! Bloodline, Domain, Mystery, ... shape, per `v06_work_inventory.rs`'s own
+//! `class_feature_option_pool_record_not_held_by_engine` comment) — both
+//! shapes now reach the board, so this is no longer a blocker, only a fact
+//! worth re-confirming per pool before assuming the owned-branch precedent
+//! alone explains a movement.
 //!
 //! # The render-and-refuse gate is the whole safety property
 //!
@@ -72,8 +94,8 @@ use crate::rules_core::pcgen_desc::{leaked_pcgen_syntax, render_pcgen_desc};
 
 /// Corpus `data.class` values this catalog recognises as an option-pool
 /// group rather than a real engine-modelled class. See the module doc for
-/// why the list is one entry long today.
-pub const REGISTERED_POOL_GROUPS: &[&str] = &["Rogue Talent"];
+/// why the list is only these two entries today.
+pub const REGISTERED_POOL_GROUPS: &[&str] = &["Rogue Talent", "Rage Power"];
 
 /// `raw_tokens` keys that carry a real, player-facing engine effect --
 /// wave-22 adversarial review CONFIRMED (finding, severity high) that 9 of
@@ -97,6 +119,82 @@ fn has_no_engine_effect_token(raw_tokens: &Value) -> bool {
     !tokens.iter().any(|t| {
         t.get("key").and_then(|k| k.as_str()).is_some_and(|k| ENGINE_EFFECT_TOKEN_KEYS.contains(&k))
     })
+}
+
+/// A silent-truncation defect found by on-screen DoD-8 inspection while
+/// widening this catalog to Rage Power (`SD31-W23-POOLMEMBER-002`), present
+/// in neither the render-and-refuse gate nor the engine-effect-token gate:
+/// PCGen ships a handful of records with MULTIPLE `DESC:` tab fields on the
+/// same row -- a lead-in clause plus several `PREVAREQ:`-gated continuation
+/// clauses, one per "which element/condition did the character pick" branch
+/// (e.g. `Rage Power ~ Elemental Blood (Greater)`'s real oracle row: `DESC:
+/// While raging, the barbarian gains` followed by four separate `DESC:
+/// ...a burrow speed of 30 feet.|PREVAREQ:BloodRage Acid,1` / `...a swim
+/// speed of 60 feet.|PREVAREQ:BloodRage Cold,1` / ... segments). The
+/// upstream ingestion this module reads (`cache_gen::class_feature`,
+/// outside this module's file territory) keeps only the FIRST `DESC:`
+/// token's text as `data.description` -- for most such records that first
+/// segment already carries an unresolvable `%N` (caught by the existing
+/// render-and-refuse gate) or a real engine-effect token (caught by
+/// [`has_no_engine_effect_token`]), but `Elemental Blood, Greater`'s lead-in
+/// clause is a plain, syntax-clean sentence FRAGMENT with neither -- it
+/// rendered "While raging, the barbarian gains" verbatim on a live character
+/// sheet, a truncated sentence with no missing-`%N`/leaked-syntax signal at
+/// all. Refused structurally here: any record whose row carries more than
+/// one `DESC:` field is, by construction, showing only a fragment of what
+/// the oracle actually states, regardless of whether that fragment happens
+/// to read as a complete sentence.
+fn raw_tokens_carry_more_than_one_desc_segment(raw_tokens: &Value) -> bool {
+    let Some(tokens) = raw_tokens.as_array() else { return false };
+    tokens.iter().filter(|t| t.get("key").and_then(|k| k.as_str()) == Some("DESC")).count() > 1
+}
+
+/// A gap in `render_pcgen_desc`'s own `dropped_args` reporting, found while
+/// widening this catalog to Rage Power (`SD31-W23-POOLMEMBER-002`; NOT
+/// present in the Rogue Talent population wave 22 checked -- confirmed by
+/// scanning all 170 real Rage Power records, only one carries this exact
+/// shape): `dropped_args` only records an unresolved `%N` when the raw
+/// `DESC:` token's OWN `|`-tail supplies a named argument for it
+/// (`pcgen_desc.rs`'s own `split_prose_and_args` doc comment: "the unmatched
+/// `%N` then has no argument at all... the honest outcome"). When the token
+/// carries a bare `%N` reference and NO `|`-tail at all (`Rage Power ~
+/// Knockback`'s real oracle row: `"...target takes %1 points of damage..."`
+/// with no trailing `|<Var>`), the digit is silently deleted from the
+/// rendered text -- no leaked syntax, no reported drop, just a grammatical
+/// hole ("the target takes  points of damage") that neither
+/// `dropped_args.is_empty()` nor `leaked_pcgen_syntax` can see. Decision 7
+/// condition 2 ("nothing to compute") fails here exactly as it does for a
+/// named unresolved argument: `render_pcgen_desc` is always called with
+/// EMPTY `PcgenDisplayValues` in this reference catalog (no character
+/// exists to resolve against), so any `%N` reference with no `|`-tail at
+/// all can never resolve, ever. Checked independently of `pcgen_desc.rs`'s
+/// own logic, deliberately -- fixing the shared renderer to ALSO populate
+/// `dropped_args` for this case would widen every one of its callers'
+/// behaviour at once, well outside this pool-membership lane's file
+/// territory; this is a narrow, additional guard scoped to this catalog
+/// alone, refusing conservatively where the shared renderer stays silent.
+fn raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(raw: &str) -> bool {
+    if raw.contains('|') {
+        // A `|`-tail exists; `render_pcgen_desc`'s own `dropped_args` (via
+        // the existing `!rendered.dropped_args.is_empty()` gate below)
+        // already catches an unresolved named argument in this shape.
+        return false;
+    }
+    let chars: Vec<char> = raw.chars().collect();
+    let mut i = 0;
+    while i < chars.len() {
+        if chars[i] == '%' {
+            if chars.get(i + 1) == Some(&'%') {
+                i += 2; // `%%` is a literal-percent escape, never a reference.
+                continue;
+            }
+            if chars.get(i + 1).is_some_and(|c| c.is_ascii_digit() && *c != '0') {
+                return true;
+            }
+        }
+        i += 1;
+    }
+    false
 }
 
 /// One option-pool member's real corpus row, with a description proven to
@@ -191,6 +289,12 @@ pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
             if !has_no_engine_effect_token(&data["raw_tokens"]) {
                 continue;
             }
+            if raw_tokens_carry_more_than_one_desc_segment(&data["raw_tokens"]) {
+                continue;
+            }
+            if raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(raw_desc) {
+                continue;
+            }
             let rendered = render_pcgen_desc(raw_desc);
             // The render-and-refuse gate: an unresolved `%N` means a real
             // computation this catalog cannot perform is still missing from
@@ -237,6 +341,28 @@ mod tests {
 
     fn repo_root() -> PathBuf {
         PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    #[test]
+    fn bare_percent_reference_with_no_pipe_tail_is_flagged_only_when_no_pipe_exists() {
+        // The exact real shape (`Rage Power ~ Knockback`'s oracle row):
+        // a `%1` reference with no `|`-tail anywhere in the token.
+        assert!(raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(
+            "the target takes %1 points of damage"
+        ));
+        // A `%N` WITH a pipe tail is left to `render_pcgen_desc`'s own
+        // `dropped_args` reporting -- never double-refused here.
+        assert!(!raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(
+            "you add +%1 on one check|StrengthSurgeBonus"
+        ));
+        // A literal `%%` escape is never a reference, pipe or no pipe.
+        assert!(!raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(
+            "a 20%% chance of success"
+        ));
+        // No percent sign at all.
+        assert!(!raw_desc_has_a_bare_percent_reference_no_pipe_tail_can_resolve(
+            "you move along narrow surfaces at full speed"
+        ));
     }
 
     #[test]
@@ -289,13 +415,97 @@ mod tests {
     fn unregistered_pool_groups_are_never_served() {
         let entries = load_pool_catalog(&repo_root());
         assert!(
-            entries.iter().all(|e| e.pool_group == "Rogue Talent"),
+            entries.iter().all(|e| e.pool_group == "Rogue Talent" || e.pool_group == "Rage Power"),
             "only REGISTERED_POOL_GROUPS may appear in the catalog"
         );
         assert!(
             !entries.iter().any(|e| e.key.starts_with("Bloodline ~ ") || e.key.starts_with("Hex ~ ")),
             "an unregistered pool's records must never leak into the catalog"
         );
+    }
+
+    /// The real corpus loads real, clean Rage Power records — proven
+    /// against the live `data/corpus/` checkout, not a fixture. `Clear
+    /// Mind` is genuinely prose-only in the pinned oracle (a `PREVARGTEQ:`
+    /// level gate, no `%N` substitution, no `BONUS:`/`DEFINE:`/`ABILITY:`
+    /// token) and must be served intact (`SD31-W23-POOLMEMBER-002`).
+    #[test]
+    fn loads_a_real_clean_rage_power_from_the_live_corpus() {
+        let entries = load_pool_catalog(&repo_root());
+        let clear_mind = entries
+            .iter()
+            .find(|e| e.book == "core_rulebook" && e.key == "Rage Power ~ Clear Mind")
+            .expect("core_rulebook's real Rage Power ~ Clear Mind record must be in the catalog");
+        assert_eq!(clear_mind.pool_group, "Rage Power");
+        assert_eq!(clear_mind.name, "Clear Mind");
+        assert!(clear_mind.description.starts_with("You may reroll a failed Will save."));
+        assert!(!clear_mind.description.contains('|'), "no pipe-arg tail may leak into prose");
+        assert!(!clear_mind.description.contains('%'), "no unsubstituted argument may leak into prose");
+    }
+
+    /// The render-and-refuse gate applies identically to Rage Power:
+    /// `Knockback`'s only magnitude is a bare `%1` with no `DEFINE:`/
+    /// `BONUS:` token anywhere in its row to resolve it against (confirmed
+    /// directly against the pinned oracle's `cr_abilities_class.lst`), so it
+    /// must never be served.
+    #[test]
+    fn knockback_is_refused_for_an_unresolvable_percent_argument() {
+        let entries = load_pool_catalog(&repo_root());
+        assert!(
+            !entries.iter().any(|e| e.key == "Rage Power ~ Knockback"),
+            "a record whose render drops a %N argument must never reach the catalog"
+        );
+        assert!(entries.iter().any(|e| e.book == "core_rulebook" && e.pool_group == "Rage Power"));
+    }
+
+    /// The engine-effect-token refusal (wave-22's own withdrawal fix)
+    /// applies identically to Rage Power: `Terrifying Howl` carries a real
+    /// `BONUS:VAR` token computing its save DC even though its prose renders
+    /// clean, and must be refused for the same reason `Finesse Rogue` was.
+    #[test]
+    fn terrifying_howl_is_refused_for_a_real_engine_effect_token() {
+        let entries = load_pool_catalog(&repo_root());
+        assert!(
+            !entries.iter().any(|e| e.key == "Rage Power ~ Terrifying Howl"),
+            "Terrifying Howl carries a real BONUS:VAR engine-effect token and must not reach the catalog"
+        );
+    }
+
+    /// A real defect caught by DoD-8 on-screen inspection, not by any
+    /// automated check: `Elemental Blood (Greater)`'s real oracle row carries
+    /// FIVE `DESC:` tab fields (a lead-in clause plus four `PREVAREQ:`-gated
+    /// per-element continuations); the corpus ingestion this catalog reads
+    /// keeps only the first, so `data.description` is the literal fragment
+    /// `"While raging, the barbarian gains"` -- syntax-clean (no `%N`, no
+    /// pipe, no engine-effect token) but a truncated sentence. Must never
+    /// reach the catalog (`SD31-W23-POOLMEMBER-002`).
+    #[test]
+    fn elemental_blood_greater_is_refused_for_a_silently_truncated_multi_desc_row() {
+        let entries = load_pool_catalog(&repo_root());
+        assert!(
+            !entries.iter().any(|e| e.key == "Rage Power ~ Elemental Blood (Greater)"),
+            "a record whose row carries more than one DESC: field must never reach the catalog \
+             (only the first segment is ingested, which can be a syntax-clean sentence fragment)"
+        );
+        assert!(entries.iter().any(|e| e.book == "advanced_class_guide" && e.pool_group == "Rage Power"));
+    }
+
+    #[test]
+    fn raw_tokens_carry_more_than_one_desc_segment_counts_desc_keys_only() {
+        let one = serde_json::json!([{"key": "KEY", "value": "x"}, {"key": "DESC", "value": "x"}]);
+        assert!(!raw_tokens_carry_more_than_one_desc_segment(&one));
+        let two = serde_json::json!([
+            {"key": "DESC", "value": "a"},
+            {"key": "DESC", "value": "b"},
+        ]);
+        assert!(raw_tokens_carry_more_than_one_desc_segment(&two));
+        // A second occurrence of an unrelated key must never trip this check.
+        let unrelated_repeat = serde_json::json!([
+            {"key": "DESC", "value": "a"},
+            {"key": "SOURCEPAGE", "value": "p.1"},
+            {"key": "SOURCEPAGE", "value": "p.2"},
+        ]);
+        assert!(!raw_tokens_carry_more_than_one_desc_segment(&unrelated_repeat));
     }
 
     /// No served description leaks unresolved PCGen syntax onto the screen

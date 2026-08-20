@@ -6619,6 +6619,37 @@ fn classify(
                 // pools, only a handful spot-checked) is a hypothesis, not
                 // yet evidence at that scale -- left `unknown` below,
                 // pending the per-group trace.
+                //
+                // `SD31-W23-POOLMEMBER-002`: the finding above is no longer
+                // universally true. `class_feature_pool_catalog` (`SD31-W22-
+                // POOLMEMBER-001`) is now a real per-record holds-check for
+                // any [`class_feature_pool_catalog::REGISTERED_POOL_GROUPS`]
+                // entry -- but an unowned group (one whose text shares no
+                // prefix/suffix with its class's own name, e.g. "Rage Power"
+                // vs "barbarian") never reaches the SIBLING check the wave-22
+                // fix added below (that one only runs once `owner` already
+                // resolved). Without this check here, widening
+                // `REGISTERED_POOL_GROUPS` to an unowned-shaped pool would
+                // change nothing on the board -- every one of its records
+                // would still hard-fail this branch regardless of the
+                // catalog. Gated by the SAME three guards the owned branch
+                // already requires, so the exact same safety argument
+                // applies: a computed/derived/static record, or a genuinely
+                // universal-sheet-modifier one, can never ride this rung.
+                if text_only
+                    && has_real_description
+                    && is_display_wiring_class_for_promotion(wc_class)
+                    && !universal_sheet_modifier
+                    && facts.class_feature_pool_catalog_holds(&unit.source_book, &unit.key)
+                {
+                    return Verdict {
+                        status: "text-complete",
+                        evidence: "class_feature_pool_catalog_serves_a_rendered_description"
+                            .to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
                 if text_only {
                     return not_ingested("class_feature_option_pool_record_not_held_by_engine");
                 }
@@ -11457,6 +11488,57 @@ mod class_feature_text_complete_rung_tests {
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "text-complete");
         assert_eq!(verdict.evidence, "class_feature_pool_catalog_serves_a_rendered_description");
+    }
+
+    /// PROVE THE RUNG CAN SUCCEED for an UNOWNED group too (`SD31-W23-
+    /// POOLMEMBER-002`): "Rage Power" (unlike "Rogue Talent") shares no
+    /// prefix/suffix text with its owning class's own name ("barbarian"), so
+    /// `class_feature_owner` -- and its `type_facet` fallback -- both return
+    /// `None` for it; the record falls into the "no owner resolved" branch,
+    /// which used to hard-code `not_ingested` for every `text_only` record
+    /// regardless of the pool catalog (the wave-22 fix at case 3 above only
+    /// reached the SEPARATE "owner resolved but not grounded" branch). This
+    /// proves the unowned branch now consults the SAME catalog before
+    /// falling back, so a widened `REGISTERED_POOL_GROUPS` entry for an
+    /// unowned-shaped pool actually reaches the board.
+    #[test]
+    fn an_unowned_pool_member_the_catalog_renders_also_reaches_text_complete() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("barbarian".to_string(), "core_rulebook");
+        facts.class_feature_pool_catalog.insert(
+            ("core_rulebook".to_string(), "Rage Power ~ Clear Mind".to_string()),
+            "You may reroll a failed Will save.".to_string(),
+        );
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            471,
+            "Rage Power ~ Clear Mind",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "text-complete");
+        assert_eq!(verdict.evidence, "class_feature_pool_catalog_serves_a_rendered_description");
+    }
+
+    /// PROVE THE RUNG CAN FAIL for the unowned shape too: the SAME group
+    /// text, but the catalog does not hold this exact `(source_book, key)`
+    /// -- must stay on the pre-existing `not_ingested` evidence, never
+    /// manufacture `text-complete` from the group-name match alone.
+    #[test]
+    fn an_unowned_pool_member_the_catalog_does_not_hold_stays_not_ingested() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("barbarian".to_string(), "core_rulebook");
+        let unit = class_feature_unit(
+            "core_rulebook",
+            "cr_abilities_class.lst",
+            999,
+            "Rage Power ~ Uncatalogued Power",
+            0,
+        );
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.evidence, "class_feature_option_pool_record_not_held_by_engine");
     }
 
     /// PROVE THE RUNG CAN FAIL, case 3b: the SAME pool-member shape, but the

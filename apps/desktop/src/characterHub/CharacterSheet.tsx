@@ -1826,16 +1826,47 @@ function RacialTraitsSection(props: { surface: RacialTraitsSurface; raceLabel: s
 }
 
 /**
- * Browsable option-pool reference — every real Rogue Talent the corpus
- * declares, described, shown regardless of whether this character has
- * selected it (SD31-W22-POOLMEMBER-001).
+ * One registered option pool's own class gate + heading copy for
+ * {@link ClassFeaturePoolReferenceSection} — data-driven so widening
+ * `class_feature_pool_catalog::REGISTERED_POOL_GROUPS` (rules_core) only
+ * needs a new row here, not a new component. `classSlug` matches
+ * `HeldClass.classId`'s trailing segment (`"class:core_rulebook:rogue"` ->
+ * `"rogue"`), the same convention the pre-existing Rogue gate already used.
+ */
+const POOL_REFERENCE_SECTIONS: ReadonlyArray<{
+  poolGroup: string;
+  classSlug: string;
+  heading: string;
+  note: string;
+}> = [
+  {
+    poolGroup: 'Rogue Talent',
+    classSlug: 'rogue',
+    heading: 'Available Rogue Talents (reference)',
+    note: 'Every Rogue Talent this catalog can render without a missing value, whether or not this build has selected one. A talent whose only magnitude depends on a value this catalog cannot compute (e.g. sneak attack dice) is not listed here.',
+  },
+  {
+    // SD31-W23-POOLMEMBER-002
+    poolGroup: 'Rage Power',
+    classSlug: 'barbarian',
+    heading: 'Available Rage Powers (reference)',
+    note: 'Every Rage Power this catalog can render without a missing value, whether or not this build has selected one. A rage power whose only magnitude depends on a value this catalog cannot compute (e.g. a save DC or a bonus token) is not listed here.',
+  },
+];
+
+/**
+ * Browsable option-pool reference — every real pool member a registered
+ * pool's corpus rows declare, described, shown regardless of whether this
+ * character has selected it (`SD31-W22-POOLMEMBER-001`, widened to a second
+ * pool by `SD31-W23-POOLMEMBER-002`).
  *
  * Modelled on `RacialTraitsSection`'s own ARG-alternate-trait precedent:
  * `list_class_feature_pool_options` serves a menu, not a per-character
- * computation, so this section renders whenever the character holds a
- * Rogue level, independent of `props.explanations` — a pool member is never
- * named by an `ExplanationDto.id` until it is actually chosen, which is
- * exactly the gap `class_feature_pool_picker.rs`'s own doc comment names.
+ * computation, so each section below renders whenever the character holds a
+ * level in that pool's owning class, independent of `props.explanations` —
+ * a pool member is never named by an `ExplanationDto.id` until it is
+ * actually chosen, which is exactly the gap `class_feature_pool_picker.rs`'s
+ * own doc comment names.
  */
 function ClassFeaturePoolReferenceSection(props: { heldClasses: HeldClass[] }) {
   const [options, setOptions] = useState<ClassFeaturePoolOptionDto[]>([]);
@@ -1857,38 +1888,45 @@ function ClassFeaturePoolReferenceSection(props: { heldClasses: HeldClass[] }) {
     };
   }, []);
 
-  const holdsRogue = props.heldClasses.some(
-    (held) => held.classId.split(':').pop() === 'rogue'
-  );
-  const rogueTalents = options.filter((option) => option.poolGroup === 'Rogue Talent');
+  const sections = POOL_REFERENCE_SECTIONS.map((section) => {
+    const holdsClass = props.heldClasses.some(
+      (held) => held.classId.split(':').pop() === section.classSlug
+    );
+    const members = options.filter((option) => option.poolGroup === section.poolGroup);
+    return { section, holdsClass, members };
+  }).filter(({ holdsClass, members }) => holdsClass && members.length > 0);
 
-  if (!holdsRogue || rogueTalents.length === 0) {
+  if (sections.length === 0) {
     return null;
   }
 
   return (
-    <div style={{ marginTop: '1.25rem' }}>
-      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.4rem', textTransform: 'uppercase' }}>
-        Available Rogue Talents (reference)
-      </p>
-      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 0.6rem' }}>
-        Every Rogue Talent this catalog can render without a missing value, whether or not this build has selected one. A talent whose only magnitude depends on a value this catalog cannot compute (e.g. sneak attack dice) is not listed here.
-      </p>
-      {rogueTalents.map((option) => (
-        <div key={`${option.book}:${option.key}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.4rem 0' }}>
-          <span style={{ color: 'var(--color-text)', fontSize: '0.82rem', fontWeight: 700 }}>{option.name}</span>
-          <p
-            style={{
-              color: 'var(--color-text-secondary)',
-              fontSize: '0.72rem',
-              margin: '0.15rem 0 0',
-            }}
-          >
-            {option.description}
+    <>
+      {sections.map(({ section, members }) => (
+        <div key={section.poolGroup} style={{ marginTop: '1.25rem' }}>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.4rem', textTransform: 'uppercase' }}>
+            {section.heading}
           </p>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 0.6rem' }}>
+            {section.note}
+          </p>
+          {members.map((option) => (
+            <div key={`${option.book}:${option.key}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.4rem 0' }}>
+              <span style={{ color: 'var(--color-text)', fontSize: '0.82rem', fontWeight: 700 }}>{option.name}</span>
+              <p
+                style={{
+                  color: 'var(--color-text-secondary)',
+                  fontSize: '0.72rem',
+                  margin: '0.15rem 0 0',
+                }}
+              >
+                {option.description}
+              </p>
+            </div>
+          ))}
         </div>
       ))}
-    </div>
+    </>
   );
 }
 
