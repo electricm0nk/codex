@@ -682,6 +682,129 @@ filter's id-prefix allowlist) **before** banking any unit, not after.
 Grouped by the plane each item lives in. Every row was re-verified directly
 against the cited source, not carried over from a sibling doc unchecked.
 
+
+## Corpus coverage, corpus-wide — re-derived 2026-08-20 (SD-31 wave 21, integration cycle)
+
+**These supersede the wave-20 snapshot above.** Re-derived at this wave's integration tip on
+`tranche/11` after merging four SOUND-or-PARTIAL lane branches (`roster-v2` deferral,
+`monster`/`monster_ability`, `race_trait`, `equipment_modifier`/`feat`, `spell`/`feat`), rejecting
+one (`class_feature-grant-data-ingest`, GAMED — see below), building the merged tree, fixing every
+confirmed adversarial-review finding reachable within this cycle's scope, and re-running the
+guarded regen pipeline in a fresh isolated `CARGO_TARGET_DIR` — never transcribed from a lane
+receipt. Oracle pin `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+
+**This wave's own central question, answered first because it is the most important thing this
+receipt reports: of the 15,305 not-done `class_feature` records, how many can now have a grant fact
+resolved from ingested data, and how many did the roster ground? Zero resolved, zero grounded, that
+this integration cycle will bank.** The enabling lane built a real, generic ingest of PCGen's
+`ABILITY:...\|PREVARGTEQ:` progression-grant tokens, but adversarial review — independently
+reproduced by this integration cycle against the pinned oracle before excluding it (instruction 3),
+not accepted on trust — found it discards the tab-field-0 granting class and the `PRECLASS:` gate
+variant it does not parse, fabricating a level-1 grant for the 73.4% of records where the real gate
+is higher (one spot-checked example: `adventurers_guide`'s `Sigilus ~ Inscribe Sihedron` ships as
+class `"Sigilus"` level 1; the oracle's own `ag_abilities_class.lst:882` names the real class
+**Magus** at level **7**). Not merged. `class_feature` stays at **134 done of 15,439 (0.8679%)**,
+unchanged for the fourth consecutive wave. See `OPEN-ISSUES.md` row 334 and §9 below.
+
+| quantity | value | how |
+|---|---:|---|
+| board units (in scope, `beginner_box` excluded) | **38,372** (unchanged — required this wave) | `docs/work-inventory.json`, replayed through `pf1e_dashboard_producer.doneness_verdict()` |
+| board `done` | **13,174 (34.33 %)** | same replay; was 13,002 / 33.88 % before this wave |
+| corpus literal sweep | 26,368 records examined, **0 findings** | `cargo run --locked --bin corpus_literal_sweep`; unchanged (no new corpus record written this wave) |
+| `derived` fixture coverage | **1,821 units cleared over 2,561 fixture rows**, 0 failed, 0 not ingested | `cargo run --locked --bin derived_evaluator_fixture_check`; unchanged |
+| `core_essentials` | **0 units**, confirmed absent | direct `python3` count over `docs/work-inventory.json`, and absent from `site/status-data.json`'s book list |
+
+By doneness bucket: `done` 13,174 · `held` 1,188 · `in-progress` 1,253 · `not-started` 18,444 ·
+`unmeasurable` 4,270 · `deferred` 43 (was `done` 13,002 · `held` 1,126 · `in-progress` 1,282 ·
+`not-started` 18,649 · `unmeasurable` 4,270 · `deferred` 43). `-205 not-started -29 in-progress
++172 done +62 held = 0` — every unit of movement accounted for, no residue.
+
+**All +172 traces to two named causes, both in the two SOUND-or-fixed lanes that banked units:**
+
+| kind | done (wave 20) | done (wave 21) | delta | cause |
+|---|---:|---:|---:|---|
+| `monster_ability` | 1,594 | 1,737 | **+143** | `monster`/`monster_ability` lane: wired the `CATEGORY:Internal` bundle-row ownership hop (a monster row naming its abilities indirectly via an `ABILITY:Internal\|AUTOMATIC\|<bundle_key>` reference) into `transcribe_monster_tables.py` — +208 ability records across 6 books, 0 removed. 97 of the 143 clear the `text-complete` prose bar with real distinct evidence; the other 46 ride the pre-existing `computed`+`grounded` rung 359 baseline units already use (see §9). |
+| `spell` | 1,553 | 1,573 | **+20** | `spell`/`feat` lane: widened 8 of 9 per-school spellbook resolvers to fall back to APG's then ACG's own `SPELL_LIST` when CRB's table has no entry, tagging `TableCellRef.rule_set` to the resolving book — the `ForeignBookTable` cross-book guard was proven against real non-CRB data for the first time. |
+| `equipment_modifier` | 508 | 516 | **+8** | `equipment_modifier`/`feat` lane: widened the `equipmods` evaluator to read armor-slot `SR:<n>` tokens (Decision 7 REFINED's UNIVERSAL paradigm case) — `special_ability_spell_resistance_{13,15,17,19}_armor` + their `.COPY=` aliases; wired end-to-end through the DTO, TypeScript types and a real Spell Resistance `StatTile` on `CharacterSheet.tsx`'s Defense tab. |
+| `equipment` | 5,312 | 5,313 | **+1** | Same lane, same mechanism: `ultimate_equipment:equipment:resplendent_robe_of_the_thespian` carries its own literal `SR:18` token, grounded by the same widened probe (a real magic item, same spillover shape as prior waves' equipment/equipment_modifier crossovers). |
+| all others | — | — | +0 | `class`, `class_feature`, `companion`, `feat` (0 `feat` units banked — only `equipment_modifier` this wave), `monster`, `race`, `race_trait` unchanged. |
+
+`race_trait`'s lane (roster-drift fix in `scripts/race_trait_ceiling.py`/`classify_race_trait_rows.py`)
+and `roster-v2`'s deferral both independently proved — not merely claimed — zero board movement.
+
+### The wave's own thesis, answered plainly — a refuted thesis is the most important thing this receipt reports
+
+**Wave 21 was dispatched to attack the reason `class_feature` (134 done of 15,439, 0.87%, 60% of
+everything still remaining, unmoved for three waves) is stuck: the per-record grant fact — is this
+feature granted, and at what class level — does not live in the `class_feature` corpus record at
+all, only in a never-ingested `.MOD` ability-grant line in the raw `.lst`.** The `class_feature-
+grant-data-ingest` lane built exactly the missing ingest: a real, generic parser reading PCGen's
+`ABILITY:<pool>\|AUTOMATIC\|<Class> ~ <Feature>\|PREVARGTEQ:<Var>,<N>` progression tokens, writing
+6,252 resolved grant facts across 20 of 21 books. Its correctness proof reproduced all 64 of
+Pathfinder Unchained's hand-curated records exactly.
+
+**It is GAMED anyway, and NOT merged.** That proof exercises only the ~1% `CATEGORY=Class`
+progression-row shape; 96.5% of what the parser actually shipped comes from a different row shape
+(mostly archetype object rows) whose field-0 granting class the parser never reads — it uses the
+key's own `~`-split fragment as the class instead, which is frequently an archetype or ability
+category name, not a class at all. Worse, the parser recognises only `PREVARGTEQ:`; PCGen's more
+common `PRECLASS:1,<Class>=<N>` gate is silently discarded, so 2,098 of 6,252 shipped facts
+(33.6%) carry a fabricated level-1 grant where the record's own segment names a real, higher gate.
+This integration cycle independently re-derived one of adversarial review's spot checks against the
+pinned oracle directly, not on the reviewer's word alone (instruction 3): `adventurers_guide`'s
+`Sigilus ~ Inscribe Sihedron` ships as class `"Sigilus"` (the archetype name), level 1,
+`level_explicit: false`; `ag_abilities_class.lst:882` — the very row the parser read — carries
+`ABILITY:Special Ability\|AUTOMATIC\|Sigilus ~ Inscribe Sihedron\|PRECLASS:1,Magus=7`: the real
+granting class is Magus, the real gate is level 7. Mutation-proving the PU reproduction gate
+(injecting one fabricated `GrantFact` per Unchained-class key) left all 4 tests and the full
+2,149-test lib suite GREEN — the gate cannot fail on exactly the fabrication this data risked.
+**Grounded: 0. Resolved-and-trustworthy: 0.** Consuming this data as-is downstream would have
+grounded thousands of `class_feature` units at a fabricated grant level — the same manufactured-
+credit shape wave 20's `GAMED` roster-engine lane was rejected for.
+
+**The parser is salvageable, not a dead end.** Both missing facts — the true granting class, the
+true gate level — are already inside the strings it reads (tab field 0; a `PRECLASS:` arm beside
+the `PREVARGTEQ:` arm it already handles). A corrected re-attempt, with a reproduction proof that
+actually samples the archetype-row/non-Class-row shape that is 96.5% of the real population (not
+just Pathfinder Unchained's own narrow `CATEGORY=Class` shape), is owed to a future wave. Until
+then, **wave 20's own narrower, independently-derived ~2,396-unit "immediately groundable by the
+engine today" estimate remains the only figure any future attempt should plan against** — not the
+7,505 wave 20 hoped for, and not the wider 4,856-unit ceiling this lane proposed, which does not
+survive its own data (77.5% of that population's own facts carry an unread-from-any-token level-1
+default). Full reasoning: `OPEN-ISSUES.md` row 334.
+
+**The sibling roster lane correctly declined to build on this data and banked 0 units instead** —
+verifying, before writing any code, that no non-hand-transcribed grant data source existed in its
+worktree this cycle, and logging a `retro.py` deferral rather than falling back to the exact
+per-class hand-transcription cost this wave exists to eliminate. Retroactively confirmed the right
+call by this rejection (though its own "no sibling has started" claim rested on a branch-tip poll
+that could not actually distinguish "not started" from "in progress" — a LOW finding logged, not
+disputed as an outcome).
+
+### What wave 21's integration cycle changed in the architecture, not just in the counts
+
+* **A live data-fabrication risk was caught before it could become a downstream grounding
+  mechanism's silent input.** Had `class_feature_grants.rs` merged un-reviewed, the next wave's
+  roster lane would have had a ready-made, plausible-looking, 6,252-fact data source to build
+  against — one that is wrong in the majority of its non-trivial cases. Rejected at the data layer,
+  before any consumer was ever wired to it (the sibling `roster-v2` lane deliberately built no
+  consumer this wave, so the blast radius was contained to zero board units).
+* **`scripts/observer/pf1e_dashboard_producer.py`'s `CODEX_REPO_ROOT` defect (`OPEN-ISSUES.md` row
+  325) recurred one wave later and is now fixed at the source**, not merely worked around again:
+  `WORK_INVENTORY_FULL_DOC` now falls back to `CODEX_REPO_ROOT`-relative before the hardcoded
+  shared-checkout path, so any worktree lane's own dashboard regen publishes its own board rather
+  than a concurrently-running sibling's.
+* **A 394-unit arithmetic error was caught and corrected in this file itself before it could stand
+  as current-state truth**: the wave-21 `race_trait` lane's own commit subtracted `core_essentials`
+  ceiling rows (a book with zero board units, Decision 9) from the `race_trait` total as though they
+  were board members. Corrected chassis-blocked residue from 2,671 to the real 3,065.
+* **A monster_ability classifier-consistency question was surfaced, not silently ridden.** 46 of
+  this wave's 143 new `monster_ability` `done` units clear the board's `computed`+`grounded` bar on
+  table-membership evidence alone, identical to 359 pre-existing baseline units and 62 correctly-
+  `held` siblings in the same batch — a real, long-standing question about whether `grounded`
+  requires an actually-observed consumer delta, logged for an explicit ruling (`OPEN-ISSUES.md` row
+  335) rather than either quietly banked as-is or unilaterally (and inconsistently) demoted.
+
 ### Desktop app: character sheet and update actions
 
 | Item | Status | Where (re-verified) |
