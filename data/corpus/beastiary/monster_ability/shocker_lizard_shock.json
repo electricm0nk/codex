@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T15:15:41Z",
   "data": {
     "corpus_key": "Shocker Lizard ~ Shock",
     "delivery": "Supernatural",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:shocker_lizard"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Shock"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|ShockSaveDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShockSaveDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ShockSaveDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Shock)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ShockSaveDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Shocker lizards can deliver an electrical shock to a single opponent within 5 feet. This attack deals 1d8 points of nonlethal electricity damage to living opponents (Reflex DC %1 half ). Additionally, if two or more shocker lizards are within 20 feet of each other, they can work together to create a lethal shock once every 1d4 rounds. This effect has a radius of 20 feet, centered on any one contributing lizard. All creatures within that radius take 2d8 points of lethal electricity damage for each lizard contributing to the shock, to a maximum of 12d8. A Reflex save (DC 10 + the number of lizards contributing) halves the damage.|ShockSaveDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Shocker Lizard ~ Shock"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.248"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.248",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1119,
-    "record_key": "Shocker Lizard ~ Shock"
-  },
+  "ingested_at": "2026-08-20T15:15:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1119,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Shocker Lizard ~ Shock",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

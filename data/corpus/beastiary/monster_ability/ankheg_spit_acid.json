@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T15:15:41Z",
   "data": {
     "corpus_key": "Ankheg ~ Spit Acid",
     "delivery": "Extraordinary",
@@ -15,19 +13,63 @@
     "owners": [
       "beastiary:monster:ankheg"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Spit Acid"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(4d4, DC %1)|SpitAcidDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpitAcidDC|10+(HD/2)+CON|TYPE=Base"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|SpitAcidDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Spit Acid)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SpitAcidDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once every 6 hours, an ankheg can spit a 30-foot line of acid. Creatures struck by this acid take 4d4 points of acid damage (Reflex DC %1 halves). Once an ankheg uses this attack, it must wait 6 hours before using it again. Additionally, during this time period, its bite attack does not inflict any additional acid damage. As a result, an ankheg does not use this ability unless it is desperate or frustrated, most often spitting acid when reduced to fewer than half its full normal hit points or when it cannot not successfully grab an opponent.|SpitAcidDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Ankheg ~ Spit Acid"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.15"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.15",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 90,
-    "record_key": "Ankheg ~ Spit Acid"
-  },
+  "ingested_at": "2026-08-20T15:15:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 90,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Ankheg ~ Spit Acid",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

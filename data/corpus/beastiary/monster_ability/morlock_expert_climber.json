@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T15:15:41Z",
   "data": {
     "corpus_key": "Morlock ~ Expert Climber",
     "delivery": "Extraordinary",
@@ -13,19 +11,47 @@
     "owners": [
       "beastiary:monster:morlock"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "SKILL|Climb|8|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A morlock can cling to cave walls and even ceilings as long as the surface has hand and footholds. You are treated as constantly being under a nonmagical version of the spell spider climb, save that you cannot cling to smooth surfaces. This ability doubles the normal +8 racial bonus to Climb checks normally afforded creatures with a climb speed to a +16 racial bonus."
+      },
+      {
+        "key": "KEY",
+        "value": "Morlock ~ Expert Climber"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.209"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.209",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 943,
-    "record_key": "Morlock ~ Expert Climber"
-  },
+  "ingested_at": "2026-08-20T15:15:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 943,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Morlock ~ Expert Climber",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

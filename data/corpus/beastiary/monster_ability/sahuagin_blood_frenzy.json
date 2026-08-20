@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T15:15:41Z",
   "data": {
     "corpus_key": "Sahuagin ~ Blood Frenzy",
     "delivery": "Extraordinary",
@@ -13,19 +11,51 @@
     "owners": [
       "beastiary:monster:sahuagin"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per day, a sahuagin that takes damage in combat can fly into a frenzy in the following round. It gains +2 Constitution and +2 Strength, but takes a -2 penalty to its AC. The frenzy lasts as long as the battle or 1 minute, whichever is shorter."
+      },
+      {
+        "key": "KEY",
+        "value": "Sahuagin ~ Blood Frenzy"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.239"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|COMBAT|AC|-2"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|STAT|STR,CON|2"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Extraordinary"
+      }
+    ],
     "source_page": "p.239",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 1078,
-    "record_key": "Sahuagin ~ Blood Frenzy"
-  },
+  "ingested_at": "2026-08-20T15:15:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1078,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Sahuagin ~ Blood Frenzy",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:tempbonus",

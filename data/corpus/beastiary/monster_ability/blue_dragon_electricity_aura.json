@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T15:15:41Z",
   "data": {
     "corpus_key": "Blue Dragon ~ Electricity Aura",
     "delivery": "Supernatural",
@@ -16,21 +14,73 @@
     "owners": [
       "beastiary:monster:dragon_blue"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(%1 ft., %2d6)|ElectricAuraRange|ElectricAuraDice"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricAuraDice|1"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricAuraDice|1|PREVARGTEQ:DragonAgeCategory,10"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricAuraRange|5"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|ElectricAuraRange|5|PREVARGTEQ:DragonAgeCategory,8"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElectricAuraDice|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "ElectricAuraRange|0"
+      },
+      {
+        "key": "DESC",
+        "value": "An adult blue dragon is surrounded by an aura of electricity. Creatures within %1 feet take %2d6 points of electricity damage at the beginning of the dragon's turn.|ElectricAuraRange|ElectricAuraDice"
+      },
+      {
+        "key": "KEY",
+        "value": "Blue Dragon ~ Electricity Aura"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Aura"
+      }
+    ],
     "source_page": "p.94",
     "traits": [
       "Aura"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 416,
-    "record_key": "Blue Dragon ~ Electricity Aura"
-  },
+  "ingested_at": "2026-08-20T15:15:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 416,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Blue Dragon ~ Electricity Aura",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

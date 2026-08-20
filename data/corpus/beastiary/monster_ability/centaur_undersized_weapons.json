@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T15:15:41Z",
   "data": {
     "corpus_key": "Centaur ~ Undersized Weapons",
     "delivery": "Extraordinary",
@@ -13,19 +11,59 @@
     "owners": [
       "beastiary:monster:centaur"
     ],
+    "raw_tokens": [
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Exotic|TOHIT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Martial|TOHIT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "WEAPONPROF=TYPE.Simple|TOHIT|2"
+      },
+      {
+        "key": "BONUS",
+        "value": "WIELDCATEGORY|ALL|1"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "Although a centaur is Large, its upper torso is the same size as that of a Medium humanoid. As a result, they wield weapons as if they were one size category smaller than their actual size (Medium for most centaurs)."
+      },
+      {
+        "key": "KEY",
+        "value": "Centaur ~ Undersized Weapons"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.42"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary"
+      }
+    ],
     "source_page": "p.42",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 205,
-    "record_key": "Centaur ~ Undersized Weapons"
-  },
+  "ingested_at": "2026-08-20T15:15:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 205,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Centaur ~ Undersized Weapons",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "static",
   "wiring_class_signals": [
     "static:literal_magnitudes_only"

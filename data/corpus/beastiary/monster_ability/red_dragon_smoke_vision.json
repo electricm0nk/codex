@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T15:15:41Z",
   "data": {
     "corpus_key": "Red Dragon ~ Smoke Vision",
     "delivery": "Extraordinary",
@@ -13,21 +11,45 @@
     "owners": [
       "beastiary:monster:dragon_red"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A very young red dragon can see perfectly in smoky conditions (such as those created by pyrotechnics)."
+      },
+      {
+        "key": "KEY",
+        "value": "Red Dragon ~ Smoke Vision"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.98"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Extraordinary.Sense"
+      }
+    ],
     "source_page": "p.98",
     "traits": [
       "Sense"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 440,
-    "record_key": "Red Dragon ~ Smoke Vision"
-  },
+  "ingested_at": "2026-08-20T15:15:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 440,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Red Dragon ~ Smoke Vision",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

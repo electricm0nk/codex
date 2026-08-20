@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T15:15:41Z",
   "data": {
     "corpus_key": "Blue Dragon ~ Desert Thirst",
     "delivery": "Supernatural",
@@ -16,19 +14,55 @@
     "owners": [
       "beastiary:monster:dragon_blue"
     ],
+    "raw_tokens": [
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|DesertThirstDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|DesertThirstDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "DesertThirstDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "A blue dragon can cast create water at will. Alternatively, it can destroy an equal amount of liquid in a 10-foot burst. Unattended liquids are instantly reduced to sand. Liquid-based magic items (such as potions) and items in a creature's possession must succeed on a Will save (DC %2) or be destroyed.|TL|DesertThirstDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Blue Dragon ~ Desert Thirst"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.94"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.94",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 415,
-    "record_key": "Blue Dragon ~ Desert Thirst"
-  },
+  "ingested_at": "2026-08-20T15:15:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 415,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Blue Dragon ~ Desert Thirst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "derived",
   "wiring_class_signals": [
     "derived:bonus",

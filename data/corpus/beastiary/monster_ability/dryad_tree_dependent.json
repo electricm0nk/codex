@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T15:15:41Z",
   "data": {
     "corpus_key": "Dryad ~ Tree Dependent",
     "delivery": "Supernatural",
@@ -13,21 +11,45 @@
     "owners": [
       "beastiary:monster:dryad"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "A dryad is mystically bonded to a single, enormous tree and must never stray more than 300 yards from it. Most dryad trees are oak trees, but other trees function as well (often having subtle influences on a specific dryad's personality and appearance). A dryad who moves 300 yards beyond her bonded tree immediately becomes sickened. Every hour thereafter, she must make a DC 15 Fortitude save to resist becoming nauseated for an hour. A dryad that is out of range of her bonded tree for 24 hours takes 1d6 points of Constitution damage, and another 1d6 points of Constitution damage every day that follows-- eventually, this separation kills the dryad. A dryad can forge a new bond with a new tree by performing a 24-hour ritual and making a successful DC 20 Will save."
+      },
+      {
+        "key": "KEY",
+        "value": "Dryad ~ Tree Dependent"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.116"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialQuality.Supernatural.Weakness"
+      }
+    ],
     "source_page": "p.116",
     "traits": [
       "Weakness"
     ]
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 572,
-    "record_key": "Dryad ~ Tree Dependent"
-  },
+  "ingested_at": "2026-08-20T15:15:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 572,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Dryad ~ Tree Dependent",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"

@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T15:15:41Z",
   "data": {
     "corpus_key": "Boggard ~ Terrifying Croak",
     "delivery": "Supernatural",
@@ -15,19 +13,67 @@
     "owners": [
       "beastiary:monster:boggard"
     ],
+    "raw_tokens": [
+      {
+        "key": "ABILITY",
+        "value": "Ability Focus|AUTOMATIC|Terrifying Croak"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(DC %1)|TerrifyingCroakDC"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TerrifyingCroakDC|10+(HD/2)+CHA"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TerrifyingCroakDC|2|PREABILITY:1,CATEGORY=FEAT,Ability Focus (Terrifying Croak)"
+      },
+      {
+        "key": "BONUS",
+        "value": "VAR|TerrifyingCroakDC|2|TYPE=Racial"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TerrifyingCroakDC|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once per hour, a boggard can, as a standard action, emit a loud and horrifying croak. Any nonboggard creature within 30 feet of the boggard must make a DC %1 Will save or become shaken for 1d4 rounds. Creatures that succeed at this save cannot be affected again by the same boggard's croak for 24 hours. Creatures that are already shaken become frightened for 1d4 rounds instead.|TerrifyingCroakDC"
+      },
+      {
+        "key": "KEY",
+        "value": "Boggard ~ Terrifying Croak"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.37"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.Supernatural"
+      }
+    ],
     "source_page": "p.37",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 183,
-    "record_key": "Boggard ~ Terrifying Croak"
-  },
+  "ingested_at": "2026-08-20T15:15:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 183,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "Boggard ~ Terrifying Croak",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

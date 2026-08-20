@@ -1,7 +1,5 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-20T15:15:41Z",
   "data": {
     "corpus_key": "White Dragon ~ Freezing Fog",
     "delivery": "SpellLike",
@@ -13,19 +11,43 @@
     "owners": [
       "beastiary:monster:dragon_white"
     ],
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "DESC",
+        "value": "An old white dragon can use this ability three times per day. It is similar to an acid fog spell but deals cold damage instead of acid damage. It also causes a rime of slippery ice to form on any surface the fog touches, creating the effect of a grease spell. The dragon is immune to the grease effect because of its icewalking ability. This ability is the equivalent of a 6th-level spell."
+      },
+      {
+        "key": "KEY",
+        "value": "White Dragon ~ Freezing Fog"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecialAttack.SpellLike"
+      }
+    ],
     "source_page": "p.100",
     "traits": []
   },
-  "source": {
-    "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
-    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
-    "line": 447,
-    "record_key": "White Dragon ~ Freezing Fog"
-  },
+  "ingested_at": "2026-08-20T15:15:41Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 447,
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "record_key": "White Dragon ~ Freezing Fog",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c"
+  },
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
