@@ -67209,7 +67209,12 @@ mod ultimate_combat_chassis_gate_tests {
     /// proficiency IS resolved (`weapon_tables.rs`'s `class:gunslinger`
     /// entry), unlike Ninja/Samurai, which still carry the
     /// `combat.baseline_weapon_proficiency_unknown` claim-blocker this
-    /// cycle deliberately left open.
+    /// cycle deliberately left open. The word "alone" in this test's name
+    /// is now load-bearing, not aspirational (wave-20 integration fix,
+    /// `OPEN-ISSUES.md` row 331): a prior version of this test asserted
+    /// only Gunslinger's own status, so a future change that accidentally
+    /// promoted Ninja or Samurai to `Computed` would have left it green
+    /// under a name that claims otherwise.
     #[test]
     fn gunslinger_alone_reaches_computed_status() {
         use super::HeadlessReceiptStatus;
@@ -67225,6 +67230,54 @@ mod ultimate_combat_chassis_gate_tests {
             receipt.status,
             HeadlessReceiptStatus::Computed,
             "gunslinger level 5 must reach Computed, blockers: {blocking:?}"
+        );
+
+        for (class_id, name) in [(NINJA_CLASS_ID, "ninja"), (SAMURAI_CLASS_ID, "samurai")] {
+            let other_receipt = build_pilot_headless_receipt(&single_class(class_id, 5));
+            assert_ne!(
+                other_receipt.status,
+                HeadlessReceiptStatus::Computed,
+                "{name} level 5 must NOT reach Computed (still blocked on \
+                 combat.baseline_weapon_proficiency_unknown) -- if this now fails, Gunslinger \
+                 is no longer 'alone' and this test's name and the wave-20 dispatch's own \
+                 scoping decision both need revisiting, not just this assertion"
+            );
+        }
+    }
+
+    /// A level beyond a UC class's real `MAXLEVEL` ceiling stays honestly
+    /// blocked, not silently accepted. Mirrors `a_level_beyond_the_real_
+    /// maxlevel_ceiling_stays_blocked` (APG alchemist) and its ACG sibling.
+    /// Added wave-20 integration (`OPEN-ISSUES.md` row 331): before this
+    /// test existed, `is_supported_uc_single_class`'s `.is_some()` ceiling
+    /// check could be mutated to `.is_some() || true` (accept any UC class
+    /// at any level, past `MAXLEVEL:20`) with the full lib suite staying
+    /// green -- a gate that could not fail. `uc::class_chassis_resolve`
+    /// itself already refuses level 21 correctly; this test is the missing
+    /// proof that the gate in front of it does too.
+    #[test]
+    fn a_level_beyond_the_real_maxlevel_ceiling_stays_blocked() {
+        use super::HeadlessReceiptStatus;
+        let receipt = build_pilot_headless_receipt(&single_class(GUNSLINGER_CLASS_ID, 21));
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Blocked,
+            "gunslinger level 21 (beyond MAXLEVEL:20) must not reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            receipt
+                .computation
+                .diagnostics
+                .iter()
+                .any(|d| d.id == "class_chassis.unsupported"),
+            "{:?}",
+            receipt.computation.diagnostics
+        );
+        assert!(
+            !has_supported_class_chassis(&single_class(GUNSLINGER_CLASS_ID, 21)),
+            "has_supported_class_chassis must itself refuse level 21, not just the downstream \
+             chassis resolver -- this is the assertion the pre-fix gate could not fail"
         );
     }
 }
