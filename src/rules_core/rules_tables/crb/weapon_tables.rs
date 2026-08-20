@@ -529,6 +529,28 @@ pub const CLASS_WEAPON_PROFICIENCIES: &[ClassWeaponProficiency] = &[
     ClassWeaponProficiency { class_id: "class:unchained_monk", tiers: &[], named: &["Club", "Crossbow (Light)", "Crossbow (Heavy)", "Dagger", "Handaxe", "Javelin", "Kama", "Nunchaku", "Quarterstaff", "Sai", "Sword (Short)", "Shortspear", "Shuriken", "Siangham", "Sling", "Spear"], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:unchained_rogue", tiers: &[WeaponProficiency::Simple], named: &["Crossbow (Hand)", "Rapier", "Sap", "Shortbow", "Sword (Short)"], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:unchained_summoner", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
+    // SD-31 wave 20 (chassis-coverage lane): Ultimate Combat's Gunslinger
+    // (`uc_abilities_class.lst`, `KEY:Gunslinger ~ Proficiencies`) grants
+    // `ABILITY:Internal|AUTOMATIC|TYPE=WeaponProfMartial|TYPE=ArmorProfLight`
+    // plus a second `ABILITY:Internal|AUTOMATIC|Weapon Prof ~ Auto|Weapon
+    // Prof ~ Simple|...` indirection -- the same convention-2 shape Fighter
+    // and Barbarian's own Simple+Martial rows already use. That same record
+    // also carries `AUTO:WEAPONPROF|TYPE=Firearm`: a weapon TYPE selector,
+    // not a tier/named-weapon/weapon-group this table models, exactly the
+    // documented boundary the Unchained Monk's `TYPE=Monk` selector already
+    // states above -- deliberately NOT claimed here. Ninja and Samurai
+    // (Ultimate Combat's other two classes) are NOT added by this same
+    // cycle: Ninja's own proficiency record grants a named-weapon list with
+    // no visible Simple-tier token on the same row (its DESC prose says
+    // "proficient with all simple weapons" but the ingested corpus token
+    // does not carry a matching `AUTO:WEAPONPROF|TYPE=Simple`/indirection,
+    // and this table's own discipline is to transcribe the token, not the
+    // prose), and Samurai's record is `AUTO:WEAPONPROF|TYPE=Samurai`, a
+    // weapon TYPE selector this table has no representation for at all
+    // (unlike Gunslinger's Firearm gap, dropping it would leave Samurai with
+    // ZERO named/tier coverage, which is not the same known-boundary shape).
+    // Both are real, open, honestly-reported gaps for a future cycle.
+    ClassWeaponProficiency { class_id: "class:gunslinger", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
 ];
 
 /// This class's weapon proficiency, or `None` for a class this table does
@@ -697,6 +719,31 @@ mod class_weapon_proficiency_tests {
         }
     }
 
+    /// SD-31 wave 20 (chassis-coverage lane): Ultimate Combat's Gunslinger
+    /// carries a real corpus proficiency record
+    /// (`uc_abilities_class.lst`, `KEY:Gunslinger ~ Proficiencies`) --
+    /// `ABILITY:Internal|AUTOMATIC|TYPE=WeaponProfMartial|TYPE=ArmorProfLight`
+    /// plus a second indirection through `Weapon Prof ~ Auto`/`Weapon Prof
+    /// ~ Simple` -- the same convention-2 indirection shape Fighter and
+    /// Barbarian already use for their own Simple+Martial grant. `TYPE=Firearm`
+    /// is also on that record; it is a weapon TYPE selector, not a tier this
+    /// table models (the same documented, deliberate boundary the Unchained
+    /// Monk's `TYPE=Monk` selector already carries above), so it is NOT
+    /// claimed here. Was previously absent entirely -- `class:gunslinger`
+    /// read `None` ("not ingested"), which claim-blocked the whole melee
+    /// baseline for every Gunslinger regardless of what weapon it held.
+    #[test]
+    fn gunslinger_has_simple_and_martial_tiers_from_its_real_corpus_record() {
+        let gunslinger = prof("class:gunslinger");
+        assert_eq!(gunslinger.tiers, &[WeaponProficiency::Simple, WeaponProficiency::Martial]);
+        assert!(gunslinger.named.is_empty());
+        assert!(gunslinger.weapon_groups.is_empty());
+        // The actual bug this closes: a Gunslinger IS proficient with the
+        // Longsword (Martial tier), so `combat.baseline_weapon_proficiency_unknown`
+        // must resolve rather than claim-block.
+        assert!(class_is_proficient_with(gunslinger, weapon("Longsword")));
+    }
+
     #[test]
     fn an_unknown_class_reports_unknown_rather_than_non_proficient() {
         assert!(class_weapon_proficiency("class:not_a_class").is_none());
@@ -726,13 +773,14 @@ mod class_weapon_proficiency_tests {
             "class:warpriest", "class:witch", "class:wizard",
             "class:unchained_barbarian", "class:unchained_monk",
             "class:unchained_rogue", "class:unchained_summoner",
+            "class:gunslinger",
         ] {
             assert!(
                 class_weapon_proficiency(class_id).is_some(),
                 "{class_id} has a real corpus proficiency record and must be covered"
             );
         }
-        assert_eq!(CLASS_WEAPON_PROFICIENCIES.len(), 31);
+        assert_eq!(CLASS_WEAPON_PROFICIENCIES.len(), 32);
     }
 
     /// Each Unchained class's grants against the class it replaces. Three
@@ -788,7 +836,7 @@ mod class_weapon_proficiency_tests {
             "class:barbarian", "class:bard", "class:bloodrager", "class:cavalier",
             "class:fighter", "class:hunter", "class:paladin", "class:ranger",
             "class:skald", "class:slayer", "class:swashbuckler", "class:warpriest",
-            "class:unchained_barbarian",
+            "class:unchained_barbarian", "class:gunslinger",
         ];
         let mut proficient = 0;
         for class in CLASS_WEAPON_PROFICIENCIES {
@@ -801,7 +849,7 @@ mod class_weapon_proficiency_tests {
             );
             proficient += usize::from(actual);
         }
-        assert_eq!(proficient, 13, "13 of 31 classes are Longsword-proficient");
+        assert_eq!(proficient, 14, "14 of 32 classes are Longsword-proficient");
     }
 
     /// Bard reaches Longsword through its explicit list, NOT a martial
