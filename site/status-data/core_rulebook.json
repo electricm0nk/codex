@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 7,
+      "done": 8,
       "partial": 2,
-      "not_started": 340,
+      "not_started": 339,
       "denominator": 349,
-      "pct": 2.0,
+      "pct": 2.3,
       "excluded_from_percentage": 600,
       "standing_breakdown": {
         "unclassified": 600,
@@ -1320,7 +1320,7 @@
         },
         {
           "name": "Clear Mind",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Clear Mind"
@@ -2510,7 +2510,7 @@
         },
         {
           "name": "Fearless Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Fearless Rage"
@@ -3413,14 +3413,14 @@
         },
         {
           "name": "Internal Fortitude",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Internal Fortitude"
         },
         {
           "name": "Intimidating Glare",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Intimidating Glare"
@@ -3644,7 +3644,7 @@
         },
         {
           "name": "Low-Light Vision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Low-Light Vision"
@@ -3805,7 +3805,7 @@
         },
         {
           "name": "Mighty Swing",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Mighty Swing"
@@ -3826,7 +3826,7 @@
         },
         {
           "name": "Moment of Clarity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Moment of Clarity"
@@ -3938,7 +3938,7 @@
         },
         {
           "name": "Night Vision",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Night Vision"
@@ -3966,7 +3966,7 @@
         },
         {
           "name": "No Escape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "No Escape"
@@ -4449,7 +4449,7 @@
         },
         {
           "name": "Quick Reflexes",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Quick Reflexes"
@@ -4694,7 +4694,7 @@
         },
         {
           "name": "Roused Anger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Roused Anger"
@@ -4715,7 +4715,7 @@
         },
         {
           "name": "Scent",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Scent"
@@ -5702,7 +5702,7 @@
         },
         {
           "name": "Unexpected Strike",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Unexpected Strike"
@@ -6353,7 +6353,7 @@
         },
         {
           "name": "Weapon and Armor Proficiency",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Weapon and Armor Proficiency (BarbarianClassFeatures.ClassFeatures.SpecialQuality)"

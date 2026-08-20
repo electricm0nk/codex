@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 8,
+      "done": 20,
       "partial": 0,
-      "not_started": 851,
+      "not_started": 839,
       "denominator": 859,
-      "pct": 0.9,
+      "pct": 2.3,
       "excluded_from_percentage": 553,
       "standing_breakdown": {
         "origin": 859,
@@ -564,7 +564,7 @@
         },
         {
           "name": "Auspicious Mark",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Auspicious Mark"
@@ -767,21 +767,21 @@
         },
         {
           "name": "Bestial Climber",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Bestial Climber"
         },
         {
           "name": "Bestial Leaper",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Bestial Leaper"
         },
         {
           "name": "Bestial Swimmer",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Bestial Swimmer"
@@ -823,7 +823,7 @@
         },
         {
           "name": "Bleeding Blow",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Bleeding Blow"
@@ -949,7 +949,7 @@
         },
         {
           "name": "Body Bludgeon",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Body Bludgeon"
@@ -1929,7 +1929,7 @@
         },
         {
           "name": "Deadly Accuracy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Deadly Accuracy"
@@ -2482,21 +2482,21 @@
         },
         {
           "name": "Dragon Totem",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural.BarbarianTotemRagePower",
           "standing": "origin",
           "display_name": "Dragon Totem"
         },
         {
           "name": "Dragon Totem Resilience",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Dragon Totem Resilience"
         },
         {
           "name": "Dragon Totem Wings",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Dragon Totem Wings"
@@ -3686,7 +3686,7 @@
         },
         {
           "name": "Ground Breaker, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Ground Breaker, Greater"
@@ -3903,7 +3903,7 @@
         },
         {
           "name": "Hive Totem Toxicity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Hive Totem Toxicity"
@@ -4841,7 +4841,7 @@
         },
         {
           "name": "Lethal Accuracy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Lethal Accuracy"
@@ -6010,7 +6010,7 @@
         },
         {
           "name": "Perfect Clarity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Perfect Clarity"
@@ -6402,7 +6402,7 @@
         },
         {
           "name": "Reflexive Dodge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Reflexive Dodge"
@@ -6962,7 +6962,7 @@
         },
         {
           "name": "Sharpened Accuracy",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Sharpened Accuracy"
@@ -7858,7 +7858,7 @@
         },
         {
           "name": "Sprint",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Sprint"
@@ -8243,7 +8243,7 @@
         },
         {
           "name": "Sunder Enchantment",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Sunder Enchantment"
@@ -9832,21 +9832,21 @@
         },
         {
           "name": "World Serpent Spirit",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "World Serpent Spirit"
         },
         {
           "name": "World Serpent Totem",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural.BarbarianTotemRagePower",
           "standing": "origin",
           "display_name": "World Serpent Totem"
         },
         {
           "name": "World Serpent Totem Unity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "World Serpent Totem Unity"

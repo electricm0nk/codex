@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 0,
+      "done": 4,
       "partial": 0,
-      "not_started": 310,
+      "not_started": 306,
       "denominator": 310,
-      "pct": 0.0,
+      "pct": 1.3,
       "excluded_from_percentage": 109,
       "standing_breakdown": {
         "unclassified": 109,
@@ -487,21 +487,21 @@
         },
         {
           "name": "Cult Totem",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Cult Totem"
         },
         {
           "name": "Cult Totem, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Cult Totem, Greater"
         },
         {
           "name": "Cult Totem, Lesser",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialQuality.Extraordinary.BarbarianTotemRagePower",
           "standing": "origin",
           "display_name": "Cult Totem, Lesser"
@@ -998,7 +998,7 @@
         },
         {
           "name": "Fight Response",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Fight Response"

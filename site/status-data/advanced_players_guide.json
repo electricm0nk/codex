@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 9,
+      "done": 38,
       "partial": 2,
-      "not_started": 1229,
+      "not_started": 1200,
       "denominator": 1240,
-      "pct": 0.7,
+      "pct": 3.1,
       "excluded_from_percentage": 805,
       "standing_breakdown": {
         "unclassified": 805,
@@ -1964,7 +1964,7 @@
         },
         {
           "name": "Boasting Taunt",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Boasting Taunt"
@@ -2160,14 +2160,14 @@
         },
         {
           "name": "Brawler",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack",
           "standing": "unclassified",
           "display_name": "Brawler"
         },
         {
           "name": "Brawler, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack",
           "standing": "origin",
           "display_name": "Brawler, Greater"
@@ -2314,7 +2314,7 @@
         },
         {
           "name": "Cantrips",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SummonerClassFeatures.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Cantrips (SummonerClassFeatures.SpecialQuality)"
@@ -2461,7 +2461,7 @@
         },
         {
           "name": "Chaos Totem",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Chaos Totem"
@@ -2475,7 +2475,7 @@
         },
         {
           "name": "Chaos Totem, Lesser",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Chaos Totem, Lesser"
@@ -2734,7 +2734,7 @@
         },
         {
           "name": "Come and Get Me",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Come and Get Me"
@@ -3637,7 +3637,7 @@
         },
         {
           "name": "Disruptive",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack",
           "standing": "unclassified",
           "display_name": "Disruptive"
@@ -4106,21 +4106,21 @@
         },
         {
           "name": "Elemental Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Elemental Rage"
         },
         {
           "name": "Elemental Rage, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Elemental Rage, Greater"
         },
         {
           "name": "Elemental Rage, Lesser",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Elemental Rage, Lesser"
@@ -4204,7 +4204,7 @@
         },
         {
           "name": "Energy Absorption",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
           "standing": "unclassified",
           "display_name": "Energy Absorption"
@@ -4218,7 +4218,7 @@
         },
         {
           "name": "Energy Eruption",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Energy Eruption"
@@ -4239,7 +4239,7 @@
         },
         {
           "name": "Energy Resistance, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Energy Resistance, Greater"
@@ -4897,14 +4897,14 @@
         },
         {
           "name": "Ferocious Mount",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Ferocious Mount"
         },
         {
           "name": "Ferocious Mount, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Ferocious Mount, Greater"
@@ -4925,14 +4925,14 @@
         },
         {
           "name": "Ferocious Trample",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Ferocious Trample"
         },
         {
           "name": "Ferocious Trample, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Ferocious Trample, Greater"
@@ -4967,14 +4967,14 @@
         },
         {
           "name": "Fiend Totem",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Fiend Totem"
         },
         {
           "name": "Fiend Totem, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Fiend Totem, Greater"
@@ -5142,7 +5142,7 @@
         },
         {
           "name": "Flesh Wound",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Flesh Wound"
@@ -5492,7 +5492,7 @@
         },
         {
           "name": "Gate",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SummonerClassFeatures.SpecialQuality.SpellLike.Gate",
           "standing": "origin",
           "display_name": "Gate"
@@ -5590,7 +5590,7 @@
         },
         {
           "name": "Good for What Ails You",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Good for What Ails You"
@@ -5786,7 +5786,7 @@
         },
         {
           "name": "Greater Shield Ally",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SummonerClassFeatures.SpecialQuality.Supernatural.Greater Shield Ally",
           "standing": "unclassified",
           "display_name": "Greater Shield Ally"
@@ -5821,7 +5821,7 @@
         },
         {
           "name": "Ground Breaker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Ground Breaker"
@@ -6248,28 +6248,28 @@
         },
         {
           "name": "Hurling",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Hurling"
         },
         {
           "name": "Hurling Charge",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Hurling Charge"
         },
         {
           "name": "Hurling, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Hurling, Greater"
         },
         {
           "name": "Hurling, Lesser",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Hurling, Lesser"
@@ -6682,7 +6682,7 @@
         },
         {
           "name": "Inspire Ferocity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Inspire Ferocity"
@@ -7123,7 +7123,7 @@
         },
         {
           "name": "Knockdown",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Knockdown"
@@ -7263,7 +7263,7 @@
         },
         {
           "name": "Life Bond",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SummonerClassFeatures.SpecialQuality.Supernatural.Life Bond",
           "standing": "unclassified",
           "display_name": "Life Bond"
@@ -7291,7 +7291,7 @@
         },
         {
           "name": "Life Link",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SummonerClassFeatures.SpecialQuality.Supernatural.Life Link",
           "standing": "unclassified",
           "display_name": "Life Link (SummonerClassFeatures.SpecialQuality.Supernatural.Life Link)"
@@ -8992,14 +8992,14 @@
         },
         {
           "name": "Overbearing Advance",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Overbearing Advance"
         },
         {
           "name": "Overbearing Onslaught",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Overbearing Onslaught"
@@ -11008,7 +11008,7 @@
         },
         {
           "name": "Smasher",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Smasher"
@@ -11372,7 +11372,7 @@
         },
         {
           "name": "Spellbreaker",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack",
           "standing": "unclassified",
           "display_name": "Spellbreaker"
@@ -11428,28 +11428,28 @@
         },
         {
           "name": "Spirit Steed",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Spirit Steed"
         },
         {
           "name": "Spirit Totem",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Spirit Totem"
         },
         {
           "name": "Spirit Totem, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Spirit Totem, Greater"
         },
         {
           "name": "Spirit Totem, Lesser",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Spirit Totem, Lesser"
@@ -12821,7 +12821,7 @@
         },
         {
           "name": "Transposition",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "SummonerClassFeatures.SpecialQuality.Supernatural.Transposition",
           "standing": "unclassified",
           "display_name": "Transposition"
@@ -14242,7 +14242,7 @@
         },
         {
           "name": "Witch Hunter",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "ClassFeatures.BarbarianClassFeatures.RagePower.SpecialAttack.Extraordinary",
           "standing": "unclassified",
           "display_name": "Witch Hunter"

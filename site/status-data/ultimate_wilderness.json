@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 0,
+      "done": 11,
       "partial": 0,
-      "not_started": 695,
+      "not_started": 684,
       "denominator": 695,
-      "pct": 0.0,
+      "pct": 1.6,
       "excluded_from_percentage": 171,
       "standing_breakdown": {
         "unclassified": 171,
@@ -550,7 +550,7 @@
         },
         {
           "name": "Autumn Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural.SeasonRagePower",
           "standing": "origin",
           "display_name": "Autumn Rage"
@@ -1005,7 +1005,7 @@
         },
         {
           "name": "Contagious Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Contagious Rage"
@@ -1236,7 +1236,7 @@
         },
         {
           "name": "Dissipating Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Dissipating Rage"
@@ -1362,14 +1362,14 @@
         },
         {
           "name": "Eclipsing Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Eclipsing Rage"
         },
         {
           "name": "Eclipsing Rage, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Eclipsing Rage, Greater"
@@ -2867,7 +2867,7 @@
         },
         {
           "name": "Lizard Stride",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Lizard Stride"
@@ -3525,7 +3525,7 @@
         },
         {
           "name": "Pack Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Pack Rage"
@@ -4519,7 +4519,7 @@
         },
         {
           "name": "Spring Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural.SeasonRagePower",
           "standing": "origin",
           "display_name": "Spring Rage"
@@ -5296,14 +5296,14 @@
         },
         {
           "name": "Tyrant Totem",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Tyrant Totem"
         },
         {
           "name": "Tyrant Totem, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural",
           "standing": "origin",
           "display_name": "Tyrant Totem, Greater"
@@ -5926,7 +5926,7 @@
         },
         {
           "name": "Winter Rage",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "BarbarianClassFeatures.ClassFeatures.RagePower.SpecialQuality.Supernatural.SeasonRagePower",
           "standing": "origin",
           "display_name": "Winter Rage"

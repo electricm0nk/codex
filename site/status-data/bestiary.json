@@ -1495,11 +1495,11 @@
     {
       "kind": "monster_ability",
       "label": "Monster Abilities",
-      "done": 237,
-      "partial": 41,
+      "done": 241,
+      "partial": 37,
       "not_started": 117,
       "denominator": 395,
-      "pct": 60.0,
+      "pct": 61.0,
       "excluded_from_percentage": 329,
       "standing_breakdown": {
         "origin": 395,
@@ -2229,7 +2229,7 @@
         },
         {
           "name": "Change Shape",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural",
           "standing": "unclassified",
           "display_name": "Change Shape (SpecialQuality.Supernatural) #5"
@@ -2390,7 +2390,7 @@
         },
         {
           "name": "Cold Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Cold Aura (SpecialAttack.Supernatural.Aura)"
@@ -3041,7 +3041,7 @@
         },
         {
           "name": "Expert Climber",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "origin",
           "display_name": "Expert Climber"
@@ -3293,7 +3293,7 @@
         },
         {
           "name": "Fire Aura",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Supernatural.Aura",
           "standing": "origin",
           "display_name": "Fire Aura (SpecialQuality.Supernatural.Aura) #2"
@@ -3454,14 +3454,14 @@
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption) #3"
         },
         {
           "name": "Grab",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialAttack.Extraordinary.AttackOption",
           "standing": "unclassified",
           "display_name": "Grab (SpecialAttack.Extraordinary.AttackOption) #4"
@@ -3496,7 +3496,7 @@
         },
         {
           "name": "Graceful Flight",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary.ModifyMovement",
           "standing": "origin",
           "display_name": "Graceful Flight"
@@ -6247,7 +6247,7 @@
         },
         {
           "name": "Undersized Weapons",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "SpecialQuality.Extraordinary",
           "standing": "unclassified",
           "display_name": "Undersized Weapons (SpecialQuality.Extraordinary)"

@@ -5,11 +5,11 @@
     {
       "kind": "class_feature",
       "label": "Class Features",
-      "done": 17,
+      "done": 40,
       "partial": 4,
-      "not_started": 1219,
+      "not_started": 1196,
       "denominator": 1240,
-      "pct": 1.4,
+      "pct": 3.2,
       "excluded_from_percentage": 1156,
       "standing_breakdown": {
         "origin": 1240,
@@ -109,7 +109,7 @@
         },
         {
           "name": "Abyssal Blood",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialQuality.Supernatural.BloodRageMiddle",
           "standing": "origin",
           "display_name": "Abyssal Blood"
@@ -123,7 +123,7 @@
         },
         {
           "name": "Abyssal Blood, Lesser",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialQuality.Supernatural.BloodRageLesser",
           "standing": "origin",
           "display_name": "Abyssal Blood, Lesser"
@@ -1250,7 +1250,7 @@
         },
         {
           "name": "Battle Roar",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.Skald Class Feature.Rage Power.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Battle Roar"
@@ -2426,14 +2426,14 @@
         },
         {
           "name": "Celestial Blood, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialQuality.Supernatural.BloodRageGreater",
           "standing": "origin",
           "display_name": "Celestial Blood, Greater"
         },
         {
           "name": "Celestial Blood, Lesser",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialQuality.Supernatural.BloodRageLesser",
           "standing": "origin",
           "display_name": "Celestial Blood, Lesser"
@@ -4771,7 +4771,7 @@
         },
         {
           "name": "Draconic Blood, Lesser",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialQuality.Supernatural.BloodRageLesser",
           "standing": "origin",
           "display_name": "Draconic Blood, Lesser"
@@ -6185,14 +6185,14 @@
         },
         {
           "name": "Fey Blood",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialQuality.Supernatural.BloodRageMiddle",
           "standing": "origin",
           "display_name": "Fey Blood"
         },
         {
           "name": "Fey Blood, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialQuality.Supernatural.BloodRageGreater",
           "standing": "origin",
           "display_name": "Fey Blood, Greater"
@@ -6248,7 +6248,7 @@
         },
         {
           "name": "Fierce Fortitude",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.Skald Class Feature.Rage Power.RagePower.SpecialAttack.Extraordinary",
           "standing": "origin",
           "display_name": "Fierce Fortitude"
@@ -8397,21 +8397,21 @@
         },
         {
           "name": "Infernal Blood",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialQuality.Supernatural.BloodRageMiddle",
           "standing": "origin",
           "display_name": "Infernal Blood"
         },
         {
           "name": "Infernal Blood, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialQuality.Supernatural.BloodRageGreater",
           "standing": "origin",
           "display_name": "Infernal Blood, Greater"
         },
         {
           "name": "Infernal Blood, Lesser",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialQuality.Supernatural.BloodRageLesser",
           "standing": "origin",
           "display_name": "Infernal Blood, Lesser"
@@ -9153,49 +9153,49 @@
         },
         {
           "name": "Linnorm Death Curse (Cairn)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.Skald Class Feature.Rage Power.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Linnorm Death Curse (Cairn)"
         },
         {
           "name": "Linnorm Death Curse (Crag)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.Skald Class Feature.Rage Power.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Linnorm Death Curse (Crag)"
         },
         {
           "name": "Linnorm Death Curse (Fjord)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.Skald Class Feature.Rage Power.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Linnorm Death Curse (Fjord)"
         },
         {
           "name": "Linnorm Death Curse (Ice)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.Skald Class Feature.Rage Power.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Linnorm Death Curse (Ice)"
         },
         {
           "name": "Linnorm Death Curse (Taiga)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.Skald Class Feature.Rage Power.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Linnorm Death Curse (Taiga)"
         },
         {
           "name": "Linnorm Death Curse (Tarn)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.Skald Class Feature.Rage Power.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Linnorm Death Curse (Tarn)"
         },
         {
           "name": "Linnorm Death Curse (Tor)",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.Skald Class Feature.Rage Power.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Linnorm Death Curse (Tor)"
@@ -11911,7 +11911,7 @@
         },
         {
           "name": "Raging Flier",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.Skald Class Feature.Rage Power.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Raging Flier"
@@ -15488,7 +15488,7 @@
         },
         {
           "name": "Ultimate Clarity",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Barbarian Class Feature.Skald Class Feature.Rage Power.RagePower.SpecialAttack.Supernatural",
           "standing": "origin",
           "display_name": "Ultimate Clarity"
@@ -15537,14 +15537,14 @@
         },
         {
           "name": "Undead Blood",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialQuality.Supernatural.BloodRageMiddle",
           "standing": "origin",
           "display_name": "Undead Blood"
         },
         {
           "name": "Undead Blood, Greater",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RagePower.SpecialQuality.Supernatural.BloodRageGreater",
           "standing": "origin",
           "display_name": "Undead Blood, Greater"

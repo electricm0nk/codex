@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-20T15:44:56Z",
+  "generated_at": "2026-08-20T20:47:45Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38372,
-  "proven_units": 6202,
+  "proven_units": 6310,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -90,19 +90,19 @@
     },
     "class_feature": {
       "units": 15439,
-      "proven": 225,
+      "proven": 341,
       "by_status": {
         "unknown": 3058,
-        "not-ingested": 11158,
-        "deferred-with-reason": 41,
+        "not-ingested": 11043,
+        "deferred-with-reason": 40,
         "grounded": 91,
-        "text-complete": 134,
+        "text-complete": 250,
         "fixture-verified": 12,
         "literal-verified": 17,
         "not-started": 928
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2339653,
+      "bytes": 2339761,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -116,10 +116,10 @@
         },
         "classfeatures": {
           "label": "Class Features",
-          "done": 14,
+          "done": 55,
           "held": 1,
           "in-progress": 0,
-          "not-started": 1232,
+          "not-started": 1191,
           "unmeasurable": 74,
           "deferred": 1
         },
@@ -269,10 +269,10 @@
         },
         "barbarianclassfeatures": {
           "label": "Barbarian Class Features",
-          "done": 7,
+          "done": 43,
           "held": 1,
           "in-progress": 0,
-          "not-started": 124,
+          "not-started": 88,
           "unmeasurable": 37,
           "deferred": 0
         },
@@ -575,10 +575,10 @@
         },
         "ragepower": {
           "label": "Rage Power",
-          "done": 0,
+          "done": 33,
           "held": 0,
           "in-progress": 0,
-          "not-started": 45,
+          "not-started": 12,
           "unmeasurable": 8,
           "deferred": 0
         },
@@ -683,12 +683,12 @@
         },
         "summonerclassfeatures": {
           "label": "Summoner Class Features",
-          "done": 0,
+          "done": 6,
           "held": 0,
           "in-progress": 0,
-          "not-started": 34,
+          "not-started": 29,
           "unmeasurable": 10,
-          "deferred": 1
+          "deferred": 0
         },
         "marksmanclassfeatures": {
           "label": "Marksman Class Features",
@@ -7354,22 +7354,22 @@
     },
     "monster_ability": {
       "units": 2942,
-      "proven": 1823,
+      "proven": 1815,
       "by_status": {
         "not-ingested": 879,
         "text-complete": 1131,
-        "grounded": 692,
-        "literal-verified": 140,
+        "grounded": 684,
+        "literal-verified": 148,
         "fixture-verified": 100
       },
       "shard": "PF1e-units-monster_ability.json",
-      "bytes": 355217,
+      "bytes": 355281,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
           "label": "Special Qualities",
-          "done": 839,
-          "held": 152,
+          "done": 844,
+          "held": 147,
           "in-progress": 0,
           "not-started": 630,
           "unmeasurable": 0,
@@ -7377,8 +7377,8 @@
         },
         "specialattack": {
           "label": "Special Attacks",
-          "done": 942,
-          "held": 129,
+          "done": 945,
+          "held": 126,
           "in-progress": 0,
           "not-started": 222,
           "unmeasurable": 0,
