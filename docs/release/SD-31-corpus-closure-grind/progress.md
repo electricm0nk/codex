@@ -32261,3 +32261,217 @@ nothing. Discarded (`git checkout -- docs/work-inventory.json`) per the wave rul
 
 `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w22-monster` deleted at cycle close. No other scratch
 directory used. `sd31/racetrait4-SD31-E6-F4-005` -- untouched, not read, not gated.
+
+## `SD31-W22-INTEGRATE-001` — wave 22 integration cycle (2026-08-20)
+
+**Branch:** `tranche/11`, base `353293b3c` (confirmed: `git log --oneline -1` matched the dispatched
+tip; `ls docs data scripts schemas` all present, tree was clean at start). **Oracle pin:**
+`PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6` (`scripts/fetch-pcgen-oracle.sh --check`
+→ OK). **Own `CARGO_TARGET_DIR`s, all deleted at cycle close:**
+`/home/ubuntu/cargo-targets/w22-integrator-grantparser`, `/home/ubuntu/cargo-targets/w22-integrator-poolcatalog`,
+`/home/ubuntu/cargo-targets/w22-integrate-build`, `/home/ubuntu/cargo-targets/w22-integrate-desktop`,
+`/home/ubuntu/cargo-targets/w22-integrate-regen`, `/home/ubuntu/cargo-targets/w22-integrate-desktop-test`.
+Six lane results, three adversarial-review passes returning eight lane verdicts (one GAMED, two
+PARTIAL-with-corrected-units, three PARTIAL/SOUND-as-received, plus two investigation-only lanes).
+
+**HEADLINE, answering the standing question directly, stated first per instruction 9: after THREE
+prior failed attempts (wave 19's misdiagnosis, wave 20 GAMED, wave 21 GAMED), does `class_feature`
+now have a trustworthy grant-fact source? NO — not fully, but materially closer than any prior
+attempt, and for the first time nothing shipped that a hand spot-check contradicts.** The wave-22
+grant-parser-v2 lane (`worktree-wf_247631fc-31a-1`) was reviewed PARTIAL, not GAMED: it banks 0
+board units (no consumer exists yet — `pilot_compute`/`wiring_class.rs` both untouched, confirmed
+by `git diff --stat`), and I independently re-derived its logic in Python and reproduced its shipped
+output exactly (3,506 pre-fix facts, 0 value differences). But the reviewer found 5 real remaining
+defects, and I fixed 4 of them before merge (§1) — a fabricated `TYPE.PC`-as-a-class defect, a
+silently-dropped-negated-gate defect, a many-to-many dedup collapse, and a stale-output bug I found
+myself while verifying the first fix. I then independently spot-checked 8 facts by hand against the
+pinned oracle across 6 different actually-shipped books (not the narrow Pathfinder Unchained slice
+the lane's own tests covered) and all 8 were correct; 5 of those are now permanent oracle-gated
+regression tests. **Honest coverage with refusals counted, post-fix: 3,483 facts resolved (3,305
+with a real corpus record to attach to), 2,969 grant tokens explicitly REFUSED rather than
+defaulted** (breakdown in §1). **What remains wrong, unfixed, and logged (`OPEN-ISSUES.md` row
+339):** one genuine 1-record PCGen oracle typo (`Kinesticist`/`Kineticist`) this parser cannot
+structurally detect, and — the more consequential one — archetype-conditional grants shipping as
+unconditional class facts with NO cross-book conflict detection, confirmed live (`Druid ~ Wild
+Shape` ships contradictory levels 4 and 6 from two different books, both shipped, neither
+reconciled). **A future lane consuming this data for real grounding MUST build the cross-book
+conflict-detection pass first** — that is what the next attempt must do differently; a fourth
+rebuild-from-scratch is not needed, a bounded follow-up is.
+
+### 1. Merge decisions
+
+| lane | branch | reviewer verdict | integrator action |
+|---|---|---|---|
+| `class-feature-grant-parser-rebuild` | `worktree-wf_247631fc-31a-1` (`d2ebce02f`) | PARTIAL, 0 units, 5 confirmed defects | **MERGED** + integrator fix commit (`70f3b827b`) fixing 4 of 5 defects, adding 5 new oracle-gated tests — see headline above and `OPEN-ISSUES.md` row 339 |
+| `option-pool class_feature reference catalog` | `worktree-wf_247631fc-31a-2` (`fc1be2e44`) | PARTIAL, corrected_units 79 (of 88) | **MERGED** + integrator fix commit (`ba61c11b8`) withdrawing the 9 non-prose-only units, fixing a React duplicate key and leaked footnote markers — see §2 |
+| `class_feature anti-fabrication gate reconciliation` | `worktree-wf_247631fc-31a-3` (`bf5a82c63`) | **GAMED**, 0 units | **NOT MERGED** — two false load-bearing claims shipped as authoritative doc-comment prose; `OPEN-ISSUES.md` row 338 restates the correct facts |
+| `monster_ability + monster` (investigation) | `worktree-wf_247631fc-31a-5` (`e7d5ed89e`) | PARTIAL (findings-only; two citation/count errors confirmed) | **MERGED** (docs-only); `OPEN-ISSUES.md` row 341 corrects the citation errors |
+| `spell + equipment_modifier` | `worktree-wf_247631fc-31a-6` (`f68e8fd5d`) | PARTIAL (real fix; two process defects) | **MERGED** as-is; `OPEN-ISSUES.md` row 342 supplies the missing receipt trail and ratifies the row-43 decision the lane made unilaterally |
+| `race_trait` | `worktree-wf_247631fc-31a-4` (`0ab22100a`) | SOUND, 0 board units, 1 reclassification | **MERGED**, clean |
+
+Merge order: `race_trait` → `class-feature-grant-parser-rebuild` → `option-pool ... catalog` →
+`monster_ability + monster` → `spell + equipment_modifier`, each `--no-ff`. Two real merge
+conflicts, both in GENERATED files (`docs/work-inventory.json`, `site/dashboard/*`, `site/status-
+data*` — resolved `--ours` at merge time, since §3's guarded regen is the only copy this receipt
+trusts) plus one in `docs/release/SD-31-corpus-closure-grind/progress.md` (both sides' own new
+receipt sections, at the same anchor point — resolved by keeping both, concatenated). One
+duplicate-row-number collision in `OPEN-ISSUES.md` (the option-pools lane's own row 338 auto-merged
+at a different position than this cycle's own row 338) — resolved by deleting the lane's
+un-reviewed row in favor of this cycle's corrected version (row 340). **One real process defect,
+found and fixed by the integrator, not by any lane or reviewer: my own edits to `worktree-
+wf_247631fc-31a-2`'s `class_feature_pool_catalog.rs` (the 9-unit withdrawal fix) were made directly
+in the worktree but never `git commit`-ed before the branch was merged — the first guarded regen
+(§3, pre-fix) showed +88, not the expected +79, which is what caught the miss. Committed
+(`ba61c11b8`) and merged (`b76d...` merge commit) before the regen was re-run; the corrected +79
+is what §3 reports below.** `grant-parser-v2`'s merge and its fix commit were confirmed already
+present in the tree by direct `grep` before trusting the first regen, so no equivalent miss existed
+there.
+
+**BUILT THE MERGED TREE BEFORE GATING, per instruction 2**: `cargo build --locked -j8` (root) and
+`cargo build --locked -j8` (`apps/desktop/src-tauri`) both clean, 0 errors, before any test or
+regen command ran.
+
+### 2. `option-pool class_feature reference catalog` — 79 of 88 units stand
+
+Adversarial review confirmed 9 of the lane's 88 originally-banked records carry a real `raw_tokens`
+engine-effect entry (`ABILITY`/`CSKILL`/`SELECT`) alongside a clean-rendering description — Decision
+7 conditions 1/2 fail even though condition 3 passes, and the lane's render-and-refuse gate only
+catches an unresolved `%N` inside the prose text itself, never a wholly separate mechanical token
+the description never mentions. Fixed: `load_pool_catalog` now refuses any record whose
+`raw_tokens` carries `ABILITY`/`CSKILL`/`SELECT`/`AUTO`/`SAB`/`BONUS`/`DEFINE`/`ADD`/`SPELLS`/
+`DR`/`SR`. Verified the 9 named records (`Finesse Rogue`, `Improved Evasion`, `Skill Mastery`,
+`Combat Swipe`, `Strong Impression`, `Survivalist`, `Firearm Training`, `Getaway Artist`, `Thrill of
+the Chase`) are all back at `not-ingested` in the regenerated `docs/work-inventory.json` (§3) — a
+direct id-by-id check, not inferred. Also fixed: the React duplicate-key hazard (`Rogue Talent ~
+Nimble Climber` exists as two different records across two books, both entering the catalog under
+one `key`) and leaked PCGen footnote markers (`**`) reaching the shipped `name` field. `tsc
+--noEmit` clean; 8/8 module tests green post-fix, including a new regression test asserting all 9
+withdrawn keys stay absent from the catalog.
+
+### 3. Guarded regen (fresh isolated `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w22-integrate-regen`)
+
+Run twice — once immediately after the last merge (caught the uncommitted-fix miss above, §1), and
+again after the fix landed. Both runs' `corpus_literal_sweep` were CLEAN and byte-identical to the
+wave-21 baseline: **26,368 records examined of 26,802 read, 254,626 tokens compared, 0 findings.**
+Both runs' `derived_evaluator_fixture_check`: **1,821 units cleared over 2,561 fixture rows, 0
+failed, 0 not-ingested** — unchanged, since no lane this wave touched `data/corpus/`.
+
+`v06_work_inventory` (second, corrected run), diffed by id against the pre-wave-22 committed
+`docs/work-inventory.json`:
+
+```
+ids added: 0   ids removed: 0   denominator: 38,372 (unchanged, frozen)
+newly done: 79   newly undone (regression): 0
+newly-done evidence: 100% class_feature_pool_catalog_serves_a_rendered_description
+```
+
+**Board: 13,174/38,372 (34.3323%) → 13,253/38,372 (34.5382%), +79, denominator unchanged.**
+Every unit of movement traced to one cause (§2's option-pool catalog, post-withdrawal). Every
+other lane's own claim of 0 board movement (grant-parser-v2, monster_ability/monster,
+spell/equipment_modifier, race_trait) independently reconfirmed by the same before/after id-diff —
+0 ids changed status outside the 79 named above.
+
+**RECLASSIFICATION, reported separately from doneness movement per standing instruction:**
+`race_trait`'s 1-unit evidence reclassification (`advanced_class_guide:race_trait:
+half_elf_arcanist_caster_level`, `race_trait_race_not_modelled` → `race_trait_absent_from_
+race_traits`, status unchanged at `not-ingested`) does not appear in the diff above because
+`doneness_verdict()` keys only on `(wiring_class, status, kind)`, never `evidence` — confirmed by
+direct code read, not assumed.
+
+By kind, after:
+
+| kind | done (before) | done (after) | delta |
+|---|---|---|---|
+| class | 28 | 28 | +0 |
+| class_feature | 134 (0.8680%) | **213 (1.3796%)** | **+79** |
+| companion | 871 | 871 | +0 |
+| equipment | 5,313 | 5,313 | +0 |
+| equipment_modifier | 516 | 516 | +0 |
+| feat | 1,459 | 1,459 | +0 |
+| monster | 989 | 989 | +0 |
+| monster_ability | 1,737 | 1,737 | +0 |
+| race | 34 | 34 | +0 |
+| race_trait | 520 | 520 | +0 |
+| spell | 1,573 | 1,573 | +0 |
+| **TOTAL** | **13,174 (34.3323%)** | **13,253 (34.5382%)** | **+79** |
+
+`core_essentials` reconfirmed absent with 0 units (`json.load` filter, direct count = 0).
+
+### 4. Public feeds (loop-instruction override 10)
+
+`docs/work-inventory.json` was touched this cycle, so `./scripts/publish-site-dashboard.sh` (real
+publish, not `--check`) was run and its output committed — see §5/verify gate for the
+`site-dashboard-check`/`site-dashboard-pi-gate`/`site-public-status-check`/`site-public-status-
+pi-gate` stage results.
+
+### 5. Full test suites (before the formal gate, per instruction 2's "expect a merge-only break")
+
+- `cargo build --locked -j8` (root): clean, 0 errors.
+- `cargo build --locked -j8` (`apps/desktop/src-tauri`): clean, 0 errors.
+- `cargo test --locked --lib -j8` (root, isolated dir): early check 2,193 passed; final full-suite
+  run (below) reconfirms 2,195 passed / 0 failed / 13 ignored — both comfortably above the recorded
+  floor (`BASELINE_ROOT_LIB_TESTS=2166`).
+- `cargo test --locked -j8 --no-fail-fast` (root, full workspace, fresh isolated dir): **578 test
+  binaries (577 `Running` lines + 1 doctest summary), 7,298 passed, 0 failed, 66 ignored, exit 0**
+  — above every recorded floor (`BASELINE_ROOT_FULL_TESTS=7263`, `BASELINE_ROOT_TEST_BINARIES=575`).
+- `cargo test --locked -j4` (`apps/desktop/src-tauri`, own isolated dir, tested EXPLICITLY per
+  instruction 7): **493 passed, 0 failed** — above `BASELINE_DESKTOP_TESTS=490` (+3, the new
+  `class_feature_pool_picker.rs` tests).
+- `npm run typecheck` (`apps/desktop`): clean, 0 errors.
+- `npm run test` (`apps/desktop`): **100/100 test files passed** — matches `BASELINE_FRONTEND_TEST_
+  FILES=100`.
+
+### 6. Full gate: `./scripts/verify.sh -j 8`
+
+
+Run 1 (before the real site publish): **FAILED at `site-dashboard-check`/`site-public-status-
+check`** (33/34) — expected, per instruction 2's own warning that every wave since 15 hits a
+merge-only break; killed early rather than letting the remaining stages burn time re-confirming
+already-independently-verified stages. Fixed by running `scripts/publish-site-dashboard.sh` for
+real (§4) and committing the refresh.
+
+Run 2 (after the site publish): **FAILED at `clippy`** (33/34) — root: 53 warnings, ceiling 50.
+All 3 new warnings traced by direct log inspection to this wave's two new files
+(`class_feature_grants.rs`'s `Gate::preclass` `type_complexity` plus a collapsible-if in
+`parse_gate`'s `PREVARGTEQ` arm; `class_feature_pool_catalog.rs`'s test-only
+`unnecessary_get_then_check`) — fixed (`1b94c4a83`), root clippy reconfirmed back at exactly 50/50
+by direct `cargo clippy` re-run before re-gating.
+
+Run 3 (after the clippy fix): **PASS, 34/34, exit 0, logs `/tmp/codex-verify-Ff5FGz`** -- `desktop` (493, tested EXPLICITLY as its own crate per instruction 7), `reach` (30), `corpus-sweep` (26,368 examined, 0 findings, byte-identical to the sweep already committed), both PI gates (13 dashboard files/1,612 declared-PI names, 0 leaked), `clippy` (root:50 desktop:7, exactly at ceiling), `class-dump` (31/31).
+
+### 7. What this cycle could NOT do
+
+- Could not build the cross-book conflict-detection pass the grant parser needs before any future
+  lane can safely consume it for real grounding (§ headline) — scoped as a bounded follow-up, not
+  attempted mid-merge; a new mechanism needs its own test suite and oracle verification, not a
+  rushed addition to an integration cycle already carrying five other lanes' fixes.
+- Could not resolve the still-open `sd13_*` allowlist-widening ruling question (`OPEN-ISSUES.md`
+  rows 330/338) — the GAMED lane's attempt to answer it unilaterally is exactly why it was rejected;
+  this cycle restated the correct facts but did not itself rule.
+- Did not attempt to widen `REGISTERED_POOL_GROUPS` beyond Rogue Talent (the option-pool catalog's
+  next natural step) — each of the other 26 pools needs its own per-pool corpus spot-check first,
+  per the lane's own dispatch instruction and this cycle's own caution after finding 9 units needed
+  withdrawal even within Rogue Talent's own 130-record slice.
+- Did not delete the 4 remote-tracking `origin/site-publish/*` branches named by instruction 11 —
+  no LOCAL branches of that name exist in this checkout to remove, and `scripts/reclaim.sh`'s own
+  `branches` category is scoped to local branches merged into `develop`, not remote refs; deleting a
+  remote branch on `origin` is a real, higher-risk shared-state action this cycle declined to take
+  unprompted. Flagged for the operator or a dedicated housekeeping cycle.
+
+### 8. DoD-8, on-screen verification
+
+Reused, not re-run: the option-pool catalog lane's own DoD-8 screenshots
+(`docs/release/SD-31-corpus-closure-grind/artifacts/SD31-W22-POOLMEMBER-001/dod8-*.png`) already
+demonstrate the "Available Rogue Talents (reference)" section rendering real prose on a live Rogue
+character's Class Features tab. The integrator's own withdrawal fix (9 units removed) was verified
+by direct id-lookup in the regenerated `docs/work-inventory.json` (§3), not by a fresh screenshot —
+the mechanism itself was already proven on-screen; this cycle changed which records reach it, not
+the rendering path.
+
+### 9. Cleanup
+
+All six `CARGO_TARGET_DIR`s used this cycle deleted at close (listed at the top of this receipt).
+Wave-22 worktrees (`worktree-wf_247631fc-31a-{1..9}`) and their branches removed, including the
+rejected `-3` (anti-fabrication-gate) branch — its content stays recoverable from
+`bf5a82c63` in reflog/`OPEN-ISSUES.md`'s own citation, per the standing "log why, don't merge"
+convention. `sd31/racetrait4-SD31-E6-F4-005` — untouched, not read, not gated.

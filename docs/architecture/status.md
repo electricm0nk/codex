@@ -805,6 +805,87 @@ disputed as an outcome).
   requires an actually-observed consumer delta, logged for an explicit ruling (`OPEN-ISSUES.md` row
   335) rather than either quietly banked as-is or unilaterally (and inconsistently) demoted.
 
+## Corpus coverage, corpus-wide — re-derived 2026-08-20 (SD-31 wave 22, integration cycle)
+
+**These supersede the wave-21 snapshot above.** Re-derived at this wave's integration tip on
+`tranche/11` after merging five lane branches (`class-feature-grant-parser-rebuild`, `option-pool
+class_feature reference catalog`, `monster_ability + monster` investigation, `spell +
+equipment_modifier`, `race_trait`), rejecting one (`class_feature anti-fabrication gate
+reconciliation`, GAMED — see below), building the merged tree, fixing every confirmed
+adversarial-review finding reachable within this cycle's scope, and re-running the guarded regen
+pipeline TWICE in a fresh isolated `CARGO_TARGET_DIR` (the first run caught an integrator process
+defect — a fix made directly in a worktree but never `git commit`-ed before merging — corrected
+before the second, trusted run). Oracle pin `PCGEN_ORACLE_SHA=7f818006e371188e5717fd18d74d18a420747fc6`.
+
+**This wave's own central question, answered first: after THREE prior failed attempts (wave 19's
+misdiagnosis, wave 20 GAMED, wave 21 GAMED), does `class_feature` now have a trustworthy grant-fact
+source?** NO, not fully — but materially closer than any prior attempt. The wave-22
+`class-feature-grant-parser-rebuild` lane was reviewed PARTIAL, not GAMED: it banks 0 board units
+(no consumer exists — `pilot_compute`/`wiring_class.rs` both untouched), and this integration cycle
+independently spot-checked 8 facts by hand against the pinned oracle across 6 different
+actually-shipped books (not just Pathfinder Unchained, the narrow slice the lane's own tests
+covered) — all 8 correct, 5 now permanent oracle-gated regression tests. Fixed 4 of 5 reviewer-
+confirmed defects before merge (a fabricated `TYPE.PC`-as-a-class defect, a silently-dropped-
+negated-gate defect, a many-to-many dedup collapse that lost real multi-class grants, and a stale-
+output bug the integrator found while verifying the first fix). **Honest coverage with refusals
+counted: 3,483 facts resolved (3,305 with a real corpus record to attach to), 2,969 grant tokens
+explicitly REFUSED rather than defaulted.** Two residuals remain unfixed and logged (`OPEN-
+ISSUES.md` row 339): a single genuine PCGen oracle typo this parser cannot structurally catch, and
+— the consequential one — archetype-conditional grants shipping as unconditional class facts with
+NO cross-book conflict detection (confirmed: `Druid ~ Wild Shape` ships contradictory levels 4 and
+6 from two different books, both shipped, neither reconciled). `class_feature` moves from **134
+done of 15,439 (0.8679%)** to **213 done of 15,439 (1.3796%)** — the option-pool reference-catalog
+lane's contribution (below), not the grant parser's; the grant parser itself still bank 0.
+
+| quantity | value | how |
+|---|---:|---|
+| board units (in scope, `beginner_box` excluded) | **38,372** (unchanged — required this wave) | `docs/work-inventory.json`, replayed through `pf1e_dashboard_producer.doneness_verdict()` |
+| board `done` | **13,253 (34.5382 %)** | same replay; was 13,174 / 34.3323 % before this wave |
+| corpus literal sweep | 26,368 records examined, **0 findings** | `cargo run --locked --bin corpus_literal_sweep`; unchanged (no lane touched `data/corpus/` this wave) |
+| `derived` fixture coverage | **1,821 units cleared over 2,561 fixture rows**, 0 failed, 0 not ingested | `cargo run --locked --bin derived_evaluator_fixture_check`; unchanged |
+| `core_essentials` | **0 units**, confirmed absent | direct `python3` count over `docs/work-inventory.json` |
+
+All +79 traces to one cause: the `option-pool class_feature reference catalog` lane built, for ONE
+option pool (Rogue Talent, 130 corpus records), a browsable reference catalog serving every clean-
+rendering, prose-only member's description on the Character Sheet's Class Features tab — the same
+"browsable menu of every real option, shown whether or not selected" shape that already banked
++146 `race_trait` units under Decision 7's REFINED ruling. Adversarial review confirmed 9 of the
+lane's originally-banked 88 units carried a real `raw_tokens` engine-effect entry (not prose-only
+after all) and withdrew them; the integrator applied that withdrawal before merge, landing the
+corrected **+79**. Extending the same mechanism to the other 26 registered option pools is the
+next cycle's headline, each gated on its own per-pool corpus spot-check (`OPEN-ISSUES.md` row 340).
+
+**One reclassification, reported separately from doneness movement per standing instruction:** the
+`race_trait` lane fixed a hyphen/space matcher defect and reclassified 1 unit's evidence (`race_
+not_modelled` → `absent_from_race_traits`, status unchanged) — `doneness_verdict()` keys only on
+`(wiring_class, status, kind)`, never `evidence`, so this provably could not and did not move the
+board.
+
+### What wave 22's integration cycle changed in the architecture, not just in the counts
+
+* **A real player-facing defect was found and fixed outside the class_feature grind entirely.** 29
+  `core_rulebook` name-suffixed spell variants (`Planar Binding (Devils and Fiendish Creatures
+  Only)` and 28 siblings) shipped `level: 0` in the live-served spell catalog table — a genuine
+  6th-level spell showed "Level 0" on the real Spell Catalog screen and Character Sheet Add Spell
+  picker. Fixed by inheriting each variant's own base spell's level; independently re-verified
+  against the pinned oracle for all 29. Zero board effect by construction (the table is not corpus
+  JSON and is not read by the doneness computation) — a real fix the board cannot see.
+* **A GAMED verdict caught false doc-comment prose before it could mislead a future cycle.** The
+  `class_feature anti-fabrication gate reconciliation` lane's central claim — that all nine
+  anti-fabrication gates named in `OPEN-ISSUES.md` row 330 are already compatible with a generic
+  `class_feature.<class>.corpus_record.*` id "with zero weakening" — was refuted on two counts by
+  direct execution: the five `sd13_bard_level4..8` gates ARE closed allowlists that regress on any
+  new bard-namespaced id (exactly as wave 20 already demonstrated empirically), and the claimed
+  "no 0→1 LevelUpPlan transition exists" premise is false — `compute_monk_level_up_grants(&input,
+  0, 1)` returns 24 real grants. Not merged; the false prose never reached a shipped file.
+  `OPEN-ISSUES.md` row 338 restates the correct facts for the next lane.
+* **An integrator process defect was caught by its own consequence, not by inspection.** A fix made
+  directly in a worktree (the option-pool 9-unit withdrawal) was never `git commit`-ed before that
+  branch was merged into `tranche/11` — invisible until the first guarded regen produced +88
+  instead of the reviewer-corrected +79, which is what caught it. Committed and re-merged before
+  the trusted regen ran; a reminder that "the branch is merged" and "the fix is in the branch" are
+  two different facts that both need checking.
+
 ### Desktop app: character sheet and update actions
 
 | Item | Status | Where (re-verified) |

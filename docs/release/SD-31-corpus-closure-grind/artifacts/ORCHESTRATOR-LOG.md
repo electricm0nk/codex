@@ -1263,3 +1263,78 @@ just Pathfinder Unchained's own narrow 1% shape. Full accounting: `progress.md`
   hung the real-oracle test for 13+ minutes; killed and a fresh daemon completed the same test in
   under a minute, repeatably, for the rest of this cycle. Full detail: `progress.md`
   `SD31-W21-INTEGRATE-001` §8.
+
+## Board after wave 22 (`SD31-W22-INTEGRATE-001`, 2026-08-20)
+
+**HEADLINE: after THREE prior failed attempts (wave 19 misdiagnosis, wave 20 GAMED, wave 21 GAMED),
+`class_feature` still does not have a fully trustworthy grant-fact source — but wave 22's attempt
+is the first that is not rejected.** The rebuilt parser (`class-feature-grant-parser-rebuild`) was
+reviewed PARTIAL, not GAMED: 0 board units banked (no consumer exists), and this integration cycle
+independently spot-checked 8 facts by hand against the pinned oracle across 6 different actually-
+shipped books, all 8 correct. Fixed 4 of 5 reviewer-confirmed defects before merge. Honest coverage:
+**3,483 facts resolved (3,305 with a real corpus record), 2,969 refused.** Two residuals remain,
+logged and actionable (`OPEN-ISSUES.md` row 339) — a single-record oracle typo, and archetype-
+conditional grants shipping as unconditional facts with no cross-book conflict detection. The next
+attempt needs a bounded cross-book reconciliation pass, not another rebuild.
+
+| kind | total (wave 21) | total (wave 22) | done (wave 21) | done (wave 22) | delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 28 (15.1351%) | 28 (15.1351%) | +0 |
+| class_feature | 15,439 | 15,439 | 134 (0.8680%) | **213 (1.3796%)** | **+79** |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,313 (85.5831%) | 5,313 (85.5831%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 516 (32.6582%) | 516 (32.6582%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 989 (77.8740%) | 989 (77.8740%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,737 (59.0415%) | 1,737 (59.0415%) | +0 |
+| race | 95 | 95 | 34 (35.7895%) | 34 (35.7895%) | +0 |
+| race_trait | 3,504 | 3,504 | 520 (14.8402%) | 520 (14.8402%) | +0 |
+| spell | 2,843 | 2,843 | 1,573 (55.3289%) | 1,573 (55.3289%) | +0 |
+| **TOTAL** | **38,372** | **38,372** | **13,174 (34.3323%)** | **13,253 (34.5382%)** | **+79** |
+
+`+79` — one lane, one cause: `option-pool class_feature reference catalog` built a browsable
+reference catalog for the Rogue Talent option pool (130 corpus records), serving every clean-
+rendering, prose-only member's description on the Character Sheet, the same shape that already
+banked +146 `race_trait` units. Adversarial review withdrew 9 of the lane's originally-banked 88
+(real `raw_tokens` engine-effect tokens, not prose-only); the integrator applied that withdrawal
+before merge. `spell`'s 29-record CRB variant-level fix is real and player-facing but has zero board
+effect by construction (a live-served table, not corpus JSON). `race_trait`'s 1-unit evidence
+reclassification is reported separately — `doneness_verdict()` never reads `evidence`, so it
+provably could not move the board. Full per-lane accounting: `progress.md` `SD31-W22-INTEGRATE-001`
+§§1-6.
+
+**`class_feature anti-fabrication gate reconciliation`'s rejected branch is not in this table,
+anywhere, at any stage; nothing was ever merged from it.**
+
+**Wave-22 thesis verdict: PARTIAL PROGRESS, not refuted, not vindicated.** Unlike wave 20 (rejected
+for regressing an acceptance gate) and wave 21 (rejected because the DATA itself was wrong in the
+majority of non-trivial cases), wave 22's grant parser is the first of the three `class_feature`-
+grounding attempts whose shipped output survives an independent oracle spot-check. It still banks
+zero units, because nothing consumes it yet and two real defects remain (§ above). The honest
+near-term path: a bounded cross-book conflict-detection pass on the EXISTING parser, then a
+consumer-wiring lane — not a fourth from-scratch rebuild. Full accounting: `progress.md`
+`SD31-W22-INTEGRATE-001` headline, `OPEN-ISSUES.md` rows 338-339.
+
+### What wave 22's integration cycle changed in the architecture, not just in the counts
+
+* **A real player-facing defect was found and fixed entirely outside the `class_feature` grind.**
+  29 `core_rulebook` name-suffixed spell variants shipped `level: 0` in the live-served spell
+  catalog table — a genuine 6th-level spell showed "Level 0" on the real Spell Catalog screen.
+  Fixed and independently re-verified against the pinned oracle for all 29; zero board effect by
+  construction.
+* **A GAMED verdict caught false doc-comment prose before it could mislead a future cycle**, not
+  merely an untested claim. The rejected anti-fabrication-gate-reconciliation lane's central claim
+  — that all nine gates named in `OPEN-ISSUES.md` row 330 need "zero weakening" for a generic
+  `class_feature.<class>.corpus_record.*` id — was refuted by direct execution on two counts (the
+  five `sd13_bard_level4..8` gates ARE closed allowlists; the claimed "no 0→1 LevelUpPlan
+  transition" premise is false, refuted by calling the very function the false comment annotates).
+  Not merged; `OPEN-ISSUES.md` row 338 restates the correct facts.
+* **An integrator process defect was caught by its own consequence.** A fix made directly in a
+  worktree (the option-pool 9-unit withdrawal) was never committed before that branch was merged —
+  invisible until the first guarded regen produced +88 instead of the reviewer-corrected +79, which
+  is what caught it. Committed and re-merged before the trusted regen ran.
+* **A merge-only break, again exactly the shape every wave since 15 has hit.** Gate run 1 FAILED at
+  `site-dashboard-check`/`site-public-status-check` (the real site publish had not yet been run at
+  that point); root-lib/root-full/desktop/frontend had already been independently confirmed clean
+  via direct invocations before gate run 1 even started, so run 1 was killed early. Full detail:
+  `progress.md` `SD31-W22-INTEGRATE-001` §7.
