@@ -1362,7 +1362,8 @@ function EquipmentEffectsPanel(props: { effects: EquipmentEffectsDto | undefined
   if (!props.effects) {
     return null;
   }
-  const { armorClassDelta, armorCheckPenaltyTotal, maxDexCap, spellFailureChance, attackBonusDelta } = props.effects;
+  const { armorClassDelta, armorCheckPenaltyTotal, maxDexCap, spellFailureChance, attackBonusDelta, spellResistanceTotal } =
+    props.effects;
   return (
     <div style={{ ...panel, marginBottom: '1rem', padding: '0.75rem 1rem' }}>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.66rem', letterSpacing: '0.06em', margin: '0 0 0.6rem', textTransform: 'uppercase' }}>
@@ -1374,6 +1375,7 @@ function EquipmentEffectsPanel(props: { effects: EquipmentEffectsDto | undefined
         {maxDexCap !== undefined ? <StatTile label="Max Dex" value={maxDexCap} /> : null}
         {spellFailureChance !== undefined ? <StatTile label="Spell Failure" value={`${spellFailureChance}%`} /> : null}
         {attackBonusDelta !== undefined ? <StatTile label="Attack Bonus" value={fmt(attackBonusDelta)} /> : null}
+        {spellResistanceTotal !== undefined ? <StatTile label="Spell Resistance" value={spellResistanceTotal} /> : null}
       </div>
     </div>
   );

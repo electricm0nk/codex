@@ -3808,6 +3808,7 @@ fn equipment_key_is_wired(
         || item.skill_bonus.is_some()
         || item.ability_bonus.is_some()
         || item.weapon_enhancement_bonus.is_some()
+        || item.spell_resistance_bonus.is_some()
 }
 
 // ---------------------------------------------------------------------------
@@ -9771,6 +9772,19 @@ mod e14_harness_tests {
         }];
         let corpus = load_equipment_corpus(&roots);
         assert!(equipment_key_is_wired("Padded Armor (Base)", &corpus));
+    }
+
+    /// `SD31-W21-EQUIPMOD-001`: the armor-slot "Spell Resistance" special
+    /// ability family carries a real, unconditional `SR:<n>` magnitude
+    /// (Decision 7 REFINED's paradigm UNIVERSAL case) and no `BONUS:`
+    /// chain at all -- proves the probe's new `spell_resistance_bonus`
+    /// check is what promotes it, not any pre-existing field. Real
+    /// verbatim tokens copied from `core_rulebook/cr_equipmods.lst:343`.
+    #[test]
+    fn equipment_probe_promotes_a_real_spell_resistance_armor_special_ability() {
+        let text = "Spell Resistance 13\tFORMATCAT:FRONT\tNAMEOPT:NORMAL\tKEY:Special Ability ~ Spell Resistance / 13 ~ Armor\tTYPE:Armor.Bracer.ArmorLike\tPLUS:2\tVISIBLE:QUALIFY\tPREMULT:2,[PRETYPE:1,ArmorEnhancement],[PRETYPE:1,Armor,Bracer]\tSR:13\tSPROP:grants spell resistance 13\n";
+        let corpus = equipment_corpus_from(text);
+        assert!(equipment_key_is_wired("Special Ability ~ Spell Resistance / 13 ~ Armor", &corpus));
     }
 
     /// Negative (F3's anti-gaming binding): a real corpus record that

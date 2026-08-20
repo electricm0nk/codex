@@ -5,11 +5,11 @@
     {
       "kind": "equipment",
       "label": "Equipment",
-      "done": 1125,
-      "partial": 29,
+      "done": 1126,
+      "partial": 28,
       "not_started": 85,
       "denominator": 1239,
-      "pct": 90.8,
+      "pct": 90.9,
       "excluded_from_percentage": 185,
       "standing_breakdown": {
         "origin": 1239,
@@ -6878,7 +6878,7 @@
         },
         {
           "name": "Resplendent Robe of the Thespian",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "Magic.Wondrous.GreaterMajor.Robe",
           "standing": "origin",
           "display_name": "Resplendent Robe of the Thespian"

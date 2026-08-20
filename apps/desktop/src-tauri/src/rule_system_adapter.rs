@@ -320,6 +320,7 @@ mod tests {
                             max_dex: effect.max_dex,
                             spell_failure: effect.spell_failure,
                             armor_check_penalty: effect.armor_check_penalty,
+                            spell_resistance_bonus: effect.spell_resistance_bonus,
                         })
                         .collect(),
                     armor_class_delta: corpus_receipt.corpus_derived.equipment_effects.armor_class_delta,
@@ -336,6 +337,10 @@ mod tests {
                         .corpus_derived
                         .equipment_effects
                         .attack_bonus_delta,
+                    spell_resistance_total: corpus_receipt
+                        .corpus_derived
+                        .equipment_effects
+                        .spell_resistance_total,
                 },
                 encumbrance: map_encumbrance_dto(&corpus_receipt.corpus_derived.encumbrance),
                 unresolved_spell_ids: corpus_receipt.corpus_derived.unresolved_spell_ids.clone(),

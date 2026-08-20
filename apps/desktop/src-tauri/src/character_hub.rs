@@ -268,6 +268,14 @@ pub struct EquipmentEffectsDto {
     pub spell_failure_chance: Option<f32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub attack_bonus_delta: Option<i16>,
+    /// The HIGHEST `per_item[].spellResistanceBonus` among everything
+    /// equipped (`equipment_effects::EquipmentEffects.spell_resistance_
+    /// total`'s own doc comment: PF1's real rule, multiple SR sources
+    /// take the highest value, they do not stack). Same `skip_
+    /// serializing_if` discipline as `maxDexCap` above, for the same
+    /// reason.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub spell_resistance_total: Option<i16>,
 }
 
 /// One carried item's real corpus weight and price, for the Gear tab's
@@ -350,6 +358,12 @@ pub struct ResolvedEquipmentEffectDto {
     pub spell_failure: Option<f32>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub armor_check_penalty: Option<i16>,
+    /// This item's own armor-slot "Spell Resistance" special-ability
+    /// contribution (`equipment_effects::ResolvedEquipmentEffect.spell_
+    /// resistance_bonus`'s own doc comment). `None` for every item that
+    /// carries no literal-integer `SR:` token.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub spell_resistance_bonus: Option<i16>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -911,6 +925,7 @@ pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDe
                     max_dex: effect.max_dex,
                     spell_failure: effect.spell_failure,
                     armor_check_penalty: effect.armor_check_penalty,
+                    spell_resistance_bonus: effect.spell_resistance_bonus,
                 })
                 .collect(),
             armor_class_delta: section.equipment_effects.armor_class_delta,
@@ -918,6 +933,7 @@ pub(crate) fn map_corpus_derived_dto(section: &CorpusDerivedSection) -> CorpusDe
             max_dex_cap: section.equipment_effects.max_dex_cap,
             spell_failure_chance: section.equipment_effects.spell_failure_chance,
             attack_bonus_delta: section.equipment_effects.attack_bonus_delta,
+            spell_resistance_total: section.equipment_effects.spell_resistance_total,
         },
         encumbrance: map_encumbrance_dto(&section.encumbrance),
         unresolved_spell_ids: section.unresolved_spell_ids.clone(),
@@ -6194,6 +6210,7 @@ mod tests {
                     max_dex_cap: None,
                     spell_failure_chance: None,
                     attack_bonus_delta: None,
+                    spell_resistance_total: None,
                 },
                 encumbrance: empty_encumbrance_dto(),
                 unresolved_spell_ids: Vec::new(),
@@ -7763,6 +7780,7 @@ mod tests {
                     max_dex_cap: None,
                     spell_failure_chance: None,
                     attack_bonus_delta: None,
+                    spell_resistance_total: None,
                 },
                 encumbrance: empty_encumbrance_dto(),
                 unresolved_spell_ids: Vec::new(),
@@ -7809,10 +7827,14 @@ mod tests {
             max_dex_cap: None,
             spell_failure_chance: None,
             attack_bonus_delta: None,
+            spell_resistance_total: None,
         };
         let json = serde_json::to_string(&with_none).expect("serialization should succeed");
         assert!(
-            !json.contains("maxDexCap") && !json.contains("spellFailureChance") && !json.contains("attackBonusDelta"),
+            !json.contains("maxDexCap")
+                && !json.contains("spellFailureChance")
+                && !json.contains("attackBonusDelta")
+                && !json.contains("spellResistanceTotal"),
             "None fields must omit their key entirely, not serialize as null: {json}"
         );
         // The two non-Option fields are unaffected by this fix -- always present.
@@ -7820,17 +7842,29 @@ mod tests {
         assert!(json.contains("\"armorCheckPenaltyTotal\":-2"));
 
         let with_some = EquipmentEffectsDto {
-            per_item: Vec::new(),
+            per_item: vec![ResolvedEquipmentEffectDto {
+                item_id: "item:spell_resistance_armor".to_owned(),
+                equipment_record_key: "Special Ability ~ Spell Resistance / 13 ~ Armor".to_owned(),
+                category: "Equipmods".to_owned(),
+                armor_class_bonus: None,
+                max_dex: None,
+                spell_failure: None,
+                armor_check_penalty: None,
+                spell_resistance_bonus: Some(13),
+            }],
             armor_class_delta: 4,
             armor_check_penalty_total: -2,
             max_dex_cap: Some(4),
             spell_failure_chance: Some(20.0),
             attack_bonus_delta: Some(1),
+            spell_resistance_total: Some(13),
         };
         let json = serde_json::to_string(&with_some).expect("serialization should succeed");
         assert!(json.contains("\"maxDexCap\":4"));
         assert!(json.contains("\"spellFailureChance\":20.0"));
         assert!(json.contains("\"attackBonusDelta\":1"));
+        assert!(json.contains("\"spellResistanceTotal\":13"), "{json}");
+        assert!(json.contains("\"spellResistanceBonus\":13"), "{json}");
     }
 
     /// The encumbrance DTO must cross the IPC boundary with the real
@@ -7964,6 +7998,7 @@ mod tests {
                     max_dex_cap: None,
                     spell_failure_chance: None,
                     attack_bonus_delta: None,
+                    spell_resistance_total: None,
                 },
                 encumbrance: empty_encumbrance_dto(),
                 unresolved_spell_ids: Vec::new(),
