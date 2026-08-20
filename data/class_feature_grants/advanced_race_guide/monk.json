@@ -56,34 +56,6 @@
     }
   },
   {
-    "key": "Gray Disciple ~ Fade from Sight",
-    "class": "Monk",
-    "level": 4,
-    "level_explicit": true,
-    "gate": "preclass",
-    "corpus_record_exists": true,
-    "source": {
-      "kind": "class_feature_grant",
-      "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
-      "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
-      "line": 832
-    }
-  },
-  {
-    "key": "Gray Disciple ~ Gray Heart",
-    "class": "Monk",
-    "level": 6,
-    "level_explicit": true,
-    "gate": "preclass",
-    "corpus_record_exists": true,
-    "source": {
-      "kind": "class_feature_grant",
-      "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
-      "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
-      "line": 832
-    }
-  },
-  {
     "key": "Ironskin Monk ~ Bonus Feat",
     "class": "Monk",
     "level": 1,
@@ -294,34 +266,6 @@
     }
   },
   {
-    "key": "Student of Stone ~ Bones of Stone 1",
-    "class": "Monk",
-    "level": 7,
-    "level_explicit": true,
-    "gate": "preclass",
-    "corpus_record_exists": true,
-    "source": {
-      "kind": "class_feature_grant",
-      "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
-      "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
-      "line": 678
-    }
-  },
-  {
-    "key": "Student of Stone ~ Bones of Stone 2",
-    "class": "Monk",
-    "level": 10,
-    "level_explicit": true,
-    "gate": "preclass",
-    "corpus_record_exists": true,
-    "source": {
-      "kind": "class_feature_grant",
-      "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
-      "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
-      "line": 678
-    }
-  },
-  {
     "key": "Student of Stone ~ Bones of Stone 3",
     "class": "Monk",
     "level": 15,
@@ -465,20 +409,6 @@
     "key": "Underfoot Adept ~ Improved Underfoot Grace",
     "class": "Monk",
     "level": 5,
-    "level_explicit": true,
-    "gate": "preclass",
-    "corpus_record_exists": true,
-    "source": {
-      "kind": "class_feature_grant",
-      "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
-      "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
-      "line": 297
-    }
-  },
-  {
-    "key": "Underfoot Adept ~ Underfoot Grace",
-    "class": "Monk",
-    "level": 1,
     "level_explicit": true,
     "gate": "preclass",
     "corpus_record_exists": true,

@@ -1,47 +1,5 @@
 [
   {
-    "key": "Armor Prof ~ Heavy",
-    "class": "Fighter",
-    "level": 1,
-    "level_explicit": true,
-    "gate": "mod_row_gated",
-    "corpus_record_exists": false,
-    "source": {
-      "kind": "class_feature_grant",
-      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
-      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
-      "line": 238
-    }
-  },
-  {
-    "key": "Armor Prof ~ Light",
-    "class": "Fighter",
-    "level": 1,
-    "level_explicit": true,
-    "gate": "mod_row_gated",
-    "corpus_record_exists": false,
-    "source": {
-      "kind": "class_feature_grant",
-      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
-      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
-      "line": 240
-    }
-  },
-  {
-    "key": "Armor Prof ~ Medium",
-    "class": "Fighter",
-    "level": 1,
-    "level_explicit": true,
-    "gate": "mod_row_gated",
-    "corpus_record_exists": false,
-    "source": {
-      "kind": "class_feature_grant",
-      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
-      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
-      "line": 239
-    }
-  },
-  {
     "key": "Fighter ~ Armor Mastery",
     "class": "Fighter",
     "level": 19,
@@ -109,34 +67,6 @@
       "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
       "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
       "line": 260
-    }
-  },
-  {
-    "key": "Shield Prof ~ Tower",
-    "class": "Fighter",
-    "level": 1,
-    "level_explicit": true,
-    "gate": "mod_row_gated",
-    "corpus_record_exists": false,
-    "source": {
-      "kind": "class_feature_grant",
-      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
-      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
-      "line": 242
-    }
-  },
-  {
-    "key": "Weapon and Armor Proficiency ~ Fighter",
-    "class": "Fighter",
-    "level": 1,
-    "level_explicit": true,
-    "gate": "mod_row_gated",
-    "corpus_record_exists": true,
-    "source": {
-      "kind": "class_feature_grant",
-      "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
-      "sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
-      "line": 236
     }
   }
 ]

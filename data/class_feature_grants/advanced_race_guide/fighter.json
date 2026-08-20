@@ -280,20 +280,6 @@
     }
   },
   {
-    "key": "Foehammer ~ Hammer to the Ground 1",
-    "class": "Fighter",
-    "level": 7,
-    "level_explicit": true,
-    "gate": "preclass",
-    "corpus_record_exists": true,
-    "source": {
-      "kind": "class_feature_grant",
-      "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
-      "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
-      "line": 31
-    }
-  },
-  {
     "key": "Foehammer ~ Hammer to the Ground 2",
     "class": "Fighter",
     "level": 15,

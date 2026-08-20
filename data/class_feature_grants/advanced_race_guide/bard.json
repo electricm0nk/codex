@@ -168,48 +168,6 @@
     }
   },
   {
-    "key": "Watersinger ~ Waterstrike 1",
-    "class": "Bard",
-    "level": 3,
-    "level_explicit": true,
-    "gate": "preclass",
-    "corpus_record_exists": true,
-    "source": {
-      "kind": "class_feature_grant",
-      "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
-      "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
-      "line": 807
-    }
-  },
-  {
-    "key": "Watersinger ~ Waterstrike 2",
-    "class": "Bard",
-    "level": 10,
-    "level_explicit": true,
-    "gate": "preclass",
-    "corpus_record_exists": true,
-    "source": {
-      "kind": "class_feature_grant",
-      "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
-      "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
-      "line": 807
-    }
-  },
-  {
-    "key": "Watersinger ~ Waterstrike 3",
-    "class": "Bard",
-    "level": 15,
-    "level_explicit": true,
-    "gate": "preclass",
-    "corpus_record_exists": true,
-    "source": {
-      "kind": "class_feature_grant",
-      "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
-      "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
-      "line": 807
-    }
-  },
-  {
     "key": "Watersinger ~ Waterstrike 4",
     "class": "Bard",
     "level": 20,

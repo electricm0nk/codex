@@ -280,20 +280,6 @@
     }
   },
   {
-    "key": "Plague Bringer ~ Disease Resistance",
-    "class": "Alchemist",
-    "level": 2,
-    "level_explicit": true,
-    "gate": "preclass",
-    "corpus_record_exists": true,
-    "source": {
-      "kind": "class_feature_grant",
-      "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_class.lst",
-      "sha256": "76e7d122a7df94eb9f52ca8e07072d663043c39598de82323168b236439d69e7",
-      "line": 709
-    }
-  },
-  {
     "key": "Plague Bringer ~ Plague Vial",
     "class": "Alchemist",
     "level": 1,

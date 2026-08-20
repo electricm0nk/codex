@@ -112,8 +112,9 @@
 //! feature they grant is corpus-owned by ANOTHER book (`advanced_players_guide`'s
 //! grant token for `Druid ~ Wild Shape` at level 6; the record itself
 //! lives under `core_rulebook`), confirmed live this cycle. A grant whose
-//! key matches no real corpus record anywhere (191 of 3,618 resolved facts,
-//! this cycle's own re-derivation -- overwhelmingly not-yet-ingested
+//! key matches no real corpus record anywhere (178 of 3,483 resolved facts,
+//! integration-cycle re-derivation after the wave-22 integration fixes below
+//! -- overwhelmingly not-yet-ingested
 //! archetype replacement features, e.g. `ultimate_combat`'s
 //! `Dervish Dancer ~ ...` block) is written with `corpus_record_exists:
 //! false` rather than dropped silently: the grant fact itself is real and
@@ -145,6 +146,60 @@
 //! both on the first full-suite run when tried there. This module's output
 //! lives under `data/class_feature_grants/<book>/<class-slug>.json`
 //! instead, a sibling tree, never touched by either gate.
+//!
+//! ## Wave-22 integration-cycle fixes (post-lane, pre-merge)
+//!
+//! The lane's own module (above) banked 0 board units and was reviewed
+//! `PARTIAL` (not `GAMED`) -- real improvement over wave 21, but the
+//! reviewer confirmed five real remaining defects. The integrator fixed
+//! four before merge:
+//!
+//! 1. **`PRECLASS:1,TYPE.PC=1`** (a TYPE-qualifier, not a class) was
+//!    shipping `"class": "TYPE.PC"`. Now refused
+//!    (`preclass_type_qualifier_not_a_class`) whenever the PRECLASS
+//!    operand contains `.`.
+//! 2. **A resolving gate with an unaccounted extra segment** (a negated
+//!    `!PRECLASS`/`!PREABILITY` riding alongside the positive gate that
+//!    resolved, e.g. `advanced_race_guide:31`'s `Foehammer ~ Hammer to
+//!    the Ground 1`) silently dropped the extra condition. Now refused
+//!    (`preclass_extra_unaccounted_gate`/`modrow_extra_unaccounted_gate`)
+//!    unless the only extra segment is the proven-level-neutral bare
+//!    `PREVAREQ:`.
+//! 3. **`resolve_grants` deduped on `key` alone**, collapsing the real
+//!    many-to-many `(class, key)` relation whenever two different
+//!    classes grant a feature under the same corpus key (confirmed:
+//!    `core_rulebook`'s `Armor Prof ~ Heavy`, granted by both Fighter
+//!    and Paladin -- only Fighter shipped). Now dedupes on `(class,
+//!    key)`.
+//! 4. **`generate_all` never cleared stale output** -- a class that
+//!    resolved on a prior run but resolves NONE now (exactly the
+//!    `TYPE.PC` case above) kept its stale file forever. Now wipes
+//!    `grants_root` before regenerating.
+//!
+//! Re-derived after these fixes: 3,483 facts (3,305 with a real corpus
+//! record), 2,969 refused. PI screening was widened to cover the
+//! generator-emitted `class` field, not just `key` (0 additional leaks
+//! found; the earlier scan was narrower "by construction" rather than by
+//! check).
+//!
+//! **Not fixed, logged instead (`OPEN-ISSUES.md`):** (a) a genuine PCGen
+//! oracle TYPO -- `occult_adventures:1331`'s `PRECLASS:1,Kinesticist=9`
+//! (real class is "Kineticist") -- resolves and ships under the
+//! misspelled name; its `key` happens to be a real corpus key too, so
+//! `corpus_record_exists: true` does NOT self-flag it the way the
+//! module's doc comment above claims for the general un-ingested case.
+//! No known-class-name registry exists in this repo to catch a spelling
+//! variant structurally; building one for a single record is out of
+//! proportion. (b) Archetype-conditional grants shipped as unconditional
+//! class grants across DIFFERENT books, producing contradictory shipped
+//! facts for the same `(class, key)` with no cross-book reconciliation
+//! (e.g. `Druid ~ Wild Shape`: `core_rulebook` ships level 4,
+//! `advanced_players_guide`'s Bear Shaman archetype row ships level 6,
+//! as two separate book-scoped files) -- a real defect needing a
+//! dedicated cross-book conflict-detection pass, deliberately not
+//! attempted in this integration cycle (out of proportion for a merge-
+//! time fix; needs its own test suite and oracle verification). Still
+//! zero consumers of this data, so neither residual reaches a player.
 //!
 //! ## Deliberately NOT touched
 //!
@@ -324,12 +379,38 @@ fn resolve_token(field0: &str, token: &AbilityToken<'_>, source_line: u32) -> Ve
     let gate = parse_gate(&token.gate_segments);
     let mod_class = mod_row_class(field0);
 
+    // A resolving gate (PRECLASS's own clause, or a .MOD row's own
+    // PREVARGTEQ) is trusted ONLY when no other, unaccounted-for gate
+    // segment rides alongside it. `PREVAREQ:` alone is the one proven
+    // level-neutral exception (see below); anything else -- including a
+    // NEGATED copy of the very gate that resolved -- means a real
+    // condition this module cannot read is silently being dropped, which
+    // adversarial review confirmed live (`advanced_race_guide:31`'s
+    // `Foehammer ~ Hammer to the Ground 1`: `PRECLASS:1,Fighter=7` +
+    // `!PRECLASS`, wave 22 shipped Fighter/7 and silently discarded the
+    // negation). Refuse rather than resolve on partial information.
+    let extra_unaccounted_gate = |other_kinds: &[String]| -> Option<String> {
+        let extra: Vec<&String> = other_kinds.iter().filter(|k| k.as_str() != "PREVAREQ").collect();
+        if extra.is_empty() { None } else { Some(extra.iter().map(|s| s.as_str()).collect::<Vec<_>>().join("+")) }
+    };
+
     let resolution: Result<(String, u8, bool, GateKind), String> = match &gate.preclass {
         Some((count, clauses)) if *count == 1 && clauses.len() == 1 && clauses[0].1.is_some() => {
             let (cls, lvl) = (&clauses[0].0, clauses[0].1.unwrap());
-            match &mod_class {
-                Some(mc) if mc != cls => Err(format!("preclass_vs_modrow_class_conflict({mc}!={cls})")),
-                _ => Ok((cls.clone(), lvl, true, GateKind::Preclass)),
+            if cls.contains('.') {
+                // PCGen's `TYPE.<X>` qualifier syntax (e.g.
+                // `PRECLASS:1,TYPE.PC=1`, "any PC class"), not a class
+                // name -- confirmed live at
+                // `core_rulebook/cr_abilities_class.lst:2772`. Never a
+                // single class; must not be shipped as one.
+                Err(format!("preclass_type_qualifier_not_a_class({cls})"))
+            } else if let Some(extra) = extra_unaccounted_gate(&gate.other_kinds) {
+                Err(format!("preclass_extra_unaccounted_gate({extra})"))
+            } else {
+                match &mod_class {
+                    Some(mc) if mc != cls => Err(format!("preclass_vs_modrow_class_conflict({mc}!={cls})")),
+                    _ => Ok((cls.clone(), lvl, true, GateKind::Preclass)),
+                }
             }
         }
         Some(_) => Err("preclass_multiclass_or_unparsed_gate".to_string()),
@@ -351,10 +432,13 @@ fn resolve_token(field0: &str, token: &AbilityToken<'_>, source_line: u32) -> Ve
                 // (negated `!PREVAREQ:`, `PREABILITY:`, `PREDOMAIN:`, ...)
                 // still does, because none of those are proven
                 // level-neutral the way `PREVAREQ:` is here.
-                let only_prevareq = gate.other_kinds.iter().all(|k| k == "PREVAREQ");
                 if let Some((_, lvl)) = &gate.prevargteq {
-                    Ok((mc.clone(), *lvl, true, GateKind::ModRowGated))
-                } else if only_prevareq {
+                    if let Some(extra) = extra_unaccounted_gate(&gate.other_kinds) {
+                        Err(format!("modrow_extra_unaccounted_gate({extra})"))
+                    } else {
+                        Ok((mc.clone(), *lvl, true, GateKind::ModRowGated))
+                    }
+                } else if extra_unaccounted_gate(&gate.other_kinds).is_none() {
                     Ok((mc.clone(), 1, false, GateKind::ModRowUngated))
                 } else {
                     Err(format!(
@@ -429,14 +513,24 @@ pub fn parse_grant_facts(text: &str) -> (Vec<GrantFact>, Vec<UnresolvedGrant>) {
 pub fn resolve_grants(
     facts: Vec<GrantFact>,
     unresolved: Vec<UnresolvedGrant>,
-) -> (BTreeMap<String, GrantFact>, BTreeMap<String, UnresolvedGrant>) {
-    let mut resolved: BTreeMap<String, GrantFact> = BTreeMap::new();
+) -> (BTreeMap<(String, String), GrantFact>, BTreeMap<String, UnresolvedGrant>) {
+    // Keyed by `(class, key)`, NOT `key` alone -- a bare-`key` dedup
+    // collapses the real many-to-many (class, key) relation whenever TWO
+    // different classes grant a feature sharing the same corpus `key`
+    // (confirmed live by adversarial review: `core_rulebook`'s `Armor
+    // Prof ~ Heavy` is granted by BOTH Fighter, line 238, and Paladin,
+    // line 267 -- a bare-`key` dedup silently drops the Paladin fact).
+    // Same-class, same-key duplicate occurrences (the ordinary case this
+    // dedup exists for) still collapse to the first file-order
+    // resolution, per the module doc comment.
+    let mut resolved: BTreeMap<(String, String), GrantFact> = BTreeMap::new();
     for fact in facts {
-        resolved.entry(fact.key.clone()).or_insert(fact);
+        resolved.entry((fact.class.clone(), fact.key.clone())).or_insert(fact);
     }
+    let resolved_keys: BTreeSet<String> = resolved.keys().map(|(_, k)| k.clone()).collect();
     let mut refused: BTreeMap<String, UnresolvedGrant> = BTreeMap::new();
     for u in unresolved {
-        if resolved.contains_key(&u.key) {
+        if resolved_keys.contains(&u.key) {
             continue;
         }
         refused.entry(u.key.clone()).or_insert(u);
@@ -575,8 +669,14 @@ pub fn generate_for_book(
         facts.sort_by(|a, b| a.key.cmp(&b.key));
         let mut records = Vec::with_capacity(facts.len());
         for fact in facts {
-            let (license, _, _, _) = pi_screening::classify_field("name", &fact.key);
-            if license == License::PiRedacted {
+            // Screen every field this generator emits (brief's own
+            // standing PI rule), not just `key` -- `class` is also
+            // generator-emitted text (adversarial review finding, low
+            // severity: 0 live leaks found, but the prior scan covered
+            // `key` only, "by construction" rather than by check).
+            let (key_license, _, _, _) = pi_screening::classify_field("name", &fact.key);
+            let (class_license, _, _, _) = pi_screening::classify_field("name", &fact.class);
+            if key_license == License::PiRedacted || class_license == License::PiRedacted {
                 report.pi_skipped += 1;
                 continue;
             }
@@ -626,6 +726,21 @@ pub fn generate_for_book(
 /// path for both would silently cross-check against raw `.lst` text
 /// instead of real corpus JSON and always report every fact missing.
 pub fn generate_all(oracle_root: &Path, repo_corpus_root: &Path, grants_root: &Path) -> std::io::Result<GenerationReport> {
+    // Wipe the whole output subtree before regenerating -- integrator-
+    // found defect (wave 22): `generate_for_book` only ever WRITES a
+    // `<class>.json` for a class that still resolves at least one grant
+    // this run; a class that resolved a grant on a PRIOR run (e.g.
+    // `type_pc.json`, `kinesticist.json` -- both from this same wave's
+    // now-fixed `TYPE.PC`-as-a-class defect) but resolves NONE now is
+    // simply never touched, so its stale, now-wrong file survives
+    // indefinitely. Regeneration must be idempotent from a clean slate,
+    // the same discipline `gen_core_rulebook_cache.rs` already applies to
+    // its own output subtree.
+    match std::fs::remove_dir_all(grants_root) {
+        Ok(()) => {}
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
+        Err(e) => return Err(e),
+    }
     let real_keys = real_class_feature_keys(repo_corpus_root)?;
     let mut total = GenerationReport::default();
     for (book, rel_dir, file_name) in BOOK_PRIMARY_FILES {
@@ -772,10 +887,10 @@ mod tests {
         let (facts, unresolved) = parse_grant_facts(text);
         assert!(unresolved.is_empty(), "unresolved: {unresolved:?}");
         let (resolved, _) = resolve_grants(facts, Vec::new());
-        let bard = &resolved["Bard ~ Bardic Knowledge"];
+        let bard = &resolved[&("Bard".to_string(), "Bard ~ Bardic Knowledge".to_string())];
         assert_eq!(bard.class, "Bard");
         assert_eq!(bard.level, 1);
-        let chronicler = &resolved["Pathfinder Chronicler ~ Bardic Knowledge"];
+        let chronicler = &resolved[&("Pathfinder Chronicler".to_string(), "Pathfinder Chronicler ~ Bardic Knowledge".to_string())];
         assert_eq!(chronicler.class, "Pathfinder Chronicler");
         assert_eq!(chronicler.level, 1);
         assert_ne!(
@@ -822,6 +937,64 @@ mod tests {
         assert!(resolve_token(field0, &token, 250)[0].is_err());
     }
 
+    // -----------------------------------------------------------------
+    // Wave-22 integration fixes for adversarial-review CONFIRMED findings.
+    // -----------------------------------------------------------------
+
+    #[test]
+    fn a_type_qualifier_preclass_operand_is_refused_not_shipped_as_a_class() {
+        // core_rulebook/cr_abilities_class.lst:2772 --
+        // `PRECLASS:1,TYPE.PC=1` ("any PC class"), a TYPE-qualifier, not a
+        // class name. Adversarial review confirmed wave 22 shipped this as
+        // `"class": "TYPE.PC"`.
+        let field0 = "CATEGORY=Internal|Default";
+        let field = "ABILITY:Internal|AUTOMATIC|Weapon Prof ~ Auto|PRECLASS:1,TYPE.PC=1";
+        let token = split_ability_token(field).unwrap();
+        let result = &resolve_token(field0, &token, 2772)[0];
+        assert!(result.is_err(), "a TYPE.<X> PRECLASS operand must not be shipped as a class");
+    }
+
+    #[test]
+    fn a_preclass_gate_with_an_unaccounted_negated_extra_segment_is_refused() {
+        // advanced_race_guide:31 shape -- `Foehammer ~ Hammer to the
+        // Ground 1`, `PRECLASS:1,Fighter=7` PLUS `!PRECLASS` (a second,
+        // negated segment). Adversarial review confirmed wave 22 resolved
+        // the positive clause and silently dropped the negation.
+        let field0 = "Foehammer";
+        let field = "ABILITY:Special Ability|AUTOMATIC|Foehammer ~ Hammer to the Ground 1|PRECLASS:1,Fighter=7|!PRECLASS:1,Barbarian=1";
+        let token = split_ability_token(field).unwrap();
+        let result = &resolve_token(field0, &token, 31)[0];
+        assert!(result.is_err(), "an unaccounted extra gate segment alongside a resolving PRECLASS must refuse, not resolve on partial information");
+    }
+
+    #[test]
+    fn a_modrow_gate_with_an_unaccounted_extra_segment_is_refused() {
+        // core_rulebook:238 shape -- `Armor Prof ~ Heavy`,
+        // `!PREABILITY:...` PLUS `PREVARGTEQ:Fighter_CFP_Level,1`.
+        // Adversarial review confirmed wave 22 resolved ModRowGated and
+        // silently dropped the negated PREABILITY condition.
+        let field0 = "CATEGORY=Class|Fighter.MOD";
+        let field = "ABILITY:Fighter Class Feature|AUTOMATIC|Armor Prof ~ Heavy|!PREABILITY:1,CATEGORY=Something|PREVARGTEQ:Fighter_CFP_Level,1";
+        let token = split_ability_token(field).unwrap();
+        let result = &resolve_token(field0, &token, 238)[0];
+        assert!(result.is_err(), "an unaccounted extra gate segment alongside a resolving ModRowGated gate must refuse");
+    }
+
+    #[test]
+    fn two_different_classes_granting_the_same_feature_key_are_both_kept_not_collapsed() {
+        // Adversarial review confirmed: `core_rulebook`'s `Armor Prof ~
+        // Heavy` is granted by BOTH Fighter (line 238) and Paladin (line
+        // 267) -- a bare-`key` dedup silently dropped the Paladin fact.
+        let text = "CATEGORY=Class|Fighter.MOD\tABILITY:Fighter Class Feature|AUTOMATIC|Armor Prof ~ Heavy|PREVARGTEQ:Fighter_CFP_Level,1\n\
+                    CATEGORY=Class|Paladin.MOD\tABILITY:Paladin Class Feature|AUTOMATIC|Armor Prof ~ Heavy|PREVARGTEQ:Paladin_CFP_Level,1\n";
+        let (facts, unresolved) = parse_grant_facts(text);
+        assert!(unresolved.is_empty(), "unresolved: {unresolved:?}");
+        let (resolved, _) = resolve_grants(facts, Vec::new());
+        assert_eq!(resolved.len(), 2, "both the Fighter and Paladin facts for the same key must survive dedup");
+        assert!(resolved.contains_key(&("Fighter".to_string(), "Armor Prof ~ Heavy".to_string())));
+        assert!(resolved.contains_key(&("Paladin".to_string(), "Armor Prof ~ Heavy".to_string())));
+    }
+
     #[test]
     fn a_feat_grant_with_no_tilde_key_is_not_class_feature_shaped() {
         let field = "ABILITY:FEAT|AUTOMATIC|Endurance|PREVARGTEQ:Ranger_CFP_Level,3";
@@ -859,7 +1032,7 @@ mod tests {
             },
         ];
         let (resolved, _) = resolve_grants(facts, Vec::new());
-        let fact = &resolved["Barbarian ~ Weapon and Armor Proficiency"];
+        let fact = &resolved[&("Barbarian".to_string(), "Barbarian ~ Weapon and Armor Proficiency".to_string())];
         assert_eq!(fact.source_line, 131);
     }
 
@@ -967,8 +1140,23 @@ mod tests {
         let (resolved, _) = resolve_grants(facts, Vec::new());
 
         let expected = pu_expected(class);
+        // Over-production check (Finding 1, wave-22 adversarial review):
+        // the per-key loop below can only prove every EXPECTED key
+        // resolved correctly -- it cannot detect an EXTRA key this class
+        // resolved that the hand-curated PU table never expected. Assert
+        // the converse directly: every `resolved` fact naming this class
+        // has a key in the expected set.
+        let expected_keys: BTreeSet<&str> = expected.iter().map(|(k, _, _)| k.as_str()).collect();
+        for (rclass, rkey) in resolved.keys() {
+            if rclass == class {
+                assert!(
+                    expected_keys.contains(rkey.as_str()),
+                    "{class}: resolved an UNEXPECTED key {rkey:?} not in the hand-curated PU table -- over-production"
+                );
+            }
+        }
         for (key, expected_min_level, expected_is_granted) in &expected {
-            let found = resolved.get(key);
+            let found = resolved.get(&(class.to_string(), key.clone()));
             let actual_is_granted = found.is_some();
             assert_eq!(
                 actual_is_granted, *expected_is_granted,
@@ -1019,6 +1207,107 @@ mod tests {
         assert_reproduces_pu_table("Summoner");
     }
 
+    // -----------------------------------------------------------------
+    // Wave-22 integration: direct oracle-gated regression tests over
+    // ACTUALLY-SHIPPED (`BOOK_PRIMARY_FILES`) books. `pu_class_feature_
+    // reproduction_*` above validates `pathfinder_unchained`, which is
+    // NOT in `BOOK_PRIMARY_FILES` and therefore never shipped by this
+    // module -- adversarial review confirmed this cycle's correctness
+    // proof covered ZERO of the 3,483 shipped facts. These five, spot-
+    // checked by the integrator directly against the pinned oracle
+    // across five DIFFERENT shipped books, close that gap for the
+    // specific facts named (not a substitute for full coverage).
+    // -----------------------------------------------------------------
+
+    fn assert_fact_against_live_oracle(
+        rel_dir: &str,
+        file_name: &str,
+        key: &str,
+        expected_class: &str,
+        expected_level: u8,
+    ) {
+        let Some(corpus_root) = pcgen_corpus_root() else {
+            eprintln!("skipping {key}: no PCGEN_CORPUS_ROOT/HOME");
+            return;
+        };
+        let lst_path = corpus_root.join(rel_dir).join(file_name);
+        let Ok(text) = std::fs::read_to_string(&lst_path) else {
+            eprintln!("skipping {key}: {} unreadable", lst_path.display());
+            return;
+        };
+        let (facts, _) = parse_grant_facts(&text);
+        let (resolved, _) = resolve_grants(facts, Vec::new());
+        let fact = resolved
+            .get(&(expected_class.to_string(), key.to_string()))
+            .unwrap_or_else(|| panic!("{expected_class}/{key} must resolve against the live oracle row"));
+        assert_eq!(fact.level, expected_level, "{expected_class}/{key}: level mismatch");
+    }
+
+    #[test]
+    #[ignore = "reads the live pinned PCGen oracle checkout; run with PCGEN_CORPUS_ROOT set"]
+    fn uw_chameleon_adept_terrain_chameleon_resolves_against_the_live_oracle_row() {
+        // ultimate_wilderness:641 -- integrator spot-check, wave 22 integration.
+        assert_fact_against_live_oracle(
+            "pathfinder/paizo/roleplaying_game/ultimate_wilderness",
+            "uw_abilities_class.lst",
+            "Chameleon Adept ~ Terrain Chameleon",
+            "Hunter",
+            1,
+        );
+    }
+
+    #[test]
+    #[ignore = "reads the live pinned PCGen oracle checkout; run with PCGEN_CORPUS_ROOT set"]
+    fn apg_fighter_roughrider_leap_from_the_saddle_resolves_against_the_live_oracle_row() {
+        // advanced_players_guide:2108 -- integrator spot-check, wave 22 integration.
+        assert_fact_against_live_oracle(
+            "pathfinder/paizo/roleplaying_game/advanced_players_guide",
+            "apg_abilities_class.lst",
+            "Fighter Roughrider ~ Leap from the Saddle",
+            "Fighter",
+            7,
+        );
+    }
+
+    #[test]
+    #[ignore = "reads the live pinned PCGen oracle checkout; run with PCGEN_CORPUS_ROOT set"]
+    fn oa_necroccultist_ghostly_horde_resolves_against_the_live_oracle_row() {
+        // occult_adventures:1519 -- integrator spot-check, wave 22 integration.
+        assert_fact_against_live_oracle(
+            "pathfinder/paizo/roleplaying_game/occult_adventures",
+            "oa_abilities_class.lst",
+            "Necroccultist ~ Ghostly Horde",
+            "Occultist",
+            5,
+        );
+    }
+
+    #[test]
+    #[ignore = "reads the live pinned PCGen oracle checkout; run with PCGEN_CORPUS_ROOT set"]
+    fn acg_wildcat_bonus_feat_resolves_against_the_live_oracle_row() {
+        // advanced_class_guide:3437 -- integrator spot-check, wave 22 integration.
+        assert_fact_against_live_oracle(
+            "pathfinder/paizo/roleplaying_game/advanced_class_guide",
+            "acg_abilities_class.lst",
+            "Wildcat ~ Bonus Feat",
+            "Monk",
+            6,
+        );
+    }
+
+    #[test]
+    #[ignore = "reads the live pinned PCGen oracle checkout; run with PCGEN_CORPUS_ROOT set"]
+    fn uc_scarred_rager_improved_tolerance_resolves_against_the_live_oracle_row() {
+        // ultimate_combat:304 -- integrator spot-check, wave 22 integration.
+        assert_fact_against_live_oracle(
+            "pathfinder/paizo/roleplaying_game/ultimate_combat",
+            "uc_abilities_class.lst",
+            "Scarred Rager ~ Improved Tolerance",
+            "Barbarian",
+            5,
+        );
+    }
+
     #[test]
     #[ignore = "reads the live pinned PCGen oracle checkout; run with PCGEN_CORPUS_ROOT set"]
     fn sigilus_inscribe_sihedron_resolves_against_the_live_oracle_row() {
@@ -1036,7 +1325,9 @@ mod tests {
         };
         let (facts, _) = parse_grant_facts(&text);
         let (resolved, _) = resolve_grants(facts, Vec::new());
-        let fact = resolved.get("Sigilus ~ Inscribe Sihedron").expect("Sigilus ~ Inscribe Sihedron must resolve");
+        let fact = resolved
+            .get(&("Magus".to_string(), "Sigilus ~ Inscribe Sihedron".to_string()))
+            .expect("Sigilus ~ Inscribe Sihedron must resolve");
         assert_eq!(fact.class, "Magus");
         assert_eq!(fact.level, 7);
     }
