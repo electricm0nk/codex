@@ -5802,6 +5802,14 @@ const HEALING_DOMAIN_SELECTION: &str = "domain:healing";
 // unground.
 const WAR_DOMAIN_SELECTION: &str = "domain:war";
 const STRENGTH_DOMAIN_SELECTION: &str = "domain:strength";
+// SD-31 wave 26 (OPERATOR-RULINGS-2026-08-21.md section 20, "PROVE BEFORE YOU
+// EXTEND" satisfied first against Good/Healing before either was added -- see
+// `domain_power`'s own `fixture_check_tests` module doc): two more domains,
+// both scanned corpus-wide for the same self-application-safe shape (a
+// beneficial effect on a touched/self target, never an enemy-facing debuff)
+// Good/War/Strength already establish.
+const DESTRUCTION_DOMAIN_SELECTION: &str = "domain:destruction";
+const GLORY_DOMAIN_SELECTION: &str = "domain:glory";
 
 /// v0.6 alpha swarm, risks item 8 (Cleric Good domain closure, generalized
 /// task #64 to every real base class whose own domain-choice class feature
@@ -5860,6 +5868,14 @@ const BATTLE_RAGE_ABILITY_ID: &str = "battle_rage";
 /// activation id, the `domain_power::DOMAIN_POWER_CATALOG` sibling of
 /// `TOUCH_OF_GOOD_ABILITY_ID`.
 const STRENGTH_SURGE_ABILITY_ID: &str = "strength_surge";
+/// SD-31 wave 26: Destruction domain's Destructive Smite self-application
+/// activation id, the `domain_power::DOMAIN_POWER_CATALOG` sibling of
+/// `TOUCH_OF_GOOD_ABILITY_ID`.
+const DESTRUCTIVE_SMITE_ABILITY_ID: &str = "destructive_smite";
+/// SD-31 wave 26: Glory domain's Touch of Glory self-application activation
+/// id, the `domain_power::DOMAIN_POWER_CATALOG` sibling of
+/// `TOUCH_OF_GOOD_ABILITY_ID`.
+const TOUCH_OF_GLORY_ABILITY_ID: &str = "touch_of_glory";
 
 // PF1 Core Rulebook Domains: a cleric gains one domain spell slot per level of
 // cleric spells she can cast, 1st and up. At levels 1-2 this bounded seam supports
@@ -14004,7 +14020,12 @@ fn ground_or_block_inquisitor_judgment(
 /// inquisitor/inquisitor_domains.json` carries `DEFINE:InquisitorDomainWar|0` and
 /// `DEFINE:InquisitorDomainStrength|0` alongside Good's own), not just reused from
 /// Cleric's list -- via the SAME interpreted-formula path, generalized rather than
-/// duplicated per domain.
+/// duplicated per domain. SD-31 wave 26 widened the catalog again (Destruction's
+/// Destructive Smite, Glory's Touch of Glory) -- same corpus file confirms
+/// `DEFINE:InquisitorDomainDestruction|0` and `DEFINE:InquisitorDomainGlory|0`
+/// alongside the rest, so both are real base-class Inquisitor domains too; no
+/// change was needed to this function's own logic, only to the shared catalog it
+/// already reads generically.
 fn ground_or_block_inquisitor_domain_power(
     input: &CharacterInput,
     inquisitor_level: u8,
@@ -14016,8 +14037,8 @@ fn ground_or_block_inquisitor_domain_power(
             id: "class_feature.inquisitor.domain_powers.unsupported".to_owned(),
             message: "Inquisitor remains blocked on its Domain class feature's granted-power \
                  burden: domain selection and the granted powers of any domain other than Good, \
-                 War, or Strength (whose own granted powers are grounded separately when \
-                 actually chosen, one domain at a time) are not implemented anywhere in this \
+                 War, Strength, Destruction, or Glory (whose own granted powers are grounded \
+                 separately when actually chosen, one domain at a time) are not implemented anywhere in this \
                  codebase, so no Inquisitor domain-power support is claimed. Unlike Cleric, an \
                  inquisitor's domain never grants bonus spells (PF1 Advanced Player's Guide \
                  Domain: 'An inquisitor does not gain the bonus spells listed for each domain, \
@@ -14044,12 +14065,13 @@ fn ground_or_block_inquisitor_domain_power(
                     "Inquisitor level {inquisitor_level}, whose Domain class feature selected \
                      {domain} (PF1 Advanced Player's Guide Domain: an inquisitor gains ONLY that \
                      domain's powers, never its bonus spells), is actively using {power} on \
-                     HERSELF, SELF-APPLICATION ONLY: a +{magnitude} {label} for 1 round. \
+                     HERSELF, SELF-APPLICATION ONLY: a +{magnitude} {label} {duration}. \
                      {power_specific}Granting this bonus to ANOTHER creature is NOT modeled: no \
                      target-creature entity exists anywhere in this codebase.",
                     domain = spec.domain_display_name,
                     power = spec.granted_power_name,
                     label = spec.magnitude_label,
+                    duration = spec.effect_duration_phrase,
                     power_specific = if spec.selection_id == GOOD_DOMAIN_SELECTION {
                         "The +{magnitude} bonus is applied to her own baseline melee attack \
                          bonus, selected-skill modifiers, and total saves (see \
@@ -14114,10 +14136,11 @@ fn ground_or_block_inquisitor_domain_power(
              class_feature/inquisitor/inquisitor_domains.json` carries \
              `DEFINE:InquisitorDomain{domain}|0`). So a {domain}-domain inquisitor's domain \
              power is genuinely computed rather than deferred. Every domain not in \
-             `domain_power::DOMAIN_POWER_CATALOG` (Good, War, Strength) remains entirely \
-             unproven and is still not claimed anywhere -- selecting one keeps this diagnostic \
-             claim-blocking (Path A canonical narrowing, 2026-07-29, widened SD-31 wave 25, \
-             mirroring Cleric's own domain-power seam)",
+             `domain_power::DOMAIN_POWER_CATALOG` (Good, War, Strength, Destruction, Glory) \
+             remains entirely unproven and is still not claimed anywhere -- selecting one keeps \
+             this diagnostic claim-blocking (Path A canonical narrowing, 2026-07-29, widened \
+             SD-31 wave 25, widened again SD-31 wave 26, mirroring Cleric's own domain-power \
+             seam)",
             domain = spec.domain_display_name,
             power = spec.granted_power_name,
         ),
@@ -39984,54 +40007,151 @@ fn explain_cleric_level1_spell_baseline(
             .collect();
         let good_domain_chosen = domain_selections_top.contains(&GOOD_DOMAIN_SELECTION);
         let healing_domain_chosen = domain_selections_top.contains(&HEALING_DOMAIN_SELECTION);
-        let unrecognized_other_domain_chosen = domain_selections_top
+        // SD-31 wave 26 (OPERATOR-RULINGS-2026-08-21.md section 20): widened
+        // from the Good-only gate above to every OTHER `domain_power::
+        // DOMAIN_POWER_CATALOG` entry -- Inquisitor's own
+        // `ground_or_block_inquisitor_domain_power` already reads this
+        // catalog generically; Cleric's own branch had been left
+        // Good/Healing-only since wave 25, the exact gap this lane's brief
+        // names ("continue, don't restart"). Good keeps its own
+        // specially-integrated branch below (its bonus is wired into real
+        // combat/skill/save totals via `active_touch_of_good_bonus`, unlike
+        // any other catalog entry), so it is deliberately excluded from
+        // this generic list to avoid double-grounding it.
+        let other_catalog_domains: Vec<&'static DomainPowerSpec> = domain_selections_top
             .iter()
-            .any(|d| *d != GOOD_DOMAIN_SELECTION && *d != HEALING_DOMAIN_SELECTION);
+            .filter(|d| **d != GOOD_DOMAIN_SELECTION)
+            .filter_map(|d| resolve_domain_power(d))
+            .collect();
+        let unrecognized_other_domain_chosen = domain_selections_top.iter().any(|d| {
+            *d != GOOD_DOMAIN_SELECTION
+                && *d != HEALING_DOMAIN_SELECTION
+                && resolve_domain_power(d).is_none()
+        });
 
-        if good_domain_chosen && !unrecognized_other_domain_chosen {
-            let touch_of_good_bonus = cleric_touch_of_good_bonus(cleric_level);
-            let touch_of_good_activation = input
-                .chosen
-                .class_ability_activations
-                .iter()
-                .find(|activation| activation.ability_id == TOUCH_OF_GOOD_ABILITY_ID);
-            match touch_of_good_activation.map(|activation| activation.active_state) {
-                Some(ActiveState::EquippedActive) => {
-                    explanations.push(ComputationExplanation {
-                        id: "class_feature.domain.good_touch_of_good_self_application"
-                            .to_owned(),
-                        value: touch_of_good_bonus,
-                        detail: format!(
-                            "Cleric level {cleric_level} is actively using Touch of Good on \
-                             HERSELF, SELF-APPLICATION ONLY (PF1 Core Rulebook Good Domain: \
-                             touch a creature, granting it a +{touch_of_good_bonus} sacred bonus \
-                             on attack rolls, skill checks, ability checks, and saving throws \
-                             for 1 round). The +{touch_of_good_bonus} bonus is applied to her \
-                             own baseline melee attack bonus, selected-skill modifiers, and \
-                             total saves (see compute_combat_baseline, \
-                             compute_selected_skill_modifiers, compute_total_saves). Granting \
-                             this bonus to ANOTHER creature -- Touch of Good's real primary use \
-                             in play -- is NOT modeled: no target-creature entity exists \
-                             anywhere in this codebase, only the acting character's own rolls \
-                             are ever computed. The ability-check facet has no separate \
-                             integrated total in this codebase and stays a flat, unintegrated \
-                             magnitude"
-                        ),
-                    });
+        if (good_domain_chosen || !other_catalog_domains.is_empty())
+            && !unrecognized_other_domain_chosen
+        {
+            if good_domain_chosen {
+                let touch_of_good_bonus = cleric_touch_of_good_bonus(cleric_level);
+                let touch_of_good_activation = input
+                    .chosen
+                    .class_ability_activations
+                    .iter()
+                    .find(|activation| activation.ability_id == TOUCH_OF_GOOD_ABILITY_ID);
+                match touch_of_good_activation.map(|activation| activation.active_state) {
+                    Some(ActiveState::EquippedActive) => {
+                        explanations.push(ComputationExplanation {
+                            id: "class_feature.domain.good_touch_of_good_self_application"
+                                .to_owned(),
+                            value: touch_of_good_bonus,
+                            detail: format!(
+                                "Cleric level {cleric_level} is actively using Touch of Good on \
+                                 HERSELF, SELF-APPLICATION ONLY (PF1 Core Rulebook Good Domain: \
+                                 touch a creature, granting it a +{touch_of_good_bonus} sacred \
+                                 bonus on attack rolls, skill checks, ability checks, and saving \
+                                 throws for 1 round). The +{touch_of_good_bonus} bonus is \
+                                 applied to her own baseline melee attack bonus, selected-skill \
+                                 modifiers, and total saves (see compute_combat_baseline, \
+                                 compute_selected_skill_modifiers, compute_total_saves). \
+                                 Granting this bonus to ANOTHER creature -- Touch of Good's real \
+                                 primary use in play -- is NOT modeled: no target-creature \
+                                 entity exists anywhere in this codebase, only the acting \
+                                 character's own rolls are ever computed. The ability-check \
+                                 facet has no separate integrated total in this codebase and \
+                                 stays a flat, unintegrated magnitude"
+                            ),
+                        });
+                    }
+                    _ => {
+                        explanations.push(ComputationExplanation {
+                            id: "class_feature.domain.good_touch_of_good_not_active".to_owned(),
+                            value: 0,
+                            detail: format!(
+                                "Cleric level {cleric_level} is not currently using Touch of \
+                                 Good (no active class_ability_activations entry for \
+                                 \"{TOUCH_OF_GOOD_ABILITY_ID}\"): a genuinely valid PF1 \
+                                 posture -- not every Good-domain Cleric is using this \
+                                 limited-use power at every moment -- so no sacred bonus is \
+                                 claimed"
+                            ),
+                        });
+                    }
                 }
-                _ => {
-                    explanations.push(ComputationExplanation {
-                        id: "class_feature.domain.good_touch_of_good_not_active".to_owned(),
-                        value: 0,
-                        detail: format!(
-                            "Cleric level {cleric_level} is not currently using Touch of Good \
-                             (no active class_ability_activations entry for \
-                             \"{TOUCH_OF_GOOD_ABILITY_ID}\"): a genuinely valid PF1 \
-                             posture -- not every Good-domain Cleric is using this limited-use \
-                             power at every moment -- so no sacred bonus is claimed"
-                        ),
-                    });
+            }
+            // SD-31 wave 26: every OTHER recognized catalog domain (War,
+            // Strength, Destruction, Glory -- Good is grounded above, on its
+            // own specially-integrated path) grounded generically, mirroring
+            // `ground_or_block_inquisitor_domain_power`'s own non-Good
+            // branch: real magnitude, real self-application activation
+            // state, real uses-per-day, honestly disclosed as NOT
+            // integrated into any other computed total (unlike Good's
+            // bonus, which IS wired into melee attack/skill/save totals).
+            for spec in &other_catalog_domains {
+                let magnitude = domain_power_magnitude(spec, cleric_level, ability_modifiers);
+                let activation = input
+                    .chosen
+                    .class_ability_activations
+                    .iter()
+                    .find(|activation| activation.ability_id == spec.ability_id);
+                match activation.map(|activation| activation.active_state) {
+                    Some(ActiveState::EquippedActive) => {
+                        explanations.push(ComputationExplanation {
+                            id: domain_power_explanation_id(spec, "self_application"),
+                            value: magnitude,
+                            detail: format!(
+                                "Cleric level {cleric_level}, whose Domain class feature \
+                                 selected {domain}, is actively using {power} on HERSELF, \
+                                 SELF-APPLICATION ONLY: a +{magnitude} {label} {duration}. This \
+                                 grounds only the flat magnitude; it is not integrated into any \
+                                 other computed total (melee attack, melee damage, skill, or \
+                                 save totals) anywhere in this codebase, unlike Good's own Touch \
+                                 of Good. Granting this bonus to ANOTHER creature is NOT \
+                                 modeled: no target-creature entity exists anywhere in this \
+                                 codebase.",
+                                domain = spec.domain_display_name,
+                                power = spec.granted_power_name,
+                                label = spec.magnitude_label,
+                                duration = spec.effect_duration_phrase,
+                            ),
+                        });
+                    }
+                    _ => {
+                        explanations.push(ComputationExplanation {
+                            id: domain_power_explanation_id(spec, "not_active"),
+                            value: 0,
+                            detail: format!(
+                                "Cleric level {cleric_level} is not currently using {power} (no \
+                                 active class_ability_activations entry for \"{ability_id}\"): a \
+                                 genuinely valid PF1 posture -- not every {domain}-domain Cleric \
+                                 is using this limited-use power at every moment -- so no \
+                                 {label} is claimed",
+                                power = spec.granted_power_name,
+                                ability_id = spec.ability_id,
+                                domain = spec.domain_display_name,
+                                label = spec.magnitude_label,
+                            ),
+                        });
+                    }
                 }
+                let wisdom_modifier = ability_modifier(input.chosen.ability_scores.wisdom);
+                let uses_per_day = domain_power_uses_per_day(&AbilityModifiers {
+                    wisdom: wisdom_modifier,
+                    ..AbilityModifiers::default()
+                });
+                explanations.push(ComputationExplanation {
+                    id: domain_power_explanation_id(spec, "uses_per_day"),
+                    value: uses_per_day,
+                    detail: format!(
+                        "Cleric {domain} domain granted power {power} uses per day (PF1 Core \
+                         Rulebook Domains): 3 + Wisdom modifier, floored at 0. At Wisdom \
+                         modifier {wisdom_modifier} this is max(3 + {wisdom_modifier}, 0) = \
+                         {uses_per_day}. This grounds only the flat daily use count; it \
+                         performs no per-use consumption tracking",
+                        domain = spec.domain_display_name,
+                        power = spec.granted_power_name,
+                    ),
+                });
             }
             diagnostics.push(ComputationDiagnostic {
                 id: "class_feature.cleric.domain_spell_list_contents.unmodeled".to_owned(),
@@ -40041,7 +40161,7 @@ fn explain_cleric_level1_spell_baseline(
                      COUNT is grounded for real; its CONTENT is named but not computed, the \
                      same 'grant-only identity record, no execution engine' idiom used \
                      throughout this session (e.g. Bard's six other bardic performances). This \
-                     does not block an otherwise-valid Good-domain posture"
+                     does not block an otherwise-valid domain posture"
                     .to_owned(),
                 claim_blocking: false,
             });
@@ -40062,11 +40182,12 @@ fn explain_cleric_level1_spell_baseline(
         } else {
             diagnostics.push(ComputationDiagnostic {
                 id: "class_feature.cleric.domain_powers.unsupported".to_owned(),
-                message: "Cleric remains blocked on its domain powers burden: domain selection, \
-                     domain spell-list contents, and the granted powers of any domain (e.g. Good's \
-                     Touch of Good, Healing's Rebuke Death, whose heal amount is not a flat number) \
-                     are not implemented anywhere in this codebase, so no Cleric domain-power \
-                     support is claimed"
+                message: "Cleric remains blocked on its domain powers burden: domain selection \
+                     and the granted powers of any domain other than Good, War, Strength, \
+                     Destruction, or Glory (whose own granted powers are grounded separately \
+                     when actually chosen) are not implemented anywhere in this codebase (e.g. \
+                     Healing's Rebuke Death, whose heal amount is not a flat number), so no \
+                     Cleric domain-power support is claimed for this selection"
                     .to_owned(),
                 claim_blocking: true,
             });
@@ -51364,9 +51485,12 @@ mod sorcerer_arcane_bloodline_progression_tests {
 #[cfg(test)]
 mod cleric_dispatch_widening_safety_tests {
     use super::{
-        build_pilot_headless_receipt, AcquisitionMode, ActiveState, CharacterClassLevel,
-        CharacterInput, CLERIC_CLASS_ID, CLERIC_DOMAIN_CHOICE_ID, TOUCH_OF_GOOD_ABILITY_ID,
-        FIGHTER_CLASS_ID, GOOD_DOMAIN_SELECTION, HEALING_DOMAIN_SELECTION, HeadlessReceiptStatus,
+        build_pilot_headless_receipt, AcquisitionMode, ActiveState, BATTLE_RAGE_ABILITY_ID,
+        CharacterClassLevel, CharacterInput, CLERIC_CLASS_ID, CLERIC_DOMAIN_CHOICE_ID,
+        DESTRUCTION_DOMAIN_SELECTION, DESTRUCTIVE_SMITE_ABILITY_ID, FIGHTER_CLASS_ID,
+        GLORY_DOMAIN_SELECTION, GOOD_DOMAIN_SELECTION, HEALING_DOMAIN_SELECTION,
+        HeadlessReceiptStatus, STRENGTH_DOMAIN_SELECTION, TOUCH_OF_GLORY_ABILITY_ID,
+        TOUCH_OF_GOOD_ABILITY_ID, WAR_DOMAIN_SELECTION,
     };
     use crate::rules_core::character_input::{
         load_character_input_fixture, ClassAbilityActivation, SelectedChoice, SpellSelection,
@@ -51729,6 +51853,116 @@ mod cleric_dispatch_widening_safety_tests {
              {:?}",
             receipt.computation.diagnostics
         );
+    }
+
+    /// SD-31 wave 26: a single-class Cleric with War domain (not previously
+    /// wired for Cleric, only for Inquisitor since wave 25) and Battle Rage
+    /// genuinely active reaches `Computed`, mirroring Good's own shape but
+    /// through the new generic catalog loop rather than the special-cased
+    /// Good branch.
+    #[test]
+    fn single_class_cleric_with_war_domain_battle_rage_active_reaches_computed() {
+        let mut input = human_cleric_input_with_domains(4, &[WAR_DOMAIN_SELECTION]);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: BATTLE_RAGE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "a War-domain-only Cleric with Battle Rage active and a valid spell posture should \
+             reach Computed: {:?}",
+            receipt.computation.diagnostics
+        );
+        let self_application = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.domain.war_battle_rage_self_application")
+            .expect("Battle Rage self-application explanation must be grounded");
+        // War domain magnitude: max(level/2, 1); level 4 -> max(2,1) = 2.
+        assert_eq!(self_application.value, 2, "{self_application:?}");
+        assert!(
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "class_feature.domain.war_battle_rage_uses_per_day"),
+            "Battle Rage uses-per-day must also be grounded: {:?}",
+            receipt.computation.explanations
+        );
+    }
+
+    /// SD-31 wave 26: a Cleric with Strength domain who is NOT currently
+    /// using Strength Surge (no activation entry) also reaches `Computed`,
+    /// with the magnitude at 0 -- the "not active" arm of the new generic
+    /// loop.
+    #[test]
+    fn single_class_cleric_with_strength_domain_not_using_strength_surge_reaches_computed() {
+        let input = human_cleric_input_with_domains(1, &[STRENGTH_DOMAIN_SELECTION]);
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Computed);
+        let not_active = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.domain.strength_strength_surge_not_active")
+            .expect("Strength Surge not-active explanation must be grounded");
+        assert_eq!(not_active.value, 0);
+    }
+
+    /// SD-31 wave 26: the two newly-widened domains (Destruction's
+    /// Destructive Smite, Glory's Touch of Glory) also reach `Computed` for
+    /// Cleric through the SAME generic loop, proving the widening is not
+    /// special-cased to War/Strength alone.
+    #[test]
+    fn single_class_cleric_with_destruction_domain_destructive_smite_active_reaches_computed() {
+        let mut input = human_cleric_input_with_domains(6, &[DESTRUCTION_DOMAIN_SELECTION]);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: DESTRUCTIVE_SMITE_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Computed, "{:?}", receipt.computation.diagnostics);
+        let self_application = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.domain.destruction_destructive_smite_self_application")
+            .expect("Destructive Smite self-application explanation must be grounded");
+        // Destruction domain magnitude: max(level/2, 1); level 6 -> max(3,1) = 3.
+        assert_eq!(self_application.value, 3, "{self_application:?}");
+    }
+
+    #[test]
+    fn single_class_cleric_with_glory_domain_touch_of_glory_active_reaches_computed() {
+        let mut input = human_cleric_input_with_domains(7, &[GLORY_DOMAIN_SELECTION]);
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: TOUCH_OF_GLORY_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(receipt.status, HeadlessReceiptStatus::Computed, "{:?}", receipt.computation.diagnostics);
+        let self_application = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.domain.glory_touch_of_glory_self_application")
+            .expect("Touch of Glory self-application explanation must be grounded");
+        // Glory domain magnitude: the bare cleric level, unhalved -- level 7 -> 7.
+        assert_eq!(self_application.value, 7, "{self_application:?}");
     }
 
     /// A Cleric with an unrecognized domain (not Good or Healing) still
@@ -55969,14 +56203,15 @@ mod sorcerer_draconic_bloodline_dragon_resistances_ac_wiring_tests {
 mod inquisitor_dispatch_widening_safety_tests {
     use super::{
         build_pilot_headless_receipt, ActiveState, CharacterClassLevel, CharacterInput,
-        HeadlessReceiptStatus, FIGHTER_CLASS_ID, GOOD_DOMAIN_SELECTION,
+        HeadlessReceiptStatus, FIGHTER_CLASS_ID, GLORY_DOMAIN_SELECTION, GOOD_DOMAIN_SELECTION,
         INQUISITOR_CLASS_ID, INQUISITOR_DOMAIN_CHOICE_ID, INQUISITOR_JUDGMENT_ABILITY_ID,
         INQUISITOR_JUDGMENT_CHOICE_ID,
         INQUISITOR_JUDGMENT_DESTRUCTION_SELECTION_ID, INQUISITOR_JUDGMENT_HEALING_SELECTION_ID,
         INQUISITOR_JUDGMENT_JUSTICE_SELECTION_ID, INQUISITOR_JUDGMENT_PIERCING_SELECTION_ID,
         INQUISITOR_JUDGMENT_PROTECTION_SELECTION_ID, INQUISITOR_JUDGMENT_PURITY_SELECTION_ID,
         INQUISITOR_JUDGMENT_RESILIENCY_SELECTION_ID, INQUISITOR_JUDGMENT_RESISTANCE_SELECTION_ID,
-        INQUISITOR_JUDGMENT_SMITING_SELECTION_ID, TOUCH_OF_GOOD_ABILITY_ID,
+        INQUISITOR_JUDGMENT_SMITING_SELECTION_ID, TOUCH_OF_GLORY_ABILITY_ID,
+        TOUCH_OF_GOOD_ABILITY_ID,
     };
     use crate::rules_core::character_input::{
         load_character_input_fixture, ClassAbilityActivation, SelectedChoice,
@@ -56820,6 +57055,48 @@ mod inquisitor_dispatch_widening_safety_tests {
             melee_attack_bonus.detail.contains("Good domain Touch of Good sacred bonus"),
             "expected Touch of Good to be named in the melee attack bonus explanation: \
              {melee_attack_bonus:?}"
+        );
+    }
+
+    /// SD-31 wave 26: an Inquisitor who selected Glory (newly widened past
+    /// Good/War/Strength) and is actively using Touch of Glory reaches
+    /// `Computed` through the SAME generic catalog loop
+    /// `ground_or_block_inquisitor_domain_power` already used for Good/War/
+    /// Strength -- this test needed no change to that function, only to
+    /// the shared catalog it reads.
+    #[test]
+    fn single_class_inquisitor_with_glory_domain_touch_of_glory_active_applies_real_bonus() {
+        let mut input = human_inquisitor_input(9);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: INQUISITOR_DOMAIN_CHOICE_ID.to_owned(),
+            selection_id: GLORY_DOMAIN_SELECTION.to_owned(),
+        });
+        input.chosen.class_ability_activations.push(ClassAbilityActivation {
+            ability_id: TOUCH_OF_GLORY_ABILITY_ID.to_owned(),
+            active_state: ActiveState::EquippedActive,
+            rounds_consumed_today: None,
+        });
+
+        let receipt = build_pilot_headless_receipt(&input);
+
+        assert_eq!(
+            receipt.status,
+            HeadlessReceiptStatus::Computed,
+            "with the Glory domain recorded, Inquisitor's remaining gaps are named without \
+             blocking: {:?}",
+            receipt.computation.diagnostics
+        );
+
+        let self_application = receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.domain.glory_touch_of_glory_self_application")
+            .expect("Touch of Glory self-application must be grounded");
+        assert_eq!(
+            self_application.value, 9,
+            "Inquisitor level 9 Touch of Glory bonus: the bare level, unhalved = 9: \
+             {self_application:?}"
         );
     }
 
