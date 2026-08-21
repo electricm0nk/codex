@@ -163,7 +163,12 @@ use super::rules_tables::RuleSetId;
 // modules, several thousand lines below, that call these functions via
 // `super::<name>` -- keeps resolving unqualified, name for name, with no
 // call site edited.
-mod class_feature_grant_consumer;
+// `pub(crate)`, not private: `derived_evaluator_fixture_check.rs`'s own `class_feature_
+// description_entries` bar check (SD-31 wave 26) drives this module's REAL `resolve_pcgen_var_
+// chain`/`class_level_variable_name` directly, rather than a second, duplicated implementation --
+// both live inside the `codex` crate, so `pub(crate)` is enough; no `tests/`-crate-visible `pub`
+// is needed or added.
+pub(crate) mod class_feature_grant_consumer;
 mod class_slayer;
 mod class_ultimate_combat;
 /// SD-31 wave 25's interpreter reproduction harness (`OPERATOR-RULINGS-2026-08-21.md` §20) --
