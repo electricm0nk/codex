@@ -17,6 +17,74 @@ purpose: Structural work that unblocks many units at once. Ranked by units-per-u
 | L6 | **The 36 grant facts with no DESC at all.** Their rules text lives on the class progression table, not a per-feature description. No `%N` mechanism will ever reach them. | **corrected wave 28: the real population is ≥1,764 within `class_feature` alone** (class_feature's own G3, magnitude-bearing units with no consumer function, is 2,583; of these, a shallow-but-unverified scan suggests roughly 1,764 lack a %N-reachable description entirely — flagged as needing a real re-derivation, not the "36 known" figure this lever was filed at) | NOT ANALYSED |
 | L7 | **(new, wave 28) Template-application mechanism.** PF1e creature/familiar TEMPLATES (Ogrekin, Animated Object, Dread Lord, Celestial/Fiendish, Mana Wastes Mutant, Fungal Creature, Petitioner...) have no single stat block for the current per-creature chassis model to hold. | **≥479 units** (corrected wave 28 via adversarial review from a filed ≥547 — 430 monster_ability + 49 companion, only 2 of the pile's 3 kinds checked, so this is a floor) | NOT STARTED — a genuinely new engine mechanism, not data transcription |
 
+### L5 sub-finding (wave 29 lane 2) — a method for the OPEN/EXCLUSIVE axis, applied to the 27 `CLASS_FEATURE_POOLS` entries
+
+Ruling §18 makes OPEN-vs-EXCLUSIVE load-bearing for any pool-catalog widening, and THE-BOX (wave
+28) found 811 of 817 distinct option-pool group names never classified on that axis. This lane was
+not asked to classify all 817, only to establish the method and classify as many as it can defend.
+
+**The method:** for each pool, read the class's own selection mechanic (not the corpus row, which
+does not encode this) against one question — *does a character gain ADDITIONAL instances of this
+choice over the course of leveling, keeping every earlier pick (OPEN), or is the choice made
+EXACTLY ONCE, permanently, at a fixed level (EXCLUSIVE)?* This is the same distinction Ruling §18
+draws for Cleric Domain ("once a character takes the Void domain, Scalykind's powers are not
+available to them").
+
+**Applied to all 28 `CLASS_FEATURE_POOLS` entries** (this file's own registry, not the wider
+817-name census — a bounded, defensible slice of it; `Arcane School` and `Focused Arcane School`
+share one table row below since both are Wizard's same EXCLUSIVE choice). **Correction against this
+lane's own dispatch brief**, which cited "27-entry pool table" — `awk '/const CLASS_FEATURE_POOLS/,
+/^\];/' src/bin/v06_work_inventory.rs | grep -c '^\s*("'` counts 28, not 27; re-derived rather than
+trusted, per the standing instruction. Self-derived from standard, widely-published PF1e
+class-mechanic text, **not per-group re-verified against the pinned oracle** — flag this the same
+way `class_feature_pool_group_matches`'s own false-suffix list demands: treat as PROPOSED,
+spot-check before any pool moves from this list into `REGISTERED_POOL_GROUPS` (the render catalog
+Ruling §18 actually gates).
+
+| Pool | Owner | Axis | Why |
+|---|---|---|---|
+| Rage Power | barbarian | **OPEN** | operator-ruled already, §18 |
+| Unchained Rage Power | unchained_barbarian | **OPEN** | same mechanic as Rage Power |
+| Discovery | alchemist | **OPEN** | gains a new discovery at multiple levels, keeps all |
+| Grand Discovery | alchemist | **EXCLUSIVE** | exactly one, at 20th level, permanent |
+| Rogue Talent | rogue | **OPEN** | operator-ruled already, §18 |
+| Advanced Talents | rogue | **OPEN** | same repeatable-pick mechanic, unlocked at 10th |
+| Hex | witch | **OPEN** | gains a new hex at multiple levels, keeps all |
+| Revelation | oracle | **OPEN** | gains a new revelation at multiple levels, keeps all |
+| Mercy | paladin | **OPEN** | gains a new mercy at multiple levels, keeps all |
+| Investigator Talent | investigator | **OPEN** | repeatable, same shape as Rogue Talent |
+| Slayer Talent | slayer | **OPEN** | repeatable, same shape as Rogue Talent |
+| Judgment | inquisitor | **OPEN** | gains an additional judgment KNOWN at higher levels (only one active at a time, but the known set grows and old ones are never lost) |
+| Inquisition | inquisitor | **EXCLUSIVE** | chosen once at 1st level, permanent |
+| Blessing | warpriest | **EXCLUSIVE** | both blessings are chosen once at 1st level (tied to deity), never gains more |
+| Evolution | summoner | **OPEN** | eidolon gains new evolutions at multiple levels |
+| Bloodline | sorcerer | **EXCLUSIVE** | chosen once at 1st level, permanent |
+| Bloodrager Bloodline | bloodrager | **EXCLUSIVE** | same shape as Sorcerer Bloodline |
+| Domain | cleric | **EXCLUSIVE** | Ruling §18's own worked example |
+| Order | cavalier | **EXCLUSIVE** | chosen once at 1st level, permanent |
+| Mystery | oracle | **EXCLUSIVE** | chosen once at 1st level; determines the whole Revelation list |
+| Curse | oracle | **EXCLUSIVE** | chosen once at 1st level, permanent |
+| Spirit | shaman | **EXCLUSIVE** | chosen once at 1st level; determines hex/spell access |
+| Animal Focus | hunter | **OPEN** | additional focuses become known at higher levels, all retained (only the ACTIVE focus is exclusive per use, the KNOWN pool is open) |
+| Favored Enemy | ranger | **OPEN** | gains an additional favored enemy at multiple levels |
+| Favored Terrain | ranger | **OPEN** | gains an additional favored terrain at multiple levels |
+| Versatile Performance | bard | **OPEN** | gains an additional linked performance at multiple levels |
+| Arcane School / Focused Arcane School | wizard | **EXCLUSIVE** | chosen once at 1st level, permanent |
+
+**Net: 16 OPEN, 12 EXCLUSIVE** (28 registry entries, 27 table rows above). 2 of the 16 OPEN are
+already operator-ruled (§18: Rogue Talent, Rage Power); the other 14 OPEN and all 12 EXCLUSIVE are
+newly classified this wave. Every EXCLUSIVE entry (Grand Discovery, Inquisition, Blessing,
+Bloodline, Bloodrager Bloodline, Domain, Order, Mystery, Curse, Spirit, Arcane School, Focused
+Arcane School) must never gain the browsable reference-catalog pattern per §18. Not code-changed
+this wave (no entry here was added to `REGISTERED_POOL_GROUPS` or otherwise wired to a
+`done`/`text-complete` credit) -- this is the classification groundwork §18 asks for, filed for the
+next pool-widening cycle to consume, not a widening itself.
+
+**Scope note:** this covers the 28 entries (27 distinct group names) already registered in this
+probe's own pool table, out of the 817 distinct group names THE-BOX's G1 census found; the other
+~790 names still need the same per-pool mechanic read before any of them can be registered
+anywhere.
+
 ## Levers that turned out not to be
 
 * **Bulk description ingest** (wave 19 thesis) — REFUTED. "not-ingested" means the engine emits no explanation naming the record, not that text is missing. The records already exist with real prose.

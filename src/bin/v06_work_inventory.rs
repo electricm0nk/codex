@@ -5200,6 +5200,59 @@ fn class_feature_owner_via_type_facet<'a, I: Iterator<Item = &'a String>>(
         .find_map(|candidate| class_feature_owner(&candidate, classes.iter().copied()))
 }
 
+/// THIRD owner-resolution fallback (`classify()`'s `Kind::ClassFeature` arm,
+/// tried after `class_feature_owner` and `class_feature_owner_via_type_facet`
+/// both fail): resolves `group` via [`CLASS_FEATURE_POOLS`] /
+/// [`class_feature_pool_group_matches`] -- the SAME matcher, pool table, and
+/// false-positive guards `probe_class_feature_key` /
+/// `probe_class_feature_effect_wiring` already use elsewhere in this file.
+/// `THE-BOX.md` §3 item #2 (wave 29 lane 2): a group like `"Rage Power"` or
+/// `"Battle Mystery"` never equals any modelled class's own name, so
+/// `class_feature_owner` can never match it directly; these records have no
+/// `type_facet` "<Class> Class Feature" marker either (that taxonomy segment
+/// names the class that grants the CHOICE, not the pool word), so the second
+/// fallback misses them too. Without this third fallback such a record's
+/// `owner` never resolves at all, and `classify()` reports it `unknown`
+/// (`class_feature_group_names_no_class_at_all`) -- landing `unmeasurable`
+/// (`pf1e_dashboard_producer.doneness_verdict`) however wired the record
+/// genuinely is, since `unknown` is never classifiable against any bar.
+///
+/// Only returns an owner that is ITSELF a modelled class
+/// (`class_books.contains_key`) -- the same discipline
+/// `class_feature_owner`'s own `classes` iterator already enforces (it is
+/// only ever called with `facts.class_books.keys()`), so this fallback can
+/// never invent an owner the engine has no chassis for.
+///
+/// **Safety (why this can never widen what GROUNDS a record) -- identical
+/// argument to `class_feature_owner_via_type_facet`'s own doc comment.**
+/// Every downstream grounding check in `classify()`'s `Kind::ClassFeature`
+/// arm requires the corpus_key's OWN group text to literally equal the
+/// resolved owner's name (`class_feature_exact_suffix_grounded`'s
+/// `group.eq_ignore_ascii_case(&class_name_as_group_text(owner))` guard,
+/// checked first, unconditionally). A pool group like `"Rage Power"` can
+/// never equal a class's own name like `"barbarian"` -- if it did,
+/// `class_feature_owner` would already have matched it directly and this
+/// fallback would never run. So recovering an owner this way can only ever
+/// route a record to `not-ingested` or, if a genuine per-class engine
+/// diagnostic separately names it, `deferred-with-reason` -- never
+/// `grounded`/`done`. Proven directly by
+/// `class_feature_consumer_delta_tests::
+/// a_pool_catalog_recovered_owner_can_never_ground_a_record_even_with_a_matching_explanation_id`,
+/// with a real explanation id planted specifically to try to defeat the
+/// guard.
+fn class_feature_owner_via_pool_catalog(
+    group: &str,
+    class_books: &BTreeMap<String, &'static str>,
+) -> Option<String> {
+    CLASS_FEATURE_POOLS
+        .iter()
+        .find(|(registered, owner, _, _)| {
+            class_books.contains_key(*owner)
+                && class_feature_pool_group_matches(registered, owner, group, class_books)
+        })
+        .map(|(_, owner, _, _)| (*owner).to_string())
+}
+
 /// The exact magnitude-descriptor suffix words `OPEN-ISSUES.md` row 78's own
 /// scale-estimate regex named (`_(bonus|count|dc|...)$`), reused verbatim
 /// rather than re-derived, so this list stays auditable against the finding
@@ -6641,6 +6694,12 @@ fn classify(
             // -- a pure fallback, never a replacement (see
             // `class_feature_owner_via_type_facet`'s doc comment for the
             // safety argument: this can never cause a false `grounded`).
+            // THIRD fallback, wave 29 lane 2 (`THE-BOX.md` §3 item #2): when
+            // both of those miss, try the registered option-pool catalog --
+            // `class_feature_owner_via_pool_catalog`'s own doc comment
+            // carries the identical safety argument (never a false
+            // `grounded`), and is a pure ADDITION after the first two, never
+            // a replacement.
             let Some(owner) = class_feature_owner(&unit.key, facts.class_books.keys())
                 .or_else(|| {
                     class_feature_owner_via_type_facet(
@@ -6648,6 +6707,7 @@ fn classify(
                         facts.class_books.keys(),
                     )
                 })
+                .or_else(|| class_feature_owner_via_pool_catalog(group, &facts.class_books))
             else {
                 // The group names no class this engine models. Before calling
                 // it unclassifiable, ask whether the CORPUS declares a class by
@@ -11647,8 +11707,22 @@ mod class_feature_text_complete_rung_tests {
 
     /// PROVE THE RUNG CAN FAIL for the unowned shape too: the SAME group
     /// text, but the catalog does not hold this exact `(source_book, key)`
-    /// -- must stay on the pre-existing `not_ingested` evidence, never
-    /// manufacture `text-complete` from the group-name match alone.
+    /// -- must stay `not-ingested`, never manufacture `text-complete` from
+    /// the group-name match alone.
+    ///
+    /// **Evidence string updated, wave 29 lane 2 (`THE-BOX.md` §3 item #2):**
+    /// `class_feature_owner_via_pool_catalog` now resolves "Rage Power" to
+    /// "barbarian" (a real `CLASS_FEATURE_POOLS` entry, `class_books`
+    /// carries the owner), so this record no longer falls through the "no
+    /// owner resolved" branch at all -- it takes the SAME "owner resolved
+    /// but not grounded, not catalog-held" path `a_pool_member_the_catalog_
+    /// does_not_hold_stays_not_ingested` (the OWNED "Rogue Talent" sibling
+    /// case, immediately below) already exercises, and so now correctly
+    /// carries that path's evidence token instead of the generic "no owner
+    /// at all" one. The doneness verdict is unchanged either way
+    /// (`not-ingested` -> `not-started` under both evidence strings) --
+    /// only the diagnostic detail improved, which is the entire point of
+    /// wiring a real owner resolution in.
     #[test]
     fn an_unowned_pool_member_the_catalog_does_not_hold_stays_not_ingested() {
         let mut facts = EngineFacts::default();
@@ -11662,7 +11736,10 @@ mod class_feature_text_complete_rung_tests {
         );
         let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
         assert_eq!(verdict.status, "not-ingested");
-        assert_eq!(verdict.evidence, "class_feature_option_pool_record_not_held_by_engine");
+        assert_eq!(
+            verdict.evidence,
+            "class_feature_owner_matched_by_name_but_record_not_held_by_engine"
+        );
     }
 
     /// PROVE THE RUNG CAN FAIL, case 3b: the SAME pool-member shape, but the
@@ -14465,6 +14542,204 @@ mod class_feature_consumer_delta_tests {
                  class/subsystem and must stay excluded"
             );
         }
+    }
+
+    /// Wave 29 lane 2 (`THE-BOX.md` §3 item #2): a magnitude-bearing
+    /// `class_feature` unit whose group text matches a registered
+    /// `CLASS_FEATURE_POOLS` entry (e.g. "Rage Power" -> "barbarian") but
+    /// whose group names no engine-modelled class DIRECTLY and carries no
+    /// `type_facet` marker either -- `class_feature_owner` and
+    /// `class_feature_owner_via_type_facet` both fail, and today's
+    /// production `classify()` lands it `unknown`
+    /// (`class_feature_group_names_no_class_at_all`), the `unmeasurable`
+    /// bucket A shape THE-BOX's census named. This is RED against today's
+    /// `classify()` -- the owner-resolution fallback chain does not yet try
+    /// the pool catalog. Wiring it must turn this GREEN without ever
+    /// producing `grounded` (proven by a sibling test below).
+    #[test]
+    fn a_pool_shaped_group_with_no_other_owner_signal_must_not_stay_unknown() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("barbarian".to_string(), "core_rulebook");
+        let unit = CorpusUnit {
+            book: "core_rulebook".to_string(),
+            source_book: "core_rulebook".to_string(),
+            kind: Kind::ClassFeature,
+            key: "Rage Power ~ Some Unregistered Power".to_string(),
+            name: "Some Unregistered Power".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "crb_abilities_class.lst".to_string(), line: 900 },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_ne!(
+            verdict.status, "unknown",
+            "a group matching a registered CLASS_FEATURE_POOLS entry must resolve an owner via \
+             the pool-catalog fallback, not fall through to unknown/unmeasurable"
+        );
+        // Exact landing spot: no diagnostic names this synthetic feature and
+        // no explanation id exists in `facts`, so it must land the same
+        // honest `not-ingested` rung the type_facet fallback's own
+        // equivalent integration test lands on -- never `grounded`.
+        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.evidence, "no_explanation_id_and_no_diagnostic_names_this_feature");
+    }
+
+    /// **THE SAFETY PROOF, pool-catalog variant.** Identical shape to
+    /// `class_feature_type_facet_owner_fallback_tests::
+    /// a_type_facet_recovered_owner_can_never_ground_a_pool_record_even_with_a_matching_explanation_id`:
+    /// plant a real explanation id that WOULD ground a genuine `"Barbarian ~
+    /// Rage Power"` record, then prove that resolving `owner` via the pool
+    /// catalog for a record whose own group is `"Rage Power"` (never equal
+    /// to `"Barbarian"`) still cannot ride it to `grounded` --
+    /// `class_feature_exact_suffix_grounded`'s `group.eq_ignore_ascii_case`
+    /// guard fails first, exactly as designed.
+    #[test]
+    fn a_pool_catalog_recovered_owner_can_never_ground_a_record_even_with_a_matching_explanation_id(
+    ) {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("barbarian".to_string(), "core_rulebook");
+        // Deliberately planted to try to defeat the guard -- this id would
+        // ground a real `"Barbarian ~ Rage Power"` record.
+        facts.explanation_ids.insert("class_feature.barbarian.rage_power".to_string());
+        let unit = CorpusUnit {
+            book: "core_rulebook".to_string(),
+            source_book: "core_rulebook".to_string(),
+            kind: Kind::ClassFeature,
+            key: "Rage Power ~ Superstition".to_string(),
+            name: "Superstition".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "crb_abilities_class.lst".to_string(), line: 901 },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "computed", false);
+        assert_ne!(verdict.status, "unknown", "the owner must be recovered via the pool catalog");
+        assert_ne!(
+            verdict.status, "grounded",
+            "a pool-catalog-recovered owner must never ground a record: status={} evidence={}",
+            verdict.status, verdict.evidence
+        );
+        assert_eq!(verdict.status, "not-ingested");
+    }
+
+    /// NEGATIVE CONTROL: a group whose text shape does NOT match any
+    /// registered pool entry (no suffix, no exact word) must be entirely
+    /// unaffected by this fallback and still read `unknown` -- the fallback
+    /// is additive, not a behaviour change for the genuinely unattributable
+    /// population. Reuses the exact fixture
+    /// `class_feature_type_facet_owner_fallback_tests::
+    /// a_record_with_no_class_signal_anywhere_still_reads_unknown` already
+    /// pins ("Domain Power" matches neither "Domain" exactly nor the
+    /// `" Domain"` suffix), confirming the two fallbacks agree.
+    #[test]
+    fn a_group_shape_matching_no_registered_pool_still_reads_unknown() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("sorcerer".to_string(), "core_rulebook");
+        let unit = CorpusUnit {
+            book: "advanced_class_guide".to_string(),
+            source_book: "advanced_class_guide".to_string(),
+            kind: Kind::ClassFeature,
+            key: "Domain Power".to_string(),
+            name: "Domain Power".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "acg_abilities_class.lst".to_string(), line: 200 },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        };
+        let verdict = classify(&unit, &facts, &BTreeSet::new(), false, true, "display", false);
+        assert_eq!(verdict.status, "unknown");
+        assert_eq!(verdict.evidence, "class_feature_group_names_no_class_at_all");
+    }
+
+    /// NEGATIVE CONTROL, the guard itself: `class_feature_owner_via_pool_catalog`
+    /// must never return an owner that is not a modelled class -- same
+    /// discipline `class_feature_owner`'s own `classes` iterator already
+    /// enforces (`facts.class_books.keys()` only). Proves the `owner`
+    /// membership check inside the new fallback is load-bearing, not dead
+    /// code: without it, "Rage Power" would resolve to `"barbarian"` even
+    /// when the engine has no barbarian chassis at all.
+    #[test]
+    fn class_feature_owner_via_pool_catalog_refuses_an_unmodelled_owner() {
+        let class_books: BTreeMap<String, &'static str> = BTreeMap::new();
+        assert_eq!(class_feature_owner_via_pool_catalog("Rage Power", &class_books), None);
+    }
+
+    /// Direct unit coverage: the pool-catalog fallback resolves the SAME
+    /// owner `class_feature_pool_group_matches` itself would report a match
+    /// for, for a representative sample spanning the suffix-match shape
+    /// ("Battle Mystery" -> oracle) and the bare-word shape ("Hex" -> witch).
+    #[test]
+    fn class_feature_owner_via_pool_catalog_resolves_known_pool_shapes() {
+        let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();
+        class_books.insert("oracle".to_string(), "core_rulebook");
+        class_books.insert("witch".to_string(), "advanced_players_guide");
+        assert_eq!(
+            class_feature_owner_via_pool_catalog("Battle Mystery", &class_books),
+            Some("oracle".to_string())
+        );
+        assert_eq!(
+            class_feature_owner_via_pool_catalog("Hex", &class_books),
+            Some("witch".to_string())
+        );
+        assert_eq!(class_feature_owner_via_pool_catalog("Domain Power", &class_books), None);
+    }
+
+    /// **Independent re-derivation of THE-BOX.md's "612" figure**, against
+    /// the real committed inventory (not a hand-built fixture) -- the
+    /// standing instruction ("verify the 612 figure yourself rather than
+    /// trusting it") this lane was dispatched under. Counts every
+    /// `class_feature` unit that is BOTH currently `status == "unknown"`
+    /// (today's production `classify()` output, i.e. genuinely
+    /// `unmeasurable` before this fix -- and, by `classify()`'s own control
+    /// flow, this status is reachable ONLY for a record where `text_only`
+    /// was `false`; a `magnitude_token_count > 0` proxy for that was tried
+    /// first and undercounted by 41, because `text_only` also depends on
+    /// `carries_prose_magnitude`, which is not itself a committed inventory
+    /// field -- `status == "unknown"` is the exact, ungamed signal, not a
+    /// proxy for one) AND whose group matches a registered
+    /// [`CLASS_FEATURE_POOLS`] entry under [`class_feature_pool_group_matches`]
+    /// with an owner this run's real [`modelled_class_books`] registers --
+    /// the EXACT population this fallback moves out of `unknown`.
+    #[test]
+    fn independent_recount_of_the_612_unmeasurable_bucket_a_figure() {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let class_books = modelled_class_books();
+        let inventory = std::fs::read_to_string(repo_root.join(OUTPUT_RELATIVE_PATH))
+            .expect("docs/work-inventory.json is readable");
+        let parsed: serde_json::Value =
+            serde_json::from_str(&inventory).expect("work-inventory.json parses");
+        let mut matched: Vec<String> = Vec::new();
+        for unit in parsed["units"].as_array().into_iter().flatten() {
+            if unit["kind"].as_str() != Some("class_feature") {
+                continue;
+            }
+            if unit["status"].as_str() != Some("unknown") {
+                continue;
+            }
+            let Some(key) = unit["corpus_key"].as_str() else { continue };
+            let group = key.split(" ~ ").next().unwrap_or(key);
+            if class_feature_owner_via_pool_catalog(group, &class_books).is_some() {
+                matched.push(key.to_string());
+            }
+        }
+        eprintln!(
+            "independent recount: {} class_feature units currently `unknown` and \
+             pool-catalog-resolvable",
+            matched.len()
+        );
+        // Pinned at the value re-derived this wave. If a future corpus
+        // change moves this, re-derive by hand before touching the
+        // assertion -- this is exactly the number-must-ship-with-its-
+        // command discipline `AGENTS.md`'s Concurrency section requires.
+        assert_eq!(
+            matched.len(),
+            612,
+            "re-derived count does not match THE-BOX.md's filed 612 -- matched keys: {matched:?}"
+        );
     }
 
     /// The discriminator that makes this a consumer-delta probe rather than a
