@@ -1625,3 +1625,140 @@ restored — the RED/GREEN pair `§17`'s own gate-must-be-able-to-fail bar requi
 **Authority (execution):** this ruling's own text (`§17`'s "owed work" instruction — confirm the 180
 case by case, since adjacency is a heuristic, not proof — quoted in full above), executed wave 16.
 
+
+## Decision 18 — Option pools must show ONLY VALID CHOICES; open vs exclusive pools are not interchangeable (operator ruling 2026-08-21)
+
+**Ruled, verbatim:** *"we need to show only valid choices."*
+
+Folded in from `artifacts/OPERATOR-RULINGS-2026-08-21.md` §18 at wave 25b integration.
+
+Answers the exclusive-choice-pool question wave 24's `BESTIARY-6-LEDGER.md` raised (see row 351 of
+`OPEN-ISSUES.md`): may a Cleric/Inquisitor domain power ride the same "browsable reference regardless
+of selection" pattern `REGISTERED_POOL_GROUPS` already uses for Rogue Talent and Rage Power?
+
+**No, for a structural reason, not a book-specific one.** A domain is an EXCLUSIVE, once-per-
+character choice — once a character takes the Void domain, Scalykind's powers are never available to
+them, so showing every domain's power to every cleric is not "showing valid choices." Rogue Talent and
+Rage Power are genuinely OPEN, repeatable-pick pools — any rogue can eventually take any rogue talent
+— so the reference-catalog pattern IS honest there, and wave 23's +109 units through that pattern
+stand unchanged.
+
+**The general rule, binding on every future pool:** before registering a new pool in
+`REGISTERED_POOL_GROUPS` (or an equivalent reference-catalog pattern), classify it OPEN
+(repeatable pick from a standing list) or EXCLUSIVE (a once-per-character branch). Open pools may use
+the reference-catalog pattern. Exclusive pools may NOT — they need real per-selection grounding (the
+`domain_power` interpreter merged this same wave, see the wave 25b receipt, is exactly that for
+Cleric/Inquisitor domains).
+
+**Also binding, not yet discharged:** this ruling makes prerequisites load-bearing for the two
+shipped open pools too — a pool option whose prerequisites a given character cannot meet is not a
+valid choice FOR THEM, so `REGISTERED_POOL_GROUPS`'s Rogue Talent/Rage Power catalogs must be
+confirmed to honour prerequisite gating rather than listing the pool wholesale. **That check has not
+been done as of this fold-in** — logged as `OPEN-ISSUES.md` follow-on work, not discharged by this
+decision alone.
+
+**Consequence for the three domain-power units `BESTIARY-6-LEDGER.md` flagged as bankable via the
+reference-catalog pattern** (Intense Celebration, It Came From Beyond, The Stars Are Right — Void/
+Scalykind/Dark Tapestry domains): they may **not** be banked that way. They need the same real
+domain-power grounding the merged `domain_power` module now provides for Good/Healing/War/Strength —
+Void, Scalykind, and Dark Tapestry are not yet in `DOMAIN_POWER_CATALOG` (their granting records lack
+the `Domain<X>LVL`/`Domain<X>Times` `BONUS:VAR` chain the catalog depends on, per `domain_power.rs`'s
+own "what this does NOT cover" list) and stay ungrounded, unchanged, pending that ingest gap being
+closed separately.
+
+**Authority:** operator ruling, 2026-08-21, verbatim above (`OPERATOR-RULINGS-2026-08-21.md` §18).
+
+---
+
+## Decision 19 — Cross-book verbatim reprints: settled doctrine, close it — CITES §13, NOT §10 (operator ruling 2026-08-21)
+
+**Ruled, verbatim:** *"this is settled doctrine. flag it, mark as complete, move on."*
+
+Folded in from `artifacts/OPERATOR-RULINGS-2026-08-21.md` §19 at wave 25b integration, with one
+citation correction made during the fold-in (see below).
+
+Bestiary 6 ships 2 spells that are byte-identical reprints of spells Ultimate Wilderness already
+ships. `BESTIARY-6-LEDGER.md` raised this as needing a new cross-book-reprint crediting mechanism.
+It does not — this was already settled doctrine before wave 25b, and the ruling's own instruction is
+to stop treating it as an open architectural question.
+
+**Citation correction made at fold-in:** the ruling text as written cites "`decisions.md §10`
+(newest printing wins, older is out of scope)" as the settling authority. `§10` is not the current
+rule — `§13` (2026-08-17, this same file) explicitly **corrected** `§10`'s direction: for identical
+printings, the FIRST print owns the object, not the newest. The two rules happen to reach the SAME
+outcome for this specific pair (Ultimate Wilderness published 2018, before Bestiary 6, so Ultimate
+Wilderness is the first print under `§13` AND the older book under `§10`'s superseded framing — both
+frameworks name Ultimate Wilderness as the survivor), so the ruling's OUTCOME is correct and is
+applied as written. But the next cycle citing this decision should cite `§13`, not `§10` — `§10`'s
+"newest wins" framing is superseded doctrine and must not be reapplied to a pair where the two
+directions disagree.
+
+**Applied:** Bestiary 6's 2 reprinted spells are marked SUPERSEDED under `§13` branch 1 (identical
+printing, first print — Ultimate Wilderness — owns it), reclassified in `v06_work_inventory.rs`'s
+`classify()` from `not-ingested`/WIRING GAP to `text-complete` with real supersession evidence — not
+excluded from the denominator (per `§13`'s "supersession does not inflate/deflate the denominator"
+guard, inherited from `§10`). **A LIMIT surfaced at wave 25b integration, folded in here rather than
+left silent:** "credit as done" is the ruling's intent, but `doneness_verdict()`'s existing lattice
+has no `DONE`-mapped cell for a `derived`-wiring-class unit under `text-complete` (only
+`literal-verified`/`fixture-verified` reach `DONE` for `static`/`derived`; `text-complete` maps to
+`HELD`) — and forcing one open a new cell purely to match this ruling's outcome would be gaming the
+same instrument Decision 1a protects. The applied fix stops treating the reprints as an open
+engineering question (no cross-book-reprint crediting mechanism is to be built, and none was) but
+does not itself move the mandate headline for these 2 units. Whether `doneness_verdict()` should
+gain a genuine supersession-aware `DONE` path — a real doctrine change affecting every future
+supersession case, not just these two — is an open ruling, logged at `OPEN-ISSUES.md` row 358.
+
+**Authority:** operator ruling, 2026-08-21, verbatim above (`OPERATOR-RULINGS-2026-08-21.md` §19).
+
+---
+
+## Decision 20 — §24.1 (`SD-27 decisions.md`) is overturned for this package: build the formula interpreter, gated by fixtures (operator ruling 2026-08-21)
+
+**Ruled, verbatim:** *"I choose thousands. if we need to revisit this, we can do it in the future.
+for now we need to get something in front of the user community."*
+
+Folded in from `artifacts/OPERATOR-RULINGS-2026-08-21.md` §20 at wave 25b integration. This decision
+is recorded in SD-31's own `decisions.md` (this file) because it governs SD-31 packages' construction
+choices going forward, even though the ruling it overturns lives in the separate `SD-27 decisions.md`.
+
+**What was overturned.** `SD-27 decisions.md §24.1` (2026-07-31, operator-pinned): *"No formula
+interpreter. Each feature is a hand-written, corpus-verified pure function."* Its rationale was that
+a misinterpreted token becomes "a plausible number nobody checks," while a wrong hand function is a
+failing test. That property is real, but the checking machinery it assumed absent — a fixture gate
+pinning a computed value against an expected value transcribed from bytes the evaluator never reads —
+now exists (`derived_evaluator_fixture_check`, since wave 13) and is mutation-proven able to fail.
+
+**What is now authorised:** reading PCGen's own formula tokens and evaluating them, instead of
+hand-writing a pure function per feature, FOR THIS PACKAGE.
+
+**What is NOT relaxed — the condition that makes this safe:** every interpreted value banked by a
+consumer must clear `derived_evaluator_fixture_check`. **An interpreted value with no fixture is not
+done.** §24.1's real concern is answered by that gate, not abandoned.
+
+**The correctness bar:** the interpreter must reproduce every one of the roughly 27 classes' worth of
+existing hand-modelled functions (mechanically floor-counted at >=166 by
+`formula_reproduction_harness.rs`, merged this wave). Any disagreement is a finding worth having,
+either side.
+
+**Provenance note, recorded because it is this program's most transferable process lesson from
+wave 25/25b:** wave 25's interpreter-core lane REFUSED to build against this same authorisation the
+first time it was dispatched, because the ruling had been WRITTEN but never COMMITTED — it existed
+only in the orchestrator's own working tree. A lane in a fresh worktree checked every ref, found the
+ruling nowhere in the repo, and correctly declined to reverse a pinned safety ruling (§24.1) on the
+authority of a dispatch prompt alone. **That refusal was correct and is exactly the behaviour this
+program asks for.** The fault was entirely the orchestrator's: dispatching lanes to act on an
+uncommitted file. A ruling is not in force until it is committed to the branch. `§20` was re-dispatched
+in wave 25b only after independently confirming `OPERATOR-RULINGS-2026-08-21.md` was committed at
+`858df7664` (tranche/11 tip) — verified again, independently, at the start of this integration cycle.
+
+**What wave 25b integration found and fixed before banking anything through it:** the interpreter
+module built against this authorisation initially cited the WRONG PCGen engine for several of its
+"oracle-derived" semantic claims, and had one real, latent correctness bug (over-permissive function-
+name case matching) and one real, currently-unfixed gap (`classlevel()` does not verify its class-name
+argument, silently wrong for genuine cross-class formulas). See `OPEN-ISSUES.md` rows 354-357 and the
+wave 25b receipt for the full account. **Zero units have been banked through the interpreter as of
+this fold-in** — the correctness bar above has not yet been cleared by any consumer, consistent with
+"thousands, not tens" being the ruling's ASPIRATION, not yet a delivered number.
+
+**Authority:** operator ruling, 2026-08-21, verbatim above (`OPERATOR-RULINGS-2026-08-21.md` §20,
+overturning `SD-27 decisions.md §24.1`, 2026-07-31).

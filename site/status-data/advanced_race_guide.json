@@ -7989,11 +7989,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 69,
-      "partial": 89,
+      "done": 74,
+      "partial": 84,
       "not_started": 70,
       "denominator": 228,
-      "pct": 30.3,
+      "pct": 32.5,
       "excluded_from_percentage": 95,
       "standing_breakdown": {
         "unclassified": 95,
@@ -9423,14 +9423,14 @@
         },
         {
           "name": "Normal Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Gillman Racial Trait.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Gillman Racial Trait.SpecialQuality.Racial Speed)"
         },
         {
           "name": "Normal Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Vanara Racial Trait.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Vanara Racial Trait.SpecialQuality.Racial Speed)"
@@ -9549,7 +9549,7 @@
         },
         {
           "name": "Riverfolk",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Gillman Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Riverfolk"
@@ -9745,7 +9745,7 @@
         },
         {
           "name": "Slime Hunter",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Gillman Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Slime Hunter"
@@ -9997,7 +9997,7 @@
         },
         {
           "name": "Throwback",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Gillman Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Throwback"
@@ -10067,7 +10067,7 @@
         },
         {
           "name": "Tree Stranger",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Vanara Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Tree Stranger"
@@ -10200,7 +10200,7 @@
         },
         {
           "name": "Whitecape",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Vanara Racial Trait.SpecialQuality.Special Quality",
           "standing": "origin",
           "display_name": "Whitecape"

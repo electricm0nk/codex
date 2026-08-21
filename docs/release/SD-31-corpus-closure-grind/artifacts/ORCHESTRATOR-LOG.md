@@ -1433,3 +1433,50 @@ three subsystem widenings that close units across many books at once — the dom
 subsystem (Good+Healing only today), a `monster_chassis` <-> companion-ability bridge, and a
 `race_ids_with_a_magnitude_consumer` flat-override seam — all three named with exact blocking code
 citations in the ledger, not estimated.
+
+
+## Board after wave 25b (`SD31-W25B-INTEGRATE-001..009`, 2026-08-21) — formula interpreter core, re-run
+
+**Re-run of wave 25's interpreter-core dispatch, whose lane correctly REFUSED to build the first
+time (the authorising ruling had been written but never committed — see `progress.md`'s "process
+failure" section for the full account). Re-verified `OPERATOR-RULINGS-2026-08-21.md` committed at
+`858df7664` (this cycle's own base) before building anything.**
+
+| Kind | Denominator before | Denominator after | Done before | Done after | Delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 28 (15.1351%) | 28 (15.1351%) | +0 |
+| class_feature | 15,439 | 15,439 | 329 (2.1310%) | 329 (2.1310%) | +0 |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,313 (85.5831%) | 5,313 (85.5831%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 516 (32.6582%) | 516 (32.6582%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 989 (77.8740%) | 989 (77.8740%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,790 (60.8430%) | 1,790 (60.8430%) | +0 |
+| race | 95 | 95 | 35 (36.8421%) | 35 (36.8421%) | +0 |
+| race_trait | 3,504 | 3,504 | 525 (14.9829%) | **540 (15.4110%)** | **+15** |
+| spell | 2,843 | 2,843 | 1,573 (55.3289%) | 1,573 (55.3289%) | +0 |
+| **TOTAL** | **38,372** | **38,372** | **13,428 (34.9943%)** | **13,443 (35.0334%)** | **+15** |
+
+**All +15 traces to ONE cause: the merged `race_trait` flat-override consumer (Rougarou/Gillman/
+Vanara Speed/Vision/Natural-Weapon), NOT the interpreter.** The formula interpreter itself
+(`formula_interpreter.rs`, merged and corrected this cycle — wrong-engine citations fixed,
+case-sensitivity bug fixed, `classlevel` cross-class gap logged as a hard precondition) and the
+domain-power extension (`domain_power.rs`, wired for War/Strength on Inquisitor's dispatch only --
+Cleric's own dispatch still gates Good/Healing-only, `OPEN-ISSUES.md` row 363) both bank ZERO units
+this wave.
+For domain_power specifically this is not a correctness failure of the merged work but a pre-existing
+`v06_work_inventory.rs` classifier gap that has ALSO been silently under-crediting the already-shipped
+Good/Healing domains all along (confirmed live: `core_rulebook:class_feature:domain_power_touch_of_good`
+reads `unknown` in the freshly-regenerated inventory) — see `OPEN-ISSUES.md` row 360 for the full,
+precisely-scoped diagnosis and the reason a same-cycle fix was investigated and correctly not
+attempted (the generic pool-member probe would select the wrong choice id for a domain power).
+
+**Full three-question answer, the wave's own required receipt format**: `progress.md`'s wave 25b
+entry, top of receipt.
+
+**Two operator rulings folded into `decisions.md`**: §18 (option pools show only valid choices —
+closes the exclusive-choice-pool question, Bestiary 6's 3 flagged domain-power units may NOT bank via
+the reference-catalog pattern) and §19 (cross-book verbatim reprints, settled doctrine — Bestiary 6's
+2 reprinted spells reclassified from WIRING GAP to a real supersession evidence state, though this
+does NOT itself move the headline — see `OPEN-ISSUES.md` row 358).
+

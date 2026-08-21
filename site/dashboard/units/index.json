@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-20T23:46:48Z",
+  "generated_at": "2026-08-21T05:19:54Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38372,
-  "proven_units": 6315,
+  "proven_units": 6332,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -7495,23 +7495,23 @@
     },
     "race_trait": {
       "units": 3504,
-      "proven": 512,
+      "proven": 527,
       "by_status": {
         "not-ingested": 2712,
-        "grounded": 327,
-        "ingested-magnitude": 267,
+        "grounded": 342,
+        "ingested-magnitude": 252,
         "text-complete": 185,
         "literal-verified": 13
       },
       "shard": "PF1e-units-race_trait.json",
-      "bytes": 502975,
+      "bytes": 502825,
       "doneness_unmapped": {},
       "categories": {
         "racialtraits": {
           "label": "Racial Traits",
-          "done": 514,
+          "done": 529,
           "held": 1,
-          "in-progress": 259,
+          "in-progress": 244,
           "not-started": 447,
           "unmeasurable": 0,
           "deferred": 0
@@ -10770,27 +10770,27 @@
     },
     "spell": {
       "units": 2843,
-      "proven": 209,
+      "proven": 211,
       "by_status": {
         "fixture-verified": 1288,
         "grounded": 176,
         "literal-verified": 217,
         "ingested-magnitude": 267,
-        "text-complete": 33,
+        "text-complete": 35,
         "not-started": 112,
-        "not-ingested": 724,
+        "not-ingested": 722,
         "unknown": 26
       },
       "shard": "PF1e-units-spell.json",
-      "bytes": 329249,
+      "bytes": 329251,
       "doneness_unmapped": {},
       "categories": {
         "arcane": {
           "label": "Arcane",
           "done": 770,
-          "held": 91,
+          "held": 92,
           "in-progress": 90,
-          "not-started": 370,
+          "not-started": 369,
           "unmeasurable": 23,
           "deferred": 0
         },
@@ -10806,9 +10806,9 @@
         "divine": {
           "label": "Divine",
           "done": 257,
-          "held": 42,
+          "held": 43,
           "in-progress": 12,
-          "not-started": 64,
+          "not-started": 63,
           "unmeasurable": 3,
           "deferred": 0
         },
@@ -10827,9 +10827,9 @@
         "Transmutation": {
           "label": "Transmutation",
           "done": 419,
-          "held": 48,
+          "held": 50,
           "in-progress": 47,
-          "not-started": 105,
+          "not-started": 103,
           "unmeasurable": 6,
           "deferred": 0
         },

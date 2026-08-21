@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-08-21T00:38:51Z",
+  "generated_at": "2026-08-21T06:30:28Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 11681,
-    "partial": 2058,
+    "done": 11687,
+    "partial": 2052,
     "not_started": 15771,
     "denominator": 29510,
     "pct": 39.6,
@@ -147,11 +147,11 @@
     {
       "id": "advanced_race_guide",
       "title": "Advanced Race Guide",
-      "done": 426,
-      "partial": 205,
+      "done": 431,
+      "partial": 200,
       "not_started": 590,
       "denominator": 1221,
-      "pct": 34.9,
+      "pct": 35.3,
       "excluded_from_percentage": 355,
       "standing_breakdown": {
         "origin": 1221,
@@ -343,11 +343,11 @@
     {
       "id": "inner_sea_world_guide",
       "title": "Inner Sea World Guide",
-      "done": 48,
-      "partial": 9,
+      "done": 49,
+      "partial": 8,
       "not_started": 120,
       "denominator": 177,
-      "pct": 27.1,
+      "pct": 27.7,
       "excluded_from_percentage": 223,
       "standing_breakdown": {
         "unclassified": 223,

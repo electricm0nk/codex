@@ -513,14 +513,14 @@
         },
         {
           "name": "Natural Weapon",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Natural Weapon"
         },
         {
           "name": "Normal Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed"
@@ -534,7 +534,7 @@
         },
         {
           "name": "Senses",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Senses"
@@ -585,14 +585,14 @@
       "items": [
         {
           "name": "Animal Growth (Reptiles Only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Arcane.Divine",
           "standing": "unclassified",
           "display_name": "Animal Growth (Reptiles Only)"
         },
         {
           "name": "Animal Shapes (Reptiles Only)",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "Divine",
           "standing": "unclassified",
           "display_name": "Animal Shapes (Reptiles Only)"

@@ -2287,11 +2287,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 6,
-      "partial": 1,
+      "done": 7,
+      "partial": 0,
       "not_started": 24,
       "denominator": 31,
-      "pct": 19.4,
+      "pct": 22.6,
       "excluded_from_percentage": 23,
       "standing_breakdown": {
         "unclassified": 23,
@@ -2447,7 +2447,7 @@
         },
         {
           "name": "Enchantment Resistance",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Special Ability",
           "standing": "origin",
           "display_name": "Enchantment Resistance"
@@ -2545,7 +2545,7 @@
         },
         {
           "name": "Normal Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Gillman Racial Trait.Gillman Racial Default.SpecialQuality.Racial Speed)"

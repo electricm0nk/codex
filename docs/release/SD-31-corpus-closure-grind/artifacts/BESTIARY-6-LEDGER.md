@@ -58,23 +58,34 @@ Bestiary 6 was small enough to fully diagnose in one wave; it was not small enou
 one wave, and the 6 units it did close came from lifting a scope restriction, not from working harder
 inside it.
 
-## Two rulings surfaced by this ledger (not resolved here)
+## Two rulings surfaced by this ledger
 
-1. **Exclusive-choice option pools.** `class_feature_pool_catalog.rs`'s "shown as a browsable
-   reference regardless of selection" pattern is proven for Rogue Talent and Rage Power -- genuinely
-   open, repeatable-pick pools where every character of the right class CAN eventually pick any
-   listed option. Cleric/Inquisitor Domain Power is a single, EXCLUSIVE, once-per-character choice.
-   Is it honest to show every Domain Power option to every Cleric regardless of which domain(s) they
-   actually chose, the same way every Rogue sees every Rogue Talent? If yes, 3 of this book's 18
-   `class_feature` units (Intense Celebration, It Came From Beyond, The Stars Are Right) can bank on
-   the next UI-permitted wave. If no, they need the same domain-grounding fix as the other 15.
-2. **Cross-book verbatim reprints.** Bestiary 6's 2 spells are byte-identical reprints of spells
-   Ultimate Wilderness already ships (shared Scalykind-subdomain content). This wave's integration
-   cycle protected the existing "no key served twice" invariant by suppressing Bestiary 6's copy --
-   correct for the player-facing catalog, but it means this book's own spell units cannot credit
-   through the per-book `spell_levels` map at all under the current architecture. Decision 10's
-   Supersession Register (proposed, not applied) is the natural home for a real cross-book-reprint
-   crediting design; until it exists, these 2 units are structurally capped below `held`.
+Both resolved by operator ruling 2026-08-21 (`OPERATOR-RULINGS-2026-08-21.md` §18/§19), folded into
+`decisions.md` as Decision 18 and Decision 19 at wave 25b integration.
+
+1. **CLOSED under Decision 18.** Cleric/Inquisitor Domain Power is a single, EXCLUSIVE,
+   once-per-character choice -- NOT the same shape as Rogue Talent/Rage Power's genuinely open,
+   repeatable-pick pools. The "browsable reference regardless of selection" pattern is **not** honest
+   for an exclusive pool. The 3 units this row named (Intense Celebration, It Came From Beyond, The
+   Stars Are Right -- Void/Scalykind/Dark Tapestry domains) may **not** bank via
+   `REGISTERED_POOL_GROUPS`. They still need the same real domain-power grounding fix as the other 15
+   -- the `domain_power` interpreter merged wave 25b (Good/Healing/War/Strength) is that fix's shape,
+   but Void/Scalykind/Dark Tapestry are not yet in its catalog (their corpus records lack the
+   `Domain<X>LVL`/`Domain<X>Times` chain the catalog depends on) and remain open work, unchanged by
+   this ruling.
+2. **CLOSED under Decision 19.** Bestiary 6's 2 spells are byte-identical reprints of spells Ultimate
+   Wilderness already ships. Settled doctrine, not a new architectural question: under `decisions.md
+   §13` branch 1 (identical printing, FIRST print owns it -- Ultimate Wilderness predates Bestiary 6),
+   Ultimate Wilderness's copy is the one served to players (unchanged -- the wave-24 cross-book dedup
+   pass stays exactly as it was), and Bestiary 6's own two units are reclassified from `not-ingested`/
+   WIRING GAP to `text-complete` with real supersession evidence in the work inventory
+   (`v06_work_inventory.rs`'s `classify()`, a fixed 2-item allowlist per the ruling's own "do not build
+   a cross-book-reprint crediting mechanism"). **This closes the ledger question but does NOT move the
+   mandate headline** -- both units' `wiring_class` is `derived`, and `derived`'s doneness lattice maps
+   only `literal-verified`/`fixture-verified` to `DONE` (`text-complete` maps to `HELD`); forcing a
+   `DONE`-mapped status would game `doneness_verdict()`, so the honest replayed result is `HELD`, not
+   `DONE`. See `OPEN-ISSUES.md` row 358 for the surfaced ruling this leaves open. No general crediting
+   mechanism was built.
 
 ## Per-unit ledger (all 72)
 
@@ -124,8 +135,8 @@ inside it.
 | race_trait | Rougarou ~ Speed | NOT DONE | WIRING GAP | Content is ingested and applied by the race corpus (real `data/corpus/bestiary_6/race_trait/rougarou/*.json` record, `computed` wiring class -- a real per-character magnitude, not describable text) but `race_ids_with_a_magnitude_consumer()`'s three existing seams (CRB's 7 hand-authored functions, the two `ALTERNATE_TRAIT_*` tables, `SIZE_ONLY_RACE_TRAIT_BUNDLE`) do not cover a flat speed/vision/natural-weapon override for a non-CRB race, so no verified `pilot_compute` consumer exists to move it past `ingested-magnitude`. | Build a general flat-override consumer seam (speed/vision/natural-weapon) in `pilot_compute::race_ids_with_a_magnitude_consumer` -- likely closes the identically-shaped units of several OTHER non-CRB races too, not just Rougarou's 3 (named as a cross-book lever, not a Rougarou-only fix, in OPEN-ISSUES row 353). |
 | race_trait | Rougarou ~ Type | DONE | - | Real corpus record, `text-complete` status, rendered/grounded (race_trait_applied_by_the_race_corpus_and_rendered_with_real_text). | - |
 | race_trait | Rougarou ~ Vision | NOT DONE | WIRING GAP | Content is ingested and applied by the race corpus (real `data/corpus/bestiary_6/race_trait/rougarou/*.json` record, `computed` wiring class -- a real per-character magnitude, not describable text) but `race_ids_with_a_magnitude_consumer()`'s three existing seams (CRB's 7 hand-authored functions, the two `ALTERNATE_TRAIT_*` tables, `SIZE_ONLY_RACE_TRAIT_BUNDLE`) do not cover a flat speed/vision/natural-weapon override for a non-CRB race, so no verified `pilot_compute` consumer exists to move it past `ingested-magnitude`. | Build a general flat-override consumer seam (speed/vision/natural-weapon) in `pilot_compute::race_ids_with_a_magnitude_consumer` -- likely closes the identically-shaped units of several OTHER non-CRB races too, not just Rougarou's 3 (named as a cross-book lever, not a Rougarou-only fix, in OPEN-ISSUES row 353). |
-| spell | Animal Growth (Reptiles Only) | NOT DONE | WIRING GAP | Content is real and correctly transcribed (`rules_tables::bestiary_6::spell_list`, byte-verified against `b6_spells.lst`) and IS chained into `spell_resolver::spell_catalog_rows()` -- but it is a verbatim, fully-populated reprint of a spell Ultimate Wilderness already serves (same `DESC:`, same Bestiary-6 `SOURCEPAGE:` citation inside `uw_spells.lst`), and the resolver's cross-book dedup pass (added this cycle to protect `no_key_is_served_twice_so_a_selection_resolves_unambiguously`, a live product invariant) keeps only the first-chained book's copy (UW, registered in wave 19). No row carries `book=="bestiary_6"` in the served catalog, so `v06_work_inventory`'s `spell_levels` map has nothing to key this unit's `engine_book` against. | Build a real cross-book-reprint crediting design (Decision 10's Supersession Register, proposed but not applied, is the natural home for this policy question) so a book whose own content is verbatim-duplicated elsewhere can still credit its OWN corpus unit without double-serving the catalog. |
-| spell | Animal Shapes (Reptiles Only) | NOT DONE | WIRING GAP | Content is real and correctly transcribed (`rules_tables::bestiary_6::spell_list`, byte-verified against `b6_spells.lst`) and IS chained into `spell_resolver::spell_catalog_rows()` -- but it is a verbatim, fully-populated reprint of a spell Ultimate Wilderness already serves (same `DESC:`, same Bestiary-6 `SOURCEPAGE:` citation inside `uw_spells.lst`), and the resolver's cross-book dedup pass (added this cycle to protect `no_key_is_served_twice_so_a_selection_resolves_unambiguously`, a live product invariant) keeps only the first-chained book's copy (UW, registered in wave 19). No row carries `book=="bestiary_6"` in the served catalog, so `v06_work_inventory`'s `spell_levels` map has nothing to key this unit's `engine_book` against. | Build a real cross-book-reprint crediting design (Decision 10's Supersession Register, proposed but not applied, is the natural home for this policy question) so a book whose own content is verbatim-duplicated elsewhere can still credit its OWN corpus unit without double-serving the catalog. |
+| spell | Animal Growth (Reptiles Only) | **HELD (reclassified)** | **CLOSED under Decision 19** | Byte-identical reprint of an Ultimate Wilderness spell (`decisions.md §13` branch 1: first print -- Ultimate Wilderness -- owns it). Wave 25b integration added a fixed 2-item allowlist to `v06_work_inventory.rs`'s `classify()` marking this unit `text-complete` with evidence `superseded_byte_identical_reprint_first_print_owns_it_decisions_13_19`, replacing its prior `not-ingested`/WIRING-GAP classification. **Measured by replaying `doneness_verdict()` (not asserted): this unit's `wiring_class` is `derived` (a real formula/range-keyword shape on the raw record), and `derived`'s own lattice maps only `literal-verified`/`fixture-verified` to `DONE` -- `text-complete` maps to `HELD` for `derived`, exactly as it does for every other `derived` unit. Forcing a `DONE`-mapped status here would be gaming the same instrument Decision 1a protects, so the headline count is UNCHANGED by this fix -- the ledger question is closed (no WIRING GAP, no cross-book-reprint mechanism needed, real supersession evidence recorded) but the mandate headline does not move for these 2 units.** See `OPEN-ISSUES.md` row 358 for the surfaced ruling question (should doneness_verdict() gain a supersession-aware DONE path). | Closed as a ledger/evidence question; a genuine headline-DONE outcome needs an operator ruling on `doneness_verdict()`'s lattice, not a code fix -- see `OPEN-ISSUES.md` row 358. |
+| spell | Animal Shapes (Reptiles Only) | **HELD (reclassified)** | **CLOSED under Decision 19** | Byte-identical reprint of an Ultimate Wilderness spell (`decisions.md §13` branch 1: first print -- Ultimate Wilderness -- owns it). Wave 25b integration added a fixed 2-item allowlist to `v06_work_inventory.rs`'s `classify()` marking this unit `text-complete` with evidence `superseded_byte_identical_reprint_first_print_owns_it_decisions_13_19`, replacing its prior `not-ingested`/WIRING-GAP classification. **Measured by replaying `doneness_verdict()` (not asserted): this unit's `wiring_class` is `derived` (a real formula/range-keyword shape on the raw record), and `derived`'s own lattice maps only `literal-verified`/`fixture-verified` to `DONE` -- `text-complete` maps to `HELD` for `derived`, exactly as it does for every other `derived` unit. Forcing a `DONE`-mapped status here would be gaming the same instrument Decision 1a protects, so the headline count is UNCHANGED by this fix -- the ledger question is closed (no WIRING GAP, no cross-book-reprint mechanism needed, real supersession evidence recorded) but the mandate headline does not move for these 2 units.** See `OPEN-ISSUES.md` row 358 for the surfaced ruling question (should doneness_verdict() gain a supersession-aware DONE path). | Closed as a ledger/evidence question; a genuine headline-DONE outcome needs an operator ruling on `doneness_verdict()`'s lattice, not a code fix -- see `OPEN-ISSUES.md` row 358. |
 | companion | Companion (Amargasaurus) | DONE | - | Real chassis data (`rules_tables/bestiary_6/companion_data.rs`) served through `companion_catalog::list_companion_catalog` ("B6" wire code) to `CompanionCatalogScreen`; grounded/fixture-verified, tested. | - |
 | companion | Companion (Brontotherium) | DONE | - | Real chassis data (`rules_tables/bestiary_6/companion_data.rs`) served through `companion_catalog::list_companion_catalog` ("B6" wire code) to `CompanionCatalogScreen`; grounded/fixture-verified, tested. | - |
 | companion | Companion (Deinotherium) | DONE | - | Real chassis data (`rules_tables/bestiary_6/companion_data.rs`) served through `companion_catalog::list_companion_catalog` ("B6" wire code) to `CompanionCatalogScreen`; grounded/fixture-verified, tested. | - |

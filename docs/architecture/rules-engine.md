@@ -1,7 +1,7 @@
 # Rules engine
 
 > Scope: The headless PF1 rules-computation spine — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure)
+> Last verified: 2026-08-21 against tranche/11 (SD-31 wave 25b — formula interpreter merged)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This document orients a contributor entering `src/rules_core/` cold. It describes the compute spine
@@ -130,6 +130,69 @@ weapon damage, active Power Attack math, initiative, general skill modifiers bey
 selected skills, armor-check penalties beyond the deterministic posture, feat prerequisites, oracle
 parity). Several of those gaps are exactly what the later per-domain engines in the
 [per-domain engine catalog](#per-domain-engine-catalog) below exist to fill, without editing this file.
+
+**Path note (SD31-E4-F1-005, since 2026-08-20):** `pilot_compute` is now a directory module
+(`src/rules_core/pilot_compute/mod.rs` holds the ~17,800-line orchestrator this section describes;
+`src/rules_core/pilot_compute/class_feature_grant_consumer.rs`, `class_slayer.rs`, and
+`class_ultimate_combat.rs` are per-class submodules split out as a pure code-move — same behaviour,
+same call sites via `mod.rs`'s own `use super::*` re-export). This document's `pilot_compute.rs`
+references above predate that split and describe `mod.rs`'s content; not fully swept to the new path
+throughout this file as of this note — treat `pilot_compute.rs` and `pilot_compute/mod.rs` as the
+same file wherever this document names the former.
+
+### 3a. `src/rules_core/pilot_compute/formula_interpreter.rs` and `domain_power.rs` — the formula
+interpreter (SD-31 wave 25/25b, a real architecture change, not an extension of the pattern above)
+
+**Every function cataloged in the table above is a hand-written, bespoke Rust closed-form
+expression, independently derived and verified against the corpus per feature.** That was a pinned
+rule (`SD-27 decisions.md §24.1`, "No formula interpreter") until `OPERATOR-RULINGS-2026-08-21.md`
+§20 overturned it for this package (folded into `docs/release/SD-31-corpus-closure-grind/decisions.md`
+as Decision 20): PCGen's own `BONUS:`/`DEFINE:` LST tokens already encode this arithmetic, and
+hand-transcribing it into a bespoke Rust function per feature was the direct cause of this program's
+per-unit throughput cost. Two new submodules, both under `src/rules_core/pilot_compute/`, exist as of
+wave 25b:
+
+- **`formula_reproduction_harness.rs`** — mechanically enumerates the existing hand-modelled
+  functions from source (>=166, a re-derivable floor, not a hand-maintained list) and defines the
+  `FormulaEvaluator` trait every interpreter implementation must satisfy. A small set of its
+  enumerated cases (21 as of wave 25b) exercise a real evaluator against them for agreement.
+- **`formula_interpreter.rs`** (`PcgenFormulaEvaluator`) — a real recursive-descent parser/evaluator
+  for the arithmetic grammar PCGen's own `BONUS:`/`DEFINE:` formula segments carry (integer/ability-
+  modifier variables, `+ - * /`, `floor`/`ceil`/`abs`/`min`/`max`/`if`/`classlevel`), semantics
+  re-derived from the pinned oracle's REAL resolution chain (`BonusObj.java` → `FormulaFactory.java`
+  → `JEPFormula.java` → `VariableProcessor.java` → `pcgen/util/PJEP.java extends org.nfunk.jep.JEP`,
+  function library `plugin/jepcommands/*Command.java` — see the module's own doc for the full chain
+  and wave 25b integration's correction of an earlier version that cited the wrong PCGen subsystem).
+- **`domain_power.rs`** — a narrower, independent arithmetic evaluator applied specifically to
+  Cleric/Inquisitor domain-power formulas, extending `ground_or_block_cleric_domain_power`/
+  `ground_or_block_inquisitor_domain_power`'s prior Good+Healing allowlist to War and Strength (wave
+  25 salvage, merged wave 25b).
+
+**What has NOT changed:** the ruling's own condition. *"Every interpreted value must clear
+`derived_evaluator_fixture_check` ... An interpreted value with no fixture is not done."* Neither
+`formula_interpreter.rs` nor `formula_reproduction_harness.rs` has a production consumer wired as of
+wave 25b — both are `pub` infrastructure with zero non-test callers, banking zero corpus units. The
+hand-written pattern the table above describes remains the shipping mechanism for every unit
+currently `done`; the interpreter is additive capability, not (yet) a replacement for what already
+ships. `domain_power.rs` IS wired (Cleric/Inquisitor War/Strength), because its own fixture gate
+(`mod fixture_check_tests`, in-module, corpus-byte-transcription-checked) satisfies the ruling's
+condition directly.
+
+**Known, disclosed gaps as of wave 25b** (see `OPEN-ISSUES.md` rows 354-357 and the wave 25b receipt
+for the full account): `classlevel("X")` does not verify its class-name argument against a bound
+class context (silently wrong, not merely incomplete, for a genuinely cross-class formula — a
+confirmed real corpus shape, `bestiary_3`'s `classlevel ("Magical Beast")/2-1`); comparisons do not
+yet produce a reusable numeric value outside `if()`'s own condition slot, so boolean-to-int coercion
+(`"1+(KineticistLVL>=15)"`) and `&&` (Sorcerer bloodline gates) both refuse rather than evaluate; the
+`BONUS:<TAG>|<target>|` envelope, PRE-token gating, and `PREVARGTEQ`-embedded repeated-conditional
+clauses are a different PCGen subsystem (`BonusObj`/`MultiTagBonusObj`) entirely out of scope.
+
+**Also new in `pilot_compute/mod.rs` as of wave 25b**: a flat-override `race_trait` compute seam
+(`explain_rougarou_flat_override_race_trait`, `explain_gillman_flat_override_race_trait`,
+`explain_vanara_flat_override_race_trait`) — the first `race_trait` movement in six waves, grounding
+a race's flat Speed/Vision/Natural-Weapon override (and, for Gillman/Vanara, the alternate-trait
+`PREFACT`-gated replacement of that override) without a new subsystem, following the same
+gate-then-explain shape the per-race seam table above already uses.
 
 ### 4. `src/rules_core/pilot_compute_corpus.rs` — the corpus-aware wrapping seam
 

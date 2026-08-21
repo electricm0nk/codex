@@ -33403,3 +33403,332 @@ cherry-picked and fixed forward, branch itself not merged as-is). `sd31/racetrai
 — untouched, not read, not gated, per the standing instruction. The unrelated
 `wf_f64d2f74-a99-{1..6}` worktrees (a different, empty workflow, 0 commits ahead of base) were left
 alone — not this wave's to clean up.
+
+## 2026-08-21 — SD-31 wave 25b (formula interpreter core, re-run after wave 25's correctly-refused authority)
+
+**THREE ANSWERS UP FRONT, per the dispatch's own required order.**
+
+**(a) Does the interpreter reproduce the hand-modelled functions? How many, and did any DISAGREE?**
+22 of 22 harness-dispatched reproduction cases agree (`formula_reproduction_harness.rs`'s
+`REPRODUCTION_CASES`, salvaged unmodified from wave 25 per §20's "do not rebuild any of it"; this is
+21 declared cases (the module's own doc figure) plus a 22nd `KnownGapNoDocComment` exemplar). **No
+hand-modelled function disagreed with the interpreter — but the proof is narrower than "22/22" reads:
+6 of the 22 cases evaluate a HAND-REWRITTEN formula rather than the corpus token's own literal
+formula segment, and the two genuinely `if()`/comparison-shaped cases (`witch_ward_bonus`,
+`oracle_battlecry_bonus`) are both hand rewrites — so the `if()`/comparison code path, which 295 of
+2,671 corpus formula candidates use, has never been reproduction-tested against one real, unmodified
+corpus token.** Found and disclosed at this integration cycle (`OPEN-ISSUES.md` row 355), not by the
+original lane. Separately, a hand re-derivation against the pinned oracle (not the harness's own
+tests) of `mental_resistance.json`'s real `min(floor((L+3)/6*2),4)` token found the interpreter's
+answer (a real float-carrying oracle engine result) diverges from what Rust-integer-division-per-
+operator — the convention all 166 existing hand functions use — would give, at 10 of 20 levels. This
+is NOT a bug (the interpreter correctly reproduces the real PJEP engine's own float-carry-through
+behaviour, re-verified directly against the pinned oracle checkout), but it IS a genuine open question
+about whether the record's own DESC text fully documents what PCGen's own engine actually computes at
+intermediate levels — logged, not resolved (`OPEN-ISSUES.md` row 356).
+
+**(b) Did the overturn deliver "thousands, not tens"? Give the honest number.**
+**Zero, this wave, from the interpreter itself — capped by a pre-existing board classifier gap, not
+by the interpreter's correctness.** The merged `domain_power.rs` module is real, tested,
+oracle-cited engineering work -- but its War/Strength widening was applied ONLY to Inquisitor's
+runtime dispatch (`ground_or_block_inquisitor_domain_power`), confirmed by direct reading of
+`mod.rs`, NOT Cleric's (Cleric's own dispatch still gates on the original Good/Healing-only check,
+unchanged -- see `OPEN-ISSUES.md` row 363, a scope-accuracy finding neither adversarial review
+caught). Even where it IS wired (Inquisitor), `v06_work_inventory.rs`'s
+`classify()` has never been able to credit ANY `"Domain Power ~ <X>"` class_feature record as
+`grounded` — including the already-shipped Good/Healing domains, confirmed live in this cycle's own
+regen (`core_rulebook:class_feature:domain_power_touch_of_good` reads `unknown` /
+`class_feature_group_names_no_class_at_all` in the freshly-regenerated `docs/work-inventory.json`) —
+because the corpus_key's group prefix (`"Domain Power"`) is PREFIX-shaped while every registered
+`CLASS_FEATURE_POOLS` matcher assumes a `"<Adjective> <PoolWord>"` SUFFIX shape. Investigated a
+same-cycle fix and found it would not actually work (the generic pool-member probe would select the
+wrong choice id — the granted power's name, not the owning domain's name); a correct fix needs a
+bespoke probe keyed through `domain_power::DOMAIN_POWER_CATALOG` itself, logged as a high-priority,
+precisely-scoped follow-on (`OPEN-ISSUES.md` row 360). **This wave's entire +15 real movement is from
+the merged `race_trait` flat-override consumer** (Rougarou/Gillman/Vanara Speed/Vision/Natural-Weapon
+overrides) — the first `race_trait` movement in six waves, exactly as wave 25's salvage described it.
+Honest reporting of an under-delivery, per the dispatch's own standing instruction.
+
+**(c) What token shapes remain UNREADABLE, and how many units sit behind them?**
+Measured corpus-wide by `formula_interpreter.rs`'s own `corpus_shape_coverage` test: **431 of 2,671
+distinct BONUS/DEFINE formula-field candidates (16.1%) refuse under the interpreter's grammar**,
+named sub-shapes largest-first: `PREVARGTEQ`-embedded repeated-conditional-addend clauses (a
+different PCGen subsystem, `BonusObj`/`MultiTagBonusObj`, not the arithmetic grammar at all);
+boolean-to-int coercion of a bare comparison used as a numeric term outside `if()` (Kineticist/
+Occultist level-gated stacking, e.g. `"1+(KineticistLVL>=15)"`); the `&&` boolean-AND operator
+(Sorcerer bloodline-power gates); `skillinfo(...)` (a real oracle function, unimplemented). Also
+structurally out of scope: the `BONUS:<TAG>|<target>|` envelope/target parsing, `%1`/`%N` DESC-text
+substitution, and multiclass `classlevel("X")` resolution to a SPECIFIC class's own level (the
+interpreter has only one `__LEVEL__` binding and currently trusts it regardless of the name argument
+— confirmed materially real via a live cross-class corpus token,
+`bestiary_3:monster:sphinx_androsphinx`'s `classlevel ("Magical Beast")/2-1`; logged as a HARD
+precondition, not merely a limitation, before any `classlevel`-bearing formula may be banked). No
+units are banked through the interpreter this wave (0 corpus units), so no unit currently sits
+"behind" these shapes in the sense of blocked banked credit — they are the surface the NEXT
+interpreter-consuming wave will need to navigate.
+
+### THE PROCESS FAILURE, recorded honestly because it is this wave's most transferable lesson
+
+Wave 25's interpreter-core lane REFUSED to build against `OPERATOR-RULINGS-2026-08-21.md` §20 the
+first time it was dispatched, because the authorising ruling had been WRITTEN but never COMMITTED —
+it existed only in the orchestrator's own working tree. The lane checked every ref (`git log --all`),
+found the cited ruling nowhere in the repo, noted this release's own `progress.md` still cited §24.1
+as active, and correctly declined to reverse a pinned safety ruling on a dispatch prompt's authority
+alone. **That refusal was correct and is exactly the behaviour this program asks for — the fault was
+entirely the orchestrator's, dispatching lanes to act on an uncommitted file.** `§20` was re-dispatched
+in wave 25b only after independently re-verifying `OPERATOR-RULINGS-2026-08-21.md` is committed at
+`858df7664` (this cycle's own base) and that its §20 text does overturn `decisions.md §24.1` — see the
+"VERIFY IT YOURSELF" instruction this wave's own dispatch prompt carried forward. A ruling is not in
+force until it is committed to the branch, full stop; the fix is procedural (commit rulings before
+dispatching against them), not anything a lane should have done differently.
+
+### What was merged, wave 25's salvage first (reviewed as any lane, not trusted on "salvage" status alone)
+
+
+**`worktree-wf_73cee402-845-2` (formula reproduction harness).** Mechanically enumerates hand-modelled
+formula functions from source (>=166, a re-derivable floor, documented blind spot
+`monk_scorpion_style_dc`, which carries no doc comment and is invisible to the scan) and defines the
+`FormulaEvaluator` trait interface contract. Real, working, not vacuous — verified by inspection and
+by its own 11 tests passing in this integration cycle's build. Merged clean, no conflicts (`28baa2ae1`).
+
+**`worktree-wf_73cee402-845-3` (domain-power interpreter, Good+Healing+War+Strength).** A small,
+independent arithmetic evaluator applied to Cleric/Inquisitor domain-power formulas. **Verified
+during this integration cycle (not caught by either adversarial review) that the War/Strength
+widening actually wired into the runtime dispatch reaches ONLY Inquisitor** (`ground_or_block_
+inquisitor_domain_power` genuinely accepts the full catalog); Cleric's own dispatch still gates on
+the original Good/Healing-only check, unchanged -- logged as `OPEN-ISSUES.md` row 363, a real,
+precisely-scoped follow-on, not a regression (Cleric's existing Good/Healing support is unaffected).
+Its own `mod fixture_check_tests` (in-module, not the separate
+`tests/domain_power_fixture_check.rs` its doc comments claimed — corrected at merge, see below) proves
+byte-exact corpus transcription AND independently-computed expected values for every catalog entry.
+Merged with one additive conflict in `mod.rs` (both this branch and the harness branch added a new
+`mod` line; combined, not overridden) — commit `d7ff0c715`. Doc-comment fix: two references to a
+nonexistent `tests/domain_power_fixture_check.rs` file corrected to name the real in-module test
+module that actually ships.
+
+**`worktree-wf_73cee402-845-5` (race_trait flat-override compute seam, Rougarou/Gillman/Vanara).** The
+first `race_trait` movement in six waves. Adds `explain_rougarou_flat_override_race_trait`/
+`explain_gillman_flat_override_race_trait`/`explain_vanara_flat_override_race_trait`, each citing its
+exact upstream `.lst` line and, for Gillman/Vanara, the `PREFACT`-gated alternate-trait replacement
+flag. Includes its own retro correction event (re-confirmed `modelled_race_of_race_trait`'s
+word-boundary-prefix matcher, not the "exact bare race name" defect a stale wave-25 dispatch brief
+claimed was still open — already fixed waves 20/22, `race_trait_grounding_tests` 26/26 green). Clean
+auto-merge, no conflicts (`2ba0c7623`).
+
+**`worktree-wf_b2487240-7ff-2` (consume-cf lane, this wave's own sibling).** Correctly banked 0 units
+after confirming the sibling interpreter-core lane had not committed anything (verified against
+`.git/refs/heads/worktree-wf_b2487240-7ff-1`, still base). Merged its retro deferral event
+(`ac8d52d89`); appended a correction to the same log — its own `scope` field overstated its seam's
+real bankable ceiling by ~90x (2,435 corpus-wide `%`-bearing descriptions vs. the real 27-key ceiling
+after applying the module's own remaining text/JSON-only gates, reproduced independently this cycle).
+
+**`worktree-wf_b2487240-7ff-1` (interpreter-core, THIS wave's primary lane) — never committed
+anything, brought in by direct file copy.** Confirmed via `.git/refs/heads/worktree-wf_b2487240-7ff-1`
+still sitting at base `858df7664` with a live, real, uncommitted `formula_interpreter.rs` (859 lines)
+in its worktree. Copied byte-for-byte, then fixed before merging (per this wave's own instruction 4:
+"take a handful of real formula tokens, compute the right answer yourself from the oracle, and check
+the interpreter output — do not delegate that to its tests"):
+
+- **Wrong-engine citations, corrected.** The module's "semantics derived from the pinned oracle"
+  section cited `PCGen-Formula/code/src/java/pcgen/base/formula/...` throughout — a real subsystem in
+  the pinned checkout (`/home/ubuntu/workspace/repos/pcgen`, `7f818006e3`), but the WRONG one: it is a
+  newer `MODIFY:`/variable-scope engine that does not evaluate `BONUS:`/`DEFINE:` tokens. Traced the
+  real resolution chain by hand: `BonusObj.java:210` -> `FormulaFactory.java:91` -> `JEPFormula.java`
+  -> `VariableProcessor.java:433` -> `pcgen/util/PJEP.java extends org.nfunk.jep.JEP`, function
+  library `plugin/jepcommands/*Command.java`. Re-verified each semantic claim against the REAL files:
+  `FloorCommand.java`/`MaxCommand.java` happened to match (right answer, wrong file cited); function
+  name case-matching and `if()`'s condition shape did not.
+- **Fixed: function-name case-sensitivity.** The prior version accepted ANY casing
+  (`to_ascii_lowercase()` blanket match). `pcgen/util/PJEP.java` (`addFunction(name.toLowerCase(),
+  com); addFunction(name.toUpperCase(), com);`) registers only each function's all-lower and
+  all-upper spelling, never mixed case. Fixed to refuse mixed case (`Max(...)`, `FlOoR(...)` now
+  `Err`), pinned by a new test. Latent, not yet harmful — `corpus_shape_coverage` confirms zero
+  corpus rows use mixed case today — but was presented as an oracle-derived fact when it was the
+  opposite of the oracle's real behaviour.
+- **NOT fixed, logged as a hard precondition: `classlevel("X")` does not verify its class-name
+  argument.** The module has only one `__LEVEL__` binding and trusts it regardless of what class name
+  is asked for. Confirmed materially real (not theoretical) against a live corpus token:
+  `bestiary_3:monster:sphinx_androsphinx`'s `BONUS PCLEVEL|Cleric|classlevel ("Magical
+  Beast")/2-1`. **No consumer may bank a value through a `classlevel(...)`-bearing formula until this
+  is resolved** — this is exactly the "plausible number nobody checks" shape §24.1 exists to prevent,
+  so it is logged as a hard gate, not a documented limitation to work around case by case.
+- **`if()`'s real condition shape, corrected in the doc, not the code (logged as a known restriction,
+  not silently mis-modelled).** Real `plugin/jepcommands/IfCommand.java` accepts a bare NUMERIC
+  condition (nonzero = true), not only a boolean comparison. This module still requires an explicit
+  comparison — a real, disclosed restriction that safely REFUSES the wider shape rather than
+  mis-evaluating it, logged as the same underlying gap as the boolean-to-int-coercion uncovered shape.
+
+Module doc rewritten throughout to cite the real chain and to stop presenting restrictions as oracle
+facts. `mod.rs` wired with `pub mod formula_interpreter;` (kept `pub` for the same dead-code reason
+the harness already is — zero non-test callers, no consumer wired this wave). Zero corpus units
+banked through this module (matches both original lanes' own claim of 0 — this cycle's fixes changed
+correctness, not the banking count).
+
+### Bestiary 6 ledger rulings (§18/§19) folded into `decisions.md`, ledger closed
+
+Folded `OPERATOR-RULINGS-2026-08-21.md` §18/§19 into `decisions.md` as Decision 18/19 (full text
+there). **§18 (option pools show only valid choices):** Cleric/Inquisitor Domain Power is an
+EXCLUSIVE, once-per-character choice, not an open repeatable-pick pool like Rogue Talent/Rage Power —
+the 3 units the Bestiary 6 ledger flagged as bankable via the reference-catalog pattern (Intense
+Celebration, It Came From Beyond, The Stars Are Right) may NOT bank that way; they need the same real
+domain-power grounding as the other 15 (still blocked, see (b) above — Void/Scalykind/Dark Tapestry
+are not in `DOMAIN_POWER_CATALOG` either). **§19 (cross-book verbatim reprints, settled doctrine):**
+Bestiary 6's 2 spells (byte-identical Ultimate Wilderness reprints) are closed under `decisions.md
+§13` branch 1 (first print — Ultimate Wilderness — owns it; one citation correction made at fold-in:
+the ruling text cited the superseded `§10` framing, not `§13`'s correction, though both happen to name
+the same survivor for this pair). Reclassified in `v06_work_inventory.rs`'s `classify()` from
+`not-ingested`/WIRING GAP to `text-complete` with real supersession evidence (a fixed 2-item
+allowlist, per the ruling's own "do not build a cross-book-reprint crediting mechanism"). **A LIMIT
+surfaced and disclosed, not hidden: this reclassification closes the ledger question but does NOT
+move the mandate headline** — both units' `wiring_class` is `derived`, and `derived`'s doneness
+lattice maps only `literal-verified`/`fixture-verified` to `DONE`, never `text-complete`; forcing a
+`DONE` result would game `doneness_verdict()`, the exact instrument Decision 1a protects. Logged as an
+open ruling question (`OPEN-ISSUES.md` row 358): should `doneness_verdict()` gain a genuine
+supersession-aware path to `DONE`? A real doctrine change, not attempted unilaterally.
+
+
+### Board movement, traced to named causes (denominator FROZEN, confirmed unmoved)
+
+Board before: **13,428 / 38,372 (34.9943%)**. Board after: **13,443 / 38,372 (35.0334%)**. **+15,
+denominator unchanged.** Measured by the real, sanctioned instrument (`scripts/observer/
+pf1e_dashboard_producer.py`'s `mandate_headline`, replaying `doneness_verdict()` — not hand-summed
+from `by_status` buckets, which cannot reproduce the wiring-class-crossed lattice or the
+book-exclusion subtraction the headline applies), run against BOTH the pre-wave-25b base snapshot and
+the post-regen snapshot with the same producer, same code, for an apples-to-apples delta:
+
+| Kind | Denom before | Denom after | Done before | Done after | Delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 28 (15.1351%) | 28 (15.1351%) | +0 |
+| class_feature | 15,439 | 15,439 | 329 (2.1310%) | 329 (2.1310%) | +0 |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,313 (85.5831%) | 5,313 (85.5831%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 516 (32.6582%) | 516 (32.6582%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 989 (77.8740%) | 989 (77.8740%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,790 (60.8430%) | 1,790 (60.8430%) | +0 |
+| race | 95 | 95 | 35 (36.8421%) | 35 (36.8421%) | +0 |
+| race_trait | 3,504 | 3,504 | 525 (14.9829%) | **540 (15.4110%)** | **+15** |
+| spell | 2,843 | 2,843 | 1,573 (55.3289%) | 1,573 (55.3289%) | +0 |
+| **TOTAL** | **38,372** | **38,372** | **13,428 (34.9943%)** | **13,443 (35.0334%)** | **+15** |
+
+**All +15 traces to ONE cause: the merged race_trait flat-override consumer newly grounding
+Rougarou/Gillman/Vanara's Speed/Vision/Natural-Weapon (and where applicable, alternate-trait-replaced
+Speed) units**, moving them from `ingested-magnitude`/in-progress to `grounded`/done (confirmed via
+`by_doneness_kind`: race_trait `in-progress` 266→251, exactly the mirror of `done` 525→540). No other
+kind moved. `class_feature`'s 0 movement despite the merged domain_power extension is a real,
+important finding, not an oversight — see (b) above and `OPEN-ISSUES.md` row 360. `spell`'s 2 reprint
+reclassifications (row above, §19) moved `held` +2 / `not-started` -2, not `done` — disclosed, not
+hidden. Reclassification (ledger status changing without a headline move, as with the 2 spell units)
+is reported SEPARATELY from doneness movement throughout this receipt, per the dispatch's own
+instruction.
+
+**RECLASSIFICATION, separate from doneness, one more instance:** `BESTIARY-6-LEDGER.md`'s two
+"rulings surfaced" sections are both now CLOSED (§18/§19 above) — this changes what future engineering
+work is authorized/blocked, not any unit's current status.
+
+**Denominator verification:** `docs/work-inventory.json`'s raw `totals.units` field reads 38,391, not
+38,372 — an APPARENT mismatch a prior adversarial review flagged as needing reconciliation. Resolved,
+not a bug (`OPEN-ISSUES.md` row 359): the 19-unit gap is entirely `equipment` (6,227 raw vs. 6,208 in
+every headline), and it is the producer's own `_mandate_headline()` correctly SUBTRACTING excluded
+books (`beginner_box` and others) from the raw total before computing the real headline denominator.
+Confirmed present in the committed artifact since AT LEAST wave 24's own close commit (`478a8350b`),
+predating wave 25b entirely — not something this wave caused or needs to fix.
+
+### Guarded regen (isolated CARGO_TARGET_DIR, never `--allow-stamp-loss`)
+
+```
+cargo run --locked -j 8 --bin corpus_literal_sweep -- --json-out $S/sweep.json
+  -> 26500 records examined of 26934 read, 255531 tokens compared (9 synthesized), 0 findings, CLEAN
+cargo run --locked -j 8 --bin derived_evaluator_fixture_check -- --json-out $S/fixture.json
+  -> 1821 unit(s) cleared over 2561 fixture row(s); 0 failed; 0 not ingested
+CORPUS_LITERAL_SWEEP_REPORT=$S/sweep.json DERIVED_FIXTURE_CHECK_REPORT=$S/fixture.json \
+  cargo run --locked -j 8 --bin v06_work_inventory
+  -> wrote docs/work-inventory.json; board 13,428 -> 13,443/38,372 (34.9943% -> 35.0334%)
+```
+
+Both the sweep and fixture-check numbers are IDENTICAL to wave 24's own recorded figures — expected:
+neither the merged salvage branches nor this cycle's own fixes touched `data/corpus` or added any new
+`derived_evaluator_fixture_check`-covered fixture (the interpreter itself banks nothing this wave, so
+it has nothing new for that gate to check yet).
+
+`core_essentials`: confirmed absent (0 units; not a key in `docs/work-inventory.json`'s
+`totals.by_book` at all).
+
+Public feed refreshed (required whenever `docs/work-inventory.json` moves):
+`./scripts/publish-site-dashboard.sh` — wrote `site/dashboard/PF1e-dashboard.json` (39.6% overall
+public projection, PI-screened) and `site/status-data.json` + 30 book-detail files (36,008 items).
+
+### Architecture docs refreshed
+
+`docs/architecture/rules-engine.md`: added a new subsection (§3a) documenting the formula interpreter
+as a real architecture change — what it is, what §20 authorises, the correction of the wrong-engine
+citations, and the disclosed gaps (`classlevel` cross-class, boolean-coercion/`&&`, `BONUS:` envelope
+out of scope). Noted the `race_trait` flat-override seam addition alongside the existing per-race seam
+table. Corrected a path-drift note (`pilot_compute.rs` is now a directory module,
+`pilot_compute/mod.rs`, since the SD31-E4-F1-005 split — not fully swept throughout the document, but
+flagged explicitly rather than left silently stale). "Last verified" header updated to this cycle.
+
+
+### Full gate
+
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w25b-gate ./scripts/verify.sh --full -j 8`.
+
+<<<GATE_RESULT_PLACEHOLDER>>>
+
+### Cleanup
+
+All wave-25b `CARGO_TARGET_DIR`s deleted at cycle close: `w25b-integ`, `w25b-regen`,
+`w25b-quickcheck`, `w25b-gate`, `w25b-review` (adversarial-review scratch dirs, pre-existing from the
+two review passes this receipt incorporates). Wave-25/25b worktrees
+(`worktree-wf_73cee402-845-{1..8}`, `worktree-wf_b2487240-7ff-{1..4}`) and their branches removed
+after merge/reconciliation — `-845-{2,3,5}` and `-7ff-2` merged; `-845-{1,4,6,7,8}` and `-7ff-{1,3,4}`
+were review/scratch/never-committed worktrees with nothing to merge, removed without a merge commit.
+`sd31/racetrait4-SD31-E6-F4-005` — untouched, not read, not gated, per the standing instruction.
+
+### Full gate — two real findings caught and fixed before green, reported honestly
+
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w25b-gate ./scripts/verify.sh --full -j 8`.
+
+- **Run 1: FAILED** (`clippy` only — `root:51 warnings exceeds recorded ceiling 50`; every other of
+  the 34 stages passed, including `root-lib` 2283, `root-full` 7390 across 578 suites, `desktop` 494,
+  `reach` 30, `corpus-sweep` 26500/26934 clean, `supersession-gate` 116 clean, `frontend-test` 100/100,
+  `class-dump` 31/31). Traced the ONE new warning: the merged `race_trait` branch left a blank line
+  between a doc comment and `const ROUGAROU_RACE_ID` (`mod.rs:10417`), which `clippy::
+  empty_line_after_doc_comments` flags — `cargo build`/`cargo test` never catch this lint, only
+  `clippy` does, which is why it slipped through the merge-and-test cycle undetected until the gate's
+  own clippy stage. Fixed (removed the blank line); re-verified in isolation
+  (`cargo clippy --locked --tests -j 8`, filtered the same way `verify.sh` counts:
+  `grep '^warning:' | grep -v 'generated .* warning' | wc -l` → exactly 50, matching the ceiling)
+  before re-running the full gate.
+- **Run 2: FAILED** (`site-dashboard-check` only, exit 1, "STALE"). Traced by hand-reproducing the
+  check's own scrub-and-compare logic: the COMMITTED `site/dashboard/PF1e-dashboard.json` (published
+  once, before gate run 1) disagreed with a fresh regen on several books' `grounded`/
+  `ingested-magnitude` split (e.g. `advanced_race_guide` grounded 207→214, `bestiary_3` grounded
+  326→329) while the `mandate_headline` itself stayed byte-identical (13,443/38,372) both times — a
+  stale intermediate per-book cache in the site payload self-correcting on refresh, not a board
+  regression (confirmed: re-running `./scripts/publish-site-dashboard.sh` then `--check` immediately
+  after passed clean, and the headline number never moved). Refreshed the public feed a second time
+  as the gate's own remediation message instructs.
+- **Run 3: PASS, 34/34 stages.** `root-lib` 2283 passed (+51 over the 2232 baseline -- 18
+  `formula_interpreter` tests, 11 `formula_reproduction_harness` tests (salvaged unmodified), 18
+  `domain_power` tests, 4 pre-existing cleric/inquisitor dispatch-widening-safety tests that only
+  compile once `domain_power.rs` exists), `root-full` 7390 passed across 578 suites, all 539
+  `tests/*.rs` suites executed (+51 over the 7339 baseline, same cause), `desktop` 494 passed
+  (unchanged), `reach` 30 passed (unchanged), `corpus-sweep` 26500 records examined of 26934 read, 0
+  findings (unchanged -- no corpus content moved this wave), `supersession-gate` 116 objects clean,
+  `frontend-test` 100/100 files, `frontend-typecheck` clean, `clippy` root:50 desktop:7 (both back at
+  ceiling after the fix), `class-dump` 31/31 computing (unchanged).
+  `scripts/verify-baselines.env` updated deliberately (2232->2283, 7339->7390) with the cause named
+  inline, per the file's own "never a silent drift" convention.
+
+
+### Cleanup
+
+All wave-25b `CARGO_TARGET_DIR`s deleted at cycle close: `w25b-integ`, `w25b-regen`,
+`w25b-quickcheck`, `w25b-gate`. Wave-25/25b worktrees (`worktree-wf_73cee402-845-{1..8}`,
+`worktree-wf_b2487240-7ff-{1..4}`) and their branches removed after merge/reconciliation —
+`-845-{2,3,5}` and `-7ff-2` merged into `tranche/11`; `-845-{1,4,6,7,8}` (all at base `478a8350b`,
+zero commits ahead) and `-7ff-{1,3,4}` (base `858df7664`, zero commits ahead — `-7ff-1`'s real
+uncommitted `formula_interpreter.rs` was copied out byte-for-byte before removal, per this receipt's
+own account above) were review/scratch/never-committed worktrees with nothing further to merge.
+`sd31/racetrait4-SD31-E6-F4-005` — untouched, not read, not gated, per the standing instruction.

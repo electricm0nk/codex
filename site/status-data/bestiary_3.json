@@ -5704,7 +5704,7 @@
         },
         {
           "name": "Low-Light Vision",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Vanara Racial Trait.Vanara Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Low-Light Vision (RacialTraits.Vanara Racial Trait.Vanara Racial Default.SpecialQuality.Racial Vision)"
@@ -6061,7 +6061,7 @@
         },
         {
           "name": "Nimble",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Vanara Racial Trait.Vanara Racial Default.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Nimble"
@@ -6103,7 +6103,7 @@
         },
         {
           "name": "Normal Speed",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Vanara Racial Trait.Vanara Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed (RacialTraits.Vanara Racial Trait.Vanara Racial Default.SpecialQuality.Racial Speed)"

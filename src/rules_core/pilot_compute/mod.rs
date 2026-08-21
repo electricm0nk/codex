@@ -171,6 +171,12 @@ mod class_ultimate_combat;
 /// them: it reads their functions through `super::` the same way `mod.rs`'s own inline
 /// `#[cfg(test)]` modules already do, and never edits any hand-modelled function's logic.
 pub mod formula_reproduction_harness;
+/// SD-31 wave 25b's formula interpreter core (`OPERATOR-RULINGS-2026-08-21.md` §20). Implements
+/// the `FormulaEvaluator` trait `formula_reproduction_harness` defines. `pub`, like the harness
+/// above: its non-test API has zero callers outside `#[cfg(test)]` yet (no unit-banking consumer
+/// is wired this wave — see its own module doc's opening paragraph), and a private `mod` here
+/// would make every one of those items a genuine `dead_code` lint.
+pub mod formula_interpreter;
 mod domain_power;
 use class_slayer::*;
 use class_ultimate_combat::compute_uc_class_chassis;
@@ -10409,7 +10415,6 @@ mod size_only_race_trait_bundle_tests {
 /// [`replaced_by_alternate_trait`], the same generic flag lookup Dwarf's
 /// Minesight branch above already calls, over `race_resolver.rs`'s own
 /// `ALTERNATE_TRAIT_REPLACE_FLAGS` table (not re-implemented, not touched).
-
 const ROUGAROU_RACE_ID: &str = "race:rougarou";
 const ROUGAROU_BASE_SPEED_FEET: i16 = 30;
 const ROUGAROU_BITE_DAMAGE_DIE: i16 = 4;

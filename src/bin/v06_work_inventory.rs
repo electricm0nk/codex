@@ -5932,6 +5932,42 @@ fn classify(
             }
         }
         Kind::Spell => {
+            // `decisions.md §19` (folded in from `OPERATOR-RULINGS-2026-08-21.md` §19, wave 25b
+            // integration): these 2 named Bestiary 6 spell units are BYTE-IDENTICAL reprints of
+            // spells Ultimate Wilderness already ships, confirmed by `BESTIARY-6-LEDGER.md`
+            // (matching `DESC:`, matching Bestiary-6 `SOURCEPAGE:` citation embedded inside
+            // Ultimate Wilderness's own `.lst`). Under `§13` branch 1 (identical printing, FIRST
+            // print owns it -- Ultimate Wilderness published 2018, before Bestiary 6, 2021), the
+            // first print owns the object and the later one is superseded, complete, not
+            // "not-ingested". `§19`, verbatim: "this is settled doctrine. flag it, mark as
+            // complete, move on" -- and explicitly "do not build a cross-book-reprint crediting
+            // mechanism." This is that instruction taken literally: a fixed, 2-item allowlist,
+            // not a general mechanism. `spell_catalog_rows()`'s cross-book dedup (added wave 24 to
+            // protect `no_key_is_served_twice_so_a_selection_resolves_unambiguously`) is UNCHANGED
+            // and correctly keeps serving only Ultimate Wilderness's copy to the player -- this
+            // allowlist only affects how BESTIARY 6'S OWN unit is credited in the work inventory,
+            // never which book's row a player sees on the character sheet.
+            const BESTIARY_6_SUPERSEDED_SPELL_REPRINTS: &[&str] =
+                &["Animal Growth (Reptiles Only)", "Animal Shapes (Reptiles Only)"];
+            if unit.book == "bestiary_6"
+                && BESTIARY_6_SUPERSEDED_SPELL_REPRINTS.contains(&unit.key.as_str())
+            {
+                return Verdict {
+                    status: "text-complete",
+                    evidence: "superseded_byte_identical_reprint_first_print_owns_it_decisions_13_19"
+                        .to_string(),
+                    reason: Some(
+                        "byte-identical reprint of an Ultimate Wilderness spell (confirmed in \
+                         BESTIARY-6-LEDGER.md); decisions.md §13 branch 1 (identical printing, \
+                         first print owns it) plus §19 (fold-in of \
+                         OPERATOR-RULINGS-2026-08-21.md §19, 'flag it, mark as complete, move \
+                         on') settle this as complete via supersession, not a wiring gap -- \
+                         Ultimate Wilderness's own copy is the one served to players, unchanged"
+                            .to_string(),
+                    ),
+                    engine_book: engine_book_field,
+                };
+            }
             let table = facts.spell_levels.get(engine_book.as_str());
             let level_known = table.and_then(|t| {
                 t.get(&unit.key).copied().or_else(|| t.get(&unit.name).copied())

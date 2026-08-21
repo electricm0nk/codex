@@ -331,8 +331,17 @@ pub(super) struct DomainPowerSpec {
     /// A short, honest label for what the magnitude number IS -- reused in
     /// this power's grounded explanation text.
     pub magnitude_label: &'static str,
+    // Provenance-only: read by this module's own `fixture_check_tests` (`catalog_provenance_
+    // matches_the_corpus_records_own_source_citation`, below) against the corpus's own `source`
+    // object, never by any PRODUCTION/runtime code path -- `cargo build --lib` (the non-test
+    // profile) correctly flags them `dead_code` because that build never compiles `#[cfg(test)]`
+    // code in. `#[allow]`d deliberately rather than deleted: these fields are load-bearing for the
+    // provenance fixture test that already exists and passes, not unused dead weight.
+    #[allow(dead_code)]
     pub upstream_lst: &'static str,
+    #[allow(dead_code)]
     pub upstream_lst_sha256: &'static str,
+    #[allow(dead_code)]
     pub upstream_line: u64,
 }
 
