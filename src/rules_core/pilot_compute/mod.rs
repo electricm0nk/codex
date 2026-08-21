@@ -12016,35 +12016,54 @@ pub(crate) fn table_class_id(class_id_str: &str) -> Option<ClassId> {
 //    PCGen's own encoding of this (`<Class>_CFP_Level` `DEFINE`/
 //    `BONUS:VAR` tokens, present on EVERY prestige class record checked,
 //    Duelist included) is a generic class-feature-point counter, NOT
-//    itself the stacking mechanism -- a false lead ruled out by checking
-//    Duelist (confirmed non-stacking by its own class_feature roster: no
-//    `spells_per_day`-shaped record, matching its real PF1 rules text) and
-//    finding the same token there too. The three of ten confirmed
-//    corpus-side to have NO caster-stacking feature at all (Duelist,
-//    Shadowdancer, Arcane Archer -- each checked for a "spell"-shaped
-//    `class_feature` record) are structurally closer to the ACG/APG/PU/UC
-//    precedent and would need only (1) resolved, plus a real, PF1-rules
-//    entry-requirement check this codebase also does not have anywhere
-//    today (`CharacterInput` never validates that a character qualifies to
-//    hold a class level -- no BAB/feat/skill gate on class entry exists
-//    for ANY class, base or prestige; harmless for base classes, which
-//    have no entry requirement, but silently wrong for a prestige class if
-//    skipped).
+//    itself the stacking mechanism.
 //
-// CONCLUSION, stated the way the wave brief asked for: do not force a
-// prestige class through this chassis. Six of ten (Eldritch Knight, Dragon
-// Disciple, Loremaster, Mystic Theurge, Pathfinder Chronicler, Arcane
-// Trickster) need a caster-level-stacking mechanism that does not exist in
-// any form in this codebase, and building it correctly is new evaluator
-// work, not a dispatch fix -- exactly the "genuinely cannot represent it"
-// case the brief pre-authorized flagging over hacking. The other three
-// (Duelist, Shadowdancer, Arcane Archer) plus Assassin (its own
-// independent, not-yet-corpus-confirmed-here spell progression) are
-// architecturally closer to buildable, but even they cannot bank a single
-// `class`-kind unit from a `pilot_compute`-only write scope, because the
-// doneness instrument's class-membership gate is registered entirely
-// outside this directory. NEEDS AN OPERATOR/ORCHESTRATOR RULING: either
-// widen a future prestige-class lane's write scope to include
+//    CORRECTION (wave 27 integration cycle, after adversarial review): the
+//    original version of this note classified the stacking/non-stacking
+//    split by probing `data/corpus/core_rulebook/class_feature/<class>/`
+//    for a "spell-shaped" JSON record. That probe is narrower than the
+//    data -- in PCGen, four of the six stacking classes encode their
+//    advancement as `ADD:SPELLCASTER|<type>` tokens directly on the
+//    `CLASS:` line itself, not as a separate class_feature record, so a
+//    directory-listing probe is structurally blind to them. Re-checked
+//    directly against the pinned oracle (`cr_classes.lst`, PCGEN_ORACLE_SHA
+//    7f818006e371188e5717fd18d74d18a420747fc6) with a per-class-block scan
+//    for `ADD:SPELLCASTER`. The corrected, oracle-verified split:
+//      STACKING (grants `ADD:SPELLCASTER|<type>` at one or more levels,
+//      advancing an existing class's caster level/spells-per-day/spells-
+//      known -- needs the missing cross-class-level-link mechanism):
+//      Arcane Archer (`cr_classes.lst:334-340`, `ADD:SPELLCASTER|Arcane` at
+//      levels 2/3/4/6/7/8/10), Arcane Trickster, Dragon Disciple, Eldritch
+//      Knight, Loremaster, Mystic Theurge.
+//      NON-STACKING (no `ADD:SPELLCASTER` token anywhere in the class
+//      block; whatever else blocks them, it is not this mechanism):
+//      Assassin, Duelist, Pathfinder Chronicler (`cr_classes.lst:467-485`:
+//      the entire level progression is a single
+//      `1 ABILITY:Class|AUTOMATIC|Pathfinder Chronicler` line, HD:8, 3/4
+//      BAB, good Will, MAXLEVEL:10, no spellcasting in PF1 at all),
+//      Shadowdancer.
+//    The original note had this backwards for two of ten: it nominated
+//    Arcane Archer as non-stacking (wrong -- seven of its ten levels
+//    advance an existing arcane caster) and filed Pathfinder Chronicler as
+//    needing the stacking mechanism (wrong -- it has no spellcasting
+//    whatsoever). Building Arcane Archer as a plain chassis per the
+//    original note's recommendation would have produced exactly the
+//    wave's named signature defect: a class that dispatches and silently
+//    drops seven levels of caster advancement.
+//
+// CONCLUSION, corrected: do not force a prestige class through this
+// chassis. Six of ten (Arcane Archer, Arcane Trickster, Dragon Disciple,
+// Eldritch Knight, Loremaster, Mystic Theurge) need a caster-level-stacking
+// mechanism that does not exist in any form in this codebase, and building
+// it correctly is new evaluator work, not a dispatch fix -- exactly the
+// "genuinely cannot represent it" case the brief pre-authorized flagging
+// over hacking. The other four (Assassin, Duelist, Pathfinder Chronicler,
+// Shadowdancer) are architecturally closer to buildable (no caster-stacking
+// blocker), but even they cannot bank a single `class`-kind unit from a
+// `pilot_compute`-only write scope, because the doneness instrument's
+// class-membership gate is registered entirely outside this directory.
+// NEEDS AN OPERATOR/ORCHESTRATOR RULING: either widen a future
+// prestige-class lane's write scope to include
 // `rules_tables/crb/class_tables.rs` (or a new sibling enum) and
 // `src/bin/v06_work_inventory.rs`'s `modelled_class_books()`, or route
 // class-enum registration through the census lane / an integration cycle
