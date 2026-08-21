@@ -8215,6 +8215,9 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
 
     explain_halfling_race_seam(input, &mut explanations, &mut diagnostics);
     explain_size_only_race_trait_bundle(input, &mut explanations);
+    explain_rougarou_flat_override_race_trait(input, &mut explanations);
+    explain_gillman_flat_override_race_trait(input, &mut explanations);
+    explain_vanara_flat_override_race_trait(input, &mut explanations);
 
 
     explain_selected_alternate_racial_traits(input, &mut explanations, &mut diagnostics);
@@ -9573,8 +9576,23 @@ pub fn race_ids_with_a_magnitude_consumer() -> std::collections::BTreeSet<&'stat
     for (race_id, ..) in SIZE_ONLY_RACE_TRAIT_BUNDLE {
         set.insert(race_id.strip_prefix("race:").unwrap_or(race_id));
     }
+    // SD31-W25-RACETRAIT-001: Rougarou, Gillman and Vanara each have a real
+    // `explain_<race>_flat_override_race_trait` seam (below, next to
+    // `SIZE_ONLY_RACE_TRAIT_BUNDLE`'s own) grounding their flat speed/vision/
+    // natural-weapon overrides -- the cross-book lever `OPEN-ISSUES.md` row
+    // 353 named. Hand-listed rather than table-derived because, unlike the
+    // size-only bundle, the three races' shapes genuinely differ (Gillman
+    // also has a Swim speed override, Rougarou also has a natural weapon).
+    for race_id in FLAT_OVERRIDE_RACE_TRAIT_RACES {
+        set.insert(race_id);
+    }
     set
 }
+
+/// Race ids (lowercase, no `"race:"` prefix) with a real
+/// `explain_<race>_flat_override_race_trait` seam, per
+/// `race_ids_with_a_magnitude_consumer`'s own doc comment above.
+const FLAT_OVERRIDE_RACE_TRAIT_RACES: &[&str] = &["rougarou", "gillman", "vanara"];
 
 #[cfg(test)]
 mod race_ids_with_a_magnitude_consumer_tests {
@@ -9603,29 +9621,33 @@ mod race_ids_with_a_magnitude_consumer_tests {
         );
     }
 
-    /// The union is exactly the 13 races this module has ANY seam for --
-    /// the same 13 a corpus-wide `grep -oE '"race:[a-z_-]+"'` over this file
-    /// finds (adversarial review's own verification method, reproduced here
-    /// as a standing test rather than a one-time manual check).
+    /// The union is exactly the 16 races this module has ANY seam for --
+    /// the prior 13 (`grep -oE '"race:[a-z_-]+"'` over this file's own
+    /// pre-SD31-W25-RACETRAIT-001 text) plus Rougarou, Gillman and Vanara,
+    /// each now backed by a real `explain_<race>_flat_override_race_trait`
+    /// seam, not a hand-copied name.
     #[test]
-    fn the_union_is_exactly_the_thirteen_seamed_races() {
+    fn the_union_is_exactly_the_sixteen_seamed_races() {
         let races = race_ids_with_a_magnitude_consumer();
         let expected: std::collections::BTreeSet<&str> = [
-            "dwarf", "elf", "gnome", "goblin", "grippli", "half-elf", "half-orc", "halfling", "hobgoblin", "human",
-            "kobold", "strix", "svirfneblin",
+            "dwarf", "elf", "gillman", "gnome", "goblin", "grippli", "half-elf", "half-orc",
+            "halfling", "hobgoblin", "human", "kobold", "rougarou", "strix", "svirfneblin",
+            "vanara",
         ]
         .into_iter()
         .collect();
         assert_eq!(races, expected);
     }
 
-    /// A race with no seam at all -- Gillman, this wave's own confirmed
-    /// over-claim -- must NOT appear in the set.
+    /// A race with no seam at all must NOT appear in the set. Gillman and
+    /// Vanara moved OUT of this list as of SD31-W25-RACETRAIT-001 (they now
+    /// have a real flat-override seam, pinned by
+    /// `the_union_is_exactly_the_sixteen_seamed_races` above); Nagaji and
+    /// Vishkanya remain genuinely unseamed and stay here as the negative
+    /// control this test exists to prove can still fail.
     #[test]
     fn an_unseamed_race_is_absent() {
         let races = race_ids_with_a_magnitude_consumer();
-        assert!(!races.contains("gillman"));
-        assert!(!races.contains("vanara"));
         assert!(!races.contains("nagaji"));
         assert!(!races.contains("vishkanya"));
     }
@@ -10356,6 +10378,409 @@ mod size_only_race_trait_bundle_tests {
                 && e.id.ends_with(".trait_bundle.size")
                 && e.id != "race.human.trait_bundle.size"),
             "no stray size-only trait_bundle record should appear for Human"
+        );
+    }
+}
+
+/// SD31-W25-RACETRAIT-001 — the "race-trait flat-override compute seam" the
+/// Bestiary 6 ledger named as missing (`artifacts/BESTIARY-6-LEDGER.md`,
+/// `Rougarou ~ Speed`/`~ Vision`/`~ Natural Weapon` rows) and `OPEN-ISSUES.md`
+/// row 353 scoped as a cross-book lever: `race_ids_with_a_magnitude_consumer`'s
+/// three existing seams (CRB's 7 `explain_*_race_seam` functions, the two
+/// `ALTERNATE_TRAIT_*` tables, `SIZE_ONLY_RACE_TRAIT_BUNDLE`) cover no flat
+/// speed/vision/natural-weapon override for a non-CRB race, so a `computed`
+/// wiring-class record stating one (`MOVE:Walk,30`, `VISION:Low-Light
+/// Vision`, a fixed `DAMAGESIZE` natural attack) stayed `ingested-magnitude`
+/// forever, however reachable.
+///
+/// Three races below, each hand-written (unlike `SIZE_ONLY_RACE_TRAIT_BUNDLE`,
+/// their shapes genuinely differ — Gillman also has a Swim speed, Rougarou
+/// also has a natural weapon, Vanara also has a Climb speed), mirroring the
+/// exact idiom `explain_dwarf_race_seam` already uses for Dwarf's own base
+/// speed and Darkvision: the transcribed value IS the fact reported, grounded
+/// standalone, never folded into a movement/vision total this engine does not
+/// have (no such total exists anywhere in this codebase, verified before
+/// writing this — `grep -rn "base_speed\|land_speed" src/rules_core` outside
+/// this new block returns nothing, and neither `PilotBaseChassisComputation`
+/// nor `SelectedSkillModifiers` carries a speed or vision field).
+///
+/// Each race's racial-DEFAULT record and, where the corpus offers one, its
+/// selectable ALTERNATE override are both handled — the alternate check reuses
+/// [`replaced_by_alternate_trait`], the same generic flag lookup Dwarf's
+/// Minesight branch above already calls, over `race_resolver.rs`'s own
+/// `ALTERNATE_TRAIT_REPLACE_FLAGS` table (not re-implemented, not touched).
+
+const ROUGAROU_RACE_ID: &str = "race:rougarou";
+const ROUGAROU_BASE_SPEED_FEET: i16 = 30;
+const ROUGAROU_BITE_DAMAGE_DIE: i16 = 4;
+
+const GILLMAN_RACE_ID: &str = "race:gillman";
+const GILLMAN_BASE_SPEED_FEET: i16 = 30;
+const GILLMAN_SWIM_SPEED_FEET: i16 = 30;
+const GILLMAN_REPLACE_SPEED_FLAG: &str = "Gillman_ReplaceSpeed";
+const GILLMAN_THROWBACK_TRAIT_KEY: &str = "Gillman ~ Throwback";
+const THROWBACK_GILLMAN_SPEED_FEET: i16 = 30;
+
+const VANARA_RACE_ID: &str = "race:vanara";
+const VANARA_BASE_SPEED_FEET: i16 = 30;
+const VANARA_CLIMB_SPEED_FEET: i16 = 20;
+const VANARA_REPLACE_SPEED_FLAG: &str = "Vanara_ReplaceSpeed";
+const VANARA_TREE_STRANGER_TRAIT_KEY: &str = "Vanara ~ Tree Stranger";
+const TREE_STRANGER_VANARA_SPEED_FEET: i16 = 30;
+
+/// Rougarou (Bestiary 6): `~ Speed` (`MOVE:Walk,30`, a flat, unconditional
+/// land-speed statement — no alternate trait in this book's own corpus
+/// replaces it), `~ Vision` (binary Low-Light Vision plus the Scent special
+/// ability, neither a distance magnitude), and `~ Natural Weapon` (a fixed
+/// 1d4 bite, secondary if the character also wields a manufactured weapon).
+/// Source: `core_essentials/races/rougarou/rougarou_abilities_race.lst:17-20`
+/// (`data/corpus/bestiary_6/race_trait/rougarou/rougarou_{speed,vision,
+/// natural_weapon}.json`'s own `source.line`/`raw_tokens`, read directly, not
+/// transcribed from the ledger).
+fn explain_rougarou_flat_override_race_trait(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if input.chosen.race_id != ROUGAROU_RACE_ID {
+        return;
+    }
+
+    explanations.push(ComputationExplanation {
+        id: "race.rougarou.trait_bundle.speed".to_owned(),
+        value: ROUGAROU_BASE_SPEED_FEET,
+        detail: format!(
+            "Rougarou racial trait bundle — speed: PF1 Bestiary 6 Rougarou has a base land \
+             speed of {ROUGAROU_BASE_SPEED_FEET} ft (rougarou_abilities_race.lst:17 \
+             MOVE:Walk,{ROUGAROU_BASE_SPEED_FEET}). This is a grounded recognition value \
+             carrying the Rougarou base-speed identity on the deterministic pilot seam; it \
+             contributes no computed speed-derived effect to any chassis output, skill \
+             modifier, attack roll, or combat baseline — mirrors the Dwarf/Elf/Gnome/Half-Elf/ \
+             Half-Orc/Halfling `trait_bundle.speed` idiom exactly, extended to a race with no \
+             CRB seam function"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "race.rougarou.trait_bundle.senses".to_owned(),
+        value: 0,
+        detail: "Rougarou racial trait bundle — senses: PF1 Bestiary 6 Rougarou grants \
+                  low-light vision and the Scent special ability (rougarou_abilities_race.lst:18 \
+                  VISION:Low-Light Vision, ABILITY:Special Ability|AUTOMATIC|Universal Monster \
+                  Rule ~ Scent). Both are binary traits, not a distance magnitude like Dwarf \
+                  Darkvision; this is a bounded recognition record naming the Rougarou \
+                  low-light-vision-and-scent identity on the deterministic pilot seam. It \
+                  contributes no computed illumination-, perception-, or \
+                  creature-detection-derived effect to any chassis output, so it carries no \
+                  fabricated mechanical value (+0)"
+            .to_owned(),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "race.rougarou.trait_bundle.natural_weapon".to_owned(),
+        value: ROUGAROU_BITE_DAMAGE_DIE,
+        detail: format!(
+            "Rougarou racial trait bundle — Natural Weapon: PF1 Bestiary 6 Rougarou has a bite \
+             attack dealing 1d{ROUGAROU_BITE_DAMAGE_DIE} points of damage \
+             (rougarou_abilities_race.lst:20 ABILITY:Internal|AUTOMATIC|Bite, \
+             raw_bonus_chains WEAPONPROF=Bite/DAMAGESIZE -1), a secondary attack if the \
+             character also wields a manufactured weapon. This engine has no natural-attack \
+             routine and computes no weapon-damage total anywhere (the same posture \
+             `ground_alchemist_feral_mutagen_discovery`'s claw/bite damage-die records already \
+             take), so the damage die is grounded as a standalone magnitude rather than folded \
+             into a total that does not exist"
+        ),
+    });
+}
+
+/// Gillman (Advanced Race Guide): racial-DEFAULT `~ Speed` states BOTH a
+/// {GILLMAN_BASE_SPEED_FEET} ft land speed and a
+/// {GILLMAN_SWIM_SPEED_FEET} ft swim speed (`MOVE:Walk,30,Swim,30`,
+/// `gillman_abilities_race.lst:17`); the selectable `Gillman ~ Throwback`
+/// alternate trait sets `Gillman_ReplaceSpeed=True` and replaces it with
+/// `Throwback ~ Gillman ~ Speed` — land speed only, no swim speed at all
+/// (`arg_abilities_race.lst:881`, `data/corpus/advanced_race_guide/
+/// race_trait/gillman/throwback_gillman_speed.json`). Confirmed genuinely
+/// unconditional in both shapes: neither record's `DESC:` carries a
+/// conditional cue (no "against", no damage type, no environmental state).
+fn explain_gillman_flat_override_race_trait(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if input.chosen.race_id != GILLMAN_RACE_ID {
+        return;
+    }
+
+    if replaced_by_alternate_trait(input, GILLMAN_REPLACE_SPEED_FLAG) {
+        let selected_throwback = selected_alternate_trait_keys(input)
+            .iter()
+            .any(|key| key == GILLMAN_THROWBACK_TRAIT_KEY);
+        explanations.push(ComputationExplanation {
+            id: "race.gillman.alternate_trait.throwback.speed".to_owned(),
+            value: THROWBACK_GILLMAN_SPEED_FEET,
+            detail: format!(
+                "Gillman alternate racial trait — Throwback (Advanced Race Guide p.188): the \
+                 chosen `Gillman ~ Throwback` alternate replaces the standard Gillman `~ Speed` \
+                 record (arg_abilities_race.lst:881 `Throwback ~ Gillman ~ Speed`, \
+                 MOVE:Walk,{THROWBACK_GILLMAN_SPEED_FEET}, gated \
+                 PREFACT:1,ABILITIES,{GILLMAN_REPLACE_SPEED_FLAG}=True, which `Gillman ~ \
+                 Throwback` sets). Throwback gillmen have {THROWBACK_GILLMAN_SPEED_FEET} ft \
+                 land speed only — no swim speed, unlike the standard racial default. The \
+                 standard {GILLMAN_BASE_SPEED_FEET}/{GILLMAN_SWIM_SPEED_FEET} ft record is \
+                 therefore NOT emitted for this character (selected_throwback={selected_throwback}, \
+                 confirmed via the same flag `replaced_by_alternate_trait` checks). This is a \
+                 grounded recognition value; it contributes no computed speed-derived effect to \
+                 any chassis output"
+            ),
+        });
+        return;
+    }
+
+    explanations.push(ComputationExplanation {
+        id: "race.gillman.trait_bundle.speed".to_owned(),
+        value: GILLMAN_BASE_SPEED_FEET,
+        detail: format!(
+            "Gillman racial trait bundle — speed: PF1 Advanced Race Guide Gillman has a base \
+             land speed of {GILLMAN_BASE_SPEED_FEET} ft and a swim speed of \
+             {GILLMAN_SWIM_SPEED_FEET} ft, can move in water without attempting Swim checks, \
+             and always treats Swim as a class skill (gillman_abilities_race.lst:17 \
+             MOVE:Walk,{GILLMAN_BASE_SPEED_FEET},Swim,{GILLMAN_SWIM_SPEED_FEET}). This is a \
+             grounded recognition value carrying the Gillman base-speed identity (both land and \
+             swim) on the deterministic pilot seam; it contributes no computed speed-derived \
+             effect to any chassis output, skill modifier, attack roll, or combat baseline — no \
+             swim-speed-consuming engine exists in this codebase either, so the Swim-as-class-\
+             skill and no-check-required clauses are named but not applied"
+        ),
+    });
+}
+
+/// Vanara (Advanced Race Guide): racial-DEFAULT `~ Speed` states BOTH a
+/// {VANARA_BASE_SPEED_FEET} ft land speed and a {VANARA_CLIMB_SPEED_FEET} ft
+/// Climb speed (`MOVE:Walk,30,Climb,20`, `vanara_abilities_race.lst:17`);
+/// the selectable `Vanara ~ Tree Stranger` alternate trait sets
+/// `Vanara_ReplaceSpeed=True` and replaces it with `Tree Stranger ~ Vanara ~
+/// Speed` — land speed only, no Climb speed at all (`arg_abilities_race.
+/// lst:1241`, `data/corpus/advanced_race_guide/race_trait/vanara/
+/// tree_stranger_vanara_speed.json`).
+fn explain_vanara_flat_override_race_trait(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if input.chosen.race_id != VANARA_RACE_ID {
+        return;
+    }
+
+    if replaced_by_alternate_trait(input, VANARA_REPLACE_SPEED_FLAG) {
+        let selected_tree_stranger = selected_alternate_trait_keys(input)
+            .iter()
+            .any(|key| key == VANARA_TREE_STRANGER_TRAIT_KEY);
+        explanations.push(ComputationExplanation {
+            id: "race.vanara.alternate_trait.tree_stranger.speed".to_owned(),
+            value: TREE_STRANGER_VANARA_SPEED_FEET,
+            detail: format!(
+                "Vanara alternate racial trait — Tree Stranger (Advanced Race Guide p.206): the \
+                 chosen `Vanara ~ Tree Stranger` alternate replaces the standard Vanara `~ \
+                 Speed` record (arg_abilities_race.lst:1241 `Tree Stranger ~ Vanara ~ Speed`, \
+                 MOVE:Walk,{TREE_STRANGER_VANARA_SPEED_FEET}, gated \
+                 PREFACT:1,ABILITIES,{VANARA_REPLACE_SPEED_FLAG}=True, which `Vanara ~ Tree \
+                 Stranger` sets). Tree stranger vanaras have \
+                 {TREE_STRANGER_VANARA_SPEED_FEET} ft land speed only — no Climb speed, unlike \
+                 the standard racial default. The standard \
+                 {VANARA_BASE_SPEED_FEET}/{VANARA_CLIMB_SPEED_FEET} ft record is therefore NOT \
+                 emitted for this character (selected_tree_stranger={selected_tree_stranger}, \
+                 confirmed via the same flag `replaced_by_alternate_trait` checks). This is a \
+                 grounded recognition value; it contributes no computed speed-derived effect to \
+                 any chassis output"
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "race.vanara.trait_bundle.speed".to_owned(),
+            value: VANARA_BASE_SPEED_FEET,
+            detail: format!(
+                "Vanara racial trait bundle — speed: PF1 Advanced Race Guide Vanara has a base \
+                 land speed of {VANARA_BASE_SPEED_FEET} ft and a Climb speed of \
+                 {VANARA_CLIMB_SPEED_FEET} ft (vanara_abilities_race.lst:17 \
+                 MOVE:Walk,{VANARA_BASE_SPEED_FEET},Climb,{VANARA_CLIMB_SPEED_FEET}). This is a \
+                 grounded recognition value carrying the Vanara base-speed identity (both land \
+                 and climb) on the deterministic pilot seam; it contributes no computed \
+                 speed-derived effect to any chassis output, skill modifier, attack roll, or \
+                 combat baseline — no Climb-check engine exists in this codebase either"
+            ),
+        });
+    }
+
+    explanations.push(ComputationExplanation {
+        id: "race.vanara.trait_bundle.senses".to_owned(),
+        value: 0,
+        detail: "Vanara racial trait bundle — senses: PF1 Advanced Race Guide Vanara grants \
+                  low-light vision (vanara_abilities_race.lst:18 VISION:Low-Light Vision). This \
+                  is a bounded recognition record naming the Vanara low-light vision identity on \
+                  the deterministic pilot seam, mirroring the already-grounded Elf low-light \
+                  vision idiom exactly; it contributes no computed illumination or \
+                  perception-derived effect to any chassis output, so it carries no fabricated \
+                  mechanical value (+0)"
+            .to_owned(),
+    });
+}
+
+#[cfg(test)]
+mod flat_override_race_trait_tests {
+    use super::compute_pilot_base_chassis;
+    use super::{
+        race_alternate_trait_selection_id, RACE_ALTERNATE_TRAIT_CHOICE_ID,
+        THROWBACK_GILLMAN_SPEED_FEET, TREE_STRANGER_VANARA_SPEED_FEET,
+    };
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn input_for_race(slug: &str, alternates: &[&str]) -> CharacterInput {
+        let text = FIGHTER_LEVEL_1_FIXTURE
+            .replace("race_id=race:human", &format!("race_id=race:{slug}"));
+        let loaded = load_character_input_fixture(&text);
+        assert!(
+            loaded.diagnostics.is_empty(),
+            "{slug} fixture should load cleanly: {:?}",
+            loaded.diagnostics
+        );
+        let mut input =
+            loaded.character_input.expect("valid fixture should produce a character input record");
+        for key in alternates {
+            input.chosen.selected_choices.push(SelectedChoice {
+                choice_set_id: RACE_ALTERNATE_TRAIT_CHOICE_ID.to_owned(),
+                selection_id: race_alternate_trait_selection_id(key),
+            });
+        }
+        input
+    }
+
+    /// Rougarou gets all three real, non-zero-value explanation records
+    /// (speed, senses, natural weapon), each citing the real mechanism.
+    #[test]
+    fn rougarou_gets_speed_senses_and_natural_weapon_explanations() {
+        let computation = compute_pilot_base_chassis(&input_for_race("rougarou", &[]));
+        let speed = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.rougarou.trait_bundle.speed")
+            .expect("rougarou must produce a speed explanation");
+        assert_eq!(speed.value, 30);
+        assert!(speed.detail.contains("MOVE:Walk,30"));
+
+        let senses = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.rougarou.trait_bundle.senses")
+            .expect("rougarou must produce a senses explanation");
+        assert!(senses.detail.contains("Scent"));
+
+        let natural_weapon = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.rougarou.trait_bundle.natural_weapon")
+            .expect("rougarou must produce a natural weapon explanation");
+        assert_eq!(natural_weapon.value, 4);
+        assert!(natural_weapon.detail.contains("1d4"));
+    }
+
+    /// Gillman's racial default speed states BOTH land and swim; the value
+    /// reported is the land speed and the detail names the swim speed too.
+    #[test]
+    fn gillman_default_speed_names_both_land_and_swim() {
+        let computation = compute_pilot_base_chassis(&input_for_race("gillman", &[]));
+        let speed = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.gillman.trait_bundle.speed")
+            .expect("gillman must produce a default speed explanation");
+        assert_eq!(speed.value, 30);
+        assert!(speed.detail.contains("swim speed of 30"));
+    }
+
+    /// Selecting `Gillman ~ Throwback` REPLACES the default speed record
+    /// with the Throwback-specific one -- a real override, not an addition:
+    /// the default's own id must be absent once Throwback is selected.
+    #[test]
+    fn gillman_throwback_alternate_replaces_the_default_speed_record() {
+        let computation =
+            compute_pilot_base_chassis(&input_for_race("gillman", &["Gillman ~ Throwback"]));
+        assert!(
+            !computation.explanations.iter().any(|e| e.id == "race.gillman.trait_bundle.speed"),
+            "the default speed record must not also appear once Throwback is selected"
+        );
+        let throwback = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.gillman.alternate_trait.throwback.speed")
+            .expect("gillman must produce the Throwback override explanation");
+        assert_eq!(throwback.value, THROWBACK_GILLMAN_SPEED_FEET);
+        assert!(
+            !throwback.detail.contains("swim speed of 30"),
+            "Throwback gillmen have no swim speed; the override text must not claim one"
+        );
+    }
+
+    /// Vanara's racial default speed states BOTH land and climb; senses is a
+    /// separate zero-value low-light-vision recognition record.
+    #[test]
+    fn vanara_default_speed_and_senses_are_both_grounded() {
+        let computation = compute_pilot_base_chassis(&input_for_race("vanara", &[]));
+        let speed = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.vanara.trait_bundle.speed")
+            .expect("vanara must produce a default speed explanation");
+        assert_eq!(speed.value, 30);
+        assert!(speed.detail.contains("Climb speed of 20"));
+
+        let senses = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.vanara.trait_bundle.senses")
+            .expect("vanara must produce a senses explanation");
+        assert_eq!(senses.value, 0);
+        assert!(senses.detail.contains("low-light vision"));
+    }
+
+    /// Selecting `Vanara ~ Tree Stranger` replaces the default speed record
+    /// exactly as Gillman's Throwback does.
+    #[test]
+    fn vanara_tree_stranger_alternate_replaces_the_default_speed_record() {
+        let computation =
+            compute_pilot_base_chassis(&input_for_race("vanara", &["Vanara ~ Tree Stranger"]));
+        assert!(
+            !computation.explanations.iter().any(|e| e.id == "race.vanara.trait_bundle.speed"),
+            "the default speed record must not also appear once Tree Stranger is selected"
+        );
+        let tree_stranger = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.vanara.alternate_trait.tree_stranger.speed")
+            .expect("vanara must produce the Tree Stranger override explanation");
+        assert_eq!(tree_stranger.value, TREE_STRANGER_VANARA_SPEED_FEET);
+        assert!(
+            !tree_stranger.detail.contains("Climb speed of 20"),
+            "Tree stranger vanaras have no Climb speed; the override text must not claim one"
+        );
+        // Senses is untouched by the speed-only alternate.
+        assert!(
+            computation.explanations.iter().any(|e| e.id == "race.vanara.trait_bundle.senses"),
+            "senses must still be emitted independently of the speed alternate"
+        );
+    }
+
+    /// A race outside this bundle (Human, the fixture's own default) gets no
+    /// stray record from any of the three new functions.
+    #[test]
+    fn a_race_outside_the_bundle_gets_no_record_from_this_seam() {
+        let computation = compute_pilot_base_chassis(&input_for_race("human", &[]));
+        assert!(
+            !computation.explanations.iter().any(|e| e.id.starts_with("race.rougarou.")
+                || e.id.starts_with("race.gillman.")
+                || e.id.starts_with("race.vanara.")),
+            "no stray flat-override record should appear for Human"
         );
     }
 }
