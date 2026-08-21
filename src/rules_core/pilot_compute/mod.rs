@@ -166,6 +166,11 @@ use super::rules_tables::RuleSetId;
 mod class_feature_grant_consumer;
 mod class_slayer;
 mod class_ultimate_combat;
+/// SD-31 wave 25's interpreter reproduction harness (`OPERATOR-RULINGS-2026-08-21.md` §20) --
+/// see its own module doc. A sibling of the three submodules above, not a call-site consumer of
+/// them: it reads their functions through `super::` the same way `mod.rs`'s own inline
+/// `#[cfg(test)]` modules already do, and never edits any hand-modelled function's logic.
+pub mod formula_reproduction_harness;
 use class_slayer::*;
 use class_ultimate_combat::compute_uc_class_chassis;
 
