@@ -33253,3 +33253,153 @@ the review worktree (`-7`, no production changes to merge) and the two placehold
 (`-2`, `-8`, `-9`, never used by any lane result). `sd31/racetrait4-SD31-E6-F4-005` -- untouched,
 not read, not gated, per the standing instruction.
 
+
+## Cycle `SD31-W24-INTEGRATE-001` (`RETRO_ACTOR=sd31-w24-integrate`) — 2026-08-20, wave 24 integration cycle (Bestiary 6 vertical slice)
+
+**Role:** integrator for wave 24 — the only agent permitted to write to `tranche/11` this cycle.
+**Base:** `55e218c61` (tranche/11 tip, confirmed via `git log --oneline -1 && ls docs data scripts schemas` —
+correct base with a full tree).
+
+**This wave was shaped differently, on the operator's direct instruction.** Waves 15-23 spread
+lanes across every kind, building general machinery; wave 24 drove every lane at ONE book —
+Bestiary 6, 72 units, 26 done at dispatch — to answer whether the remaining ~65% of the corpus is
+blocked by a WIRING problem (machinery cannot reach present content) or an UNWIRED problem (content
+was never connected). **The primary deliverable is the per-unit ledger:**
+[`artifacts/BESTIARY-6-LEDGER.md`](artifacts/BESTIARY-6-LEDGER.md).
+
+### TOP-OF-RECEIPT ANSWER: wiring problem or unwired problem?
+
+**Wiring, by a 39:1 margin.** Of the 40 units still not done, 39 are `WIRING GAP` and 1 is
+`UNWIRED`. Zero are `NOT PRESENT` and zero are `BLOCKED-RULING`. Every remaining `class_feature`
+(18) and `monster_ability` (16) unit has real, oracle-verified content behind it — the
+`monster_ability` lane's proposal to file all 16 as `NOT PRESENT` (which would have licensed a
+Structural Exclusion Register entry against the frozen denominator) was independently reviewed
+**GAMED** and is corrected in the ledger.
+
+### Board and Bestiary-6 movement
+
+Board: **13,422 → 13,428/38,372 (34.9786% → 34.9942%)**, +6, denominator unchanged (confirmed by
+direct count before/after). Bestiary 6: **26 → 32/72 (36.1% → 44.4%)**. All +6 traces to ONE cause:
+the integration cycle's own Rougarou race ingest (below) — 0 units moved from any of the 4
+dispatched lanes.
+
+### Lane-by-lane disposition
+
+1. **`class_feature` (branch `worktree-wf_b26e6dd1-dd7-1`)** — 0 code shipped (`git diff --stat`
+   against base empty, confirmed). Reviewed `PARTIAL`: real, correctly-sourced analysis for all 18
+   units, correctly refused the one cheap move available (widening `REGISTERED_POOL_GROUPS` without
+   a render row, which would have been an anti-gaming violation) and raised a genuine, still-open
+   ruling about exclusive-choice option pools. Two corrections layered into the ledger: the Guarded
+   Mind ASPECT-token gap (its own recommended fix would have banked a mechanically-wrong unit) and
+   the real name of the domain-power grounding subsystem (the Cleric side is inline, not a function
+   named `ground_or_block_cleric_domain_power`). Nothing to merge; findings folded into the ledger.
+2. **`monster_ability` (branch `worktree-wf_b26e6dd1-dd7-2`)** — 0 code shipped. Reviewed **GAMED**:
+   classified all 16 units `NOT PRESENT` and floated a Structural Exclusion Register candidate, but
+   the oracle carries real `DESC:` content for every one of them and two are already referenced by
+   exact corpus key from this book's own companion chassis data. Corrected to `WIRING GAP` in the
+   ledger with the real mechanism (a `monster_chassis` registration bridging the already-live
+   companion-ability render path). `OPEN-ISSUES.md` row 351.
+3. **`race_trait`/`race` (branch `worktree-wf_b26e6dd1-dd7-3`)** — 0 code shipped. Diagnosis
+   (Rougarou needs an unbuilt heritage/subrace-selector mechanism) was REFUTED by two independent
+   adversarial reviews re-reading the pinned oracle directly — no `*_subrace.lst` file exists for
+   Rougarou, and its `Rougarou_Replace*` flags are permanently `0`. Correctly identified this as
+   outside its own granted file scope ("do NOT touch race chassis"); the integration cycle built the
+   corrected fix (below). `OPEN-ISSUES.md` row 352.
+4. **`spell` + book-auditor (branch `worktree-wf_b26e6dd1-dd7-4`, `790de4076`)** — real content
+   (Bestiary 6 registered as spell-catalog book 11) plus a full independent whole-book ledger that
+   reproduced the 72/26/46 census exactly and is the structural backbone of the consolidated ledger.
+   **Shipped commit regressed 4 `apps/desktop/src-tauri` tests** (the catalog's own
+   "no key served twice" invariant), confirmed by both adversarial reviews executing both states.
+   Cherry-picked the real content (`5957871fe`) and fixed forward in the same cycle (`1b77dbe36`):
+   generalized the pre-existing "thinner cross-book duplicate omitted" pattern into a resolver-level,
+   book-agnostic dedup pass. 3 of the lane's own `general_fix` citations for other kinds were also
+   refuted (Guarded Mind's ASPECT gap; the 5 null-description `inquisitor_domain` records; the
+   `monster_chassis` registration's own ownership invariant) and corrected in the ledger.
+
+### What the integration cycle built directly: Rougarou (Bestiary 6's sole race)
+
+Two adversarial reviews independently refuted the `race_trait` lane's root-cause diagnosis and
+re-derived the real shape: Rougarou is a flat, single-tier race, identical to Bestiary 2's 6 races
+and Bestiary 5's Skinwalker (both landed the same day, 2026-08-15, as the earlier note that wrongly
+grouped Rougarou with Dhampir's real heritage gap). Since the integration cycle carries no file-scope
+restriction, built it directly: `RaceSpec { dir: "rougarou", book: "bestiary_6" }` added to
+`ingest_races::IN_SCOPE_RACES`, `"bestiary_6"` added to `race_catalog::RACE_CORPUS_BOOKS`. Ran the
+real ingest binary against the pinned oracle (unchanged, `7f818006e3`) — `ALL race=38
+race_trait=363`, zero errors, zero PI hits. Widened the character-creation roster to 38 races and
+re-derived every pinned count this touches across 6 files (the count-change-needs-a-sweep hazard,
+caught by running the full targeted test set before committing, not after).
+
+**Result (guarded regen, isolated `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w24b-regen`, deleted
+after use):** `bestiary_6:race:rougarou` → `done` (offered by the real character-creation roster);
+`~_ability_scores` → `done` (the SAME automatic creation-chassis credit every modelled race's
+Ability Scores unit already uses — no new consumer needed, refuting the lane's own second-order
+prediction that one would be); `~_change_shape`/`~_languages`/`~_size`/`~_type` → `done` (Decision
+7's text-complete rung). `~_speed`/`~_vision`/`~_natural_weapon` stayed `in-progress`
+(`ingested-magnitude`, no verified `pilot_compute` consumer — named as a cross-book lever for a
+future cycle, not a Rougarou-only fix, in `OPEN-ISSUES.md` row 353). `~_adopted_race_rougarou` (the
+APG "Adopted" selector row) stayed `not-started` — genuinely `UNWIRED`, a structurally different
+record shape the chassis ingest does not capture.
+
+### Guarded regen (isolated CARGO_TARGET_DIR, never `--allow-stamp-loss`)
+
+```
+cargo run --locked -j 8 --bin corpus_literal_sweep -- --json-out $S/sweep.json
+  -> 26500 records examined of 26934 read, 255531 tokens compared, 0 findings, CLEAN
+cargo run --locked -j 8 --bin derived_evaluator_fixture_check -- --json-out $S/fixture.json
+  -> 1821 unit(s) cleared over 2561 fixture row(s); 0 failed; 0 not ingested
+CORPUS_LITERAL_SWEEP_REPORT=$S/sweep.json DERIVED_FIXTURE_CHECK_REPORT=$S/fixture.json \
+  cargo run --locked -j 8 --bin v06_work_inventory
+  -> wrote docs/work-inventory.json; board 13,422 -> 13,428/38,372, bestiary_6 26 -> 32/72
+```
+
+`core_essentials`: confirmed 0 units (direct Python count over `docs/work-inventory.json`).
+Denominator unchanged: 38,372 = 38,372, confirmed at total and per-kind level.
+
+Public feed refreshed (override 10, required whenever `docs/work-inventory.json` moves):
+`./scripts/publish-site-dashboard.sh` — wrote `site/dashboard/PF1e-dashboard.json` (39.6% overall
+public projection, PI-screened) and `site/status-data.json` + 30 book-detail files.
+
+
+### Full gate
+
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w24b-gate ./scripts/verify.sh -j 8`.
+
+- **Run 1: FAILED** (`root-full`, `desktop`, `reach`, all `cargo exit 101`) — 5 distinct findings, all
+  downstream of the Rougarou ingest commit's count change (37 -> 38 races) not sweeping every
+  hand-copied pin: `tests/duergar_invisibility_sla_reaches_a_player_via_monster_codex.rs`'s
+  `LOADED_BOOKS` hand-copy of `RACE_CORPUS_BOOKS` missing `bestiary_6` (fifth time this exact test
+  has caught this exact omission class); two whole-corpus race-trait-row-count pins in
+  `tests/sd27_aasimar_globalvar_gate_closes_the_dead_affordance.rs`/`sd27_alternate_racial_trait_
+  reachability.rs` (346->354, 786->794 x2); `data/corpus/bestiary_6/LICENSE.json`'s
+  `records_processed` (44->53); and `apps/desktop/src-tauri/src/reach_gate.rs`'s
+  `every_ingested_family_is_accounted_for`/`unsurfaced_families_are_exactly_the_recorded_findings`
+  (`bestiary_6/races` and `bestiary_6/race_traits` had no reach claim and no `OPEN_FINDINGS` entry —
+  wired-integration-discipline's own gate, correctly refusing ingested content with no declared
+  consumer). Fixed all 5 (commit `77b8cbfc6`): added the missing hand-copy entry, restated the two
+  pinned counts, restated the LICENSE.json count with an extended screening note, and added real
+  reach claims for `bestiary_6/races`/`race_traits` (same `races_reach`/`race_traits_reach`
+  mechanism as `bestiary_2`/`bestiary_5`, generic, no new code) plus an `OPEN_FINDINGS` entry for
+  `bestiary_6/spells` (a real, named gap this cycle's own spell-dedup fix produces).
+- **Run 2: FAILED** (`site-dashboard-check` only) — the LICENSE.json fix above landed AFTER the
+  first `publish-site-dashboard.sh` run, so the committed public feed was stale by one edit.
+  Re-published, re-staged.
+- **Run 3: PASS, 34/34 stages.** `root-lib` 2232 passed (+5 over the 2227 baseline — Rougarou's new
+  race-creation/race-resolver coverage), `root-full` 7339 passed across 578 suites, all 539
+  `tests/*.rs` suites executed (+5 over the 7334 baseline, same cause), `desktop` 494 passed
+  (unchanged), `reach` 30 passed (unchanged), `corpus-sweep` 26500 records examined of 26934 read
+  (+9 over the 26491 baseline — Rougarou's 9 new corpus records), 0 findings, `supersession-gate`
+  116 objects clean, `frontend-test` 100/100 files, `frontend-typecheck` clean, `clippy` root:50
+  desktop:7 (both unchanged, at ceiling), `class-dump` 31/31 computing (unchanged).
+  `scripts/verify-baselines.env` updated deliberately (2227->2232, 7334->7339, 26491->26500) with
+  the cause named inline, per the file's own "never a silent drift" convention.
+
+### Cleanup
+
+All wave-24 `CARGO_TARGET_DIR`s deleted at cycle close: `w24b-build`, `w24b-build-root`,
+`w24b-ingest`, `w24b-regen`, `w24b-gate`. Wave-24 worktrees (`worktree-wf_b26e6dd1-dd7-{1,2,3,4,5,6}`)
+and their branches removed after merge, including the two review worktrees (`-5`, `-6`, no
+production changes to merge) and the placeholder-then-superseded `-4` (spell lane, content
+cherry-picked and fixed forward, branch itself not merged as-is). `sd31/racetrait4-SD31-E6-F4-005`
+— untouched, not read, not gated, per the standing instruction. The unrelated
+`wf_f64d2f74-a99-{1..6}` worktrees (a different, empty workflow, 0 commits ahead of base) were left
+alone — not this wave's to clean up.

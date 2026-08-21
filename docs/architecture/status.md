@@ -970,6 +970,101 @@ instruction) — every gained id genuinely transitioned doneness, not merely its
   adversarial review re-running the full suite the lane's own submission had described as
   "pending."
 
+## Corpus coverage, corpus-wide — re-derived 2026-08-20 (SD-31 wave 24, integration cycle)
+
+**Wave 24 was shaped differently, on the operator's direct instruction: instead of spreading lanes
+across every kind, all lanes served ONE goal — drive a single book, Bestiary 6 (72 units, 26 done at
+dispatch), toward closure, to distinguish a WIRING problem from an UNWIRED one.** The full per-unit
+ledger is the wave's primary deliverable:
+[`SD-31-corpus-closure-grind/artifacts/BESTIARY-6-LEDGER.md`](../release/SD-31-corpus-closure-grind/artifacts/BESTIARY-6-LEDGER.md).
+Board: **13,422 → 13,428/38,372 (34.9786% → 34.9942%)**, +6, denominator unchanged. Bestiary 6:
+26 → 32/72 (44.4%). Oracle pin unchanged, `7f818006e371188e5717fd18d74d18a420747fc6`.
+
+**The wave's own question, answered plainly: is Bestiary 6's remaining work a WIRING problem or an
+UNWIRED problem?** Of the 40 units still not done, **39 are WIRING GAP and 1 is UNWIRED — a 39:1
+margin.** Every remaining `class_feature` (18) and `monster_ability` (16) unit has real,
+oracle-verified content behind it; none needed a Structural Exclusion Register entry. One lane's
+proposal to file all 16 `monster_ability` units `NOT PRESENT` (licensing denominator removal) was
+independently reviewed **GAMED** and corrected — the abilities are already referenced by exact
+corpus key from this book's own companion chassis data (`companion_data.rs`'s
+`external_ability_refs`), which a live, no-new-UI render path already serves for this book's 12
+advancement abilities today; what is missing is a `monster_chassis` registration bridging that
+existing companion-ability path into the `monster_ability` kind's own classifier arm, not missing
+content.
+
+**What actually moved the board this wave did not come from any of the 4 dispatched lanes — it came
+from the integration cycle itself, building the one fix every lane was explicitly barred from
+touching.** 2 of 4 lanes (`class_feature`, `race_trait`) correctly diagnosed their entire remaining
+population as outside their granted file scope and shipped zero code. The `monster_ability` lane
+also shipped zero code, with the GAMED misdiagnosis above. The `spell` lane shipped real content
+(Bestiary 6 registered as spell-catalog book 11) that broke a live product invariant
+(`no_key_is_served_twice_so_a_selection_resolves_unambiguously`, 4 desktop-crate tests) and was
+fixed forward in this same cycle by generalizing the existing cross-book-duplicate-suppression
+pattern into a resolver-level dedup pass. Two independent adversarial reviews then refuted the
+`race_trait` lane's headline diagnosis — that Rougarou (Bestiary 6's sole race) needed an unbuilt
+heritage/subrace-selector ingest mechanism, the Dhampir shape — against the pinned oracle directly:
+no `*_subrace.lst` file exists for Rougarou, and its `Rougarou_Replace*` flags are DEFINEd to `0`
+with nothing anywhere in the corpus ever setting one `True`. Rougarou is a flat, single-tier race,
+the identical shape already ingested for Bestiary 2's 6 races and Bestiary 5's Skinwalker. The
+integration cycle built the ingest directly: +1 `race`, +5 `race_trait` (Ability Scores, via the
+same automatic creation-chassis credit every modelled race's Ability Scores unit already uses;
+Change Shape/Languages/Size/Type via Decision 7's text-complete rung), widening the
+character-creation roster to 38 races. 3 more `race_trait` units (Speed/Vision/Natural Weapon) and
+1 (`Adopted Race ~ Rougarou`, the APG selector row — genuinely UNWIRED, not ingested at all) remain
+open, named in the ledger with their general fix.
+
+**Priced for the remaining thirty books**: a lane dispatch bounded to "tables and matchers only, no
+chassis work" is close to a guaranteed zero-yield dispatch for `race_trait` and near-zero-yield for
+`class_feature`/`monster_ability` in their CURRENT shape. The real levers are a handful of subsystem
+widenings that close units across MANY books at once, not more lane-parallelism at this file-scope
+grain: (1) the Cleric/Inquisitor domain-power grounding subsystem, allowlisted to Good+Healing only
+today; (2) a `monster_chassis` ↔ companion-ability bridge; (3) a `race_ids_with_a_magnitude_
+consumer` flat-override seam (speed/vision/natural-weapon) for non-CRB races. All three are named,
+with their exact blocking code cited, in the Bestiary 6 ledger.
+
+| quantity | value | how |
+|---|---:|---|
+| board units (in scope, `beginner_box` excluded) | **38,372** (unchanged — required this wave) | `docs/work-inventory.json`, replayed through `pf1e_dashboard_producer.doneness_verdict()` |
+| board `done` | **13,428 (34.9942%)** | same replay; was 13,422 / 34.9786% before this wave |
+| corpus literal sweep | 26,500 records examined of 26,934 read, **0 findings** | `cargo run --locked --bin corpus_literal_sweep`, isolated `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w24b-regen` |
+| `derived` fixture coverage | **1,821 units cleared over 2,561 fixture rows**, 0 failed, 0 not ingested | `cargo run --locked --bin derived_evaluator_fixture_check`; unchanged |
+| `core_essentials` | **0 units**, confirmed absent | direct `python3` count over `docs/work-inventory.json` |
+| Bestiary 6 | **32/72 (44.4%)**, was 26/72 (36.1%) | `docs/work-inventory.json`, filtered `book==bestiary_6` |
+| in-scope races (`ingest_races::IN_SCOPE_RACES`) | **38**, was 37 | Rougarou (Bestiary 6) added this wave |
+
+**All +6 traces to one cause**: the integration cycle's own Rougarou race ingest (1 `race` +
+5 `race_trait`, all landing on already-accepted mechanisms — the character-creation roster and
+Decision 7's text-complete rung — not a new one). 0 units moved from any of the 4 dispatched lanes.
+
+### What wave 24's integration cycle changed in the architecture, not just in the counts
+
+* **A cross-book verbatim spell reprint exposed a real gap in `spell_catalog_rows()`'s dedup
+  discipline, generalized rather than patched around the one collision that found it.** The
+  existing "thinner duplicate omitted" pattern (`ultimate_combat::spell_list` already omits `Share
+  Language (Communal)` this way, at INGEST time, by hand) only covers a duplicate one lane
+  remembers to omit. A later book chaining a spell BOTH books genuinely print in full (Bestiary 6
+  and Ultimate Wilderness's shared Scalykind-subdomain spells) had no such omission and served the
+  same key twice. Fixed at the resolver level instead: a book-agnostic, first-chained-wins dedup
+  pass now runs after every book's rows are chained, protecting every FUTURE book widening from the
+  same collision shape, not just this one.
+* **A lane's root-cause diagnosis was refuted by re-reading the oracle it claimed to have read
+  whole, not by re-running the same instrument that produced it.** The `race_trait` lane's claim
+  that Rougarou needed an unbuilt heritage/subrace-selector mechanism traced, on inspection, to an
+  unevidenced parenthetical in an earlier `OPEN-ISSUES.md` row that grouped Rougarou with Dhampir's
+  REAL heritage gap without independently checking Rougarou's own oracle files. Two independent
+  adversarial reviews (a wave-24 lane review and a separate ledger-honesty-lens review) each
+  performed that direct check and reached the same refutation — the corrective instinct this
+  program keeps re-learning: "read the whole corpus record, not filtered fields" and "shipped prose
+  is not a source of truth" apply to a lane's OWN prior findings, not only to corpus content.
+* **A book-level `NOT PRESENT` classification was caught before it could license a denominator
+  removal it did not earn.** The `monster_ability` lane's instrument (`classify_monster_ability_
+  rows.py`) models an ability's owner as `kind=='monster'` only, and printed an absolute claim
+  ("nothing can ever own them") in exactly the place it is blind to companion-only ownership — a
+  proxy making its confident claim precisely where it is wrong, the identical failure shape this
+  program's own standing rule (`validate proxies against known truth`) exists to catch. Caught by
+  cross-checking the proxy's claim against the compiled chassis table directly, not by trusting the
+  proxy's own framing.
+
 ### Desktop app: character sheet and update actions
 
 | Item | Status | Where (re-verified) |

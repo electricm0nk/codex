@@ -1393,3 +1393,43 @@ not two, and no branch from this wave was rejected or left unmerged.**
   base-green acceptance gate (`sd24_wired_integration_audit.rs`) — caught only by an adversarial
   review re-running the full suite the lane's own submission described as "pending."
 
+
+## Board after wave 24 (`SD31-W24-INTEGRATE-001`, 2026-08-20) — Bestiary 6 vertical slice
+
+**Wave shape changed on operator instruction: all lanes served ONE book (Bestiary 6, 72 units) to
+answer whether the remaining corpus is a WIRING problem or an UNWIRED problem, not spread across
+kinds. Full per-unit ledger: `artifacts/BESTIARY-6-LEDGER.md`.**
+
+| Kind | Denominator before | Denominator after | Done before | Done after | Delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 28 (15.1351%) | 28 (15.1351%) | +0 |
+| class_feature | 15,439 | 15,439 | 329 (2.1310%) | 329 (2.1310%) | +0 |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,313 (85.5831%) | 5,313 (85.5831%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 516 (32.6582%) | 516 (32.6582%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 989 (77.8740%) | 989 (77.8740%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,790 (60.8430%) | 1,790 (60.8430%) | +0 |
+| race | 95 | 95 | 34 (35.7895%) | **35 (36.8421%)** | **+1** |
+| race_trait | 3,504 | 3,504 | 520 (14.8402%) | **525 (14.9829%)** | **+5** |
+| spell | 2,843 | 2,843 | 1,573 (55.3289%) | 1,573 (55.3289%) | +0 |
+| **TOTAL** | **38,372** | **38,372** | **13,422 (34.9786%)** | **13,428 (34.9943%)** | **+6** |
+
+**Bestiary 6 itself: 26/72 (36.1%) -> 32/72 (44.4%).** All +6 traces to ONE cause: the integration
+cycle's own Rougarou (Bestiary 6's sole race) chassis ingest, not any of the 4 dispatched lanes (all
+4 shipped zero units; 2 shipped zero code and correctly diagnosed their scope as exhausted, 1 shipped
+zero code with a GAMED misdiagnosis corrected in the ledger, 1 shipped real content that needed a
+same-cycle regression fix before merge).
+
+**The wiring-vs-unwired answer, the wave's actual question: 39 WIRING GAP, 1 UNWIRED, 0 NOT PRESENT,
+0 BLOCKED-RULING, out of the 40 units still not done.** Bestiary 6's remaining work is a wiring
+problem, not an unwired one, by a 39:1 margin — every remaining `class_feature`/`monster_ability`
+unit has real oracle content behind it. Full reasoning and per-unit citations:
+`artifacts/BESTIARY-6-LEDGER.md`.
+
+**Priced for the remaining 30 books**: a lane dispatch bounded to "tables/matchers only, no chassis
+work" is close to a guaranteed zero-yield dispatch in the current architecture. The real levers are
+three subsystem widenings that close units across many books at once — the domain-power grounding
+subsystem (Good+Healing only today), a `monster_chassis` <-> companion-ability bridge, and a
+`race_ids_with_a_magnitude_consumer` flat-override seam — all three named with exact blocking code
+citations in the ledger, not estimated.

@@ -485,42 +485,42 @@
       "items": [
         {
           "name": "+2 Strength, +2 Wisdom, -2 Intelligence",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Ability Scores",
           "standing": "unclassified",
           "display_name": "+2 Strength, +2 Wisdom, -2 Intelligence"
         },
         {
           "name": "Change Shape",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Special Quality.Supernatural",
           "standing": "unclassified",
           "display_name": "Change Shape"
         },
         {
           "name": "Languages",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Language",
           "standing": "unclassified",
           "display_name": "Languages"
         },
         {
           "name": "Medium",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Size",
           "standing": "unclassified",
           "display_name": "Medium"
         },
         {
           "name": "Natural Weapon",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality",
           "standing": "unclassified",
           "display_name": "Natural Weapon"
         },
         {
           "name": "Normal Speed",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Speed",
           "standing": "unclassified",
           "display_name": "Normal Speed"
@@ -534,14 +534,14 @@
         },
         {
           "name": "Senses",
-          "doneness": "not-started",
+          "doneness": "partial",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Vision",
           "standing": "unclassified",
           "display_name": "Senses"
         },
         {
           "name": "Shapechanger",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "RacialTraits.Rougarou Racial Trait.Rougarou Racial Default.SpecialQuality.Racial Type",
           "standing": "unclassified",
           "display_name": "Shapechanger"
@@ -551,11 +551,11 @@
     {
       "kind": "race",
       "label": "Races",
-      "done": 0,
+      "done": 1,
       "partial": 0,
-      "not_started": 1,
+      "not_started": 0,
       "denominator": 1,
-      "pct": 0.0,
+      "pct": 100.0,
       "excluded_from_percentage": 0,
       "standing_breakdown": {
         "origin": 1
@@ -563,7 +563,7 @@
       "items": [
         {
           "name": "Rougarou",
-          "doneness": "not-started",
+          "doneness": "done",
           "type_facet": "Base.PC",
           "standing": "origin",
           "display_name": "Rougarou"

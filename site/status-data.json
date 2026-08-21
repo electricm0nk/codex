@@ -1,14 +1,14 @@
 {
-  "generated_at": "2026-08-20T21:35:41Z",
+  "generated_at": "2026-08-21T00:38:51Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 11680,
+    "done": 11681,
     "partial": 2058,
-    "not_started": 15772,
+    "not_started": 15771,
     "denominator": 29510,
     "pct": 39.6,
     "excluded_from_percentage": 8862,
@@ -399,11 +399,11 @@
     {
       "id": "bestiary_6",
       "title": "Bestiary 6",
-      "done": 26,
+      "done": 27,
       "partial": 0,
-      "not_started": 17,
+      "not_started": 16,
       "denominator": 43,
-      "pct": 60.5,
+      "pct": 62.8,
       "excluded_from_percentage": 29,
       "standing_breakdown": {
         "origin": 43,

@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-20T20:47:45Z",
+  "generated_at": "2026-08-20T23:46:48Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38372,
-  "proven_units": 6310,
+  "proven_units": 6315,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -7401,12 +7401,12 @@
       "proven": 0,
       "by_status": {
         "ingested-magnitude": 3,
-        "literal-verified": 34,
-        "not-ingested": 55,
+        "literal-verified": 35,
+        "not-ingested": 54,
         "not-started": 3
       },
       "shard": "PF1e-units-race.json",
-      "bytes": 9355,
+      "bytes": 9359,
       "doneness_unmapped": {},
       "categories": {
         "none": {
@@ -7420,10 +7420,10 @@
         },
         "base": {
           "label": "Base",
-          "done": 27,
+          "done": 28,
           "held": 0,
           "in-progress": 3,
-          "not-started": 6,
+          "not-started": 5,
           "unmeasurable": 0,
           "deferred": 0
         },
@@ -7495,24 +7495,24 @@
     },
     "race_trait": {
       "units": 3504,
-      "proven": 507,
+      "proven": 512,
       "by_status": {
-        "not-ingested": 2720,
-        "grounded": 326,
-        "ingested-magnitude": 264,
-        "text-complete": 181,
+        "not-ingested": 2712,
+        "grounded": 327,
+        "ingested-magnitude": 267,
+        "text-complete": 185,
         "literal-verified": 13
       },
       "shard": "PF1e-units-race_trait.json",
-      "bytes": 502957,
+      "bytes": 502975,
       "doneness_unmapped": {},
       "categories": {
         "racialtraits": {
           "label": "Racial Traits",
-          "done": 509,
+          "done": 514,
           "held": 1,
-          "in-progress": 256,
-          "not-started": 455,
+          "in-progress": 259,
+          "not-started": 447,
           "unmeasurable": 0,
           "deferred": 0
         },
