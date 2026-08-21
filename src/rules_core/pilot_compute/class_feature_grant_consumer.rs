@@ -158,6 +158,8 @@ use std::sync::OnceLock;
 
 use serde_json::Value;
 
+use super::formula_interpreter::PcgenFormulaEvaluator;
+use super::formula_reproduction_harness::FormulaEvaluator as _;
 use super::{ComputationExplanation, pu_feature_slug};
 
 /// The four classes this module refuses to emit for -- see this module's
@@ -538,6 +540,215 @@ fn corpus_records_with_real_description() -> &'static BTreeMap<String, String> {
     })
 }
 
+// ---------------------------------------------------------------------------------------------
+// SD-31 wave 26: resolving `%N` corpus DESC placeholders through the formula interpreter
+// (`OPERATOR-RULINGS-2026-08-21.md` §20, "RULED, 2026-08-21: §24.1 IS OVERTURNED. Build the
+// interpreter.").
+// ---------------------------------------------------------------------------------------------
+//
+// `corpus_records_with_real_description` above (SD31-W23) admits a grant fact ONLY when its
+// record's raw `DESC:` renders CLEAN with NO character context at all -- any `%N` reference is
+// grounds for exclusion, full stop. That was the correct, conservative call in wave 23: no
+// mechanism existed yet to fill a `%N` honestly. Wave 25b built one
+// (`formula_interpreter::PcgenFormulaEvaluator`, proven to reproduce 22 of 22 hand-modelled
+// functions, zero disagreements) and this section is what plugs it in for `class_feature`,
+// following the ALREADY-ESTABLISHED, ALREADY-LIVE precedent
+// `pilot_compute/mod.rs::pu_display_values` / `pu_resolved_description` set for Pathfinder
+// Unchained: read the same-record `BONUS:VAR` chain, seed it with the ONE fact this module
+// actually has about a specific character (their level in the granting class), evaluate with the
+// real interpreter, and hand the result to `pcgen_desc::render_pcgen_desc_with_values` -- the
+// SAME renderer, unmodified, that already enforces "drop and report, never guess" for any
+// argument this chain cannot reach.
+//
+// # Scope: level-only chains, one class per record
+//
+// This resolver binds exactly one variable from outside the record itself: `<Class ...
+// no-spaces>LVL` (PCGen's own auto-declared per-class level variable -- confirmed corpus-wide,
+// e.g. `Bard` -> `BardLVL`, `Slayer` -> `SlayerLVL`, `Alchemist` -> `AlchemistLVL`) bound to the
+// character's real level in that class, taken from this function's own `level` parameter (the
+// SAME single-class-only precondition `push_generic_class_feature_grant_records`'s own caller
+// already documents). No ability-modifier binding exists yet -- a formula whose chain bottoms out
+// in anything else (an ability abbreviation, a sibling record's own variable, a shape the
+// interpreter refuses such as the documented bare-comparison-as-numeric-term gap) simply never
+// resolves, is never guessed, and the grant fact this module already skips today keeps being
+// skipped. Widening to ability modifiers is real, scoped follow-on work (`ability_modifiers` is
+// already in scope at this module's one call site, `compute_class_chassis`), not attempted here.
+//
+// # Why this belongs in `detail`, not a new render surface
+//
+// `ClassFeatureRow.detail` (`classFeaturesModel.ts`) is ALREADY rendered verbatim on the
+// character sheet -- "the engine's own corpus citation", per that file's own module doc. Routing
+// the resolved sentence through it needs zero new IPC surface, zero new Tauri command, and zero
+// new frontend wiring: the render path this wave's brief asks for ("wire it into the
+// description-completion path... the render path... is already book-agnostic") is this one,
+// already proven, already live.
+
+/// One class_feature corpus record's raw PCGen tokens this resolver needs: its owning class
+/// (read straight from `data.class`, never re-derived from the `KEY:` text), display name, raw
+/// `DESC:` token text (verbatim, `%N` unresolved), and every same-record `BONUS:VAR` name ->
+/// formula pair. A comma-separated multi-target `BONUS:VAR` row (PCGen's own shape, e.g.
+/// `BONUS:VAR|CMB_Sunder,CMD_Sunder|SunderTrainingSunderBonus`) contributes one entry per named
+/// target, all sharing the same formula text.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(crate) struct ClassFeatureRecordTokens {
+    pub(crate) name: String,
+    pub(crate) class: String,
+    pub(crate) raw_description: String,
+    pub(crate) bonus_vars: BTreeMap<String, String>,
+}
+
+/// Parses every `BONUS:VAR|<name[,name2,...]>|<formula>[|<extra qualifiers>]` row out of one
+/// record's `raw_tokens` array, keyed by target name. A row whose formula segment is itself
+/// followed by further `|`-delimited PRE-gate qualifiers keeps only the formula (the text before
+/// the next `|`) -- this resolver does not evaluate PRE-gates, the same restriction
+/// `extract_formula_field` (`formula_interpreter.rs`) documents for its own positional heuristic.
+fn parse_bonus_var_tokens(raw_tokens: &[Value]) -> BTreeMap<String, String> {
+    let mut bonus_vars = BTreeMap::new();
+    for token in raw_tokens {
+        if token["key"].as_str() != Some("BONUS") {
+            continue;
+        }
+        let Some(value) = token["value"].as_str() else { continue };
+        let Some(rest) = value.strip_prefix("VAR|") else { continue };
+        let mut parts = rest.splitn(2, '|');
+        let (Some(names), Some(formula_and_tail)) = (parts.next(), parts.next()) else {
+            continue;
+        };
+        let formula = formula_and_tail.split('|').next().unwrap_or(formula_and_tail);
+        for name in names.split(',') {
+            let name = name.trim();
+            if !name.is_empty() {
+                bonus_vars.insert(name.to_string(), formula.to_string());
+            }
+        }
+    }
+    bonus_vars
+}
+
+/// Every `data/corpus/*/class_feature/**/*.json` record that carries a real (non-empty,
+/// non-`.CLEAR`, non-PI-marker) description, keyed by corpus `KEY:`, regardless of whether that
+/// description carries an unresolved `%N` -- the strictly WIDER sibling of
+/// `corpus_records_with_real_description` above, which additionally requires the description to
+/// already render clean with no character context. First book (alphabetically) wins a duplicate
+/// key, mirroring that function's own convention.
+pub(crate) fn class_feature_record_tokens() -> &'static BTreeMap<String, ClassFeatureRecordTokens> {
+    static TABLE: OnceLock<BTreeMap<String, ClassFeatureRecordTokens>> = OnceLock::new();
+    TABLE.get_or_init(|| {
+        let mut out = BTreeMap::new();
+        let corpus_root = repo_root().join("data/corpus");
+        let Ok(books) = std::fs::read_dir(&corpus_root) else { return out };
+        let mut book_dirs: Vec<_> = books.flatten().collect();
+        book_dirs.sort_by_key(|e| e.file_name());
+        for book_entry in book_dirs {
+            let cf_dir = book_entry.path().join("class_feature");
+            if !cf_dir.is_dir() {
+                continue;
+            }
+            let mut files = Vec::new();
+            walk_json_files(&cf_dir, &mut files);
+            for file in files {
+                let Ok(text) = std::fs::read_to_string(&file) else { continue };
+                let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+                let data = &doc["data"];
+                let (Some(key), Some(name), Some(class)) =
+                    (data["key"].as_str(), data["name"].as_str(), data["class"].as_str())
+                else {
+                    continue;
+                };
+                let Some(raw_desc) = data["description"].as_str() else { continue };
+                if !is_real_description_value(raw_desc) {
+                    continue;
+                }
+                let bonus_vars = data["raw_tokens"]
+                    .as_array()
+                    .map(|tokens| parse_bonus_var_tokens(tokens))
+                    .unwrap_or_default();
+                out.entry(key.to_string()).or_insert_with(|| ClassFeatureRecordTokens {
+                    name: name.to_string(),
+                    class: class.to_string(),
+                    raw_description: raw_desc.to_string(),
+                    bonus_vars,
+                });
+            }
+        }
+        out
+    })
+}
+
+/// PCGen's own auto-declared per-class level variable name: the class's display name with every
+/// whitespace character removed, plus `LVL` -- confirmed corpus-wide (`Bard` -> `BardLVL`,
+/// `Barbarian` -> `BarbarianLVL`, `Arcane Archer` -> `ArcaneArcherLVL`, ...) by grepping every
+/// `BONUS:VAR|<name>|<ClassNameLVL>` single-identifier row in `data/corpus/*/class_feature/` and
+/// checking which owning `data.class` value it names.
+pub(crate) fn class_level_variable_name(class: &str) -> String {
+    let mut out: String = class.chars().filter(|c| !c.is_whitespace()).collect();
+    out.push_str("LVL");
+    out
+}
+
+/// Resolves every `bonus_vars` identifier this record's own `BONUS:VAR` tokens can reach, seeded
+/// with the SINGLE fact this module actually knows about one character: their level in the
+/// granting class, bound to `class_level_var`. A fixed-point pass over the record's own token
+/// set: repeatedly evaluates any not-yet-bound formula whose every identifier is already known,
+/// through the real [`PcgenFormulaEvaluator`], until a full pass adds nothing further (capped at
+/// 16 passes -- generous headroom over the longest chain this corpus has ever shown, 2 hops).
+///
+/// An identifier this loop cannot reach (an ability modifier, a sibling record's own variable, a
+/// shape the interpreter refuses -- e.g. the documented bare-comparison-as-numeric-term gap) is
+/// simply never bound -- never guessed, never defaulted. [`resolved_description_for`]'s own
+/// downstream `render_pcgen_desc_with_values` call then drops (and reports) any `%N` that still
+/// names it, exactly the way it already treats any other unresolved argument.
+pub(crate) fn resolve_pcgen_var_chain(
+    bonus_vars: &BTreeMap<String, String>,
+    class_level_var: &str,
+    level: u8,
+) -> BTreeMap<String, i64> {
+    let evaluator = PcgenFormulaEvaluator;
+    let mut vars: BTreeMap<String, i64> = BTreeMap::new();
+    vars.insert(class_level_var.to_string(), i64::from(level));
+    let mut progressed = true;
+    let mut guard = 0;
+    while progressed && guard < 16 {
+        progressed = false;
+        guard += 1;
+        for (name, formula) in bonus_vars {
+            if vars.contains_key(name) {
+                continue;
+            }
+            if let Ok(value) = evaluator.evaluate(formula, &vars) {
+                vars.insert(name.clone(), value);
+                progressed = true;
+            }
+        }
+    }
+    vars
+}
+
+/// This grant fact's real corpus `DESC:` description with THIS CHARACTER's own numbers
+/// substituted in place of every `%N`, or `None` when the chain does not fully resolve -- exactly
+/// the "drop and report, never guess" contract `render_pcgen_desc_with_values` already enforces,
+/// extended here only by WHERE the values come from (the real formula interpreter over this
+/// record's own `BONUS:VAR` chain, seeded with the character's real class level) rather than a
+/// hand-modelled function.
+pub(crate) fn resolved_description_for(key: &str, level: u8) -> Option<String> {
+    let record = class_feature_record_tokens().get(key)?;
+    let class_level_var = class_level_variable_name(&record.class);
+    let resolved_vars = resolve_pcgen_var_chain(&record.bonus_vars, &class_level_var, level);
+    let mut values = crate::rules_core::pcgen_desc::PcgenDisplayValues::new();
+    for (name, value) in &resolved_vars {
+        values.set(name, *value);
+    }
+    let rendered =
+        crate::rules_core::pcgen_desc::render_pcgen_desc_with_values(&record.raw_description, &values);
+    if !rendered.dropped_args.is_empty() || rendered.text.is_empty() {
+        return None;
+    }
+    if crate::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {
+        return None;
+    }
+    Some(rendered.text)
+}
+
 /// Pushes one `ComputationExplanation` (id
 /// `class_feature.<owner>.corpus_record.<feature_slug>`, same shape and
 /// convention as `push_pu_class_feature_records`) for every merged grant
@@ -596,7 +807,32 @@ pub(super) fn push_generic_class_feature_grant_records(
         if level < granted_at {
             continue;
         }
-        let Some(name) = descriptions.get(key) else { continue };
+        // Two independent paths to a servable name for this record:
+        //
+        // 1. (SD31-W23, unchanged) `descriptions` -- the record's raw description already
+        //    renders clean with NO character context at all. Its real prose is served
+        //    separately by the STATIC, book-agnostic `class_feature_descriptions.rs` render
+        //    path; this branch's own `detail` text is byte-identical to before this wave.
+        // 2. (SD-31 wave 26, NEW) The record's description carries an unresolved `%N`, but
+        //    THIS character's own class level lets the formula interpreter resolve it (see
+        //    `resolved_description_for` above). Previously this whole grant fact was skipped
+        //    outright (`descriptions.get` returned `None` and the loop moved on) -- it is now
+        //    emitted WITH its real, per-character resolved sentence embedded directly in
+        //    `detail`, which `classFeaturesModel.ts` already renders verbatim on the sheet. A
+        //    record whose chain does NOT resolve (ability-modifier-dependent, a shape the
+        //    interpreter refuses, an unknown grant class) keeps being skipped exactly as
+        //    before -- refuse, never guess.
+        let (name, resolved_prose): (&str, Option<String>) =
+            if let Some(name) = descriptions.get(key) {
+                (name.as_str(), None)
+            } else if let Some(record) = class_feature_record_tokens().get(key) {
+                match resolved_description_for(key, level) {
+                    Some(text) => (record.name.as_str(), Some(text)),
+                    None => continue,
+                }
+            } else {
+                continue;
+            };
         let feature_slug = pu_feature_slug(key);
         if feature_slug.is_empty() {
             continue;
@@ -604,16 +840,26 @@ pub(super) fn push_generic_class_feature_grant_records(
         if already_computed_slugs.contains(feature_slug.as_str()) {
             continue;
         }
-        explanations.push(ComputationExplanation {
-            id: format!("class_feature.{owner}.corpus_record.{feature_slug}"),
-            value: i16::from(granted_at),
-            detail: format!(
+        let detail = match &resolved_prose {
+            Some(prose) => format!(
+                "{owner} level {level}: `{key}` (\"{name}\") is a class feature of this \
+                 character, granted from class level {granted_at}. {prose} (the real rulebook \
+                 description, with this character's own numbers resolved through the PCGen \
+                 formula interpreter, per a grant fact ingested from PCGen's own \
+                 class-progression tokens, data/class_feature_grants)."
+            ),
+            None => format!(
                 "{owner} level {level}: `{key}` (\"{name}\") is a class feature of this \
                  character, granted from class level {granted_at}, per a grant fact ingested \
                  from PCGen's own class-progression tokens (data/class_feature_grants). The \
                  record's real rulebook description is served separately by the character \
                  sheet's Class Features section."
             ),
+        };
+        explanations.push(ComputationExplanation {
+            id: format!("class_feature.{owner}.corpus_record.{feature_slug}"),
+            value: i16::from(granted_at),
+            detail,
         });
     }
 }
@@ -944,5 +1190,277 @@ mod tests {
             any_emitted,
             "expected at least one non-excluded class to emit at least one real explanation at              level 20 against the live merged data -- an empty result here would mean the whole              emission path silently became a no-op"
         );
+    }
+
+    // -----------------------------------------------------------------------------------------
+    // SD-31 wave 26: resolving `%N` corpus DESC placeholders through the formula interpreter
+    // -----------------------------------------------------------------------------------------
+
+    #[test]
+    fn class_level_variable_name_matches_the_corpus_wide_convention() {
+        assert_eq!(class_level_variable_name("Bard"), "BardLVL");
+        assert_eq!(class_level_variable_name("Rogue"), "RogueLVL");
+        assert_eq!(class_level_variable_name("Arcane Archer"), "ArcaneArcherLVL");
+        assert_eq!(class_level_variable_name("Assassin"), "AssassinLVL");
+    }
+
+    /// `Assassin ~ Save against Poisons` (`core_rulebook`, real corpus record): a single
+    /// `BONUS:VAR|AssassinPoisonSaveBonus|AssassinLVL/2` token, no chain hop needed at all --
+    /// the simplest real shape this resolver handles.
+    #[test]
+    fn resolve_pcgen_var_chain_reproduces_a_single_hop_division_formula() {
+        let mut bonus_vars = BTreeMap::new();
+        bonus_vars.insert("AssassinPoisonSaveBonus".to_string(), "AssassinLVL/2".to_string());
+        for (level, expected) in [(2u8, 1i64), (3, 1), (4, 2), (10, 5), (20, 10)] {
+            let vars = resolve_pcgen_var_chain(&bonus_vars, "AssassinLVL", level);
+            assert_eq!(
+                vars.get("AssassinPoisonSaveBonus"),
+                Some(&expected),
+                "level {level}"
+            );
+        }
+    }
+
+    /// `Rogue ~ Trapfinding` (`core_rulebook`, real corpus record): a TWO-hop chain
+    /// (`TrapfindingLVL` -> `RogueLVL`, then `TrapfindingBonus` -> `max(TrapfindingLVL/2,1)`),
+    /// the shape wave 25b's own worked example (`Bardic Knowledge`) also uses. Proves the
+    /// fixed-point pass genuinely chains through an intermediate variable, not just a bare
+    /// single-hop lookup.
+    #[test]
+    fn resolve_pcgen_var_chain_reproduces_a_two_hop_max_formula() {
+        let mut bonus_vars = BTreeMap::new();
+        bonus_vars.insert("TrapfindingLVL".to_string(), "RogueLVL".to_string());
+        bonus_vars.insert("TrapfindingBonus".to_string(), "max(TrapfindingLVL/2,1)".to_string());
+        for (level, expected) in [(1u8, 1i64), (2, 1), (3, 1), (4, 2), (5, 2), (10, 5), (20, 10)] {
+            let vars = resolve_pcgen_var_chain(&bonus_vars, "RogueLVL", level);
+            assert_eq!(vars.get("TrapfindingBonus"), Some(&expected), "level {level}");
+        }
+    }
+
+    /// An identifier the chain can never reach (here: a made-up ability-modifier-shaped name,
+    /// standing in for the real, currently-unsupported case) is never bound -- no entry, no
+    /// guessed `0`, no panic.
+    #[test]
+    fn resolve_pcgen_var_chain_never_binds_an_unreachable_identifier() {
+        let mut bonus_vars = BTreeMap::new();
+        bonus_vars.insert("MasterStrikeDC".to_string(), "10+(MasterStrikeLVL/2)+INT".to_string());
+        bonus_vars.insert("MasterStrikeLVL".to_string(), "RogueLVL".to_string());
+        let vars = resolve_pcgen_var_chain(&bonus_vars, "RogueLVL", 10);
+        assert_eq!(vars.get("MasterStrikeLVL"), Some(&10));
+        assert!(
+            vars.get("MasterStrikeDC").is_none(),
+            "a formula referencing an unbound identifier (INT) must never resolve to a guessed \
+             number: {vars:?}"
+        );
+    }
+
+    /// End-to-end against the LIVE corpus record and the LIVE grant data: `resolved_description_for`
+    /// produces the exact real sentence, with this character's own number substituted, for
+    /// `Assassin ~ Save against Poisons` at a concrete level.
+    #[test]
+    fn resolved_description_for_produces_the_real_sentence_for_a_live_corpus_record() {
+        // Level 3, deliberately NOT level 4: `AssassinLVL/2` floor-divides 3 and 4 to the SAME
+        // result at some off-by-one mutations but not others -- straddling the 2/3 and 3/4
+        // division boundaries (levels 2, 3, 4 below) is what makes this assertion actually
+        // sensitive to an off-by-one in the seeded level, confirmed live during this wave's own
+        // mutation-proof pass (temporarily seeding `level + 1`): a level-4-only check here missed
+        // it by coincidence (5/2 truncates to the same 2 as 4/2), while level 3 does not
+        // (4/2=2 != 3/2=1).
+        let text3 = resolved_description_for("Assassin ~ Save against Poisons", 3)
+            .expect("Assassin ~ Save against Poisons must resolve at level 3 against the live corpus");
+        assert_eq!(text3, "The assassin gains a +1 saving throw bonus against poisons.");
+        let text4 = resolved_description_for("Assassin ~ Save against Poisons", 4)
+            .expect("Assassin ~ Save against Poisons must resolve at level 4 against the live corpus");
+        assert_eq!(text4, "The assassin gains a +2 saving throw bonus against poisons.");
+        assert!(!text3.contains('%') && !text4.contains('%'), "no unresolved %N argument may survive");
+    }
+
+    /// The same, for the two-hop `max()` shape, against the live `Rogue ~ Trapfinding` record.
+    #[test]
+    fn resolved_description_for_produces_the_real_sentence_for_the_two_hop_live_record() {
+        let text = resolved_description_for("Rogue ~ Trapfinding", 1)
+            .expect("Rogue ~ Trapfinding must resolve at level 1 against the live corpus");
+        assert_eq!(
+            text,
+            "You add +1 to Perception skill checks made to locate traps and to Disable Device \
+             skill checks. You can use the Disable Device skill to disarm magical traps."
+        );
+        let text4 = resolved_description_for("Rogue ~ Trapfinding", 4)
+            .expect("Rogue ~ Trapfinding must resolve at level 4 against the live corpus");
+        assert!(text4.starts_with("You add +2 to Perception"), "got {text4:?}");
+    }
+
+    /// The honest scale of this wave's own widening, measured against the LIVE, real
+    /// `unambiguous_grants()` population (not a hand-picked sample): how many grant facts were
+    /// admitted before this wave (`descriptions.get` -- no `%N` at all), how many are newly
+    /// admitted by this wave's interpreter-backed chain resolution, and -- for every fact this
+    /// wave still cannot resolve -- WHY, split by cause, so a future wave knows what it is
+    /// planning against. Pinned as a concrete assertion (not merely printed) so a regression in
+    /// either count is caught, not silently drifted.
+    #[test]
+    fn the_live_scale_of_this_waves_widening_is_measured_and_pinned() {
+        let descriptions = corpus_records_with_real_description();
+        let mut already_admitted = 0usize;
+        let mut newly_resolved = 0usize;
+        let mut class_excluded_otherwise_resolvable = 0usize;
+        let mut chain_unresolvable = 0usize;
+        let mut no_record_at_all = 0usize;
+        let mut newly_resolved_examples: Vec<String> = Vec::new();
+
+        for ((class, key), &granted_at) in unambiguous_grants() {
+            if descriptions.contains_key(key) {
+                already_admitted += 1;
+                continue;
+            }
+            if class_feature_record_tokens().get(key).is_none() {
+                no_record_at_all += 1;
+                continue;
+            }
+            // Structural resolvability is level-INDEPENDENT for this corpus's arithmetic
+            // formulas (no known div-by-zero-at-a-specific-level case exists today) -- probing
+            // at the record's own granted level is representative and also the level a
+            // just-qualifying character actually has.
+            let probe_level = granted_at.max(1);
+            let resolves = resolved_description_for(key, probe_level);
+            // Class exclusion is checked FIRST, matching `push_generic_class_feature_grant_records`'s
+            // own early return for an excluded class -- a record whose chain resolves but whose
+            // class is gate-excluded is NEVER actually emitted in production, so it must not be
+            // counted as `newly_resolved` here.
+            if ANTI_FABRICATION_GATE_EXCLUDED_CLASSES.contains(&class.as_str()) {
+                if resolves.is_some() {
+                    class_excluded_otherwise_resolvable += 1;
+                } else {
+                    chain_unresolvable += 1;
+                }
+                continue;
+            }
+            match resolves {
+                Some(text) => {
+                    newly_resolved += 1;
+                    newly_resolved_examples.push(format!("{class}/{key}@{granted_at}"));
+                    assert!(!text.contains('%'), "{key}: resolved text still leaks an unresolved %N argument");
+                }
+                None => chain_unresolvable += 1,
+            }
+        }
+
+        // Pinned counts: change these ONLY with a concrete corpus/grant-data change that moves
+        // them, never to make a test pass. If this assertion fails after touching
+        // `resolve_pcgen_var_chain`/`resolved_description_for`, the new counts ARE the finding --
+        // report them, don't silently update the pin without checking why they moved.
+        assert_eq!(
+            (already_admitted, newly_resolved, class_excluded_otherwise_resolvable, chain_unresolvable, no_record_at_all),
+            (137, 12, 8, 20, 36),
+            "live scale moved -- already_admitted={already_admitted} newly_resolved={newly_resolved} \
+             class_excluded_otherwise_resolvable={class_excluded_otherwise_resolvable} \
+             chain_unresolvable={chain_unresolvable} no_record_at_all={no_record_at_all} \
+             examples of newly-resolved: {newly_resolved_examples:?}"
+        );
+    }
+
+    /// A key with no corpus record at all resolves to `None`, never a panic or a guess.
+    #[test]
+    fn resolved_description_for_returns_none_for_an_unknown_key() {
+        assert_eq!(resolved_description_for("Not A Real Class ~ Not A Real Feature", 5), None);
+    }
+
+    /// End-to-end THROUGH the emission function this wave widens: `Assassin ~ Save against
+    /// Poisons` was completely absent from this module's output before this wave (its
+    /// description carries an unresolved `%1`, so `corpus_records_with_real_description` -- the
+    /// pre-wave-26 gate -- excluded it, and the whole grant fact was silently skipped). It now
+    /// emits, carrying the real, per-character resolved sentence in `detail`.
+    #[test]
+    fn push_generic_class_feature_grant_records_now_emits_the_previously_skipped_assassin_record() {
+        // Level 3 (not 4): see `resolved_description_for_produces_the_real_sentence_for_a_live_
+        // corpus_record`'s own comment for why this specific level is what makes the assertion
+        // sensitive to an off-by-one in the seeded class level.
+        let mut explanations = Vec::new();
+        push_generic_class_feature_grant_records("class:assassin", 3, &mut explanations);
+        let found = explanations
+            .iter()
+            .find(|e| e.id == "class_feature.assassin.corpus_record.save_against_poisons")
+            .unwrap_or_else(|| panic!("expected the assassin poison-save record to be emitted at \
+                 level 3; got {explanations:?}"));
+        assert_eq!(found.value, 2, "granted_at must still be the real grant level, unchanged");
+        assert!(
+            found.detail.contains("The assassin gains a +1 saving throw bonus against poisons."),
+            "the real, resolved sentence with this character's own number must be embedded in \
+             detail: {}",
+            found.detail
+        );
+        assert!(!found.detail.contains('%'), "no unresolved %N argument may ship: {}", found.detail);
+    }
+
+    /// **Honest scope correction to `the_live_scale_of_this_waves_widening_is_measured_and_
+    /// pinned`'s own count, found while verifying this wave against the REAL full pipeline
+    /// rather than this module in isolation.** `Barbarian ~ Damage Reduction` is one of the 12
+    /// `newly_resolved` records that census counts -- correctly, `resolved_description_for`
+    /// genuinely resolves it via the interpreter -- but `pilot_compute/mod.rs` ALREADY carries a
+    /// real, hand-modelled `class_feature.barbarian.damage_reduction` explanation with a
+    /// complete, per-character value AND real derivation prose in `detail`, pushed before this
+    /// module ever runs. Its trailing dot-segment (`damage_reduction`) COLLIDES with this
+    /// module's own roster id for the same grant fact, so the pre-existing
+    /// `already_computed_slugs` guard (see `a_pre_existing_real_explanation_suppresses_the_
+    /// matching_roster_id`, above) correctly suppresses this module's own emission in the REAL
+    /// pipeline -- the player was already fully served for this one record before this wave, and
+    /// this wave changes nothing observable for it. Of the 12 interpreter-resolvable records,
+    /// this is the ONLY one with a pre-existing hand-modelled collision (confirmed by grep: no
+    /// other of the 12 classes' feature slugs appears as a `class_feature.<class>.<slug>` id
+    /// anywhere in `pilot_compute/mod.rs`) -- so this wave's real, NEW, previously-unserved
+    /// population is 11, not 12. Reported here rather than silently, per the wave brief's own
+    /// "report honestly how far it scales" instruction.
+    #[test]
+    fn barbarian_damage_reduction_is_superseded_by_its_own_pre_existing_hand_modelled_explanation() {
+        let mut explanations = vec![ComputationExplanation {
+            id: "class_feature.barbarian.damage_reduction".to_owned(),
+            value: 2,
+            detail: "the real, hand-wired Damage Reduction magnitude and derivation".to_owned(),
+        }];
+        push_generic_class_feature_grant_records("class:barbarian", 20, &mut explanations);
+        assert_eq!(
+            explanations.iter().filter(|e| e.id.rsplit('.').next() == Some("damage_reduction")).count(),
+            1,
+            "exactly the pre-seeded real explanation must survive; this module must not add a \
+             second, colliding id for the same trailing segment: {explanations:?}"
+        );
+        assert_eq!(explanations[0].value, 2, "the real hand-modelled explanation must be untouched");
+    }
+
+    /// Below the grant level, nothing is emitted at all -- unchanged behaviour, character does
+    /// not have the feature yet.
+    #[test]
+    fn push_generic_class_feature_grant_records_still_withholds_below_the_grant_level() {
+        let mut explanations = Vec::new();
+        push_generic_class_feature_grant_records("class:assassin", 1, &mut explanations);
+        assert!(
+            !explanations.iter().any(|e| e.id.contains("save_against_poisons")),
+            "a character below the grant level must not see this feature at all: {explanations:?}"
+        );
+    }
+
+    /// The EXISTING (pre-wave-26) branch's `detail` text is byte-identical to before this wave --
+    /// this change is purely additive for records that were previously skipped, never a rewrite
+    /// of records that were already served.
+    #[test]
+    fn the_pre_existing_no_placeholder_branch_detail_text_is_unchanged() {
+        let mut explanations = Vec::new();
+        push_generic_class_feature_grant_records("class:fighter", 2, &mut explanations);
+        let bravery_roster_id = "class_feature.fighter.corpus_record.bravery";
+        // Fighter's OWN hand-wired chassis code normally pushes a real `bravery` explanation
+        // first and this module defers to it (see the `already_computed_slugs` guard above) --
+        // called in isolation here (no prior explanations), so this module's own coarser roster
+        // fact is what gets pushed, and its exact wording is the thing under test.
+        let found = explanations.iter().find(|e| e.id == bravery_roster_id);
+        if let Some(found) = found {
+            assert!(
+                found.detail.ends_with(
+                    "per a grant fact ingested from PCGen's own class-progression tokens \
+                     (data/class_feature_grants). The record's real rulebook description is \
+                     served separately by the character sheet's Class Features section."
+                ),
+                "unchanged detail wording expected for the no-percent-n branch: {}",
+                found.detail
+            );
+        }
     }
 }

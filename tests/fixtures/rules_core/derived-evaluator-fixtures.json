@@ -49942,5 +49942,365 @@
         ]
       }
     }
+  ],
+  "class_feature_description_token_family": "DESC:<prose>%1|<name> where <name>'s value is resolved through a same-record BONUS:VAR chain rooted at the record's own class-level variable (<ClassNameNoSpaces>LVL).",
+  "class_feature_description_derivation": "Every TARGETS record's raw upstream .lst row is re-read directly and its BONUS:VAR chain resolved by this script's own from-scratch fixed-point evaluator (resolve_chain / evaluate_formula), seeded ONLY with the class's own level variable at each sample level. expected.value_at_level pins the fully-resolved integer the DESC: token's %1 argument names, at several sample character levels chosen to straddle each formula's own division/max() step boundaries.",
+  "class_feature_description_independence": "scripts/derive_class_feature_description_fixtures.py re-reads the pinned upstream .lst bytes directly, splits each record's raw tab-delimited fields with its own logic (read_record_fields), and evaluates the resulting formula chain with its own from-scratch recursive-descent parser/evaluator (evaluate_formula) -- structurally independent, cross-language code from src/rules_core/pilot_compute/class_feature_grant_consumer.rs's resolve_pcgen_var_chain, which drives the REAL production formula_interpreter::PcgenFormulaEvaluator. It opens no file under data/corpus/ and imports no engine module. docs/work-inventory.json is read for IDENTITY ONLY (book/source_file/source_line for a corpus_key) -- no magnitude is ever taken from it. TARGETS is a hand-picked, hand-verified batch (see this script's own module doc's 'TARGET SELECTION' section) -- the exact live population class_feature_grant_consumer.rs's own corpus-wide census test found resolvable, not the full theoretical shape space.",
+  "class_feature_description_entries": [
+    {
+      "unit_id": "core_rulebook:class_feature:arcane_archer_hail_of_arrows",
+      "book": "core_rulebook",
+      "record_key": "Arcane Archer ~ Hail of Arrows",
+      "class": "Arcane Archer",
+      "class_level_var": "ArcaneArcherLVL",
+      "desc_arg_names_in_percent_n_order": [
+        "HailArrowsTargets",
+        "HailArrowsTimes"
+      ],
+      "bonus_var_chain": {
+        "HailArrowsTargets": "ArcaneArcherLVL",
+        "HailArrowsTimes": "1"
+      },
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "upstream_lst_sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "upstream_line": 2927,
+      "corpus_field": "DESC:In lieu of his regular attacks, %2 per day an arcane archer of 8th level or higher can fire an arrow at each and every target within range, to a maximum of %1 targets. Each attack uses the archer's primary attack bonus, and each enemy may only be targeted by a single arrow.|HailArrowsTargets|HailArrowsTimes",
+      "expected": {
+        "value_at_level_by_arg": {
+          "HailArrowsTargets": {
+            "8": 8,
+            "9": 9,
+            "10": 10,
+            "15": 15,
+            "20": 20
+          },
+          "HailArrowsTimes": {
+            "8": 1,
+            "9": 1,
+            "10": 1,
+            "15": 1,
+            "20": 1
+          }
+        }
+      }
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:arcane_archer_phase_arrow",
+      "book": "core_rulebook",
+      "record_key": "Arcane Archer ~ Phase Arrow",
+      "class": "Arcane Archer",
+      "class_level_var": "ArcaneArcherLVL",
+      "desc_arg_names_in_percent_n_order": [
+        "PhaseArrowTimes"
+      ],
+      "bonus_var_chain": {
+        "PhaseArrowTimes": "1"
+      },
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "upstream_lst_sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "upstream_line": 2926,
+      "corpus_field": "DESC:At 6th level, an arcane archer can launch an arrow %1 per day at a target known to him within range, and the arrow travels to the target in a straight path, passing through any nonmagical barrier or wall in its way. (Any magical barrier stops the arrow.) This ability negates cover, concealment, armor, and shield modifiers, but otherwise the attack is rolled normally. Using this ability is a standard action (and shooting the arrow is part of the action).|PhaseArrowTimes",
+      "expected": {
+        "value_at_level_by_arg": {
+          "PhaseArrowTimes": {
+            "6": 1,
+            "7": 1,
+            "10": 1,
+            "15": 1,
+            "20": 1
+          }
+        }
+      }
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:arcane_archer_seeker_arrow",
+      "book": "core_rulebook",
+      "record_key": "Arcane Archer ~ Seeker Arrow",
+      "class": "Arcane Archer",
+      "class_level_var": "ArcaneArcherLVL",
+      "desc_arg_names_in_percent_n_order": [
+        "SeekerArrowTimes"
+      ],
+      "bonus_var_chain": {
+        "SeekerArrowTimes": "1"
+      },
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "upstream_lst_sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "upstream_line": 2925,
+      "corpus_field": "DESC:At 4th level, an arcane archer can launch an arrow at a target known to him within range, and the arrow travels to the target, even around corners. Only an unavoidable obstacle or the limit of the arrow's range prevents the arrow's flight. This ability negates cover and concealment modifiers, but otherwise the attack is rolled normally. Using this ability is a standard action (and shooting the arrow is part of the action). An arcane archer can use this ability %1 per day.|SeekerArrowTimes",
+      "expected": {
+        "value_at_level_by_arg": {
+          "SeekerArrowTimes": {
+            "4": 1,
+            "5": 1,
+            "6": 1,
+            "10": 1,
+            "20": 1
+          }
+        }
+      }
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:arcane_trickster_impromptu_sneak_attack",
+      "book": "core_rulebook",
+      "record_key": "Arcane Trickster ~ Impromptu Sneak Attack",
+      "class": "Arcane Trickster",
+      "class_level_var": "ArcaneTricksterLVL",
+      "desc_arg_names_in_percent_n_order": [
+        "ImpromptuSneakTimes"
+      ],
+      "bonus_var_chain": {
+        "ImpromptuSneakTimes": "(ArcaneTricksterLVL+1)/4"
+      },
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "upstream_lst_sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "upstream_line": 2935,
+      "corpus_field": "DESC:Beginning at 3rd level, %1 per day an arcane trickster can declare one melee or ranged attack she makes to be a sneak attack (the target can be no more than 30 feet distant if the impromptu sneak attack is a ranged attack). The target of an impromptu sneak attack loses any Dexterity bonus to AC, but only against that attack. The power can be used against any target, but creatures that are not subject to critical hits take no extra damage (though they still lose any Dexterity bonus to AC against the attack). At 7th level, an arcane trickster can use this ability twice per day.|ImpromptuSneakTimes",
+      "expected": {
+        "value_at_level_by_arg": {
+          "ImpromptuSneakTimes": {
+            "3": 1,
+            "4": 1,
+            "5": 1,
+            "10": 2
+          }
+        }
+      }
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:assassin_save_against_poisons",
+      "book": "core_rulebook",
+      "record_key": "Assassin ~ Save against Poisons",
+      "class": "Assassin",
+      "class_level_var": "AssassinLVL",
+      "desc_arg_names_in_percent_n_order": [
+        "AssassinPoisonSaveBonus"
+      ],
+      "bonus_var_chain": {
+        "AssassinPoisonSaveBonus": "AssassinLVL/2"
+      },
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "upstream_lst_sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "upstream_line": 2945,
+      "corpus_field": "DESC:The assassin gains a +%1 saving throw bonus against poisons.|AssassinPoisonSaveBonus",
+      "expected": {
+        "value_at_level_by_arg": {
+          "AssassinPoisonSaveBonus": {
+            "2": 1,
+            "3": 1,
+            "4": 2,
+            "5": 2,
+            "10": 5,
+            "20": 10
+          }
+        }
+      }
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:barbarian_damage_reduction",
+      "book": "core_rulebook",
+      "record_key": "Barbarian ~ Damage Reduction",
+      "class": "Barbarian",
+      "class_level_var": "BarbarianLVL",
+      "desc_arg_names_in_percent_n_order": [
+        "BarbarianDR"
+      ],
+      "bonus_var_chain": {
+        "ClassFeatureDR_ALL": "BarbarianDR",
+        "BarbarianDR": "(BarbarianDRLVL-4)/3",
+        "BarbarianDRLVL": "BarbarianLVL"
+      },
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "upstream_lst_sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "upstream_line": 424,
+      "corpus_field": "DESC:You gain damage reduction. Subtract %1 from the damage you take each time you are dealt damage from a weapon or natural attack. Damage reduction can reduce damage to 0 but not below 0.|BarbarianDR",
+      "expected": {
+        "value_at_level_by_arg": {
+          "BarbarianDR": {
+            "7": 1,
+            "8": 1,
+            "9": 1,
+            "10": 2,
+            "13": 3,
+            "20": 5
+          }
+        }
+      }
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:duelist_elaborate_defense",
+      "book": "core_rulebook",
+      "record_key": "Duelist ~ Elaborate Defense",
+      "class": "Duelist",
+      "class_level_var": "DuelistLVL",
+      "desc_arg_names_in_percent_n_order": [
+        "ElaborateDefense"
+      ],
+      "bonus_var_chain": {
+        "ElaborateDefense": "ElaborateParryLVL/3",
+        "FightingDefensivelyACBonus": "ElaborateDefense",
+        "TotalDefenseACBonus": "ElaborateDefense",
+        "ElaborateParryLVL": "DuelistLVL"
+      },
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "upstream_lst_sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "upstream_line": 2997,
+      "corpus_field": "DESC:At 7th level and higher, if a duelist chooses to fight defensively or use total defense in melee combat, she gains an additional +%1 dodge bonus to AC for every 3 levels of duelist she has attained.|ElaborateDefense",
+      "expected": {
+        "value_at_level_by_arg": {
+          "ElaborateDefense": {
+            "7": 2,
+            "8": 2,
+            "9": 3,
+            "10": 3,
+            "20": 6
+          }
+        }
+      }
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:duelist_improved_reaction",
+      "book": "core_rulebook",
+      "record_key": "Duelist ~ Improved Reaction",
+      "class": "Duelist",
+      "class_level_var": "DuelistLVL",
+      "desc_arg_names_in_percent_n_order": [
+        "ImprovedReaction"
+      ],
+      "bonus_var_chain": {
+        "ImprovedReaction": "floor((DuelistLVL+4)/6)*2"
+      },
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "upstream_lst_sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "upstream_line": 2988,
+      "corpus_field": "DESC:At 2nd level, a duelist gains a +%1 bonus on initiative checks. This bonus stacks with the benefit provided by the Improved Initiative feat.|ImprovedReaction",
+      "expected": {
+        "value_at_level_by_arg": {
+          "ImprovedReaction": {
+            "2": 2,
+            "3": 2,
+            "4": 2,
+            "10": 4,
+            "20": 8
+          }
+        }
+      }
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:duelist_precise_strike",
+      "book": "core_rulebook",
+      "record_key": "Duelist ~ Precise Strike",
+      "class": "Duelist",
+      "class_level_var": "DuelistLVL",
+      "desc_arg_names_in_percent_n_order": [
+        "PreciseStrikeDamage"
+      ],
+      "bonus_var_chain": {
+        "PreciseStrikeDamage": "DuelistLVL"
+      },
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "upstream_lst_sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "upstream_line": 2991,
+      "corpus_field": "DESC:A duelist gains the ability to strike precisely with a light or one-handed piercing weapon, adding her duelist level [%1] to her damage roll. When making a precise strike, a duelist cannot attack with a weapon in her other hand or use a shield. A duelist's precise strike only works against living creatures with discernible anatomies. Any creature that is immune to critical hits is also immune to a precise strike, and any item or ability that protects a creature from critical hits also protects a creature from a precise strike.|PreciseStrikeDamage",
+      "expected": {
+        "value_at_level_by_arg": {
+          "PreciseStrikeDamage": {
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "8": 8,
+            "10": 10
+          }
+        }
+      }
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:rogue_trapfinding",
+      "book": "core_rulebook",
+      "record_key": "Rogue ~ Trapfinding",
+      "class": "Rogue",
+      "class_level_var": "RogueLVL",
+      "desc_arg_names_in_percent_n_order": [
+        "TrapfindingBonus"
+      ],
+      "bonus_var_chain": {
+        "TrapfindingBonus": "max(TrapfindingLVL/2,1)",
+        "TrapfindingLVL": "RogueLVL"
+      },
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "upstream_lst_sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "upstream_line": 1617,
+      "corpus_field": "DESC:You add +%1 to Perception skill checks made to locate traps and to Disable Device skill checks. You can use the Disable Device skill to disarm magical traps.|TrapfindingBonus",
+      "expected": {
+        "value_at_level_by_arg": {
+          "TrapfindingBonus": {
+            "1": 1,
+            "2": 1,
+            "3": 1,
+            "4": 2,
+            "5": 2,
+            "10": 5,
+            "20": 10
+          }
+        }
+      }
+    },
+    {
+      "unit_id": "ultimate_intrigue:class_feature:vigilante_seamless_guise",
+      "book": "ultimate_intrigue",
+      "record_key": "Vigilante ~ Seamless Guise",
+      "class": "Vigilante",
+      "class_level_var": "VigilanteLVL",
+      "desc_arg_names_in_percent_n_order": [
+        "SeamlessGuiseBonus"
+      ],
+      "bonus_var_chain": {
+        "SeamlessGuiseBonus": "20"
+      },
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+      "upstream_lst_sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+      "upstream_line": 30,
+      "corpus_field": "DESC:A vigilante knows how to behave in a way that appears perfectly proper and normal for his current identity. Should anyone suspect him of being anything other than what he appears to be while either in his social or vigilante identity, he can attempt a Disguise check with a +%1 circumstance bonus to appear as his current identity, and not as his other identity.|SeamlessGuiseBonus",
+      "expected": {
+        "value_at_level_by_arg": {
+          "SeamlessGuiseBonus": {
+            "1": 20,
+            "2": 20,
+            "3": 20,
+            "10": 20,
+            "20": 20
+          }
+        }
+      }
+    },
+    {
+      "unit_id": "ultimate_intrigue:class_feature:vigilante_unshakable",
+      "book": "ultimate_intrigue",
+      "record_key": "Vigilante ~ Unshakable",
+      "class": "Vigilante",
+      "class_level_var": "VigilanteLVL",
+      "desc_arg_names_in_percent_n_order": [
+        "VigilanteUnshakableDCBonus"
+      ],
+      "bonus_var_chain": {
+        "VigilanteUnshakableDCBonus": "VigilanteLVL"
+      },
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_abilities_class.lst",
+      "upstream_lst_sha256": "91c472dde9cbf0fd08bcd6028a2501c6987d9cf7be44ca016f62a72d69f47a7e",
+      "upstream_line": 34,
+      "corpus_field": "DESC:A vigilante adds %1 to the DC of any attempts to Intimidate him.|VigilanteUnshakableDCBonus",
+      "expected": {
+        "value_at_level_by_arg": {
+          "VigilanteUnshakableDCBonus": {
+            "3": 3,
+            "4": 4,
+            "5": 5,
+            "10": 10,
+            "20": 20
+          }
+        }
+      }
+    }
   ]
 }

@@ -116,6 +116,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     let companion = run_companion_bar_check(repo_root);
     let companion_skill = run_companion_skill_bar_check(repo_root);
     let companion_save_dc = run_companion_save_dc_bar_check(repo_root);
+    let class_feature_description = run_class_feature_description_bar_check(repo_root);
     let mut cleared = equipment.cleared;
     cleared.extend(monster.cleared);
     cleared.extend(monster_sla.cleared);
@@ -127,6 +128,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     cleared.extend(companion.cleared);
     cleared.extend(companion_skill.cleared);
     cleared.extend(companion_save_dc.cleared);
+    cleared.extend(class_feature_description.cleared);
     let mut failures = equipment.failures;
     failures.extend(monster.failures);
     failures.extend(monster_sla.failures);
@@ -138,6 +140,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     failures.extend(companion.failures);
     failures.extend(companion_skill.failures);
     failures.extend(companion_save_dc.failures);
+    failures.extend(class_feature_description.failures);
     let mut not_ingested = equipment.not_ingested;
     not_ingested.extend(monster.not_ingested);
     not_ingested.extend(monster_sla.not_ingested);
@@ -149,6 +152,7 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
     not_ingested.extend(companion.not_ingested);
     not_ingested.extend(companion_skill.not_ingested);
     not_ingested.extend(companion_save_dc.not_ingested);
+    not_ingested.extend(class_feature_description.not_ingested);
     // A unit that FAILED any seam must never be reported cleared by another
     // one. `cleared` is a union across seams and `failures` is keyed by
     // `unit_id`, so a unit covered by two seams could otherwise be stamped on
@@ -172,7 +176,8 @@ pub fn run_bar_check(repo_root: &Path) -> BarCheckReport {
             + monster_ability.fixtures_total
             + monster_ability_formula.fixtures_total
             + companion.fixtures_total
-            + companion_skill.fixtures_total,
+            + companion_skill.fixtures_total
+            + class_feature_description.fixtures_total,
     }
 }
 
@@ -4220,6 +4225,169 @@ fn run_companion_save_dc_bar_check(repo_root: &Path) -> BarCheckReport {
                          all, so it asserts nothing",
                         fixture.corpus_field
                     ),
+                );
+            }
+            None => {
+                cleared.insert(fixture.unit_id.clone());
+            }
+        }
+    }
+
+    BarCheckReport { cleared, failures, not_ingested, fixtures_total }
+}
+
+// ------------------------------------------------------------------------------------------
+// SD-31 wave 26: `class_feature_description_entries` -- the formula-interpreter-backed
+// `%N` DESC-placeholder resolution bar check.
+// ------------------------------------------------------------------------------------------
+
+/// One `class_feature_description_entries` fixture row: a real, live grant fact whose corpus
+/// `DESC:` token carries an unresolved `%N` this repo's formula interpreter (`OPERATOR-RULINGS-
+/// 2026-08-21.md` §20) can now resolve via a same-record `BONUS:VAR` chain seeded with the
+/// character's class level. `expected_value_at_level_by_arg` is transcribed by `scripts/
+/// derive_class_feature_description_fixtures.py`, straight from the pinned upstream `.lst`
+/// bytes, through that script's own from-scratch (Python, cross-language) evaluator -- never
+/// read back from this repo's Rust interpreter.
+#[derive(Debug, Clone)]
+pub struct ClassFeatureDescriptionFixture {
+    pub unit_id: String,
+    pub book: String,
+    pub record_key: String,
+    pub class: String,
+    pub class_level_var: String,
+    pub upstream_lst: String,
+    pub upstream_lst_sha256: String,
+    pub upstream_line: u64,
+    pub corpus_field: String,
+    /// PCGen variable name -> (character level -> expected resolved integer).
+    pub expected_value_at_level_by_arg: BTreeMap<String, BTreeMap<u8, i64>>,
+}
+
+/// Reads the `class_feature_description_entries` array of the committed fixture file.
+pub fn load_class_feature_description_fixtures(repo_root: &Path) -> Vec<ClassFeatureDescriptionFixture> {
+    let path = repo_root.join(FIXTURE_RELATIVE_PATH);
+    let text = std::fs::read_to_string(&path)
+        .unwrap_or_else(|e| panic!("the committed fixture must be readable at {path:?}: {e}"));
+    let doc: serde_json::Value =
+        serde_json::from_str(&text).expect("the committed fixture must be valid JSON");
+    let Some(entries) = doc.get("class_feature_description_entries").and_then(|v| v.as_array()) else {
+        return Vec::new();
+    };
+    entries
+        .iter()
+        .map(|e| {
+            let expected = &e["expected"]["value_at_level_by_arg"];
+            let mut expected_value_at_level_by_arg: BTreeMap<String, BTreeMap<u8, i64>> = BTreeMap::new();
+            if let Some(obj) = expected.as_object() {
+                for (arg_name, by_level) in obj {
+                    let mut per_level = BTreeMap::new();
+                    if let Some(by_level_obj) = by_level.as_object() {
+                        for (level_str, value) in by_level_obj {
+                            let level: u8 = level_str.parse().expect("level key parses as u8");
+                            per_level.insert(level, value.as_i64().expect("expected value is an i64"));
+                        }
+                    }
+                    expected_value_at_level_by_arg.insert(arg_name.clone(), per_level);
+                }
+            }
+            ClassFeatureDescriptionFixture {
+                unit_id: e["unit_id"].as_str().expect("unit_id").to_string(),
+                book: e["book"].as_str().expect("book").to_string(),
+                record_key: e["record_key"].as_str().expect("record_key").to_string(),
+                class: e["class"].as_str().expect("class").to_string(),
+                class_level_var: e["class_level_var"].as_str().expect("class_level_var").to_string(),
+                upstream_lst: e["upstream_lst"].as_str().expect("upstream_lst").to_string(),
+                upstream_lst_sha256: e["upstream_lst_sha256"]
+                    .as_str()
+                    .expect("upstream_lst_sha256")
+                    .to_string(),
+                upstream_line: e["upstream_line"].as_u64().expect("upstream_line"),
+                corpus_field: e["corpus_field"].as_str().expect("corpus_field").to_string(),
+                expected_value_at_level_by_arg,
+            }
+        })
+        .collect()
+}
+
+/// The `class_feature_description_entries` half of [`run_bar_check`]. Runs the REAL production
+/// resolver (`pilot_compute::class_feature_grant_consumer::resolve_pcgen_var_chain`, which
+/// drives the proven `formula_interpreter::PcgenFormulaEvaluator`) against the SAME live corpus
+/// record (`class_feature_grant_consumer::class_feature_record_tokens`) the shipped engine reads
+/// -- never a second, hand-rolled Rust evaluator -- at every level the fixture pins, for every
+/// PCGen variable name the fixture names. A unit clears only when EVERY (arg, level) pair
+/// matches; any mismatch, or any level the production resolver could not reach at all, fails the
+/// whole unit rather than partially crediting it.
+fn run_class_feature_description_bar_check(repo_root: &Path) -> BarCheckReport {
+    let fixtures = load_class_feature_description_fixtures(repo_root);
+    let fixtures_total = fixtures.len();
+
+    let mut cleared = BTreeSet::new();
+    let mut failures: BTreeMap<String, String> = BTreeMap::new();
+    let not_ingested: BTreeMap<String, String> = BTreeMap::new();
+
+    for fixture in &fixtures {
+        let Some(record) = crate::rules_core::pilot_compute::class_feature_grant_consumer::class_feature_record_tokens()
+            .get(&fixture.record_key)
+        else {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "{:?} does not resolve against the live data/corpus/{}/class_feature ingest",
+                    fixture.record_key, fixture.book
+                ),
+            );
+            continue;
+        };
+        if record.class != fixture.class {
+            failures.insert(
+                fixture.unit_id.clone(),
+                format!(
+                    "fixture states class={:?} but the live ingest states class={:?}",
+                    fixture.class, record.class
+                ),
+            );
+            continue;
+        }
+        let mut mismatch: Option<String> = None;
+        'outer: for (arg_name, by_level) in &fixture.expected_value_at_level_by_arg {
+            for (&level, &expected) in by_level {
+                let resolved = crate::rules_core::pilot_compute::class_feature_grant_consumer::resolve_pcgen_var_chain(
+                    &record.bonus_vars,
+                    &fixture.class_level_var,
+                    level,
+                );
+                match resolved.get(arg_name) {
+                    Some(&got) if got == expected => {}
+                    Some(&got) => {
+                        mismatch = Some(format!(
+                            "{:?} at level {level}: fixture (from the pinned upstream .lst, \
+                             independently evaluated) expects {arg_name}={expected}, the real \
+                             production resolver produced {got}",
+                            fixture.corpus_field
+                        ));
+                        break 'outer;
+                    }
+                    None => {
+                        mismatch = Some(format!(
+                            "{:?} at level {level}: the real production resolver could not \
+                             resolve {arg_name} at all (fixture expects {expected})",
+                            fixture.corpus_field
+                        ));
+                        break 'outer;
+                    }
+                }
+            }
+        }
+        match mismatch {
+            Some(message) => {
+                failures.insert(fixture.unit_id.clone(), message);
+            }
+            None if fixture.expected_value_at_level_by_arg.is_empty() => {
+                // A fixture that pins no expected value asserts nothing about the resolver.
+                // Refused rather than counted (Decision 1(a)).
+                failures.insert(
+                    fixture.unit_id.clone(),
+                    format!("fixture for {:?} pins no expected value at all", fixture.corpus_field),
                 );
             }
             None => {

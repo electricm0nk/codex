@@ -201,6 +201,27 @@ fn load_class_feature_descriptions(repo_root: &Path) -> Vec<ClassFeatureDescript
                 continue;
             }
             let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(raw_desc);
+            // SD-31 wave 26 bugfix (`OPERATOR-RULINGS-2026-08-21.md` §20): a `%N` this catalog
+            // has no character context to fill must not be served with the number silently
+            // missing. `render_pcgen_desc` (empty `PcgenDisplayValues`) drops the placeholder
+            // AND the `+`/`-` sign that introduced it, so a real corpus row like `Rogue ~
+            // Trapfinding`'s "You add +%1 to Perception..." rendered as "You add to
+            // Perception..." -- syntactically clean, semantically missing its own headline
+            // number, and NOTHING here ever refused to serve it (the ONLY prior guard,
+            // `leaked_pcgen_syntax` below, checks for raw PCGen syntax reaching the screen, which
+            // a cleanly-dropped placeholder never trips). `class_feature_grant_consumer.rs`'s
+            // OWN sibling gate (`corpus_records_with_real_description`) already carries this
+            // exact check, flagged there as a "Gate-weakening review finding (SD-31 wave 23
+            // integration cycle)" -- this catalog never got the same fix until now. Real,
+            // per-character resolved text for a record shaped exactly like this now reaches the
+            // player through `class_feature_grant_consumer`'s own `detail` field instead (wave
+            // 26's formula-interpreter-backed chain resolution), for every grant fact it can
+            // prove; this catalog carries no character context at all (built once, process-wide),
+            // so refusing to serve an incomplete sentence is the honest response here, matching
+            // `is_real_description_value`'s own posture for an empty/placeholder description.
+            if !rendered.dropped_args.is_empty() {
+                continue;
+            }
             // A hard panic (`monster_catalog`/`companion_catalog`'s own
             // convention) is right for those two chassis-table kinds, whose
             // registered population is a small, hand-vetted list re-checked
@@ -297,16 +318,117 @@ mod tests {
         // `Rogue ~ Sneak Attack` itself carries `description: null` in the
         // real corpus (its rules text lives on the class table, not a
         // per-feature `DESC:`) -- not a fixture stand-in for that record,
-        // `Rogue ~ Trapfinding` genuinely does carry one.
-        let trapfinding = descriptions
+        // `Aberrant Bloodline ~ Aberrant Form` genuinely does carry a real,
+        // `%N`-free description (SD-31 wave 26: `Rogue ~ Trapfinding` USED
+        // to be this test's example, but its description carries an
+        // unresolved `%1` and is no longer served by this catalog -- see
+        // `a_description_whose_percent_n_argument_has_no_character_context_
+        // to_resolve_it_is_not_served`, below).
+        let aberrant_form = descriptions
             .iter()
-            .find(|d| d.book == "core_rulebook" && d.key == "Rogue ~ Trapfinding");
-        let record =
-            trapfinding.expect("core_rulebook's real Rogue ~ Trapfinding record must be in the catalog");
-        assert_eq!(record.class_slug, "rogue");
-        assert_eq!(record.feature_slug, "trapfinding");
-        assert!(record.description.starts_with("You add"));
+            .find(|d| d.book == "core_rulebook" && d.key == "Aberrant Bloodline ~ Aberrant Form");
+        let record = aberrant_form
+            .expect("core_rulebook's real Aberrant Bloodline ~ Aberrant Form record must be in the catalog");
+        assert_eq!(record.class_slug, "aberrant_bloodline");
+        assert_eq!(record.feature_slug, "aberrant_form");
+        assert!(record.description.starts_with("Your body becomes truly unnatural."));
         assert!(!record.description.contains('|'), "the pipe-arg tail must never leak into prose");
+    }
+
+    /// SD-31 wave 26 bugfix. `corpus_records_with_real_description`
+    /// (`class_feature_grant_consumer.rs`) already refuses to admit a record
+    /// whose empty-values render still drops an argument -- "Gate-weakening
+    /// review finding (SD-31 wave 23 integration cycle)", its own comment
+    /// says, over exactly this signal. This catalog never got the same fix:
+    /// it only ever checked `leaked_pcgen_syntax` (raw `%`/`|` leaking onto
+    /// the screen), which a CLEANLY dropped `%N` never trips -- `render_
+    /// pcgen_desc` removes the placeholder AND its introducing `+` sign, so
+    /// `Rogue ~ Trapfinding`'s real corpus text ("You add +%1 to Perception
+    /// skill checks...") shipped as "You add to Perception skill checks..."
+    /// -- syntactically clean, semantically missing its own headline number,
+    /// with nothing here ever refusing to serve it. A player reading that
+    /// sentence has no way to tell the magnitude is missing rather than
+    /// truly absent from the rule. This catalog carries no character
+    /// context to fill the placeholder (it is built once, process-wide, per
+    /// `class_feature_descriptions()`'s own `OnceLock` caching), so the
+    /// honest response mirrors `corpus_records_with_real_description`'s own:
+    /// refuse to serve, count it, never ship a sentence with its own number
+    /// silently missing. Real, per-character resolved text for records
+    /// shaped exactly like this now reaches the player through
+    /// `class_feature_grant_consumer`'s own `detail` field instead
+    /// (SD-31 wave 26), for every grant fact its formula-interpreter-backed
+    /// chain resolution can prove.
+    #[test]
+    fn a_description_whose_percent_n_argument_has_no_character_context_to_resolve_it_is_not_served() {
+        let descriptions = load_class_feature_descriptions(&repo_root());
+        let trapfinding =
+            descriptions.iter().find(|d| d.book == "core_rulebook" && d.key == "Rogue ~ Trapfinding");
+        assert!(
+            trapfinding.is_none(),
+            "Rogue ~ Trapfinding's real DESC carries an unresolved %1 this catalog has no \
+             character context to fill; serving it silently drops the '+N' magnitude the whole \
+             sentence exists to state. Got: {trapfinding:?}"
+        );
+    }
+
+    /// The refusal above is not vacuous scope-narrowing: a real, live sample of the corpus
+    /// carries this exact shape (thousands of records), and this general, corpus-wide sweep
+    /// proves NONE of them survive into the served catalog -- not just the one hand-picked
+    /// `Rogue ~ Trapfinding` example. Re-derives, independently of `load_class_feature_
+    /// descriptions`'s own admission gate, whether each served record's RAW description would
+    /// have dropped an argument when rendered with no values -- exactly the condition the fix
+    /// must exclude.
+    #[test]
+    fn no_served_description_ever_carries_a_cleanly_dropped_but_semantically_incomplete_placeholder() {
+        let repo = repo_root();
+        let mut raw_with_percent_n = 0usize;
+        let corpus_root = repo.join("data/corpus");
+        let books = std::fs::read_dir(&corpus_root).expect("data/corpus must exist");
+        let mut raw_descriptions_by_key = std::collections::BTreeMap::new();
+        for book_entry in books.flatten() {
+            let cf_dir = book_entry.path().join("class_feature");
+            if !cf_dir.is_dir() {
+                continue;
+            }
+            let mut files = Vec::new();
+            walk_json_files(&cf_dir, &mut files);
+            for file in files {
+                let Ok(text) = std::fs::read_to_string(&file) else { continue };
+                let Ok(doc) = serde_json::from_str::<Value>(&text) else { continue };
+                let Some(key) = doc["data"]["key"].as_str() else { continue };
+                if let Some(desc) = doc["data"]["description"].as_str() {
+                    if !is_real_description_value(desc) {
+                        continue;
+                    }
+                    if desc.contains('%') {
+                        raw_with_percent_n += 1;
+                    }
+                    raw_descriptions_by_key.entry(key.to_string()).or_insert_with(|| desc.to_string());
+                }
+            }
+        }
+        assert!(
+            raw_with_percent_n > 1000,
+            "expected thousands of real corpus class_feature descriptions carrying an unresolved \
+             %N -- this is the population the fix must exclude, and a suspiciously low count here \
+             would mean this test measured nothing: got {raw_with_percent_n}"
+        );
+
+        let descriptions = load_class_feature_descriptions(&repo);
+        let mut incomplete: Vec<&str> = Vec::new();
+        for served in &descriptions {
+            let Some(raw) = raw_descriptions_by_key.get(&served.key) else { continue };
+            let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(raw);
+            if !rendered.dropped_args.is_empty() {
+                incomplete.push(served.key.as_str());
+            }
+        }
+        assert!(
+            incomplete.is_empty(),
+            "{} served description(s) silently dropped a %N argument with no character context: \
+             {incomplete:?}",
+            incomplete.len()
+        );
     }
 
     /// No served description leaks unresolved PCGen syntax onto the screen --
