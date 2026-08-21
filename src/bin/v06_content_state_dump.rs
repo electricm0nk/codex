@@ -858,6 +858,12 @@ fn main() {
             // `Mythic` table (358 gap rows from `ma_feats.lst`), so this arm
             // is real, not exhaustiveness-only.
             RuleSetId::Mythic => "mythic_adventures",
+            // SD-31 wave-29 (`lane5-book-onboard` lane). Adventurer's Guide
+            // has no feats file this repo compiles yet (its first record
+            // family is `spell_list`, not a feat table); the arm exists
+            // for exhaustiveness only, exactly as `Oa`'s above does --
+            // `all_feat_tables()` never yields an `AdventurersGuide` table.
+            RuleSetId::AdventurersGuide => "adventurers_guide",
         };
         let records = table.entries.len();
         let wired_here = table

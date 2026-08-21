@@ -76,8 +76,8 @@ use codex::rules_core::derived_evaluator_fixture_check::{
 };
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{
-    acg, advanced_race_guide, apg, crb, inner_sea_gods, occult_adventures, ultimate_combat,
-    ultimate_intrigue, ultimate_magic, ultimate_wilderness,
+    acg, adventurers_guide, advanced_race_guide, apg, crb, inner_sea_gods, occult_adventures,
+    ultimate_combat, ultimate_intrigue, ultimate_magic, ultimate_wilderness,
 };
 use codex::rules_core::spell_resolver;
 
@@ -95,6 +95,9 @@ const BOOK_OA: &str = "OA";
 const BOOK_UC: &str = "UC";
 const BOOK_ISG: &str = "ISG";
 const BOOK_UW: &str = "UW";
+/// SD-31 wave-29 (`lane5-book-onboard` lane): Adventurer's Guide, the
+/// twelfth book -- this book's first record family of any kind.
+const BOOK_AG: &str = "AG";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -363,6 +366,22 @@ fn map_uw_entry(entry: &ultimate_wilderness::spell_list::SpellListEntry) -> Spel
     }
 }
 
+/// AG's table types `school`, `level` and `description` optionally, like
+/// UW's/UC's/ISG's -- SD-31 wave-29's `lane5-book-onboard` lane ingest
+/// found 2 of the 45 shipped base declarations carry no `CLASSES:`/
+/// `DOMAINS:` level (`Continual Flame (Lantern Bearer)`, `Summon Mantis`).
+fn map_ag_entry(entry: &adventurers_guide::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_AG.to_string(),
+        school: entry.school.map(|school| format!("{school:?}")),
+        level: entry.level,
+        description: entry.description.map(serve_description),
+        duration: duration_for(BOOK_AG, entry.key),
+        range: range_for(BOOK_AG, entry.key),
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellCatalogResponse {
@@ -492,6 +511,7 @@ mod tests {
             .chain(ultimate_combat::spell_list::SPELL_LIST.iter().map(map_uc_entry))
             .chain(inner_sea_gods::spell_list::SPELL_LIST.iter().map(map_isg_entry))
             .chain(ultimate_wilderness::spell_list::SPELL_LIST.iter().map(map_uw_entry))
+            .chain(adventurers_guide::spell_list::SPELL_LIST.iter().map(map_ag_entry))
             .collect();
         let actual = build_spell_catalog().entries;
         assert_eq!(actual.len(), expected.len());
@@ -507,9 +527,9 @@ mod tests {
     #[test]
     fn the_catalog_serves_every_ingested_book_not_only_crb() {
         let response = build_spell_catalog();
-        // SD-31 wave-19 (`ultimate_wilderness` lane): +61 UW spells, the
-        // tenth book, 1950 -> 2011.
-        assert_eq!(response.entries.len(), 2011);
+        // SD-31 wave-29 (`lane5-book-onboard` lane): +45 AG spells, the
+        // twelfth book, 2011 -> 2056.
+        assert_eq!(response.entries.len(), 2056);
         assert_eq!(book_entries(BOOK_CRB).len(), 664);
         assert_eq!(book_entries(BOOK_APG).len(), 297);
         assert_eq!(book_entries(BOOK_ACG).len(), 144);
@@ -520,6 +540,7 @@ mod tests {
         assert_eq!(book_entries(BOOK_UC).len(), 146);
         assert_eq!(book_entries(BOOK_ISG).len(), 92);
         assert_eq!(book_entries(BOOK_UW).len(), 61);
+        assert_eq!(book_entries(BOOK_AG).len(), 45);
     }
 
     #[test]
@@ -548,7 +569,7 @@ mod tests {
             assert!(
                 [
                     BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG, BOOK_UI, BOOK_UM, BOOK_OA, BOOK_UC,
-                    BOOK_ISG, BOOK_UW
+                    BOOK_ISG, BOOK_UW, BOOK_AG
                 ]
                 .contains(&entry.book.as_str())
             );
