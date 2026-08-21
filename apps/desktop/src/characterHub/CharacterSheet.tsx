@@ -13,6 +13,7 @@ import {
   loadClassFeatureDescriptions,
   type ClassFeatureDescriptionDto,
 } from '../boundary/loadClassFeatureDescriptions';
+import { loadClassFeatureFeatBridgeDescriptions } from '../boundary/loadClassFeatureFeatBridgeDescriptions';
 import {
   loadClassFeaturePoolOptions,
   type ClassFeaturePoolOptionDto,
@@ -1950,10 +1951,19 @@ function ActionsTab(props: {
   >([]);
   useEffect(() => {
     let cancelled = false;
-    loadClassFeatureDescriptions()
-      .then((descriptions) => {
+    // SD31-W29-CLASSFEATURE-FEATBRIDGE-001 (THE-BOX §2.1 F2): a SECOND,
+    // disjoint source of the same DTO shape -- records with no local
+    // description whose entire content is a grant of an already-modelled
+    // feat. Fetched alongside and concatenated, exactly the way
+    // `buildClassFeatureSurface`'s own `descriptions` param already
+    // expects a flat list; `findCorpusDescription` picks the first match
+    // by `(classSlug, featureSlug)`, and the two Rust-side populations
+    // never name the same record (see `class_feature_feat_bridge.rs`'s own
+    // doc comment), so concatenation order does not matter here.
+    Promise.all([loadClassFeatureDescriptions(), loadClassFeatureFeatBridgeDescriptions()])
+      .then(([descriptions, bridged]) => {
         if (!cancelled) {
-          setClassFeatureDescriptions(descriptions);
+          setClassFeatureDescriptions([...descriptions, ...bridged]);
         }
       })
       .catch(() => {

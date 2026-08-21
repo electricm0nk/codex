@@ -7,6 +7,7 @@ mod character_hub;
 mod characterHub;
 mod class_catalog;
 mod class_feature_descriptions;
+mod class_feature_feat_bridge;
 mod class_feature_pool_picker;
 mod class_spell_levels;
 mod corpus_fixtures;
@@ -55,6 +56,7 @@ use characterHub::recomputeCharacter::recompute_character;
 use characterHub::reSaveCharacter::re_save_character;
 use class_catalog::list_class_catalog;
 use class_feature_descriptions::list_class_feature_descriptions;
+use class_feature_feat_bridge::list_class_feature_feat_bridge_descriptions;
 use class_feature_pool_picker::list_class_feature_pool_options;
 use class_spell_levels::list_class_spell_levels;
 use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
@@ -214,6 +216,15 @@ fn main() {
             // derivation, never the rulebook prose, so this is a second,
             // additive field, not a replacement.
             list_class_feature_descriptions,
+            // SD31-W29-CLASSFEATURE-FEATBRIDGE-001 (THE-BOX §2.1 F2): a
+            // class_feature record whose entire content is a grant of an
+            // already-separately-modelled feat carries no local
+            // description of its own -- this serves the matched feat's
+            // own already-verified text through the SAME DTO shape, a
+            // second, additive population `class_feature_descriptions.rs`
+            // never covers (disjoint by construction; see that module's
+            // own doc comment).
+            list_class_feature_feat_bridge_descriptions,
             // SD31-W22-POOLMEMBER-001: the browsable option-pool reference
             // catalog (Rogue Talents today) -- a menu of every real record,
             // regardless of selection, modelled on
