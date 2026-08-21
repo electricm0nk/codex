@@ -34288,3 +34288,132 @@ worktree (`/tmp/w27-baseline-check`) removed. `worktree-wf_be4660f2-72a-3` (wave
 branch) left in place per the standing note — still a future wave's cherry-pick target, not this
 wave's to resolve. `sd31/racetrait4-SD31-E6-F4-005` — untouched, not read, not gated, per the standing
 instruction.
+
+## 2026-08-21 — SD-31 wave 28: THE BOX — corpus-wide visibility census, banks nothing by design (integration cycle)
+
+**This wave's mandate was explicitly the opposite of every prior integration cycle: bank zero
+units.** Six lanes examined every not-done unit corpus-wide (except `class` and `race`, see below),
+named what shape each population is in, sized the fix, and evaluated whether a tool is worth
+building. Two independent adversarial-review lanes stress-tested every count. The deliverable is
+`artifacts/THE-BOX.md` — the consolidated map, not a banking receipt.
+
+### Board — confirmed unchanged, start to finish
+
+```
+md5sum docs/work-inventory.json
+de0dfa8614efdd027316ccf274ad8490
+```
+
+Identical before the first lane started and after the last document was committed.
+**13,456/38,372 (35.07%) — zero movement, as required.** No lane wrote production logic,
+reclassified a unit, or ran the guarded work-inventory regen; each lane's entire diff is exactly
+one new file under `artifacts/`.
+
+### The reconciliation — the check no individual lane could perform
+
+The six piles do not sum to the board's 24,916 not-done units as filed; `THE-BOX.md` §1 works out
+why. Two corrections, both real:
+
+* **1,212 units double-counted.** The `unmeasurable` lane's 4,270 and the `spell-feat-equipment`
+  lane's 4,380 both, independently and correctly, include the unmeasurable subset of
+  spell/feat/equipment_modifier/equipment (26+565+416+205) — the first as its own census, the
+  second because it censused those four kinds' entire not-done population. Same 1,212 records,
+  confirmed by cross-checking both lanes' own printed sub-tables field-for-field, not a look-alike.
+* **295 units examined by no lane at all**: `class` (157, carried forward from wave 27's own
+  census, not re-derived), `race` (60, **never once named by any lane — a genuine, newly-surfaced
+  gap**, not a carry-forward), and `class_feature`'s held+deferred remainder (78, falling between
+  the not-started-only and unmeasurable-only lanes).
+
+Net: 24,621 of 24,916 (98.8%) examined by at least one lane. `race` — the race chassis kind,
+distinct from `race_trait` — is the single most useful gap this reconciliation step surfaced: a
+whole kind, 60 units, that no wave-28 dispatch even referenced.
+
+### What survived adversarial review, what didn't
+
+Zero of the six lanes returned GAMED. Two (`unmeasurable`, and the sweeps lane's S8/D5 measurement)
+were SOUND as filed. The other four were PARTIAL — real, honest work with at least one load-bearing
+error each, all caught before scheduling:
+
+* **class_feature not-started (11,971):** the filed biggest lever (F1, a render-catalog eligibility
+  widening, ceiling 3,536) overstated its reach by 28% (misses an existing
+  `ENGINE_EFFECT_TOKEN_KEYS` refusal gate — corrected ceiling ≤2,763) and understated its real cost
+  (needs a new, unscoped frontend render surface plus Ruling §18's per-pool classification before
+  any of it can bank). A near-miss group's book attribution was fabricated relative to its own
+  printed reproduction command (corrected: pathfinder_unchained 24, not advanced_class_guide 17).
+* **race_trait (2,954):** the G1 finding (1,619 units, 55% of the pile, are not race-trait content
+  at all across 7 whole files) survives fully and is the wave's single most consequential result.
+  The surrounding partition initially double-counted 35 units (some already `done`) and a proposed
+  follow-on sweep would, if scheduled as filed, have reclassified 539 *already-done* units out of
+  the kind — caught and blocked before it could become a future wave's silent regression.
+  Partition corrected to sum exactly to 2,954.
+* **monster/companion/monster_ability (2,258):** a 68-unit double-count (imprecise substring
+  matching, "Cthulhu" hitting two different creature names) inflated the proposed new engine lever
+  (L7, template-application) from a defensible 479 to a filed "≥547" — corrected via the same
+  exact-match technique the lane had already used correctly elsewhere in its own report.
+* **spell/feat/equipment_modifier/equipment (4,380):** population arithmetic reproduced exactly
+  throughout — the best census in the wave on that axis. Its #1 tool recommendation, filed as
+  "BUILD FIRST" and closing "at least 162 units at zero new production logic," was **REJECTED**:
+  the targeted probe field can never resolve `Some` under the current selection construction, so
+  the change closes zero units, and the only records it *could* touch it would flip on a fabricated
+  computed zero — the exact anti-gaming shape Decision 1a forbids. Caught by reading the two
+  functions the lever named, before it was ever scheduled.
+* **sweeps (structural census):** two premature closures. S9 was marked CLOSED on a 0-of-34
+  class-scoped answer to a question the sweep itself poses corpus-wide across every kind. S2 was
+  marked CLOSED on an "architecture-bounded to 3 enum-bearing kinds" argument refuted inside the
+  same wave by a table/consumer drift with no enum involved (B6 spell coverage). Both reverted to
+  PARTIAL in `todo/sweeps.md`. Separately, the flagship tool proposal (a twice-run-diff pytest
+  guarding the fixture generators) was proven — by literally running it twice — unable to detect
+  the exact bug it was built for, because the corruption happens on the FIRST run from committed
+  state and is stable after. The corrected design (run once against the committed fixture, assert
+  no per-key entry-count regression) is now `THE-BOX.md`'s top-ranked next action, given Ruling
+  §20's interpreter is about to scale this exact seam by orders of magnitude.
+
+### Ranked next three (full reasoning: `THE-BOX.md` §3)
+
+1. **Fix the self-erasing fixture generator** (`scripts/derive_derived_evaluator_fixtures.py`) and
+   ship the corrected regression check first — protective, ~1 hour, closes 0 units directly but
+   guards every unit the interpreter will touch going forward. Confirmed live: 2,109 fixture
+   entries across 8 families destroyed on one run from committed state (not the "11 equipment
+   units" first filed).
+2. **Wire `class_feature_pool_group_matches()` into `classify()`'s owner-resolution fallback** —
+   612 units, near-zero cost, zero regression risk, confirmed SOUND by adversarial review (cargo
+   test re-run + independent group→unit join). Cheapest confirmed unit-mover in the whole census.
+3. **Book onboarding for adventurers_guide + inner_sea_magic + inner_sea_temples +
+   inner_sea_taverns** — ≥2,300 units, recurring independently across 5 kinds (class_feature G4 928
+   + spell/feat/equipment/equipment_modifier's 1,372, no kind overlap). The largest corpus-wide
+   lever this wave measured, at a calibrated, bounded cost.
+
+**Rejected outright, not scheduled anywhere**: the `equipment_key_is_wired()` two-clause widen
+(closes 0, fabricates a computed zero) and the twice-run-diff fixture-generator test (proven unable
+to catch its own target).
+
+### `todo/` reconciliation
+
+`sweeps.md`: S9/S2 reverted CLOSED→PARTIAL; S5/S7 corrected to PARTIAL with honest, stated
+denominators (≥9 raw_tokens binaries, not 5; 303 of 311 assert_eq! sites untriaged, not 8); S6
+escalated to CRITICAL with the corrected 2,109-entry blast radius; S8/D5 measured corpus-wide for
+the first time (8,210 of 11,502 class_feature.class values, 71.4%, are non-dispatched-class text);
+S10 (natural-attack STR-damage refusal's true scope, 410 raw hits vs. 176 monster-scoped) and an
+unnumbered render-catalog-trust sweep candidate (does F1's shape recur for race_trait/
+monster_ability?) added. `levers.md`: L3 sized for the first time (28, was "unknown"); L4/L5/L6
+re-sized against the wave-28 census; new L7 (template-application mechanism, ≥479 units) added.
+`defects.md`: D6 (equipment_modifier SPROP-extraction bug, 111 confirmed misclassified via a full,
+non-sampled oracle sweep), D7 (the live self-erasing fixture generator, flagged urgent), D8 (dormant
+B6 coverage-test drift, 0 live impact today). `blocked.md`: B6–B11 added (Eidolon-kind-mismatch,
+Core Essentials glossary-table ownership, equipment_modifier `VISIBLE:NO` scope, `.FORGET`/`pfs_*`
+scoping, ABP reclassification); B1's evidence refreshed (213 of 249 still confirmed duplicate, 36
+now also duplicate content Ruling §16 already deleted).
+
+### Full gate
+
+See "Full gate" subsection below, appended after the site-dashboard regen this wave's `todo/`
+edits required (they feed the public dashboard's markdown scan, same as every prior wave's
+document-only changes do).
+
+### Cleanup
+
+All 8 wave-28 worktrees (`.claude/worktrees/wf_4e719d05-c88-1` through `-8` — 6 lane deliverables
++ 2 adversarial-review worktrees, the latter two 0-diff) and their branches removed; all content
+already merged or folded into this receipt. No `CARGO_TARGET_DIR` from any lane survived to cycle
+close (each lane's own report records deletion; none found stray). `sd31/racetrait4-SD31-E6-F4-005`
+— untouched, not read, not gated, per the standing instruction.
