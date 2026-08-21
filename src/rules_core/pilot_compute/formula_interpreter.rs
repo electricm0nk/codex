@@ -194,8 +194,11 @@
 //!   semantics are unverified — found during wave 26, out of this lane's four named shapes, not
 //!   attempted.
 //! - `skillinfo(...)`'s five other first-argument keywords (`modifier`, `rank`, `total`, `stat`,
-//!   `misc`) — verified against `SkillInfoCommand.java` (same citation as `TOTALRANK`) but not
-//!   corpus-exercised, so not implemented (see [`Expr::SkillInfoTotalRank`]'s own doc).
+//!   `misc`) — verified against `SkillInfoCommand.java` (same citation as `TOTALRANK`). CORRECTION
+//!   (wave 26 integration cycle): two of the five (`rank`, `total`) ARE corpus-exercised (4 and 1
+//!   real occurrences respectively) but this module does not implement them yet — refused rather than guessed at, not
+//!   "not corpus-exercised" as an earlier version of this comment claimed. `modifier`/`stat`/
+//!   `misc` are genuinely unexercised. See [`Expr::SkillInfoTotalRank`]'s own doc.
 //! - `var(...)`, `count(...)`, `mastervar(...)`, `charbonusto(...)`, `cl(...)` — real
 //!   `plugin/jepcommands/*Command.java` functions this module refuses as unimplemented: 31, 20, 3,
 //!   2, and 1 corpus-formula refusals respectively (57 total; these five plus `skillinfo` summed
@@ -416,11 +419,15 @@ enum Expr {
     /// first argument (case-insensitive, matching the real oracle's
     /// `"totalrank".equalsIgnoreCase(param1)`) is implemented; every other real
     /// `plugin/jepcommands/SkillInfoCommand.java` first-argument keyword (`modifier`, `rank`,
-    /// `total`, `stat`, `misc`) is refused at parse time -- narrower than the real function, but
-    /// `"TOTALRANK"` is the only first argument any corpus formula actually uses (confirmed:
-    /// `tests::corpus_shape_coverage`'s full refusal listing names zero others), and this module's
-    /// own discipline is to implement only what is both oracle-verified AND corpus-exercised, the
-    /// same restriction already applied to `min`/`max`/`floor`/`ceil`/`abs`/`if`/`classlevel`.
+    /// `total`, `stat`, `misc`) is refused at parse time -- narrower than the real function.
+    /// CORRECTION (wave 26 integration cycle, adversarial-review finding): the module doc and
+    /// the parse-time refusal message both used to claim `"TOTALRANK"` is "the only one any
+    /// corpus formula uses" -- that is FALSE. `grep -rhoP 'skillinfo\("[A-Za-z]+"'` over
+    /// `data/corpus` finds 39 `TOTALRANK`, 4 `RANK`, and 1 `TOTAL` occurrences (20/2/1 distinct
+    /// formula candidates); `RANK`/`TOTAL` are corpus-exercised too, just unimplemented so far,
+    /// and correctly refuse rather than silently defaulting. `"TOTALRANK"` remains the only
+    /// first argument this module implements, oracle-verified AND corpus-exercised, the same
+    /// restriction already applied to `min`/`max`/`floor`/`ceil`/`abs`/`if`/`classlevel`.
     SkillInfoTotalRank(String),
 }
 
@@ -618,10 +625,12 @@ impl<'a> Parser<'a> {
                 if !kind.eq_ignore_ascii_case("totalrank") {
                     return Err(FormulaEvalError(format!(
                         "skillinfo({kind:?}, ...) — only the \"TOTALRANK\" first argument is \
-                         implemented (the only one any corpus formula uses); \
-                         plugin/jepcommands/SkillInfoCommand.java also defines \"modifier\", \
-                         \"rank\", \"total\", \"stat\", \"misc\", none corpus-exercised, so none \
-                         guessed at here"
+                         implemented; plugin/jepcommands/SkillInfoCommand.java also defines \
+                         \"modifier\", \"rank\", \"total\", \"stat\", \"misc\" -- \"rank\" and \
+                         \"total\" ARE corpus-exercised (wave 26 integration cycle correction: \
+                         4 and 1 real corpus occurrences respectively) but unimplemented so far, \
+                         so refused rather than guessed at; \"modifier\"/\"stat\"/\"misc\" are not \
+                         corpus-exercised at all"
                     )));
                 }
                 Ok(Expr::SkillInfoTotalRank(skill))
@@ -1104,6 +1113,44 @@ mod tests {
             0,
             "a mutant implementing && as || would wrongly return 1 here — proves the test discriminates"
         );
+    }
+
+    /// Adversarial-review finding (wave 26 integration cycle): `CmpOp::Gt`, `CmpOp::Lt` and
+    /// `CmpOp::Le` had no boundary-sensitive test — mutating any of the three (`>` to `>=`, `<`
+    /// to `<=`, `<=` to `<`) left the whole `pilot_compute::` suite green. All three are real,
+    /// corpus-live shapes this commit newly accepts and evaluates (72/24/6 distinct corpus
+    /// formula candidates use `>`/`</`<=` respectively, e.g. Brawler's
+    /// `(BrawlerLVL>2)+(BrawlerLVL>6)+...`, Warpriest's `if(...LVL<5,4,if(...` , Monk's
+    /// `if(MONKLVL<=3,-(KiPoolLVL/2),0)`) — exactly section 24.1's own feared failure mode
+    /// (a misinterpreted token producing a plausible number nobody checks) one level down from
+    /// the corpus-formula level. Each assertion below straddles its own operator's true boundary
+    /// on both sides, so a one-off mutation of that operator is guaranteed to flip a result.
+    #[test]
+    fn cmp_gt_is_strictly_greater_not_greater_or_equal() {
+        let e = PcgenFormulaEvaluator;
+        // At the boundary (10>10): real `>` is false. A `>=` mutant would wrongly say true.
+        assert_eq!(e.evaluate("if(X>10,1,0)", &vars(&[("X", 10)])).unwrap(), 0);
+        // Just above the boundary (11>10): real `>` is true.
+        assert_eq!(e.evaluate("if(X>10,1,0)", &vars(&[("X", 11)])).unwrap(), 1);
+    }
+
+    #[test]
+    fn cmp_lt_is_strictly_less_not_less_or_equal() {
+        let e = PcgenFormulaEvaluator;
+        // At the boundary (5<5): real `<` is false. A `<=` mutant would wrongly say true.
+        assert_eq!(e.evaluate("if(X<5,1,0)", &vars(&[("X", 5)])).unwrap(), 0);
+        // Just below the boundary (4<5): real `<` is true.
+        assert_eq!(e.evaluate("if(X<5,1,0)", &vars(&[("X", 4)])).unwrap(), 1);
+    }
+
+    #[test]
+    fn cmp_le_is_less_or_equal_not_strictly_less() {
+        let e = PcgenFormulaEvaluator;
+        // At the boundary (3<=3): real `<=` is true. A `<` mutant would wrongly say false —
+        // this is the live Monk shape (`MONKLVL<=3`) at exactly its own gate level.
+        assert_eq!(e.evaluate("if(X<=3,1,0)", &vars(&[("X", 3)])).unwrap(), 1);
+        // Just above the boundary (4<=3): real `<=` is false.
+        assert_eq!(e.evaluate("if(X<=3,1,0)", &vars(&[("X", 4)])).unwrap(), 0);
     }
 
     // -- 2. refusals: mutation-style proof that unrecognised shapes never guess -----------------

@@ -300,13 +300,18 @@ mod tests {
     /// already uses) and asserts the exact same five `BONUS` values are present, in order.
     #[test]
     fn wave_26_reads_the_real_ward_json_record_unmodified() {
-        let repo_root = std::env::var("CODEX_REPO_ROOT").unwrap_or_else(|_| ".".to_string());
-        let path = std::path::Path::new(&repo_root)
+        // Adversarial-review finding (wave 26 integration cycle): this guard used to fall back to
+        // an env var (`CODEX_REPO_ROOT`) and silently `return` (test passes vacuously) when the
+        // file could not be read — a no-op whenever the var was unset or wrong, defeating the one
+        // mechanism preventing `ward_json_bonus_tokens()` from drifting away from the real record.
+        // `env!("CARGO_MANIFEST_DIR")` is a compile-time constant (this crate's own established
+        // convention — see e.g. `class_feature_grant_consumer.rs::repo_root()`,
+        // `derived_evaluator_fixture_check.rs`), always correct, never needs a runtime fallback —
+        // and a missing/unreadable file now hard-fails via `.expect()` instead of skipping.
+        let path = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
             .join("data/corpus/advanced_players_guide/class_feature/witch_hex/ward.json");
-        let Ok(text) = std::fs::read_to_string(&path) else {
-            eprintln!("wave_26_reads_the_real_ward_json_record_unmodified: {path:?} not found — skipping");
-            return;
-        };
+        let text = std::fs::read_to_string(&path)
+            .unwrap_or_else(|e| panic!("wave_26_reads_the_real_ward_json_record_unmodified: {path:?} must be readable, got: {e}"));
         let v: serde_json::Value = serde_json::from_str(&text).expect("ward.json must be valid JSON");
         let tokens = v
             .pointer("/data/raw_tokens")

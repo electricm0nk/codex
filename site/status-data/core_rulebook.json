@@ -5555,7 +5555,7 @@
         },
         {
           "name": "Trapfinding",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RogueClassFeatures.RangerClassFeatures.SpecialQuality.Extraordinary.Trapfinding",
           "standing": "unclassified",
           "display_name": "Trapfinding"

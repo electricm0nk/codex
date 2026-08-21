@@ -1,7 +1,7 @@
 # Rules engine
 
 > Scope: The headless PF1 rules-computation spine — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
-> Last verified: 2026-08-21 against tranche/11 (SD-31 wave 25b — formula interpreter merged)
+> Last verified: 2026-08-21 against tranche/11 (SD-31 wave 26 — formula interpreter wired to its first production consumers)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 This document orients a contributor entering `src/rules_core/` cold. It describes the compute spine
@@ -193,6 +193,62 @@ clauses are a different PCGen subsystem (`BonusObj`/`MultiTagBonusObj`) entirely
 a race's flat Speed/Vision/Natural-Weapon override (and, for Gillman/Vanara, the alternate-trait
 `PREFACT`-gated replacement of that override) without a new subsystem, following the same
 gate-then-explain shape the per-race seam table above already uses.
+
+### 3b. Wave 26 — the interpreter gets its first production consumers, plus grammar widening
+
+Wave 25b built `formula_interpreter.rs` and proved it against 22 hand-modelled functions but wired
+zero consumers. Wave 26 plugged it in:
+
+- **`class_feature_grant_consumer.rs`** now resolves a `class_feature` corpus record's `DESC:` `%N`
+  placeholder through the interpreter (`resolve_pcgen_var_chain`, a fixed-point pass over the
+  record's own same-record `BONUS:VAR` chain, seeded with the character's real class level) where
+  the static, book-agnostic `class_feature_descriptions.rs` catalog (desktop app) has no character
+  context to resolve it — that catalog was also fixed this wave to refuse serving a description whose
+  `%N` it cannot fill, rather than silently dropping the number (a real, disclosed ~2,389-description
+  reduction in raw served count, trading a subtly-wrong sentence for none). 12 class_feature records
+  fixture-verified this wave; 1 (`core_rulebook:class_feature:rogue_trapfinding`) newly crosses the
+  `derived`+`fixture-verified` → `done` bar. **Reachability caveat** (`OPEN-ISSUES.md` row 366): the
+  new consumer row this module emits for Trapfinding is itself suppressed by the pre-existing
+  `already_computed_slugs` guard (a hand-modelled `class_chassis.rogue.trapfinding` already occupies
+  that slug) — the banked unit's `done` status rests on the `derived` wiring class's own bar
+  (evaluator-fixture correctness), not on this new row reaching a live sheet. The value shown to the
+  player was, and remains, correct via the pre-existing hand-modelled path.
+- **`domain_power.rs`** (its own, separate, `i32`-typed evaluator — NOT `formula_interpreter`'s `f64`
+  one; unification is an open question, `OPEN-ISSUES.md` row 368) widened Cleric's own domain
+  dispatch to read the shared `DOMAIN_POWER_CATALOG` generically (previously Good/Healing-only even
+  though War/Strength already existed and were already served to Inquisitor), and added two new
+  catalog entries: Destruction ~ Destructive Smite (`max(DomainDestructionLVL/2,1)`) and Glory ~ Touch
+  of Glory (bare `DomainGloryLVL`, no `max()` wrap). 0 board units bank from this — confirmed this
+  cycle and pre-existing per `OPEN-ISSUES.md` row 360 — because `v06_work_inventory.rs`'s
+  `class_feature_owner` cannot attribute ANY `Domain Power ~ X` corpus row to Cleric or Inquisitor at
+  all, not even the already-shipped, already-computed Good/Healing powers.
+- **`formula_interpreter.rs` grammar widened**: bare/parenthesised comparisons as first-class
+  boolean-as-numeric values (`Expr::Cmp`), `&&`-chains of comparisons (`Expr::And`), and
+  `skillinfo("TOTALRANK", ...)` (`Expr::SkillInfoTotalRank`) — all three derived from decompiling the
+  pinned `org.scijava:jep:2.4.2` dependency jar's bytecode (`Comparative`/`Logical`/
+  `SkillInfoCommand`), not guessed. `corpus_shape_coverage`'s refusal count fell from 431/2,671
+  (16.1%) to 118/2,671 (4.4%).
+- **`bonus_stack_reader.rs`** (new module) reads the real multi-token `PREVARGTEQ`-gated additive-
+  stack shape (`witch_ward_bonus` and ~210–222 similar records/target-variable groups) — several
+  `BONUS:VAR` tokens sharing one target, each individually gated, summed only over currently-
+  qualifying addends per `PlayerCharacter.getTotalBonusTo`/`BonusManager.sumActiveBonusMap`. Zero
+  consumers wired yet (out of this wave's scope). The wave-25-dispatch-named
+  "`PREVARGTEQ`-embedded-inside-raw-formula-text" shape does not exist in the real corpus — a
+  dispatch-premise correction (`OPEN-ISSUES.md` row 364); this module reads the shape that IS real.
+- **`race_trait`**: a formula-shaped seam for Undine's 3 alternate racial traits was built this wave
+  and its arithmetic/fixtures were independently verified sound by two separate reviews, but the
+  accompanying board-credit change (adding `"undine"` to a coarse race-level allowlist) was found, on
+  mutation, to award `done` credit to 11 sibling records with no consumer of any kind — marked GAMED
+  and **NOT merged** to `tranche/11`. See `OPEN-ISSUES.md` row 365 for the full finding and two
+  remediation paths a future wave can take to land the sound parts (the seam and its fixtures)
+  without the gaming vector.
+
+**Known interpreter gaps as of wave 26** (supersedes the wave-25b list above where noted):
+`classlevel("X")` still does not verify its class-name argument (unchanged — still a hard
+precondition on banking anything through it); `classlevel("X","APPLIEDAS=NONEPIC")`'s 2-arg form is a
+real corpus shape, unverified, refuses cleanly; `var`/`count`/`mastervar`/`charbonusto`/`cl` (57
+refusals) remain unimplemented; comparisons/`&&`/`skillinfo(TOTALRANK)` are no longer gaps (closed
+this wave).
 
 ### 4. `src/rules_core/pilot_compute_corpus.rs` — the corpus-aware wrapping seam
 

@@ -60,15 +60,21 @@ fn crb_equipment_is_fully_record_ingested() {
     );
 }
 
-/// The criterion 6.1 "zero weight/description coverage" canary is now
-/// retired: CRB, APG, and ACG have all gained real `weight`/`description`
-/// coverage across three concurrent SD-24 criteria 6.3/6.4 cycles
-/// (`crb-field-completion-cycle`, `apg-field-completion-cycle`,
-/// `acg-field-completion-cycle`). Each book's own dedicated test below
-/// (`equipment_table_entry_weight_and_description_field_coverage_for_crb`,
-/// `apg_equipment_gained_weight_field_and_is_fully_record_ingested`,
-/// `equipment_table_entry_weight_and_description_field_coverage_for_acg`)
-/// asserts its real, book-specific ceiling instead.
+// The criterion 6.1 "zero weight/description coverage" canary is now
+// retired: CRB, APG, and ACG have all gained real `weight`/`description`
+// coverage across three concurrent SD-24 criteria 6.3/6.4 cycles
+// (`crb-field-completion-cycle`, `apg-field-completion-cycle`,
+// `acg-field-completion-cycle`). Each book's own dedicated test below
+// (`equipment_table_entry_weight_and_description_field_coverage_for_crb`,
+// `apg_equipment_gained_weight_field_and_is_fully_record_ingested`,
+// `equipment_table_entry_weight_and_description_field_coverage_for_acg`)
+// asserts its real, book-specific ceiling instead -- this is historical
+// context, not a doc comment for the test below (wave 26 integration
+// cycle: converted from `///` to `//` to clear a real `clippy::
+// empty_line_after_doc_comments` gate failure without changing any
+// semantics; the SECOND doc block immediately below, unchanged, is the
+// one that actually documents `equipment_table_entry_weight_and_
+// description_field_coverage_for_crb`).
 
 /// SD-24 criteria 6.3/6.4 (this cycle, CRB-only file-touch scope): CRB's
 /// `EquipmentTableEntry` gained real `weight_lbs`/`description` fields,

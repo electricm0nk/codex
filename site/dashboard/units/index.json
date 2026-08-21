@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-21T05:19:54Z",
+  "generated_at": "2026-08-21T11:31:04Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38372,
-  "proven_units": 6332,
+  "proven_units": 6331,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -90,19 +90,19 @@
     },
     "class_feature": {
       "units": 15439,
-      "proven": 341,
+      "proven": 340,
       "by_status": {
         "unknown": 3058,
         "not-ingested": 11043,
         "deferred-with-reason": 40,
-        "grounded": 91,
+        "grounded": 90,
         "text-complete": 250,
-        "fixture-verified": 12,
+        "fixture-verified": 13,
         "literal-verified": 17,
         "not-started": 928
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2339761,
+      "bytes": 2339769,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -215,8 +215,8 @@
         },
         "rogueclassfeatures": {
           "label": "Rogue Class Features",
-          "done": 24,
-          "held": 4,
+          "done": 25,
+          "held": 3,
           "in-progress": 0,
           "not-started": 165,
           "unmeasurable": 17,

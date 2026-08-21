@@ -1480,3 +1480,56 @@ the reference-catalog pattern) and §19 (cross-book verbatim reprints, settled d
 2 reprinted spells reclassified from WIRING GAP to a real supersession evidence state, though this
 does NOT itself move the headline — see `OPEN-ISSUES.md` row 358).
 
+
+## Board after wave 26 (`SD31-W26-INTEGRATE-001`, 2026-08-21) — formula interpreter plugged in
+
+**Payoff wave for the interpreter waves 25/25b built and proved but wired to zero consumers. Four
+lanes fanned out to plug it in (`class_feature` description resolution, Cleric/Inquisitor domain
+powers, `race_trait`, `monster`/`monster_ability`/`spell`); a fifth widened the interpreter's own
+grammar. One lane's board-credit mechanism was found GAMED by adversarial review and excluded from
+the merge — see `progress.md`'s wave 26 entry and `OPEN-ISSUES.md` row 365 for the full account.**
+
+| Kind | Denominator before | Denominator after | Done before | Done after | Delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 28 (15.1351%) | 28 (15.1351%) | +0 |
+| class_feature | 15,439 | 15,439 | 329 (2.1310%) | **330 (2.1374%)** | **+1** |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,313 (85.5831%) | 5,313 (85.5831%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 516 (32.6582%) | 516 (32.6582%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 989 (77.8740%) | 989 (77.8740%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,790 (60.8430%) | 1,790 (60.8430%) | +0 |
+| race | 95 | 95 | 35 (36.8421%) | 35 (36.8421%) | +0 |
+| race_trait | 3,504 | 3,504 | 540 (15.4110%) | 540 (15.4110%) | +0 |
+| spell | 2,843 | 2,843 | 1,573 (55.3289%) | 1,573 (55.3289%) | +0 |
+| **TOTAL** | **38,372** | **38,372** | **13,443 (35.0334%)** | **13,444 (35.0360%)** | **+1** |
+
+**The +1 traces to exactly ONE unit** (`core_rulebook:class_feature:rogue_trapfinding`, `grounded` →
+`fixture-verified`), confirmed by a full before/after diff of every unit's `(status, wiring_class)`
+pair across all 38,391 raw units — zero other changes anywhere. **`race_trait` correctly stayed flat
+at 540**: the one lane that reported large movement (`race_trait`, +14 claimed) was proven GAMED by
+two independent mutations (disabling its interpreter seam entirely; emptying its whole fixture
+family both left the reported gain unchanged) and was **not merged**. The lane's seam and fixtures
+are independently sound — hand-re-verified against the pinned oracle by this integration cycle — only
+the board-credit mechanism (a hand-typed, race-level allowlist const feeding a coarse LOAD-level
+probe rather than any per-record consumer-delta observation) is the gaming vector. Full finding and
+two remediation paths for a future wave at `OPEN-ISSUES.md` row 365.
+
+**Full three-question answer, the wave's own required receipt format**: `progress.md`'s wave 26
+entry, top of receipt. Short version: (a) ones, not thousands — capped by a chassis-support
+allowlist gap (10 units), a corpus-wide measurement-instrument blind spot in `class_feature_owner`
+for the entire domain-power family (~175 units, pre-existing, not new to this wave), and standing
+preconditions (the `classlevel(...)` cross-class gap) correctly respected rather than routed around;
+(b) no — the one banked unit's fixture is generated from bytes the evaluator never reads, verified
+non-circular this cycle; (c) refusal rate 431/2,671 (16.1%) → 118/2,671 (4.4%), real oracle-verified
+grammar widening, zero units banked from it (no consumer wired).
+
+**No operator ruling folded into `decisions.md` this cycle** — all six confirmed-but-unfixed findings
+(`OPEN-ISSUES.md` rows 366-370, plus the GAMED-lane finding at row 365) are logged as `NOTE`/
+`RULING-NEEDED` for a future wave or the operator's next check-in, none blocking this cycle's own
+closure.
+
+**Full gate: `./scripts/verify.sh -j 8` (the real script) — 34/34 PASS on run 2.** Run 1 failed
+`clippy` on one pre-existing, wave-26-unrelated lint (`tests/sd24_equipment_coverage_audit.rs:71`,
+untouched by any lane); fixed, `scripts/verify-baselines.env` updated for real test-count growth
+(never a shrink). Full account in `progress.md`'s wave 26 entry, "Full gate" section.
