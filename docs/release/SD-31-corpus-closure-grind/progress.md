@@ -34205,6 +34205,20 @@ of 38,391 the file itself carries is NOT the denominator; `_mandate_headline` su
 `EXCLUDED_BOOKS`' `beginner_box` (19 units): 38,391 − 19 = 38,372 exactly, a real relationship not a
 discrepancy — `OPEN-ISSUES.md` row 379 documents this for future reviews that read it as a mismatch).
 
+**Reclassification, stated separately from doneness (zero board effect, by design):** the race_trait
+lane's `modelled_race_of_race_trait` fix (`v06_work_inventory.rs`) corrects a TRAILING-segment
+compound-prefix bug for `"Adopted Race ~ <RaceName>"` records (44 total in the corpus; the lane's own
+report cites 7 as newly correctly resolved by this fix) — distinct from wave 20's already-fixed
+LEADING-segment compound-prefix bug. This integration cycle verified the population is
+attribution-only, not doneness-affecting: all 44 `Adopted Race ~ *` units in the post-regen inventory
+are `not-ingested` with `evidence: race_trait_race_not_modelled`, and the real regen's per-unit
+`(status, wiring_class)` diff (the diff this receipt's board table is built from) shows zero change
+for any of them — confirming the fix is a pure attribution correction with no doneness-boundary
+crossing, matching the lane's own "0 board effect" claim. Did not independently re-derive which 7 of
+the 44 specifically flipped their internal race attribution (their `evidence` string is identical
+before and after; only which race name it names internally differs) — the lane's own diff for that
+detail is in its worktree commit `4dc024690` if a future review needs it.
+
 **Mutation-proven** (Decision 1a): temporarily reverted `FLAT_OVERRIDE_RACE_TRAIT_RACES` to its
 pre-wave-27 3-race set, rebuilt, re-ran `v06_work_inventory` against the SAME sweep/fixture reports —
 board reverted to 13,446 (−10), touching exactly the 10 Samsaran/Nagaji units and nothing else.
