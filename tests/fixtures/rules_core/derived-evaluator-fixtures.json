@@ -1793,6 +1793,19 @@
       }
     },
     {
+      "unit_id": "book_of_the_damned_volume_2:monster:demon_vermlek",
+      "book": "book_of_the_damned_volume_2",
+      "record_key": "Demon (Vermlek)",
+      "upstream_lst": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_races.lst",
+      "upstream_lst_sha256": "837eb03a72aedd5790bab3fc53ffd3a19f7e66f3d75e32fdad653697abef6dd7",
+      "upstream_line": 7,
+      "corpus_field": "BONUS:VAR|SLA_CL|HD*3/4",
+      "monster_class_token": "Outsider (Fort/Will):4",
+      "expected": {
+        "spell_like_ability_caster_level": 3
+      }
+    },
+    {
       "unit_id": "book_of_the_damned_volume_2:monster:demon_brimorak",
       "book": "book_of_the_damned_volume_2",
       "record_key": "Demon (Brimorak)",
