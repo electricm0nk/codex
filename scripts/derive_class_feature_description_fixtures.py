@@ -37,13 +37,16 @@ own `the_live_scale_of_this_waves_widening_is_measured_and_pinned` test
 found live: every (class, key) pair that is (a) a real, cross-book-
 unconflicted, non-archetype base-class grant fact
 (`data/class_feature_grants`), (b) NOT one of the seven anti-fabrication-
-gate-excluded classes, and (c) resolvable through a LEVEL-ONLY `BONUS:VAR`
-chain (no ability modifier, no bare-comparison-as-numeric-term, no
-`classlevel()` ambiguity) -- 12 of the 227 live grant facts this repo
-currently resolves. The other ~20 that structurally resolve but sit behind
-an excluded class, and the ~20 whose chain this wave's resolver genuinely
-cannot reach, are real, counted, reported gaps -- not silently absorbed
-here.
+gate-excluded classes, and (c) resolvable through a `BONUS:VAR` chain (no
+bare-comparison-as-numeric-term, no `classlevel()` ambiguity) -- 12
+LEVEL-ONLY targets from wave 26, plus 3 more from SD-31 wave 27 whose chain
+additionally needs one bare ability-modifier abbreviation
+(`Arcane Archer ~ Arrow of Death`/CHA, `Ranger ~ Master Hunter`/WIS,
+`Rogue ~ Master Strike`/INT -- the scoped, named follow-on wave 26 deferred).
+15 of the 227 live grant facts this repo currently resolves. The other ~11
+that structurally resolve but sit behind an excluded class, and the ~14
+whose chain this wave's resolver genuinely cannot reach, are real, counted,
+reported gaps -- not silently absorbed here.
 
 TOKEN FAMILY
 ------------
@@ -86,18 +89,28 @@ INVENTORY_PATH = REPO_ROOT / "docs" / "work-inventory.json"
 # division/step boundaries, the same mutation-sensitivity discipline
 # `derive_class_feature_level_scaling_fixtures.py`'s own sibling "quantity" check uses).
 TARGETS = [
-    ("Arcane Archer ~ Hail of Arrows", "Arcane Archer", [8, 9, 10, 15, 20]),
-    ("Arcane Archer ~ Phase Arrow", "Arcane Archer", [6, 7, 10, 15, 20]),
-    ("Arcane Archer ~ Seeker Arrow", "Arcane Archer", [4, 5, 6, 10, 20]),
-    ("Arcane Trickster ~ Impromptu Sneak Attack", "Arcane Trickster", [3, 4, 5, 10]),
-    ("Assassin ~ Save against Poisons", "Assassin", [2, 3, 4, 5, 10, 20]),
-    ("Barbarian ~ Damage Reduction", "Barbarian", [7, 8, 9, 10, 13, 20]),
-    ("Duelist ~ Elaborate Defense", "Duelist", [7, 8, 9, 10, 20]),
-    ("Duelist ~ Improved Reaction", "Duelist", [2, 3, 4, 10, 20]),
-    ("Duelist ~ Precise Strike", "Duelist", [1, 2, 3, 4, 8, 10]),
-    ("Rogue ~ Trapfinding", "Rogue", [1, 2, 3, 4, 5, 10, 20]),
-    ("Vigilante ~ Seamless Guise", "Vigilante", [1, 2, 3, 10, 20]),
-    ("Vigilante ~ Unshakable", "Vigilante", [3, 4, 5, 10, 20]),
+    ("Arcane Archer ~ Hail of Arrows", "Arcane Archer", [8, 9, 10, 15, 20], {}),
+    ("Arcane Archer ~ Phase Arrow", "Arcane Archer", [6, 7, 10, 15, 20], {}),
+    ("Arcane Archer ~ Seeker Arrow", "Arcane Archer", [4, 5, 6, 10, 20], {}),
+    ("Arcane Trickster ~ Impromptu Sneak Attack", "Arcane Trickster", [3, 4, 5, 10], {}),
+    ("Assassin ~ Save against Poisons", "Assassin", [2, 3, 4, 5, 10, 20], {}),
+    ("Barbarian ~ Damage Reduction", "Barbarian", [7, 8, 9, 10, 13, 20], {}),
+    ("Duelist ~ Elaborate Defense", "Duelist", [7, 8, 9, 10, 20], {}),
+    ("Duelist ~ Improved Reaction", "Duelist", [2, 3, 4, 10, 20], {}),
+    ("Duelist ~ Precise Strike", "Duelist", [1, 2, 3, 4, 8, 10], {}),
+    ("Rogue ~ Trapfinding", "Rogue", [1, 2, 3, 4, 5, 10, 20], {}),
+    ("Vigilante ~ Seamless Guise", "Vigilante", [1, 2, 3, 10, 20], {}),
+    ("Vigilante ~ Unshakable", "Vigilante", [3, 4, 5, 10, 20], {}),
+    # SD-31 wave 27: ability-modifier-dependent chains, the scoped follow-on wave 26 explicitly
+    # deferred ("AbilityModifiers is already in scope at this module's one call site; wiring it
+    # is small"). `ability_modifier_inputs` is a FIXED, assumed test input (a character's own
+    # ability score has no corpus byte representation to transcribe) -- chosen once here and fed
+    # to the SAME value the Rust bar-check's fixture row states, so both sides agree on what is
+    # being tested: the FORMULA evaluates correctly for a given ability-modifier input, the same
+    # thing every other TARGETS row proves for the level dimension.
+    ("Arcane Archer ~ Arrow of Death", "Arcane Archer", [10, 15, 20], {"CHA": 5}),
+    ("Ranger ~ Master Hunter", "Ranger", [1, 5, 10, 15, 20], {"WIS": 4}),
+    ("Rogue ~ Master Strike", "Rogue", [1, 5, 10, 15, 20], {"INT": 3}),
 ]
 
 
@@ -307,10 +320,22 @@ def class_level_variable_name(class_name: str) -> str:
     return "".join(class_name.split()) + "LVL"
 
 
-def resolve_chain(bonus_vars: dict[str, str], class_level_var: str, level: int) -> dict[str, int]:
+ABILITY_ABBREVIATIONS = ("STR", "DEX", "CON", "INT", "WIS", "CHA")
+
+
+def resolve_chain(
+    bonus_vars: dict[str, str],
+    class_level_var: str,
+    level: int,
+    ability_modifier_inputs: dict[str, int] | None = None,
+) -> dict[str, int]:
     """The same fixed-point pass `resolve_pcgen_var_chain` (Rust, production) performs, written
-    independently here."""
-    vars: dict[str, float] = {class_level_var: float(level)}
+    independently here. `ability_modifier_inputs` mirrors production's `ability_modifier_seed_
+    vars`: all six bare abbreviations are always seeded, defaulting an unnamed one to `0`."""
+    vars: dict[str, float] = {abbrev: 0.0 for abbrev in ABILITY_ABBREVIATIONS}
+    for abbrev, value in (ability_modifier_inputs or {}).items():
+        vars[abbrev] = float(value)
+    vars[class_level_var] = float(level)
     progressed = True
     guard = 0
     while progressed and guard < 16:
@@ -341,7 +366,7 @@ def derive(data_root: Path) -> tuple[list[dict], list[str]]:
     file_sha_cache: dict[str, str] = {}
     file_path_cache: dict[str, Path] = {}
 
-    for corpus_key, class_name, sample_levels in TARGETS:
+    for corpus_key, class_name, sample_levels, ability_modifier_inputs in TARGETS:
         unit = by_corpus_key.get(corpus_key)
         if unit is None:
             skipped.append(f"{corpus_key}: no docs/work-inventory.json class_feature unit found")
@@ -406,7 +431,10 @@ def derive(data_root: Path) -> tuple[list[dict], list[str]]:
 
         class_level_var = class_level_variable_name(class_name)
         try:
-            resolved_by_level = {lvl: resolve_chain(bonus_vars, class_level_var, lvl) for lvl in sample_levels}
+            resolved_by_level = {
+                lvl: resolve_chain(bonus_vars, class_level_var, lvl, ability_modifier_inputs)
+                for lvl in sample_levels
+            }
         except Exception as exc:  # pragma: no cover - defensive
             skipped.append(f"{corpus_key}: evaluation error: {exc}")
             continue
@@ -443,6 +471,7 @@ def derive(data_root: Path) -> tuple[list[dict], list[str]]:
                 "upstream_line": line_no,
                 "corpus_field": f"DESC:{desc}",
                 "expected": {"value_at_level_by_arg": value_at_level_by_arg},
+                "ability_modifier_inputs": ability_modifier_inputs,
             }
         )
 
@@ -457,7 +486,9 @@ TOKEN_FAMILY = (
 DERIVATION = (
     "Every TARGETS record's raw upstream .lst row is re-read directly and its BONUS:VAR chain "
     "resolved by this script's own from-scratch fixed-point evaluator (resolve_chain / "
-    "evaluate_formula), seeded ONLY with the class's own level variable at each sample level. "
+    "evaluate_formula), seeded with the class's own level variable at each sample level and (SD-31 "
+    "wave 27) each TARGETS row's own fixed, assumed ability_modifier_inputs -- empty for the 12 "
+    "wave-26 level-only targets, one bare ability abbreviation for the 3 wave-27 targets. "
     "expected.value_at_level pins the fully-resolved integer the DESC: token's %1 argument "
     "names, at several sample character levels chosen to straddle each formula's own "
     "division/max() step boundaries."

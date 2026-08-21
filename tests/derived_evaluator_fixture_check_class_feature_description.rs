@@ -44,6 +44,17 @@
 //! `v06_work_inventory` both call -- and asserts every fixtured `unit_id` is in `cleared`,
 //! not merely that some hand-rolled comparison inside this file agrees with itself.
 //!
+//! # SD-31 wave 27: ability-modifier-dependent targets
+//!
+//! `reference_resolve_chain` (guarantee 3's independent re-derivation) now also seeds the six
+//! bare ability abbreviations from each fixture row's own `ability_modifier_inputs` -- empty
+//! for every wave-26 level-only target, one bare abbreviation for wave 27's three new targets
+//! (`Arcane Archer ~ Arrow of Death`/CHA, `Ranger ~ Master Hunter`/WIS, `Rogue ~ Master
+//! Strike`/INT), mirroring production's `resolve_pcgen_var_chain`/`ability_modifier_seed_vars`
+//! widening in `class_feature_grant_consumer.rs`. Confirmed RED before the widening (this file's
+//! guarantee-3 test failed with `ArrowOfDeathDC=None` against the fixture's `Some(25)` the
+//! instant the three new TARGETS were derived, before this file's own fix landed), GREEN after.
+//!
 //! # Mutation-proof
 //!
 //! Each guarantee is mutation-provable on the committed fixture in isolation (zero one
@@ -296,13 +307,22 @@ fn reference_evaluate(formula: &str, vars: &BTreeMap<String, i64>) -> Option<i64
 
 /// The same fixed-point chain resolution `resolve_pcgen_var_chain` performs, written
 /// independently here against `bonus_var_chain` as pinned in the fixture (never re-read from
-/// `data/corpus/`).
+/// `data/corpus/`). SD-31 wave 27: also seeds `ability_modifier_inputs` (the fixture's own
+/// fixed, assumed ability-modifier test input -- empty for every wave-26 level-only target),
+/// mirroring production's `ability_modifier_seed_vars`.
 fn reference_resolve_chain(
     bonus_vars: &BTreeMap<String, String>,
     class_level_var: &str,
     level: u8,
+    ability_modifier_inputs: &BTreeMap<String, i16>,
 ) -> BTreeMap<String, i64> {
     let mut vars: BTreeMap<String, i64> = BTreeMap::new();
+    for abbrev in ["STR", "DEX", "CON", "INT", "WIS", "CHA"] {
+        vars.insert(
+            abbrev.to_string(),
+            i64::from(ability_modifier_inputs.get(abbrev).copied().unwrap_or(0)),
+        );
+    }
     vars.insert(class_level_var.to_string(), i64::from(level));
     let mut progressed = true;
     let mut guard = 0;
@@ -462,7 +482,12 @@ fn class_feature_description_expected_values_are_re_derivable_from_the_pinned_co
 
         for (arg_name, by_level) in &f.expected_value_at_level_by_arg {
             for (&level, &expected) in by_level {
-                let resolved = reference_resolve_chain(&bonus_vars, &f.class_level_var, level);
+                let resolved = reference_resolve_chain(
+                    &bonus_vars,
+                    &f.class_level_var,
+                    level,
+                    &f.ability_modifier_inputs,
+                );
                 let got = resolved.get(arg_name);
                 assert_eq!(
                     got,

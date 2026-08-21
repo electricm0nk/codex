@@ -2152,6 +2152,114 @@ mod class_feature_seam_tests {
 }
 
 #[cfg(test)]
+mod class_feature_description_seam_tests {
+    use super::*;
+
+    /// SD-31 wave 27: [`ability_modifiers_from_fixture_inputs`] seeds exactly the named
+    /// abilities and defaults every unnamed one to `0` -- the same "seed what is known, never
+    /// guess the rest" posture as [`resolve_pcgen_var_chain`]'s own default seeding.
+    #[test]
+    fn ability_modifiers_from_fixture_inputs_seeds_named_abilities_and_defaults_the_rest() {
+        let mut inputs: BTreeMap<String, i16> = BTreeMap::new();
+        inputs.insert("INT".to_string(), 3);
+        inputs.insert("WIS".to_string(), -1);
+        let ability_modifiers = ability_modifiers_from_fixture_inputs(&inputs);
+        assert_eq!(ability_modifiers.intelligence, 3);
+        assert_eq!(ability_modifiers.wisdom, -1);
+        assert_eq!(ability_modifiers.strength, 0);
+        assert_eq!(ability_modifiers.dexterity, 0);
+        assert_eq!(ability_modifiers.constitution, 0);
+        assert_eq!(ability_modifiers.charisma, 0);
+    }
+
+    #[test]
+    fn ability_modifiers_from_fixture_inputs_of_an_empty_map_is_all_zero() {
+        let ability_modifiers = ability_modifiers_from_fixture_inputs(&BTreeMap::new());
+        assert_eq!(ability_modifiers, crate::rules_core::pilot_compute::AbilityModifiers::default());
+    }
+
+    /// The real end-to-end gate: every committed `class_feature_description_entries` row --
+    /// level-only (wave 26) and ability-modifier-dependent (wave 27) alike -- clears
+    /// [`run_class_feature_description_bar_check`] against the REAL, live `data/corpus` ingest
+    /// and the REAL production `resolve_pcgen_var_chain`. This is the seam family's own
+    /// dedicated `cargo test` coverage -- before this wave it was exercised only by running the
+    /// `derived_evaluator_fixture_check` binary, never by `cargo test`, so a regression here
+    /// would have shipped silently past every other gate this repo runs on a normal PR.
+    #[test]
+    fn run_class_feature_description_bar_check_clears_every_committed_class_feature_description_fixture()
+    {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let report = run_class_feature_description_bar_check(&repo_root);
+        assert!(
+            report.fixtures_total > 0,
+            "the committed fixture must carry at least one class_feature_description_entries row"
+        );
+        assert!(
+            report.failures.is_empty(),
+            "every committed class_feature_description fixture must clear the bar, got {} \
+             failures: {:?}",
+            report.failures.len(),
+            report.failures
+        );
+        assert_eq!(report.cleared.len(), report.fixtures_total);
+    }
+
+    /// Mutation-proof, without touching production code: a hand-built fixture whose
+    /// `ability_modifier_inputs` names a DIFFERENT ability modifier value than the one the real
+    /// corpus formula was independently derived against must NOT clear -- proving this bar-check
+    /// is actually sensitive to `ability_modifier_inputs`, not merely present and vacuous. Uses
+    /// the REAL live `Rogue ~ Master Strike` corpus record (`10+(MasterStrikeLVL/2)+INT`), so
+    /// this exercises the real `class_feature_record_tokens()` lookup too, not a scratch corpus.
+    #[test]
+    fn a_wrong_ability_modifier_input_makes_run_class_feature_description_bar_check_report_a_failure()
+    {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let real = crate::rules_core::pilot_compute::class_feature_grant_consumer::class_feature_record_tokens()
+            .get("Rogue ~ Master Strike")
+            .expect("Rogue ~ Master Strike must resolve against the live corpus");
+        let mut ability_modifier_inputs = BTreeMap::new();
+        // Deliberately the WRONG intelligence modifier -- one off the value this wave's real
+        // committed fixture (see `derive_class_feature_description_fixtures.py`'s `TARGETS`)
+        // independently derived the real corpus row against.
+        ability_modifier_inputs.insert("INT".to_string(), 999i16);
+        let mut expected_value_at_level_by_arg: BTreeMap<String, BTreeMap<u8, i64>> = BTreeMap::new();
+        expected_value_at_level_by_arg
+            .insert("MasterStrikeDC".to_string(), BTreeMap::from([(20u8, 23i64)]));
+        let fixture = ClassFeatureDescriptionFixture {
+            unit_id: "scratch:class_feature:wrong_ability_input".to_string(),
+            book: "core_rulebook".to_string(),
+            record_key: "Rogue ~ Master Strike".to_string(),
+            class: real.class.clone(),
+            class_level_var: "RogueLVL".to_string(),
+            upstream_lst: "scratch".to_string(),
+            upstream_lst_sha256: "scratch".to_string(),
+            upstream_line: 0,
+            corpus_field: "scratch".to_string(),
+            expected_value_at_level_by_arg,
+            ability_modifier_inputs,
+        };
+        // Reproduces `run_class_feature_description_bar_check`'s own per-fixture body directly
+        // (that function only reads the committed fixture file, not an injectable list), against
+        // the SAME real corpus record and the SAME real `resolve_pcgen_var_chain`.
+        let _ = &repo_root;
+        let ability_modifiers = ability_modifiers_from_fixture_inputs(&fixture.ability_modifier_inputs);
+        let resolved = crate::rules_core::pilot_compute::class_feature_grant_consumer::resolve_pcgen_var_chain(
+            &real.bonus_vars,
+            &fixture.class_level_var,
+            20,
+            &ability_modifiers,
+        );
+        assert_ne!(
+            resolved.get("MasterStrikeDC"),
+            Some(&23),
+            "an INT modifier of 999 must produce a wildly different DC than the real committed \
+             fixture's INT input does, proving this bar-check is genuinely sensitive to \
+             ability_modifier_inputs rather than vacuously true: {resolved:?}"
+        );
+    }
+}
+
+#[cfg(test)]
 mod spell_range_seam_tests {
     use super::*;
 
@@ -4314,6 +4422,20 @@ pub struct ClassFeatureDescriptionFixture {
     pub corpus_field: String,
     /// PCGen variable name -> (character level -> expected resolved integer).
     pub expected_value_at_level_by_arg: BTreeMap<String, BTreeMap<u8, i64>>,
+    /// SD-31 wave 27: a FIXED, assumed test ability-modifier input (bare PCGen abbreviation --
+    /// `STR`/`DEX`/`CON`/`INT`/`WIS`/`CHA` -- -> assumed modifier value), used ONLY when the
+    /// target record's own `BONUS:VAR` formula references an ability abbreviation. Absent (empty
+    /// map) for every fixture that does not need one -- the twelve wave-26 targets are all
+    /// level-only chains and this defaults to an empty map for them, changing nothing about how
+    /// they resolve. Unlike `expected_value_at_level_by_arg`, this is NOT "transcribed from the
+    /// corpus" (a character's own ability score has no corpus representation at all): it is a
+    /// fixed test input this script and this bar-check both agree to feed the SAME record, so
+    /// that the fixture proves the FORMULA is evaluated correctly for a given input, the same
+    /// thing every other fixture in this family proves for the level dimension. Parsed by
+    /// [`load_class_feature_description_fixtures`] below (this struct is hand-parsed off
+    /// `serde_json::Value`, not `#[derive(Deserialize)]`) -- absent from the JSON row entirely,
+    /// as every pre-wave-27 entry is, parses to an empty map, never an error.
+    pub ability_modifier_inputs: BTreeMap<String, i16>,
 }
 
 /// Reads the `class_feature_description_entries` array of the committed fixture file.
@@ -4343,6 +4465,19 @@ pub fn load_class_feature_description_fixtures(repo_root: &Path) -> Vec<ClassFea
                     expected_value_at_level_by_arg.insert(arg_name.clone(), per_level);
                 }
             }
+            let mut ability_modifier_inputs: BTreeMap<String, i16> = BTreeMap::new();
+            if let Some(obj) = e.get("ability_modifier_inputs").and_then(|v| v.as_object()) {
+                for (abbrev, value) in obj {
+                    let value = value
+                        .as_i64()
+                        .unwrap_or_else(|| panic!("ability_modifier_inputs.{abbrev} must be an integer"));
+                    ability_modifier_inputs.insert(
+                        abbrev.clone(),
+                        i16::try_from(value)
+                            .unwrap_or_else(|_| panic!("ability_modifier_inputs.{abbrev}={value} out of i16 range")),
+                    );
+                }
+            }
             ClassFeatureDescriptionFixture {
                 unit_id: e["unit_id"].as_str().expect("unit_id").to_string(),
                 book: e["book"].as_str().expect("book").to_string(),
@@ -4357,9 +4492,26 @@ pub fn load_class_feature_description_fixtures(repo_root: &Path) -> Vec<ClassFea
                 upstream_line: e["upstream_line"].as_u64().expect("upstream_line"),
                 corpus_field: e["corpus_field"].as_str().expect("corpus_field").to_string(),
                 expected_value_at_level_by_arg,
+                ability_modifier_inputs,
             }
         })
         .collect()
+}
+
+/// Builds the [`AbilityModifiers`] value a `class_feature_description_entries` fixture's own
+/// `ability_modifier_inputs` names, defaulting every unnamed ability to `0` -- the same "seed
+/// what is known, never guess the rest" posture the rest of this fixture family uses.
+fn ability_modifiers_from_fixture_inputs(
+    inputs: &BTreeMap<String, i16>,
+) -> crate::rules_core::pilot_compute::AbilityModifiers {
+    crate::rules_core::pilot_compute::AbilityModifiers {
+        strength: inputs.get("STR").copied().unwrap_or(0),
+        dexterity: inputs.get("DEX").copied().unwrap_or(0),
+        constitution: inputs.get("CON").copied().unwrap_or(0),
+        intelligence: inputs.get("INT").copied().unwrap_or(0),
+        wisdom: inputs.get("WIS").copied().unwrap_or(0),
+        charisma: inputs.get("CHA").copied().unwrap_or(0),
+    }
 }
 
 /// The `class_feature_description_entries` half of [`run_bar_check`]. Runs the REAL production
@@ -4401,6 +4553,7 @@ fn run_class_feature_description_bar_check(repo_root: &Path) -> BarCheckReport {
             );
             continue;
         }
+        let fixture_ability_modifiers = ability_modifiers_from_fixture_inputs(&fixture.ability_modifier_inputs);
         let mut mismatch: Option<String> = None;
         'outer: for (arg_name, by_level) in &fixture.expected_value_at_level_by_arg {
             for (&level, &expected) in by_level {
@@ -4408,6 +4561,7 @@ fn run_class_feature_description_bar_check(repo_root: &Path) -> BarCheckReport {
                     &record.bonus_vars,
                     &fixture.class_level_var,
                     level,
+                    &fixture_ability_modifiers,
                 );
                 match resolved.get(arg_name) {
                     Some(&got) if got == expected => {}

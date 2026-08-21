@@ -49957,9 +49957,38 @@
     }
   ],
   "class_feature_description_token_family": "DESC:<prose>%1|<name> where <name>'s value is resolved through a same-record BONUS:VAR chain rooted at the record's own class-level variable (<ClassNameNoSpaces>LVL).",
-  "class_feature_description_derivation": "Every TARGETS record's raw upstream .lst row is re-read directly and its BONUS:VAR chain resolved by this script's own from-scratch fixed-point evaluator (resolve_chain / evaluate_formula), seeded ONLY with the class's own level variable at each sample level. expected.value_at_level pins the fully-resolved integer the DESC: token's %1 argument names, at several sample character levels chosen to straddle each formula's own division/max() step boundaries.",
+  "class_feature_description_derivation": "Every TARGETS record's raw upstream .lst row is re-read directly and its BONUS:VAR chain resolved by this script's own from-scratch fixed-point evaluator (resolve_chain / evaluate_formula), seeded with the class's own level variable at each sample level and (SD-31 wave 27) each TARGETS row's own fixed, assumed ability_modifier_inputs -- empty for the 12 wave-26 level-only targets, one bare ability abbreviation for the 3 wave-27 targets. expected.value_at_level pins the fully-resolved integer the DESC: token's %1 argument names, at several sample character levels chosen to straddle each formula's own division/max() step boundaries.",
   "class_feature_description_independence": "scripts/derive_class_feature_description_fixtures.py re-reads the pinned upstream .lst bytes directly, splits each record's raw tab-delimited fields with its own logic (read_record_fields), and evaluates the resulting formula chain with its own from-scratch recursive-descent parser/evaluator (evaluate_formula) -- structurally independent, cross-language code from src/rules_core/pilot_compute/class_feature_grant_consumer.rs's resolve_pcgen_var_chain, which drives the REAL production formula_interpreter::PcgenFormulaEvaluator. It opens no file under data/corpus/ and imports no engine module. docs/work-inventory.json is read for IDENTITY ONLY (book/source_file/source_line for a corpus_key) -- no magnitude is ever taken from it. TARGETS is a hand-picked, hand-verified batch (see this script's own module doc's 'TARGET SELECTION' section) -- the exact live population class_feature_grant_consumer.rs's own corpus-wide census test found resolvable, not the full theoretical shape space.",
   "class_feature_description_entries": [
+    {
+      "unit_id": "core_rulebook:class_feature:arcane_archer_arrow_of_death",
+      "book": "core_rulebook",
+      "record_key": "Arcane Archer ~ Arrow of Death",
+      "class": "Arcane Archer",
+      "class_level_var": "ArcaneArcherLVL",
+      "desc_arg_names_in_percent_n_order": [
+        "ArrowOfDeathDC"
+      ],
+      "bonus_var_chain": {
+        "ArrowOfDeathDC": "20+CHA"
+      },
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "upstream_lst_sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "upstream_line": 2928,
+      "corpus_field": "DESC:At 10th level, an arcane archer can create a special type of slaying arrow that forces the target, if damaged by the arrow's attack, to make a Fortitude save (DC %1) or be slain immediately. It takes 1 day to make a slaying arrow, and the arrow only functions for the arcane archer who created it. The slaying arrow lasts no longer than 1 year, and the archer can only have one such arrow in existence at a time.|ArrowOfDeathDC",
+      "expected": {
+        "value_at_level_by_arg": {
+          "ArrowOfDeathDC": {
+            "10": 25,
+            "15": 25,
+            "20": 25
+          }
+        }
+      },
+      "ability_modifier_inputs": {
+        "CHA": 5
+      }
+    },
     {
       "unit_id": "core_rulebook:class_feature:arcane_archer_hail_of_arrows",
       "book": "core_rulebook",
@@ -49995,7 +50024,8 @@
             "20": 1
           }
         }
-      }
+      },
+      "ability_modifier_inputs": {}
     },
     {
       "unit_id": "core_rulebook:class_feature:arcane_archer_phase_arrow",
@@ -50023,7 +50053,8 @@
             "20": 1
           }
         }
-      }
+      },
+      "ability_modifier_inputs": {}
     },
     {
       "unit_id": "core_rulebook:class_feature:arcane_archer_seeker_arrow",
@@ -50051,7 +50082,8 @@
             "20": 1
           }
         }
-      }
+      },
+      "ability_modifier_inputs": {}
     },
     {
       "unit_id": "core_rulebook:class_feature:arcane_trickster_impromptu_sneak_attack",
@@ -50078,7 +50110,8 @@
             "10": 2
           }
         }
-      }
+      },
+      "ability_modifier_inputs": {}
     },
     {
       "unit_id": "core_rulebook:class_feature:assassin_save_against_poisons",
@@ -50107,7 +50140,8 @@
             "20": 10
           }
         }
-      }
+      },
+      "ability_modifier_inputs": {}
     },
     {
       "unit_id": "core_rulebook:class_feature:barbarian_damage_reduction",
@@ -50138,7 +50172,8 @@
             "20": 5
           }
         }
-      }
+      },
+      "ability_modifier_inputs": {}
     },
     {
       "unit_id": "core_rulebook:class_feature:duelist_elaborate_defense",
@@ -50169,7 +50204,8 @@
             "20": 6
           }
         }
-      }
+      },
+      "ability_modifier_inputs": {}
     },
     {
       "unit_id": "core_rulebook:class_feature:duelist_improved_reaction",
@@ -50197,7 +50233,8 @@
             "20": 8
           }
         }
-      }
+      },
+      "ability_modifier_inputs": {}
     },
     {
       "unit_id": "core_rulebook:class_feature:duelist_precise_strike",
@@ -50226,6 +50263,71 @@
             "10": 10
           }
         }
+      },
+      "ability_modifier_inputs": {}
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:ranger_master_hunter",
+      "book": "core_rulebook",
+      "record_key": "Ranger ~ Master Hunter",
+      "class": "Ranger",
+      "class_level_var": "RangerLVL",
+      "desc_arg_names_in_percent_n_order": [
+        "MasterHunterDC"
+      ],
+      "bonus_var_chain": {
+        "MasterHunterDC": "10+(MasterHunterLVL/2)+WIS",
+        "MasterHunterLVL": "RangerLVL"
+      },
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "upstream_lst_sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "upstream_line": 1427,
+      "corpus_field": "DESC:You can always move at full speed while using Survival to follow tracks without penalty. You can, as a standard action, make a single attack against a favored enemy at your full attack bonus. If the attack hits, the target takes damage normally and must make a Fortitude save or die (DC %1). You can choose instead to deal an amount of nonlethal damage equal to the creature's current hit points. A successful save negates this damage. You can use this ability once per day against each favored enemy type you possess, but not against the same creature more than once in a 24-hour period.|MasterHunterDC",
+      "expected": {
+        "value_at_level_by_arg": {
+          "MasterHunterDC": {
+            "1": 14,
+            "5": 16,
+            "10": 19,
+            "15": 21,
+            "20": 24
+          }
+        }
+      },
+      "ability_modifier_inputs": {
+        "WIS": 4
+      }
+    },
+    {
+      "unit_id": "core_rulebook:class_feature:rogue_master_strike",
+      "book": "core_rulebook",
+      "record_key": "Rogue ~ Master Strike",
+      "class": "Rogue",
+      "class_level_var": "RogueLVL",
+      "desc_arg_names_in_percent_n_order": [
+        "MasterStrikeDC"
+      ],
+      "bonus_var_chain": {
+        "MasterStrikeDC": "10+(MasterStrikeLVL/2)+INT",
+        "MasterStrikeLVL": "RogueLVL"
+      },
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+      "upstream_lst_sha256": "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+      "upstream_line": 1619,
+      "corpus_field": "DESC:You are incredibly deadly when dealing sneak attack damage. Each time you deal sneak attack damage, you can choose one of the following three effects: the target can be put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain. Regardless of the effect chosen, the target receives a Fortitude save to negate the additional effect. The DC of this save is %1. Once a creature has been the target of a master strike, regardless of whether or not the save is made, that creature is immune to your master strike for 24 hours. Creatures that are immune to sneak attack damage are also immune to this ability.|MasterStrikeDC",
+      "expected": {
+        "value_at_level_by_arg": {
+          "MasterStrikeDC": {
+            "1": 13,
+            "5": 15,
+            "10": 18,
+            "15": 20,
+            "20": 23
+          }
+        }
+      },
+      "ability_modifier_inputs": {
+        "INT": 3
       }
     },
     {
@@ -50257,7 +50359,8 @@
             "20": 10
           }
         }
-      }
+      },
+      "ability_modifier_inputs": {}
     },
     {
       "unit_id": "ultimate_intrigue:class_feature:vigilante_seamless_guise",
@@ -50285,7 +50388,8 @@
             "20": 20
           }
         }
-      }
+      },
+      "ability_modifier_inputs": {}
     },
     {
       "unit_id": "ultimate_intrigue:class_feature:vigilante_unshakable",
@@ -50313,7 +50417,8 @@
             "20": 20
           }
         }
-      }
+      },
+      "ability_modifier_inputs": {}
     }
   ]
 }
