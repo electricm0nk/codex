@@ -177,6 +177,12 @@ pub mod formula_reproduction_harness;
 /// is wired this wave — see its own module doc's opening paragraph), and a private `mod` here
 /// would make every one of those items a genuine `dead_code` lint.
 pub mod formula_interpreter;
+/// SD-31 wave 26's "BonusObj-shape reader" (`OPERATOR-RULINGS-2026-08-21.md` §20 follow-on) --
+/// see its own module doc. `pub` for the same reason as the two modules above: no unit-banking
+/// consumer is wired to it yet (this lane is scoped to closing interpreter refusals and reading
+/// the real multi-token `PREVARGTEQ` bonus-stack shape, not to wiring a consumer), so a private
+/// `mod` here would make its non-test API dead code.
+pub mod bonus_stack_reader;
 mod domain_power;
 use class_slayer::*;
 use class_ultimate_combat::compute_uc_class_chassis;
