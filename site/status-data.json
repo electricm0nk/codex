@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-08-21T11:34:36Z",
+  "generated_at": "2026-08-21T18:27:52Z",
   "doneness_values": [
     "done",
     "partial",
     "not-started"
   ],
   "overall": {
-    "done": 11687,
-    "partial": 2052,
+    "done": 11693,
+    "partial": 2046,
     "not_started": 15771,
     "denominator": 29510,
     "pct": 39.6,
@@ -147,11 +147,11 @@
     {
       "id": "advanced_race_guide",
       "title": "Advanced Race Guide",
-      "done": 431,
-      "partial": 200,
+      "done": 432,
+      "partial": 199,
       "not_started": 590,
       "denominator": 1221,
-      "pct": 35.3,
+      "pct": 35.4,
       "excluded_from_percentage": 355,
       "standing_breakdown": {
         "origin": 1221,
@@ -175,11 +175,11 @@
     {
       "id": "bestiary_4",
       "title": "Bestiary 4",
-      "done": 626,
-      "partial": 96,
+      "done": 631,
+      "partial": 91,
       "not_started": 310,
       "denominator": 1032,
-      "pct": 60.7,
+      "pct": 61.1,
       "excluded_from_percentage": 304,
       "standing_breakdown": {
         "unclassified": 304,

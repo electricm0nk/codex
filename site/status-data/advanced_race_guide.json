@@ -7989,11 +7989,11 @@
     {
       "kind": "race_trait",
       "label": "Race Traits",
-      "done": 74,
-      "partial": 84,
+      "done": 75,
+      "partial": 83,
       "not_started": 70,
       "denominator": 228,
-      "pct": 32.5,
+      "pct": 32.9,
       "excluded_from_percentage": 95,
       "standing_breakdown": {
         "unclassified": 95,
@@ -9157,7 +9157,7 @@
         },
         {
           "name": "Hypnotic Gaze",
-          "doneness": "partial",
+          "doneness": "done",
           "type_facet": "RacialTraits.Nagaji Racial Trait.SpecialAttack.Special Attack.SpellLike",
           "standing": "origin",
           "display_name": "Hypnotic Gaze"

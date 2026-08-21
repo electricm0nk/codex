@@ -1,7 +1,7 @@
 {
   "available": true,
   "schema": 15,
-  "generated_at": "2026-08-21T11:31:04Z",
+  "generated_at": "2026-08-21T18:24:21Z",
   "source_document": "docs/work-inventory.json",
   "shard_base": "units/",
   "fields": [
@@ -13,7 +13,7 @@
     "type_facet"
   ],
   "total_units": 38372,
-  "proven_units": 6331,
+  "proven_units": 6339,
   "doneness_unmapped_seen": false,
   "pi_redacted_names": 420,
   "category_labels_redacted": 3,
@@ -90,19 +90,19 @@
     },
     "class_feature": {
       "units": 15439,
-      "proven": 340,
+      "proven": 338,
       "by_status": {
         "unknown": 3058,
         "not-ingested": 11043,
         "deferred-with-reason": 40,
-        "grounded": 90,
+        "grounded": 88,
         "text-complete": 250,
-        "fixture-verified": 13,
+        "fixture-verified": 15,
         "literal-verified": 17,
         "not-started": 928
       },
       "shard": "PF1e-units-class_feature.json",
-      "bytes": 2339769,
+      "bytes": 2339785,
       "doneness_unmapped": {},
       "categories": {
         "specialquality": {
@@ -170,8 +170,8 @@
         },
         "rangerclassfeatures": {
           "label": "Ranger Class Features",
-          "done": 6,
-          "held": 6,
+          "done": 7,
+          "held": 5,
           "in-progress": 0,
           "not-started": 141,
           "unmeasurable": 119,
@@ -215,8 +215,8 @@
         },
         "rogueclassfeatures": {
           "label": "Rogue Class Features",
-          "done": 25,
-          "held": 3,
+          "done": 26,
+          "held": 2,
           "in-progress": 0,
           "not-started": 165,
           "unmeasurable": 17,
@@ -7495,23 +7495,23 @@
     },
     "race_trait": {
       "units": 3504,
-      "proven": 527,
+      "proven": 537,
       "by_status": {
         "not-ingested": 2712,
-        "grounded": 342,
-        "ingested-magnitude": 252,
+        "grounded": 352,
+        "ingested-magnitude": 242,
         "text-complete": 185,
         "literal-verified": 13
       },
       "shard": "PF1e-units-race_trait.json",
-      "bytes": 502825,
+      "bytes": 502725,
       "doneness_unmapped": {},
       "categories": {
         "racialtraits": {
           "label": "Racial Traits",
-          "done": 529,
+          "done": 539,
           "held": 1,
-          "in-progress": 244,
+          "in-progress": 234,
           "not-started": 447,
           "unmeasurable": 0,
           "deferred": 0
