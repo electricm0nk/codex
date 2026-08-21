@@ -163,6 +163,53 @@ pub fn build_feat_catalog() -> FeatCatalogResponse {
     build_feat_catalog_for(None)
 }
 
+/// Finds one feat's own already-verified description by an EXACT name
+/// match — never fuzzy. Built for `class_feature_feat_bridge.rs`
+/// (SD31-W29-CLASSFEATURE-FEATBRIDGE-001, THE-BOX §2.1 F2): a `class_feature`
+/// record whose entire content is a grant of an already-separately-modelled
+/// `feat` (`ABILITY:FEAT|AUTOMATIC|<name>` / `ABILITY:FEAT|VIRTUAL|<name>`)
+/// carries no local description of its own, but the target feat's real
+/// rulebook text already exists here, already rendered, already leak-
+/// checked. This is that lookup, kept deliberately narrow: **exact string
+/// equality only.** This codebase's own standing lesson is that a shared
+/// name never implies a shared thing — a fuzzy matcher belongs, if built at
+/// all, in the caller, verified per-match against the owning record, never
+/// silently folded into this function.
+///
+/// Reuses the identical render treatment [`map_catalog_entry`] applies —
+/// `render_pcgen_desc` then a `dropped_args`/`leaked_pcgen_syntax` double
+/// refusal — rather than re-deriving it, so this function can never promise
+/// cleaner text than the picker itself would ship for the same record. When
+/// a name matches multiple books' feats (the catalog's own documented
+/// "Endurance" collision), the first exact match in `all_feat_tables()`'s
+/// own book order (CRB, APG, ACG, ARG, PU, …) wins — the SAME determinism
+/// `build_feat_catalog`'s caller already relies on for that collision,
+/// applied here rather than invented fresh.
+///
+/// Returns `None` when no book's feat carries this exact name, when the
+/// matched record has no `DESC:` token of its own, or when its render would
+/// itself be refused by the picker (an unresolved `%N`/raw PCGen leak) —
+/// never a guessed or partial description.
+pub fn feat_description_by_exact_name(name: &str) -> Option<String> {
+    for book in all_feat_tables() {
+        for entry in book.entries {
+            if entry.name != name {
+                continue;
+            }
+            let Some(raw) = entry.description else { continue };
+            let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(raw);
+            if !rendered.dropped_args.is_empty() {
+                continue;
+            }
+            if codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text).is_some() {
+                continue;
+            }
+            return Some(rendered.text);
+        }
+    }
+    None
+}
+
 fn build_feat_catalog_for(facts: Option<&CharacterPrereqFacts>) -> FeatCatalogResponse {
     let mut entries = Vec::new();
     for book in all_feat_tables() {
@@ -985,6 +1032,45 @@ mod tests {
             assert!(!entry.key.is_empty());
             assert!(!entry.name.is_empty());
         }
+    }
+
+    /// The proof case for `class_feature_feat_bridge.rs`: a real, exact
+    /// name lookup returns the SAME text `map_catalog_entry` would render
+    /// for that record — proving reuse, not reinvention.
+    #[test]
+    fn feat_description_by_exact_name_finds_a_real_feat() {
+        let extra_hex = feat_description_by_exact_name("Extra Hex");
+        let catalog_entry = build_feat_catalog()
+            .entries
+            .into_iter()
+            .find(|e| e.name == "Extra Hex")
+            .expect("Extra Hex must be in the catalog");
+        assert_eq!(extra_hex, catalog_entry.description);
+        assert_eq!(extra_hex.as_deref(), Some("You have learned the secrets of a new hex."));
+    }
+
+    /// No fuzzy matching, ever — a name one character off must not resolve.
+    #[test]
+    fn feat_description_by_exact_name_refuses_a_near_miss() {
+        assert_eq!(feat_description_by_exact_name("Extra Hexes"), None);
+        assert_eq!(feat_description_by_exact_name("extra hex"), None);
+        assert_eq!(feat_description_by_exact_name(""), None);
+        assert_eq!(feat_description_by_exact_name("Not A Real Feat Name At All"), None);
+    }
+
+    /// The multi-book collision precedent (`both_endurance_listings_are_
+    /// served_and_are_distinguishable`, above): CRB's own `Endurance` wins,
+    /// deterministically, the same book-order tie-break `all_feat_tables()`
+    /// already fixes.
+    #[test]
+    fn feat_description_by_exact_name_is_deterministic_on_a_cross_book_collision() {
+        let endurance = feat_description_by_exact_name("Endurance");
+        let crb_entry = build_feat_catalog()
+            .entries
+            .into_iter()
+            .find(|e| e.name == "Endurance" && e.source == "Crb")
+            .expect("CRB's Endurance must be in the catalog");
+        assert_eq!(endurance, crb_entry.description);
     }
 
     #[test]
