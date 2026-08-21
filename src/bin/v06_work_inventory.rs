@@ -4569,11 +4569,46 @@ fn crb_class_name(class_id: ClassId) -> &'static str {
 /// break — a segment that merely CONTAINS a race name mid-word ("Aquatic
 /// Elf", "Elfin Grace") still matches nothing, the exact name-coincidence
 /// hazard this function's own doc comment above was written to close.
+/// SD31-W27-RACETRAIT-001: `"Adopted Race"` is a real, verified exception to
+/// the "trailing segment is the trait name, never the race" rule
+/// (`the_trailing_trait_name_segment_is_never_read_as_the_race`'s own doc
+/// comment, still correct for every OTHER header). ARG's Adopted trait
+/// enumerates one `Adopted Race ~ <RaceName>` record per adoptable race --
+/// declared in the pinned PCGen oracle checkout's own `<race>_abilities_
+/// race.lst` files (e.g. `aasimar_abilities_race.lst:33`), 44 records
+/// corpus-wide per `docs/work-inventory.json`'s `race_trait_race_not_
+/// modelled` population before this fix, `unit.name` equal to the race
+/// name in every one, hand re-derived against the pinned checkout (NOT
+/// this repo's own `data/corpus/` JSON tree, which carries only the
+/// smaller transcribed-and-verified subset -- these 44 stay `not-ingested`
+/// after this fix too; it corrects only the evidence string for the 7
+/// that also name a CRB race). Confirmed the OTHER five headers sharing
+/// this cycle's `race_trait_race_not_modelled` population do NOT share this
+/// shape and must not be added here: `Racial SLA ~ <ability name>`, `Race
+/// Subtype ~ <creature subtype, not a race>`, `Unchained Evolution ~
+/// <evolution name>`, `Favored Class Bonus ~ <bonus type>`, and `Favored
+/// Class Bonus Output ~ <class> ~ <race>` (3-segment, inconsistent arity)
+/// all carry the trait name (or something else entirely) in the trailing
+/// position, exactly the shape the exclusion above still correctly guards.
+const RACE_BEARING_TRAILING_SEGMENT_HEADER: &str = "adopted race";
+
 fn modelled_race_of_race_trait<'a>(
     key: &str,
     race_names: &'a BTreeSet<String>,
 ) -> Option<&'a String> {
     let segments: Vec<&str> = key.split(" ~ ").collect();
+    if let [header, race_segment] = segments.as_slice()
+        && header.trim().to_lowercase() == RACE_BEARING_TRAILING_SEGMENT_HEADER
+        && let Some(found) = race_names.iter().find(|race| {
+            let normalized_segment = race_segment.trim().to_lowercase().replace('-', " ");
+            let race = race.replace('-', " ");
+            normalized_segment
+                .strip_prefix(race.as_str())
+                .is_some_and(|rest| rest.is_empty() || rest.starts_with(' '))
+        })
+    {
+        return Some(found);
+    }
     segments[..segments.len().saturating_sub(1)].iter().find_map(|segment| {
         // Wave 22: hyphen/space are normalized to the SAME separator on
         // both sides before comparison. `race_names`'s two compound race
@@ -10282,6 +10317,50 @@ mod race_trait_grounding_tests {
         let races = modelled_races();
         assert_eq!(modelled_race_of_race_trait("Dwarf", &races), None);
         assert_eq!(modelled_race_of_race_trait("Orc ~ Human", &races), None);
+    }
+
+    /// SD31-W27-RACETRAIT-001: `"Adopted Race ~ <RaceName>"` is the one
+    /// verified exception to the rule immediately above -- ARG's Adopted
+    /// trait names the race in the TRAILING segment, not the leading one
+    /// (44 records corpus-wide, `unit.name` equal to the race name in
+    /// every one, hand re-derived before this fix). A modelled CRB race
+    /// must now be found; corpus-wide this affects only the 7 CRB-race
+    /// `Adopted Race ~ <CRB race>` records (the other 37 name a race
+    /// outside `RaceId::ALL` and still correctly return `None` here, same
+    /// as before this fix -- `probe_race_trait_corpus`'s own race-corpus
+    /// probe is what grounds those, not this CRB-table fallback).
+    #[test]
+    fn adopted_race_names_the_race_in_its_own_trailing_segment() {
+        let races = modelled_races();
+        assert_eq!(
+            modelled_race_of_race_trait("Adopted Race ~ Dwarf", &races).map(String::as_str),
+            Some("dwarf"),
+            "Adopted Race ~ Dwarf names a modelled CRB race in its trailing segment"
+        );
+        assert_eq!(
+            modelled_race_of_race_trait("Adopted Race ~ Half-Elf", &races).map(String::as_str),
+            Some("half-elf"),
+            "the compound-race-name spelling must still match via the same hyphen/space \
+             normalization the leading-segment path already uses"
+        );
+    }
+
+    /// The exception is narrowly scoped to the exact `"Adopted Race"`
+    /// header spelling: a non-CRB race in that trailing position still
+    /// grounds nothing here (`probe_race_trait_corpus`'s own consumer-delta
+    /// observation is what would ground it, not this CRB-table fallback),
+    /// and a DIFFERENT header sharing the "category ~ specific-name" shape
+    /// must NOT be swept in by this fix -- `Racial SLA`, `Race Subtype`,
+    /// `Unchained Evolution`, and `Favored Class Bonus` all carry the trait
+    /// name (or a non-race concept) in the trailing position, exactly the
+    /// coincidence hazard `the_trailing_trait_name_segment_is_never_read_
+    /// as_the_race` exists to prevent.
+    #[test]
+    fn the_adopted_race_exception_does_not_widen_to_a_non_crb_race_or_a_different_header() {
+        let races = modelled_races();
+        assert_eq!(modelled_race_of_race_trait("Adopted Race ~ Aasimar", &races), None);
+        assert_eq!(modelled_race_of_race_trait("Racial SLA ~ Dwarf", &races), None);
+        assert_eq!(modelled_race_of_race_trait("Race Subtype ~ Human", &races), None);
     }
 
     // -----------------------------------------------------------------
