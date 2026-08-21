@@ -1589,3 +1589,60 @@ needed this cycle — a first for this program relative to every wave-15-through
 `scripts/verify-baselines.env` updated for real test-count growth (root-lib 2324→2333, root-full
 7436→7447, both measured, never a shrink; test-binary and desktop counts unchanged). Full account in
 `progress.md`'s wave 27 entry, "Full gate" section.
+
+
+## Board after wave 28 (`SD31-W28-VISIBILITY-001`, 2026-08-21) — THE BOX: corpus-wide visibility census, banks nothing by design
+
+**Wave 28's dispatch was the opposite of every prior integration cycle: dump the box, examine every
+piece, bank zero units.** Six lanes censused every not-done unit corpus-wide (`class` and `race`
+excepted — see below), sized every group, evaluated every proposed tool. Two adversarial-review
+lanes stress-tested every count. Deliverable: `artifacts/THE-BOX.md`.
+
+| Kind | Denominator before | Denominator after | Done before | Done after | Delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 28 (15.1351%) | 28 (15.1351%) | +0 |
+| class_feature | 15,439 | 15,439 | 332 (2.1504%) | 332 (2.1504%) | +0 |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,313 (85.5831%) | 5,313 (85.5831%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 516 (32.6582%) | 516 (32.6582%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 989 (77.8740%) | 989 (77.8740%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,790 (60.8430%) | 1,790 (60.8430%) | +0 |
+| race | 95 | 95 | 35 (36.8421%) | 35 (36.8421%) | +0 |
+| race_trait | 3,504 | 3,504 | 550 (15.6963%) | 550 (15.6963%) | +0 |
+| spell | 2,843 | 2,843 | 1,573 (55.3289%) | 1,573 (55.3289%) | +0 |
+| **TOTAL** | **38,372** | **38,372** | **13,456 (35.0673%)** | **13,456 (35.0673%)** | **+0** |
+
+**Zero movement, confirmed** — `docs/work-inventory.json` md5 `de0dfa8614efdd027316ccf274ad8490`
+identical before the first lane started and after the last commit landed. This is correct, not a
+gap: the wave's entire mandate was to look, not bank.
+
+**The reconciliation this wave's dispatch specifically asked for** (do the piles sum to 24,916 not-
+done units?) found real drift, worked out in full at `THE-BOX.md` §1: 1,212 units double-counted
+between two lanes (the `unmeasurable` census and the `spell-feat-equipment` census both correctly
+include the same unmeasurable subset of 4 kinds — confirmed field-for-field, not a coincidence), and
+295 units examined by no lane at all — `class` (157, carried forward from wave 27, not re-derived),
+`race` (60, **never once named by any lane this wave, a genuine newly-surfaced gap**), and
+`class_feature`'s held+deferred remainder (78). Net: 24,621 of 24,916 (98.8%) examined by at least
+one lane.
+
+**Adversarial review outcome**: zero of six lanes GAMED. Two SOUND as filed (`unmeasurable`; the
+sweeps lane's S8/D5 measurement). Four PARTIAL, each with at least one load-bearing error caught
+before it could misdirect a future wave — most consequentially, a tool recommendation
+(`spell-feat-equipment`'s `equipment_key_is_wired()` widen) filed as "BUILD FIRST" was proven to
+close **zero** units and risk fabricating a computed zero on the records it would touch (Decision
+1a anti-gaming shape), and two premature sweep closures (S9, S2) were reverted before landing in
+`todo/sweeps.md`. Full per-lane verdicts and corrected counts: `THE-BOX.md` §2.
+
+**No operator ruling folded into `decisions.md` this cycle.** Seven new ruling questions filed to
+`blocked.md` (B6–B11, plus a refreshed B1) — full list at `THE-BOX.md` §7 — none blocking this
+cycle's own closure. `todo/sweeps.md`, `levers.md`, `defects.md` all reconciled per §6 of `THE-BOX.md`
+(3 new defects, 1 new lever, 2 sweep closures reverted, 1 sweep newly measured, 2 sweeps corrected
+denominators).
+
+**Full gate: `./scripts/verify.sh -j 8` (the real script).** First run failed `site-dashboard-check`
+(this wave's `todo/*.md`/`progress.md` edits feed the public dashboard's markdown scan, staling the
+committed copy — same as any prior wave's document-only changes would). Fixed by running
+`./scripts/publish-site-dashboard.sh` and committing the regen; `docs/work-inventory.json` confirmed
+byte-identical before and after. Second run: full account in `progress.md`'s wave 28 entry, "Full
+gate" section.
