@@ -34035,3 +34035,242 @@ wave can cherry-pick its sound seam/fixture work per `OPEN-ISSUES.md` row 365's 
 Review-only worktrees (`-72a-6`, `-72a-7`, `-72a-8`, all detached at `83b301881`/`851e45bbc` with
 nothing merge-worthy of their own) removed. `sd31/racetrait4-SD31-E6-F4-005` — untouched, not read,
 not gated, per the standing instruction.
+
+## 2026-08-21 — SD31-W27-INTEGRATE-001: class-chassis census, formula-interpreter's 2nd consumer, race_trait's 5th/6th race (integration cycle)
+
+**Base verified**: `tranche/11` tip `4e775acb0` (a `0b24005bb`-descendant docs commit, not a
+site-publish break — `git merge-base --is-ancestor 0b24005bb HEAD` confirmed clean); two pre-existing
+uncommitted local changes (an automated `reclaim.sh` retro event, a completed governance survey draft)
+found in the tree at session start, committed as-is (`17c8149bb`) before any lane merge, neither
+wave-27 work.
+
+### The wave brief's three required questions, answered first
+
+**(a) How many of the 157 not-done classes were Monk-shaped — table already present, only the
+dispatch mapping missing?** **Zero.** Independently re-derived from `docs/work-inventory.json`
+(`kind=='class'`, `status!='grounded'`, 157 rows) cross-checked against every `ClassId`-family enum
+in `rules_tables/`: `table_class_id`/`compute_class_chassis`/`has_supported_class_chassis` already
+dispatch all 34 classes that have a real chassis table anywhere in the codebase (CRB 11, APG 6, ACG
+10, Pathfinder Unchained 4, Ultimate Combat 3). The Monk precedent (`class_tables()` already carried
+a corpus-backed row, only the string mapping was missing) closed at a prior wave and the pattern is
+now fully exhausted — confirmed independently by three separate parties this wave (two lanes, one
+adversarial review) with zero disagreement. This is the single most useful planning number the wave
+asked for: **the remaining 157 classes need real construction work, not cheap dispatch wiring.**
+
+**(b) How many classes are now buildable, and how many class_feature units followed?** **Zero classes
+made buildable.** Both class-scoped lanes' diffs are comment-only (0 non-comment lines between them);
+neither `table_class_id`, `class_tables.rs`, nor any `ClassId`-family enum was touched. `class_feature`
+gained **+2** (Ranger ~ Master Hunter, Rogue ~ Master Strike) — but both ride on classes that were
+ALREADY buildable (Ranger/Rogue are pre-existing CRB dispatches); zero class_feature units followed
+from any new class becoming buildable, because none did.
+
+**(c) Of the classes still unbuildable, what shapes are they and what would each cost?** Six shapes,
+re-derived this cycle from `docs/work-inventory.json` grouped by `type_facet`/book (157 total):
+* **77 prestige classes** (CRB 10 + Advanced Players Guide + Ultimate Psionics 19) need an
+  entry-requirement gating mechanism that does not exist anywhere in `CharacterInput` — no class,
+  base or prestige, has a BAB/feat/skill entry gate today. Cost: new evaluator + input-schema work,
+  not a table.
+* **6 of the CRB 10 prestige classes** (Arcane Archer, Arcane Trickster, Dragon Disciple, Eldritch
+  Knight, Loremaster, Mystic Theurge — corrected this cycle from a lane finding that had 2 of these
+  backwards, see below) ALSO need a caster-level-stacking mechanism (advancing an EXISTING class's
+  spell progression from prestige levels) that does not exist at all: `CharacterClassLevel` is a flat
+  `{class_id, level}` with no cross-class link field. Cost: real spellcasting-evaluator surgery, on
+  top of the entry-requirement gate above.
+* **22 real base classes** (Antipaladin; Magus, Vigilante, Shifter — 3 more this cycle's own
+  adversarial review found the census lane had omitted; 6 Occult Adventures classes; 10 Ultimate
+  Psionics base classes) have zero chassis table anywhere. Cost: net-new table construction, one
+  class at a time, following the existing `ClassMeta`/`ClassTableRow` shape.
+* **5 CRB NPC classes** (Adept, Aristocrat, Commoner, Expert, Warrior) are real, untabled, and — per
+  TWO independent adversarial reviews this wave — the **cheapest remaining `class`-kind throughput in
+  the program**: the pinned oracle already carries their complete BAB/three-save progressions in the
+  exact `classlevel()`-arithmetic shape the wave-25 interpreter reads, no entry gate, no spellcasting,
+  architecturally identical to the ~30-line Gunslinger row wave 20 already shipped. Cost: table
+  transcription only, no new mechanism (`OPEN-ISSUES.md` row 373).
+* **48 units are not player-selectable base classes at all** (33 Monster creature-type HD
+  progressions, 7 Monster.Companion incl. Eidolon/Homunculus/Astral Warrior/Horror, 3 Psionic
+  power-list menus, 3 untyped edge records, 2 Vigilante-identity Support records). **Eidolon
+  specifically**: it is a Summoner class FEATURE (a bonded creature the Summoner's own class already
+  grants and computes through), not a class a character selects and levels independently — its
+  presence in the `class`-kind population at all is a `class` vs `class_feature` kind-classification
+  question, not a chassis gap. Cost, if the operator rules these belong under a different kind or
+  should be excluded: zero engineering, a reclassification. Declined to propose cutting the
+  denominator over this unilaterally (`OPEN-ISSUES.md` row 372) — kept in as not-done.
+* **28 are in books with no compiled rule set at all** (`adventurers_guide` 25, `inner_sea_magic` 3).
+  Cost: from-scratch book ingest, out of any wiring lane's scope by construction.
+* **2 (Ninja, Samurai)** already have complete, correctly-dispatched chassis (proven: 4/4
+  `ultimate_combat_chassis_gate_tests` green) and are blocked only by one missing weapon-proficiency
+  table row in `weapon_tables.rs` — outside every wave-27 lane's granted file scope, but the cheapest
+  possible 2-unit yield in the program once that file is in scope.
+
+### Merge decisions
+
+Five lanes dispatched; four had code changes, all four survived adversarial review as SOUND or
+PARTIAL (none GAMED, nothing withheld from the merge). Corrected figures banked where a reviewer
+returned one, with one documented exception (below).
+
+| Lane | Verdict | Claimed | Banked | Merge commit |
+|---|---|---|---|---|
+| W27-class-chassis (census) | SOUND | 0 | 0 | `a6f7056c5` |
+| class_feature | PARTIAL | 2 | 2 | `52f9861cf` |
+| prestige-class shape (CRB) | PARTIAL | 0 | 0 | `a36c743ed` (corrected `7f2b0d4fd`) |
+| race_trait | PARTIAL | 10 | 10 (reviewer suggested 9, see below) | `117ebec28` (fixed `b49054eb9`) |
+| monster_ability/spell/equipment/equipment_modifier | SOUND | 0 | 0 | not merged — 0-diff investigation, findings folded into this receipt directly |
+
+**Built the merged tree before gating**, per the standing instruction that two lanes both touch
+chassis-adjacent code near `table_class_id`: `cargo build --locked --lib -j 8` clean after all four
+merges, one warning (pre-existing, unrelated `EMPOWER_SPELL_METAMAGIC_SELECTION` dead-code lint).
+
+**Spot-checked the class chassis this wave's work touches** (Ranger, Rogue — the only two classes
+`class_feature`'s +2 rides on) directly against the pinned oracle's `CLASS:` lines, not against either
+lane's own claim: Ranger (`cr_classes.lst:206`) full BAB, Fort+Ref good/Will poor, d10 — matches
+`class_tables.rs:124` exactly. Rogue (`:237`) 3/4 BAB, Ref good/Fort+Will poor, d8 — matches
+`class_tables.rs:125` exactly. No dispatches-but-computes-wrong defect in the touched roster.
+
+### Confirmed findings fixed this cycle
+
+1. **Prestige-class stacking/non-stacking split had 2 of 10 backwards** (`7f2b0d4fd`). Arcane Archer
+   was filed as non-stacking; it carries `ADD:SPELLCASTER|Arcane` at 7 of its 10 levels
+   (`cr_classes.lst:334-340`). Pathfinder Chronicler was filed as needing the stacking mechanism; it
+   has zero spellcasting anywhere in its block (`cr_classes.lst:467-485`). Root cause: the original
+   probe scanned `data/corpus/core_rulebook/class_feature/<class>/` for a spell-shaped record, blind
+   to advancement encoded as `ADD:SPELLCASTER` directly on the `CLASS:` line. Corrected in both the
+   in-code comment (immediately after `table_class_id`) and the retro deferral event (append-only
+   correction row).
+2. **Nagaji Hypnotic Gaze was computed unconditionally for every nagaji, alongside Serpent's Sense,
+   the trait it is supposed to replace** (`b49054eb9`). `nagaji_hypnotic_gaze.json` is
+   `is_racial_default: false`, gated on `Nagaji_ReplaceSerpentsSense` (already registered in
+   `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS`). Fixed by gating both records on
+   `replaced_by_alternate_trait`, mirroring `explain_gillman_flat_override_race_trait`/
+   `explain_vanara_flat_override_race_trait`'s existing pattern exactly. The lane's own test built the
+   exact input that should have caught this (no alternates selected) and asserted the bug's behavior
+   instead — replaced with two tests, one per branch, both green.
+3. **Nagaji Armored Scales' doc comment falsely claimed no natural-armor consumer exists anywhere in
+   the codebase** (same commit). `FeatDerivedPillarContributions::natural_armor_bonus` is real,
+   already summed into both the AC total and touch-AC exclusion, and already accepts three other
+   sources (Alchemist Mutagen, Sorcerer Draconic Bloodline, ARG Armor of the Pit). The record is not
+   yet wired into it (a genuine, disclosed follow-on) — the doc comment now says so honestly instead
+   of claiming a gap that isn't there. The `+1` unit's own credit was not withdrawn; only the
+   characterization was wrong, not the value.
+
+**One reviewer-suggested correction NOT applied, disclosed rather than silently overridden**
+(`OPEN-ISSUES.md` row 380): adversarial review `wf_69b5938a-634-8` suggested withdrawing race_trait's
+credit from 10 to 9 (Nagaji Hypnotic Gaze). The correctness bug WAS fixed (finding 2 above). But
+`probe_race_trait_corpus`'s `is_seamed` gate is race-level, not record-level, by design (row 365's own
+point) — it does not observe whether a given record's seam function emits a value for a default
+no-alternates character. Re-running the real regen after the fix confirms Hypnotic Gaze is STILL
+credited `grounded` (mutation-proven: reverting the seam's race list reverts exactly the same 10
+units, this record included, and nothing else). Singling out Hypnotic Gaze for a one-off carve-out was
+rejected as inconsistent: `advanced_race_guide:race_trait:gillman_throwback` and
+`.../vanara_tree_stranger`/`tree_stranger_vanara_speed` are the IDENTICAL shape (an alternate-trait
+record only actually computed by its seam function when selected) and have been credited `grounded`
+under this same coarse gate since wave 25b with no prior review flagging it. The board reports the
+real, reproducible +10, not a hand-patched +9.
+
+### Guarded regen — measured, not asserted
+
+Fresh isolated `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w27-integrate` (deleted after use), plus a
+SEPARATE from-scratch baseline regen at `0b24005bb` in its own `git worktree` (`/tmp/w27-baseline-check`,
+`CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w27-baseline`, also deleted) — done specifically to rule
+out staleness in the committed pre-wave `docs/work-inventory.json`, not just diffed the file. The
+from-scratch baseline reproduced the committed file's `totals.units` exactly (38,391) and, replayed
+through `pf1e_dashboard_producer.work_inventory_panel()`'s own `mandate_headline`, gave `{'done':
+13444, 'denominator': 38372}` — an exact match to the wave brief's stated before-state.
+
+```
+cargo run --locked --bin corpus_literal_sweep -- --json-out $S/sweep.json
+  -> CLEAN, 26500/26934 examined, 255531 tokens compared, 0 findings
+cargo run --locked --bin derived_evaluator_fixture_check -- --json-out $S/fixture.json
+  -> 1836 unit(s) cleared over 2577 fixture row(s); 0 failed; 0 not ingested
+  (baseline: 1833/2574 — exactly +3, the class_feature lane's 2 banked + 1 stranded-but-fixture-clean
+  Arcane Archer record)
+CORPUS_LITERAL_SWEEP_REPORT=$S/sweep.json DERIVED_FIXTURE_CHECK_REPORT=$S/fixture.json \
+  cargo run --locked --bin v06_work_inventory
+```
+
+Diffed every unit's `(status, wiring_class)` pair, baseline vs after, across all 38,391 raw units:
+**exactly 12 changed, nothing else moved.** Replayed via `pf1e_dashboard_producer.doneness_verdict()`
+per unit (not a crude status-string heuristic — `derived`+`grounded` is `held`, not `done`; only
+`derived`+`fixture-verified` clears the bar):
+
+| kind | before | after | delta |
+|---|---|---|---|
+| class | 28/185 | 28/185 | +0 |
+| class_feature | 330/15,439 | 332/15,439 | **+2** |
+| race_trait | 540/3,504 | 550/3,504 | **+10** |
+| all other kinds | — | — | +0 |
+| **TOTAL** | **13,444/38,372 (35.0360%)** | **13,456/38,372 (35.0673%)** | **+12** |
+
+**Denominator did not move** (38,372 both before and after — confirmed the raw `totals.units` value
+of 38,391 the file itself carries is NOT the denominator; `_mandate_headline` subtracts
+`EXCLUDED_BOOKS`' `beginner_box` (19 units): 38,391 − 19 = 38,372 exactly, a real relationship not a
+discrepancy — `OPEN-ISSUES.md` row 379 documents this for future reviews that read it as a mismatch).
+
+**Mutation-proven** (Decision 1a): temporarily reverted `FLAT_OVERRIDE_RACE_TRAIT_RACES` to its
+pre-wave-27 3-race set, rebuilt, re-ran `v06_work_inventory` against the SAME sweep/fixture reports —
+board reverted to 13,446 (−10), touching exactly the 10 Samsaran/Nagaji units and nothing else.
+Restored the real fix, re-ran once more, confirmed the board returns to 13,456 exactly. `class_feature`
+was not separately mutation-proven this cycle (the merged lane's own mutation proof — reverting the
+ability-modifier seed to an empty map, exactly 3 fixtures go red — was independently reproduced by
+adversarial review `wf_69b5938a-634-7` and re-confirmed by this cycle's own fixture-count delta above).
+
+Public feeds regenerated: `./scripts/publish-site-dashboard.sh`, then `--check` confirms current.
+`core_essentials` confirmed absent (0 books, 0 units) from both `site/status-data.json`'s book list
+and `site/status-data/`. Only the touched books' shards changed (`advanced_race_guide`, `bestiary_4`,
+`core_rulebook`).
+
+### Full gate — `./scripts/verify.sh -j 8` (isolated `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w27-integrate`)
+
+**34/34 PASS on the FIRST run — no fixes needed this cycle**, a first for this program's wave-27-and-
+earlier history (every prior wave's receipt on record needed at least one gate-run fix).
+
+```
+passed:  34  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+              pi-redaction-selftest provenance-selftest site-dashboard-selftest
+              site-dashboard-check site-dashboard-pi-gate build-public-status-selftest
+              site-public-status-check site-public-status-pi-gate site-asset-stamp-check
+              reachability-audit-selftest reachability-audit groundtruth-guard-selftest
+              supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest
+              reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full
+              desktop reach corpus-sweep supersession-gate frontend-install frontend-test
+              frontend-typecheck clippy class-dump
+RESULT: PASS
+```
+
+Headline stage results:
+
+- **`root-lib`**: 2333 passed, 0 failed (baseline was 2324; +9, all new tests, `verify-baselines.env`
+  updated).
+- **`root-full`**: 7447 passed across 579 suites, all 540 `tests/*.rs` suites executed, 0 failed.
+- **`desktop`** (`apps/desktop/src-tauri`, tested EXPLICITLY as its own gate stage per the standing
+  instruction): 496 passed, 0 failed — unchanged from baseline, no desktop-side code touched this wave.
+- **`reach`**: 30 passed.
+- **`corpus-sweep`**: 26500 records examined of 26934 read, 255531 tokens compared, 0 findings.
+- **`supersession-gate`**: 116 objects, all clean.
+- **`frontend-test`**: 100/100 files. **`frontend-typecheck`**: `tsc --noEmit` clean.
+- **`clippy`**: root:50, desktop:7 warnings, 0 errors (both exactly at ceiling, unchanged).
+- **`class-dump`**: 31/31 computing — note this instrument's roster is narrower than the real
+  doneness gate and does not include Gunslinger/Ninja/Samurai at all (`OPEN-ISSUES.md` row 374); its
+  green result does not contradict Ninja/Samurai's real `Blocked` status.
+- **`site-dashboard-check`** / **`site-public-status-check`**: both "is current".
+- **`core_essentials`**: confirmed absent (0 units) in both the raw inventory and the public feed.
+
+**Gate verdict: GREEN, the real `./scripts/verify.sh`, 34/34, zero failures, zero stages skipped.**
+
+### Architecture docs refreshed
+
+`docs/architecture/status.md` gained a wave-27 "Corpus coverage" section (the census answer, the
+corrected prestige-class split, the +12's real composition, three architectural findings). `rules-
+engine.md` gained a §3c documenting the interpreter's second consumer (ability modifiers) and the
+race_trait seam's growth to 5 races, per this program's living-architecture-docs convention (every SD
+closure/wave refreshes `docs/architecture/` before it is reflected anywhere else).
+
+### Cleanup
+
+Scratch `CARGO_TARGET_DIR`s deleted at cycle close: `w27-integrate`, `w27-baseline` (819MB / 39GB
+freed). All 8 wave-27 worktrees (`.claude/worktrees/wf_69b5938a-634-1` through `-8`, four merged lanes
++ one 0-diff investigation + three adversarial-review worktrees) and their branches removed — all were
+either merged or contributed a 0-diff finding folded into this receipt directly. The scratch baseline
+worktree (`/tmp/w27-baseline-check`) removed. `worktree-wf_be4660f2-72a-3` (wave 26's GAMED race_trait
+branch) left in place per the standing note — still a future wave's cherry-pick target, not this
+wave's to resolve. `sd31/racetrait4-SD31-E6-F4-005` — untouched, not read, not gated, per the standing
+instruction.

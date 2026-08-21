@@ -1533,3 +1533,59 @@ closure.
 `clippy` on one pre-existing, wave-26-unrelated lint (`tests/sd24_equipment_coverage_audit.rs:71`,
 untouched by any lane); fixed, `scripts/verify-baselines.env` updated for real test-count growth
 (never a shrink). Full account in `progress.md`'s wave 26 entry, "Full gate" section.
+
+
+## Board after wave 27 (`SD31-W27-INTEGRATE-001`, 2026-08-21) — class-chassis census answers "zero Monk-shaped"; formula interpreter's 2nd consumer; race_trait's 5th/6th race
+
+**Wave 27's dispatch reframed the wall as "features for characters that cannot exist" and asked how
+many of the 157 not-done `class` units are Monk-shaped. Answer: zero — the pattern was fully exhausted
+before this wave started. Zero classes were made buildable. Both units of real movement (+2
+`class_feature`, +10 `race_trait`) ride on chassis/races that already existed.** See `progress.md`'s
+wave 27 entry (top of receipt) for the wave brief's full three-question answer, including the 6-shape
+breakdown of where the remaining 157 classes actually sit and per-shape cost estimates.
+
+| Kind | Denominator before | Denominator after | Done before | Done after | Delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 28 (15.1351%) | 28 (15.1351%) | +0 |
+| class_feature | 15,439 | 15,439 | 330 (2.1374%) | **332 (2.1504%)** | **+2** |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,313 (85.5831%) | 5,313 (85.5831%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 516 (32.6582%) | 516 (32.6582%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 989 (77.8740%) | 989 (77.8740%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,790 (60.8430%) | 1,790 (60.8430%) | +0 |
+| race | 95 | 95 | 35 (36.8421%) | 35 (36.8421%) | +0 |
+| race_trait | 3,504 | 3,504 | 540 (15.4110%) | **550 (15.6963%)** | **+10** |
+| spell | 2,843 | 2,843 | 1,573 (55.3289%) | 1,573 (55.3289%) | +0 |
+| **TOTAL** | **38,372** | **38,372** | **13,444 (35.0360%)** | **13,456 (35.0673%)** | **+12** |
+
+**The +12 traces to exactly 12 units**, confirmed by a full before/after diff of every unit's
+`(status, wiring_class)` pair — reproduced against a FROM-SCRATCH baseline regen at `0b24005bb` in a
+separate worktree (not just a diff of the committed pre-wave file, to rule out staleness). `class_feature`
++2: Ranger ~ Master Hunter, Rogue ~ Master Strike (both `derived`+`fixture-verified`, riding on
+pre-existing Ranger/Rogue chassis — no new class dispatch). `race_trait` +10: Samsaran (4/4 records)
+and Nagaji (6/6 records), full per-record coverage — directly answering wave 26's Undine GAMED finding
+(row 365's partial-coverage shape). Mutation-proven: reverting `FLAT_OVERRIDE_RACE_TRAIT_RACES` to its
+pre-wave-27 3-race set reverts the board to 13,446 exactly (−10, same 10 units, nothing else).
+
+**One real correctness bug found and fixed during integration, not before**: Nagaji Hypnotic Gaze was
+computed unconditionally alongside Serpent's Sense (the trait it is supposed to replace as a PCGen
+alternate). Fixed by gating both on `replaced_by_alternate_trait`, the same pattern Gillman/Vanara
+already use (`b49054eb9`). The board still banks the full +10, not the adversarial review's suggested
++9 — the credit mechanism is race-level, not record-level, and singling out Hypnotic Gaze while two
+structurally identical, already-shipped Gillman/Vanara records go unchallenged would be inconsistent
+rather than principled. Full account: `OPEN-ISSUES.md` row 380. A second, comment-only lane finding
+(the CRB prestige-class stacking/non-stacking split had 2 of 10 backwards) was also corrected in-code
+this cycle (`7f2b0d4fd`) before it could become a future wave's false premise.
+
+**No operator ruling folded into `decisions.md` this cycle.** 10 new `NOTE`/clarification rows logged
+to `OPEN-ISSUES.md` (371-380) — a cheap-win opportunity for a future wave (5 CRB NPC classes, row
+373), a cross-cutting instrument blind spot (`v06_class_state_dump`, row 374), the class_feature
+lane's repeat of wave 26's row-366 shape (row 375), and the race_trait credit-mechanism disclosure
+(row 380) among them — none blocking this cycle's own closure.
+
+**Full gate: `./scripts/verify.sh -j 8` (the real script) — 34/34 PASS on the FIRST run.** No fixes
+needed this cycle — a first for this program relative to every wave-15-through-26 receipt on record.
+`scripts/verify-baselines.env` updated for real test-count growth (root-lib 2324→2333, root-full
+7436→7447, both measured, never a shrink; test-binary and desktop counts unchanged). Full account in
+`progress.md`'s wave 27 entry, "Full gate" section.
