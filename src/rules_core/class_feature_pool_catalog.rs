@@ -112,6 +112,34 @@ pub const REGISTERED_POOL_GROUPS: &[&str] = &["Rogue Talent", "Rage Power"];
 const ENGINE_EFFECT_TOKEN_KEYS: &[&str] =
     &["ABILITY", "CSKILL", "SELECT", "AUTO", "SAB", "BONUS", "DEFINE", "ADD", "SPELLS", "DR", "SR"];
 
+/// SD31-W29-INTEGRATE (Ruling §18, `OPERATOR-RULINGS-2026-08-21.md`):
+/// *"we need to show only valid choices."* A PCGen `PRE*` token (
+/// `PREABILITY`, `PREVARGTEQ`, `PREMULT`, `PRESKILL`, `PRELEVEL`,
+/// `PREFACT`, `PRECLASS`, `PREFEAT`, ...) is a prerequisite gate: the
+/// option is not available to every character of the pool's owning class,
+/// only to the subset who satisfies it (an archetype, a minimum level, a
+/// skill rank, ...). This catalog has no character to check a prerequisite
+/// against -- it is a book-wide reference walk, not a per-character
+/// query -- so it cannot tell a qualifying character from a disqualified
+/// one. Wave 29's adversarial review found 126 already-registered records
+/// (both Rogue Talent and Rage Power) carry a `PRE*` token and are served
+/// wholesale regardless, which is exactly the "listing a pool wholesale"
+/// shape Ruling §18 forbids ("the next pool-touching cycle must confirm
+/// the shipped catalog honours that rather than listing a pool wholesale.
+/// That check has not been done" -- it has now). Refusing here is the
+/// doctrinal fix: an option this catalog cannot prove is a VALID choice is
+/// not served, full stop, same posture as [`has_no_engine_effect_token`]
+/// refusing a record with a live mechanical token this catalog cannot
+/// safely narrate. A future cycle that wants these records back needs
+/// real per-character prerequisite evaluation in the picker itself
+/// (`class_feature_pool_picker.rs`), not a wider catalog.
+fn has_no_prerequisite_token(raw_tokens: &Value) -> bool {
+    let Some(tokens) = raw_tokens.as_array() else { return true };
+    !tokens.iter().any(|t| {
+        t.get("key").and_then(|k| k.as_str()).is_some_and(|k| k.starts_with("PRE"))
+    })
+}
+
 /// `true` when `raw_tokens` carries no [`ENGINE_EFFECT_TOKEN_KEYS`] entry --
 /// i.e. the record is genuinely prose-only, not merely prose-renders-clean.
 fn has_no_engine_effect_token(raw_tokens: &Value) -> bool {
@@ -338,6 +366,9 @@ pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
                 continue;
             }
             if !has_no_engine_effect_token(&data["raw_tokens"]) {
+                continue;
+            }
+            if !has_no_prerequisite_token(&data["raw_tokens"]) {
                 continue;
             }
             if raw_tokens_carry_more_than_one_desc_segment(&data["raw_tokens"]) {
@@ -665,6 +696,37 @@ mod tests {
         assert!(!has_no_engine_effect_token(&with_ability));
         let with_select = serde_json::json!([{"key": "SELECT", "value": "3+INT"}]);
         assert!(!has_no_engine_effect_token(&with_select));
+    }
+
+    // SD31-W29-INTEGRATE (Ruling §18): a pool option gated by a prerequisite
+    // the catalog cannot evaluate must not be served wholesale.
+    #[test]
+    fn has_no_prerequisite_token_refuses_any_pre_star_key_but_allows_a_plain_desc_only_record() {
+        let clean = serde_json::json!([{"key": "KEY", "value": "x"}, {"key": "DESC", "value": "x"}]);
+        assert!(has_no_prerequisite_token(&clean));
+        for pre_key in ["PREABILITY", "PREVARGTEQ", "PREMULT", "PRESKILL", "PRELEVEL", "PREFACT"] {
+            let gated = serde_json::json!([{"key": pre_key, "value": "1,whatever"}]);
+            assert!(
+                !has_no_prerequisite_token(&gated),
+                "{pre_key} must be recognised as a prerequisite gate"
+            );
+        }
+    }
+
+    #[test]
+    fn an_archetype_gated_rage_power_is_refused_by_the_live_catalog() {
+        // Real oracle rows (`adventurers_guide`): each carries
+        // `PREABILITY = 1,CATEGORY=Archetype,Barbarian Archetype ~ Giant
+        // Stalker` (or the sibling archetype), so none of these three may
+        // be served wholesale to every barbarian -- wave 29 adversarial
+        // review, CONFIRMED finding.
+        let entries = load_pool_catalog(&repo_root());
+        for withdrawn_key in ["giant_stalker_defense", "topple_giant", "underfoot"] {
+            assert!(
+                !entries.iter().any(|e| e.book == "adventurers_guide" && e.key == withdrawn_key),
+                "{withdrawn_key} carries an archetype prerequisite and must not reach the catalog"
+            );
+        }
     }
 
     #[test]

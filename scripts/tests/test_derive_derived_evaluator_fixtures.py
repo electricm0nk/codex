@@ -234,5 +234,93 @@ class SandboxReproductionTests(unittest.TestCase):
         self.assertEqual(before, after_test, "this test must never mutate the real committed fixture")
 
 
+class HeldStatusesRegressionTests(unittest.TestCase):
+    """SD31-W29-INTEGRATE (adversarial-review CONFIRMED finding): the
+    `shrunk_families` gate is completely BLIND to a `HELD_STATUSES`
+    regression, because the carry-forward merge in `main()` silently
+    backfills a fully-empty fresh-derivation with the previously-committed
+    rows -- `entries` never shrinks even though the generator has stopped
+    doing its job. Reverting `HELD_STATUSES` to its pre-fix 3-status tuple
+    (with the rest of today's fix -- preserve-by-exclusion, carry-forward
+    merge -- intact) leaves every OTHER test in this file green and the
+    written fixture byte-identical to committed. This class proves the
+    dedicated guards added for exactly that gap actually catch it: a
+    module-level `assert` fires before `main()` even runs."""
+
+    def test_reverting_fixture_verified_out_of_held_statuses_is_caught(self):
+        with open(SCRIPT, encoding="utf-8") as fh:
+            fixed_text = fh.read()
+        needle = (
+            'HELD_STATUSES = (\n'
+            '    "ingested-magnitude", "grounded", "text-complete", "fixture-verified",\n'
+            ')'
+        )
+        self.assertIn(
+            needle, fixed_text,
+            "generator's HELD_STATUSES tuple text has moved -- update this "
+            "mutation test's needle to match",
+        )
+        mutated_text = fixed_text.replace(
+            needle,
+            'HELD_STATUSES = (\n    "ingested-magnitude", "grounded", "text-complete",\n)',
+        )
+        self.assertNotEqual(mutated_text, fixed_text)
+
+        with open(FIXTURE, encoding="utf-8") as fh:
+            before = json.load(fh)
+
+        rc, out, err, after = _run_generator_in_sandbox(mutated_text)
+        self.assertNotEqual(
+            rc, 0,
+            f"a HELD_STATUSES regression must be refused, not silently "
+            f"written:\nstdout:\n{out}",
+        )
+        self.assertIn(
+            "fixture-verified must stay in HELD_STATUSES", err,
+            f"expected the module-level assert to fire; got:\nstdout:\n{out}\nstderr:\n{err}",
+        )
+        # The sandbox fixture was seeded from the real committed one before
+        # the script ran and errored out before writing -- it must still
+        # equal exactly what was seeded, proving nothing was written.
+        self.assertEqual(after, before)
+
+    def test_a_generator_that_somehow_bypassed_the_module_assert_is_still_caught_in_main(self):
+        """Belt-and-suspenders: even if a future edit removed the
+        module-level `assert` but the underlying live selection still
+        produced zero fresh `entries`, `main()`'s own
+        `existing_by_id and not fresh_by_id` guard must independently
+        refuse the write. Proven by neutralising ONLY the module-level
+        assert (turning it into a no-op) while keeping the 3-status tuple,
+        so `held_derived` still resolves to nothing derivable."""
+        with open(SCRIPT, encoding="utf-8") as fh:
+            fixed_text = fh.read()
+        needle = (
+            'HELD_STATUSES = (\n'
+            '    "ingested-magnitude", "grounded", "text-complete", "fixture-verified",\n'
+            ')\n'
+            'assert "fixture-verified" in HELD_STATUSES, (\n'
+            '    "fixture-verified must stay in HELD_STATUSES -- its absence is silently "\n'
+            '    "masked by the carry-forward merge in main() and caught by nothing else "\n'
+            '    "(todo/defects.md D7, todo/sweeps.md S6)"\n'
+            ')'
+        )
+        self.assertIn(needle, fixed_text, "text has moved -- update this test's needle")
+        mutated_text = fixed_text.replace(
+            needle,
+            'HELD_STATUSES = (\n    "ingested-magnitude", "grounded", "text-complete",\n)',
+        )
+        self.assertNotEqual(mutated_text, fixed_text)
+
+        with open(FIXTURE, encoding="utf-8") as fh:
+            before = json.load(fh)
+
+        rc, out, err, after = _run_generator_in_sandbox(mutated_text)
+        self.assertNotEqual(rc, 0, f"main()'s own guard must also refuse:\nstdout:\n{out}")
+        self.assertIn(
+            "FATAL: this run derived ZERO fresh", out + err, f"stdout:\n{out}\nstderr:\n{err}"
+        )
+        self.assertEqual(after, before)
+
+
 if __name__ == "__main__":
     unittest.main()

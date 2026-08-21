@@ -105,30 +105,60 @@ SCALARS_SUBSTRING = ("CASTERLEVEL", "CLASSLEVEL", "TOTALLEVELS", "TOTALLEVEL",
                      "PLUSTOTAL", "SPELLLEVEL")
 SCALARS_WORD = ("BAB", "HD", "STR", "DEX", "CON", "INT", "WIS", "CHA", "TL",
                 "CL", "RACESIZE")
-# SD31-W29-LANE1: the committed fixture's own 94 `entries` reproducibly drop
-# to 0 on a fresh run from the committed state, because this tuple omitted
-# BOTH `fixture-verified` (the stamp `apply_done_rung_stamps()`,
-# `src/bin/v06_work_inventory.rs`, writes onto a unit once THIS fixture
-# already verified it -- so a `derived`/`equipment` unit this generator
-# covered on a prior run is invisible to the very next run) and
-# `literal-verified` (the sibling done-rung stamp `corpus_literal_sweep`
-# writes for `static` units, which a `derived` unit never carries but which
-# 83 of the 94 committed `entries` -- units whose `wiring_class` was
-# subsequently corrected on a later inventory rebuild while keeping their
-# stamp -- carry today). Per `scripts/observer/pf1e_dashboard_producer.py`'s
-# `doneness_verdict` (the canonical status taxonomy), BOTH stamps mean
-# `DONENESS_DONE` for a `static`/`derived` unit -- they are the two most
-# CERTAIN statuses this generator could see, not edge cases to omit. Fixed
-# 2026-08-21 (Wave 29 Lane 1); reproduced by running this script ONCE from
-# the committed state (the destruction is complete on the very first run --
-# a SECOND run then diffs clean against the first, which is exactly why a
-# twice-run-diff test cannot catch this class of bug).
-# `scripts/tests/test_derive_derived_evaluator_fixtures.py` now pins this as
-# a run-once-vs-committed regression instead; see that file's module
-# docstring for the full twice-run-diff-is-blind argument.
+# SD31-W29-LANE1 (corrected by wave 29 INTEGRATION after adversarial
+# review -- see `todo/defects.md` D7 and `todo/sweeps.md` S6 for the full
+# correction record): the committed fixture's own 94 `entries` reproducibly
+# drop to 0 on a fresh run from the committed state. The dominant cause was
+# the write step rebuilding the whole document from scratch and only
+# preserving a hardcoded `"monster_"` prefix (fixed below, in `main()`,
+# by preserving every key BY EXCLUSION instead) -- that alone accounts for
+# all 2,110 lost rows across all 8 families, INCLUDING every one of this
+# family's own 94 `entries` (83 of which are carried forward rather than
+# freshly re-derived; see `main()`'s carry-forward-merge comment for why).
+#
+# `fixture-verified` (the stamp `apply_done_rung_stamps()`,
+# `src/bin/v06_work_inventory.rs`, writes onto a `derived` unit once THIS
+# fixture already verified it) being missing from this tuple is a SEPARATE,
+# real, independently-necessary bug: without it, a `derived` unit newly
+# verified since the fixture was last regenerated stays permanently
+# invisible to this generator, one that the carry-forward merge alone
+# cannot mask forever (a unit dropped from the LIVE selection because its
+# own status is never recognised is never carried forward either, since
+# carry-forward only preserves rows the PREVIOUS run already wrote). Fixed
+# by adding it back.
+#
+# `literal-verified` was ALSO added here by the original lane 1 fix, on the
+# (wrong) theory that it restored the 83 reclassified-to-`static` `entries`
+# rows. It cannot: `apply_done_rung_stamps()` stamps `literal-verified`
+# ONLY inside its `WiringClass::Static` arm, and this generator's own
+# selection below is gated on `wiring_class == "derived"` -- a
+# `derived`+`literal-verified` unit is therefore structurally impossible
+# (confirmed directly against the live inventory: 0 such units exist), so
+# `literal-verified` in this tuple was unreachable dead configuration.
+# Removed.
+#
+# Reproduced by running this script ONCE from the committed state (the
+# destruction is complete on the very first run -- a SECOND run then diffs
+# clean against the first, which is exactly why a twice-run-diff test
+# cannot catch this class of bug).
+# `scripts/tests/test_derive_derived_evaluator_fixtures.py` pins this as a
+# run-once-vs-committed regression instead; see that file's module
+# docstring for the full twice-run-diff-is-blind argument. It also pins
+# (`at_least_one_entry_is_freshly_derived_this_run_not_merely_carried_
+# forward`) that `fixture-verified` specifically stays in this tuple: the
+# carry-forward merge in `main()` makes a REGRESSION here invisible to
+# every other test in this file (reverting to the original 3-status tuple
+# leaves the committed fixture byte-identical AND every other test green,
+# because the generator derives zero fresh rows and the merge silently
+# absorbs that) -- so this is the one guard load-bearing enough that it is
+# also asserted directly, immediately below.
 HELD_STATUSES = (
-    "ingested-magnitude", "grounded", "text-complete",
-    "literal-verified", "fixture-verified",
+    "ingested-magnitude", "grounded", "text-complete", "fixture-verified",
+)
+assert "fixture-verified" in HELD_STATUSES, (
+    "fixture-verified must stay in HELD_STATUSES -- its absence is silently "
+    "masked by the carry-forward merge in main() and caught by nothing else "
+    "(todo/defects.md D7, todo/sweeps.md S6)"
 )
 
 # The engine reads its equipment records from `data/corpus/<book>/equipment/`.
@@ -408,7 +438,12 @@ def main():
     # `static` done-rung stamp, `literal-verified`, from the entirely
     # independent `corpus_literal_sweep` -- confirmed by joining every
     # `entries` unit_id against `docs/work-inventory.json`:
-    # 83 static/literal-verified + 11 derived/fixture-verified = 94 exactly).
+    # 83 static + 11 derived/fixture-verified = 94 exactly -- the 83 carry
+    # their OWN independent `literal-verified` stamp from `corpus_literal_
+    # sweep`, but that stamp plays no role in THIS generator selecting or
+    # preserving them; they survive purely because this merge carries
+    # forward any `entries` row the live `derived`-only selection no
+    # longer covers, regardless of what status the unit now carries).
     # An abort-on-shrink guard would therefore refuse to ever run again,
     # permanently, for a condition outside this script's control -- worse
     # than the bug it replaces. Merging instead keeps every previously
@@ -433,6 +468,27 @@ def main():
          for uid in existing_by_id.keys() | fresh_by_id.keys()),
         key=lambda e: e["unit_id"],
     )
+
+    # Wave 29 integration: `shrunk_families` (below) cannot see this class
+    # of regression at all -- a `HELD_STATUSES` bug that makes `held_derived`
+    # (and therefore `entries`, the freshly-derived set) empty produces
+    # `fresh_by_id == {}`, which the carry-forward merge above silently
+    # backfills from `existing`, so `entries` (the merged, WRITTEN list)
+    # never shrinks even though the generator has stopped doing its job
+    # entirely. Adversarial review proved this exact blind spot by
+    # reverting `HELD_STATUSES` to its pre-fix 3-status tuple: all 5
+    # pre-existing tests stayed green and the written fixture stayed
+    # byte-identical. Guard the thing `shrunk_families` cannot: if there
+    # was ANY previously-committed `entries` row to derive from, at least
+    # one row must be FRESH this run, not merely carried forward.
+    if existing_by_id and not fresh_by_id:
+        sys.exit(
+            "FATAL: this run derived ZERO fresh `entries` rows even though "
+            f"{len(existing_by_id)} were previously committed -- HELD_STATUSES "
+            "likely regressed (see todo/defects.md D7, todo/sweeps.md S6); "
+            "refusing to write a fixture the carry-forward merge would "
+            "otherwise silently paper over"
+        )
 
     document = {
         "schema": 1,
