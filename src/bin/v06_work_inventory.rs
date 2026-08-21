@@ -2221,6 +2221,9 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     RuleSetId::Oa,
     // SD31-E6-F2-007 -- this book's first compiled rule set of any kind.
     RuleSetId::Mythic,
+    // SD-31 wave-29 (`lane5-book-onboard` lane) -- this book's first
+    // compiled rule set of any kind.
+    RuleSetId::AdventurersGuide,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -2261,6 +2264,7 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Isg => "inner_sea_gods",
         RuleSetId::Oa => "occult_adventures",
         RuleSetId::Mythic => "mythic_adventures",
+        RuleSetId::AdventurersGuide => "adventurers_guide",
     }
 }
 
@@ -2315,6 +2319,7 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Isg => "inner_sea_gods",
         RuleSetId::Oa => "occult_adventures",
         RuleSetId::Mythic => "mythic_adventures",
+        RuleSetId::AdventurersGuide => "adventurers_guide",
     }
 }
 
@@ -2446,6 +2451,16 @@ fn spell_book_slug_for(short_code: &str) -> &'static str {
         // attribution or measurement logic. See
         // `rules_tables::bestiary_6::spell_list`.
         "B6" => "bestiary_6",
+        // SD-31 wave-29 (`lane5-book-onboard` lane): AG joins
+        // `spell_resolver::spell_catalog_rows()` as the catalog's 12th
+        // book, this book's first record family of any kind. Same
+        // additive, single-line registration every prior spell-lane cycle
+        // made here before it -- this function is a closed-set lookup
+        // table with its own dedicated test
+        // (`spell_book_slug_for_covers_every_catalog_book`), not
+        // attribution or measurement logic. See
+        // `src/bin/ingest_adventurers_guide_spells.rs`.
+        "AG" => "adventurers_guide",
         other => panic!(
             "spell_resolver::spell_catalog_rows() now carries an unmapped book code {other:?} \
              -- add it to spell_book_slug_for so the spell classifier does not silently drop \
@@ -9744,23 +9759,26 @@ mod rule_set_mapping_tests {
     #[test]
     fn uncompiled_books_stay_none() {
         // This test needs a book the engine genuinely has not compiled, and it
-        // has now outlived THREE of them: `ultimate_psionics` moved to
+        // has now outlived FOUR of them: `ultimate_psionics` moved to
         // compiled in SD28-E29 (`epic-29-upsi-complete`), `inner_sea_gods` in
-        // SD-29 Epic 5 extend round 9 (`RuleSetId::Isg`), and
-        // `occult_adventures` in SD31-E6-F2-003 (`RuleSetId::Oa`, its spell
-        // family). The comment this replaces also stated a reason that was
-        // wrong by the time it was read -- "`inner_sea_gods` ... (SD-30's own
-        // book set, out of this bundle)" -- and `decisions.md §38` had
-        // already re-scoped SD-29 corpus-wide.
+        // SD-29 Epic 5 extend round 9 (`RuleSetId::Isg`), `occult_adventures`
+        // in SD31-E6-F2-003 (`RuleSetId::Oa`, its spell family), and
+        // `adventurers_guide` in SD-31 wave-29 (`RuleSetId::AdventurersGuide`,
+        // its spell family, `lane5-book-onboard` lane). The comment this
+        // replaces also stated a reason that was wrong by the time it was
+        // read -- "`inner_sea_gods` ... (SD-30's own book set, out of this
+        // bundle)" -- and `decisions.md §38` had already re-scoped SD-29
+        // corpus-wide.
         //
-        // `adventurers_guide` is uncompiled by DERIVATION, not by assumption:
+        // `inner_sea_temples` is uncompiled by DERIVATION, not by assumption:
         // `corpus_dir_for` is exhaustive over `RuleSetId` and carries no arm
         // returning it, so no `COMPILED_RULE_SETS` member can map to it --
-        // re-checked against the current match arm one by one (32 arms, none
-        // return `"adventurers_guide"`), and the book genuinely has a corpus
-        // directory (`data/corpus/adventurers_guide/`), so this is a real
-        // uncompiled book, not a typo'd nonexistent one.
-        assert_eq!(rule_set_for("adventurers_guide"), None);
+        // re-checked against the current match arm one by one (33 arms, none
+        // return `"inner_sea_temples"`), and the book genuinely has a real
+        // corpus directory (`OBSERVABLE_BOOK_DIRS` names
+        // `pathfinder/paizo/campaign_setting/inner_sea_temples`), so this is
+        // a real uncompiled book, not a typo'd nonexistent one.
+        assert_eq!(rule_set_for("inner_sea_temples"), None);
     }
 }
 

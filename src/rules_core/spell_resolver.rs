@@ -18,8 +18,8 @@ use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::spell_list::SPELL_LIST;
 use crate::rules_core::rules_tables::RuleSetId;
 use crate::rules_core::rules_tables::{
-    acg, advanced_race_guide, apg, bestiary_6, crb, inner_sea_gods, occult_adventures,
-    ultimate_combat, ultimate_intrigue, ultimate_magic, ultimate_wilderness,
+    acg, adventurers_guide, advanced_race_guide, apg, bestiary_6, crb, inner_sea_gods,
+    occult_adventures, ultimate_combat, ultimate_intrigue, ultimate_magic, ultimate_wilderness,
 };
 use crate::rules_core::source_content::{SourceContentKind, SourcePackageContent};
 
@@ -62,6 +62,12 @@ pub const SPELL_BOOK_UW: &str = "UW";
 /// `rules_tables::bestiary_6::spell_list`'s doc comment for the two rows'
 /// verbatim reprint inside Ultimate Wilderness's own `uw_spells.lst`.
 pub const SPELL_BOOK_B6: &str = "B6";
+/// SD-31 wave-29 (`lane5-book-onboard` lane): Adventurer's Guide, the
+/// twelfth book -- 45 of 49 base spell declarations ship (`ag_spells.lst`,
+/// 4 PI-dropped on `NAMEISPI:YES`), this book's FIRST compiled `RuleSetId`
+/// of any kind (`RuleSetId::AdventurersGuide`). See
+/// `src/bin/ingest_adventurers_guide_spells.rs` for the ingest path.
+pub const SPELL_BOOK_AG: &str = "AG";
 
 /// One ingested spell record, normalized across every book's own
 /// `spell_list` table.
@@ -215,6 +221,14 @@ pub fn spell_catalog_rows() -> &'static [SpellCatalogRow] {
             level: entry.level,
             description: entry.description,
         });
+        let ag_rows =
+            adventurers_guide::spell_list::SPELL_LIST.iter().map(|entry| SpellCatalogRow {
+                book: SPELL_BOOK_AG,
+                key: entry.key,
+                school: entry.school.map(|school| format!("{school:?}")),
+                level: entry.level,
+                description: entry.description,
+            });
         let chained: Vec<SpellCatalogRow> = crb_rows
             .chain(apg_rows)
             .chain(acg_rows)
@@ -226,6 +240,7 @@ pub fn spell_catalog_rows() -> &'static [SpellCatalogRow] {
             .chain(isg_rows)
             .chain(uw_rows)
             .chain(b6_rows)
+            .chain(ag_rows)
             .collect();
         // SD-31 wave-24 (integration cycle, W24-INTEGRATE): a later-chained
         // book can genuinely reprint an earlier book's spell verbatim (e.g.
@@ -294,6 +309,23 @@ mod spell_catalog_rows_tests {
             isg_rows.iter().any(|row| row.key == "Blade Snare"),
             "expected the real corpus row \"Blade Snare\" (isg_spells.lst) among Inner Sea \
              Gods rows: {isg_rows:?}"
+        );
+    }
+
+    /// SD-31 wave-29 (`lane5-book-onboard` lane): Adventurer's Guide is the
+    /// twelfth book chained into `spell_catalog_rows()`, and this book's
+    /// FIRST compiled rule set of any kind. A real, non-empty row set
+    /// proves the chain actually wired the new book in, not merely that
+    /// the constant compiles.
+    #[test]
+    fn adventurers_guide_is_chained_into_the_catalog() {
+        let ag_rows: Vec<&SpellCatalogRow> =
+            spell_catalog_rows().iter().filter(|row| row.book == SPELL_BOOK_AG).collect();
+        assert!(!ag_rows.is_empty(), "expected at least one Adventurer's Guide spell row");
+        assert!(
+            ag_rows.iter().any(|row| row.key == "Bone Flense"),
+            "expected the real corpus row \"Bone Flense\" (ag_spells.lst) among Adventurer's \
+             Guide rows: {ag_rows:?}"
         );
     }
 

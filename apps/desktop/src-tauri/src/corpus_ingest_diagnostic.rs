@@ -94,6 +94,7 @@ use std::process::Command;
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::rules_tables::acg::{self, AcgClassId};
+use codex::rules_core::rules_tables::adventurers_guide as ag;
 use codex::rules_core::rules_tables::advanced_race_guide as arg;
 use codex::rules_core::rules_tables::apg::{self, ApgClassId};
 use codex::rules_core::rules_tables::beastiary1::MonsterId;
@@ -526,6 +527,15 @@ fn occult_adventures_counts() -> BTreeMap<String, u32> {
     counts
 }
 
+/// Adventurer's Guide: SD-31 wave-29 (`lane5-book-onboard` lane) -- this
+/// book's FIRST compiled record family of any kind. 45 base spell records
+/// -- see `adventurers_guide::spell_list`'s own doc comment.
+fn adventurers_guide_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("spells".to_string(), ag::spell_list::SPELL_LIST.len() as u32);
+    counts
+}
+
 /// Ultimate Psionics: SD-28 Epic 29 (`epic-29-upsi-complete`) from-scratch
 /// book ingest, and the last Ultimate book. 221 feat records -- see
 /// `ultimate_psionics::feat_tables`'s own doc comment for the catalog and
@@ -822,6 +832,12 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             occult_adventures_counts(),
             &races,
         ),
+        book_status(
+            "adventurers_guide",
+            "src/rules_core/rules_tables/adventurers_guide",
+            adventurers_guide_counts(),
+            &races,
+        ),
     ]
 }
 
@@ -973,7 +989,12 @@ mod tests {
                 // of any kind, appended at the end of the list rather than
                 // inserted into a book-family block, since it shares no
                 // chassis with any book above it.
-                "occult_adventures"
+                "occult_adventures",
+                // SD-31 wave-29 (`lane5-book-onboard` lane) -- this book's
+                // first compiled record family of any kind, same
+                // appended-at-the-end placement as `occult_adventures`
+                // above, for the same reason.
+                "adventurers_guide"
             ]
         );
     }

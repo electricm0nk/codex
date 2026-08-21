@@ -9,6 +9,12 @@
 //! `SD-22-content-source-ingest-and-dm-toolkit/decisions.md` §5.
 
 pub mod acg;
+/// Adventurer's Guide. SD-31 wave-29 (`lane5-book-onboard` lane) -- the
+/// book's FIRST compiled rule set of any kind, first record family: base
+/// spell declarations transcribed from `ag_spells.lst`
+/// (`rules_tables::adventurers_guide::spell_list`). See
+/// `src/bin/ingest_adventurers_guide_spells.rs` for the ingest path.
+pub mod adventurers_guide;
 pub mod advanced_race_guide;
 pub mod apg;
 pub mod archetype_swap;
@@ -300,4 +306,16 @@ pub enum RuleSetId {
     /// overlay as a new feat. Reported, not ingested here (`OPEN-ISSUES.md`,
     /// out of this card's `race_trait` file territory).
     Mythic,
+    /// Adventurer's Guide. SD-31 wave-29 (`lane5-book-onboard` lane) -- this
+    /// book's FIRST compiled rule set of any kind, first record family: base
+    /// spell records (`rules_tables::adventurers_guide::spell_list::
+    /// SPELL_LIST`, transcribed from `ag_spells.lst`).
+    ///
+    /// Same book-level gate `RuleSetId::Oa`/`RuleSetId::Mythic` record
+    /// above: without this variant, every `adventurers_guide` corpus unit
+    /// (class_feature, spell, feat, equipment alike) reads `not-started`/
+    /// `no_compiled_rule_set_for_book` regardless of what any per-kind
+    /// table ships -- `THE-BOX.md` §2.1's G4 finding (`adventurers_guide`
+    /// 699 `class_feature` units) is this exact gate.
+    AdventurersGuide,
 }

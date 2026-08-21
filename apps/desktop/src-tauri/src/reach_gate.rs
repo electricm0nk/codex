@@ -112,10 +112,10 @@ use codex::rules_core::rules_tables::crb::race_tables::RaceId;
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::{
-    acg, advanced_race_guide as arg, apg, beastiary1, crb, inner_sea_gods as isg,
-    occult_adventures as oa, pathfinder_unchained as pu, ultimate_combat as uc,
-    ultimate_equipment as ue, ultimate_intrigue as ui, ultimate_magic as um,
-    ultimate_psionics as upsi, ultimate_wilderness as uw, RuleSetId,
+    acg, adventurers_guide as ag, advanced_race_guide as arg, apg, beastiary1, crb,
+    inner_sea_gods as isg, occult_adventures as oa, pathfinder_unchained as pu,
+    ultimate_combat as uc, ultimate_equipment as ue, ultimate_intrigue as ui,
+    ultimate_magic as um, ultimate_psionics as upsi, ultimate_wilderness as uw, RuleSetId,
 };
 
 use crate::corpus_ingest_diagnostic::build_corpus_ingest_diagnostic;
@@ -1038,6 +1038,22 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("ultimate_wilderness", "spells") => Some(spells_reach(
             "UW",
             uw::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD-31 wave-29 (`lane5-book-onboard` lane): Adventurer's Guide
+        // joins `spell_resolver::spell_catalog_rows()` as the catalog's
+        // 12th book, the same `build_spell_catalog`/"All books" render
+        // path UM/OA/UC/ISG/UW use -- this book's FIRST reach claim of any
+        // kind, and its first compiled `RuleSetId`. Every base declaration
+        // carries a real `SCHOOL:`, `CLASSES:` level and/or `DESC:`, so
+        // `has_payload` is satisfied, proven by this gate's own
+        // `bare_records_are_exactly_the_recorded_findings` check below
+        // rather than assumed (`src/bin/ingest_adventurers_guide_spells.rs`).
+        ("adventurers_guide", "spells") => Some(spells_reach(
+            "AG",
+            ag::spell_list::SPELL_LIST
                 .iter()
                 .map(|entry| entry.key.to_owned())
                 .collect(),
