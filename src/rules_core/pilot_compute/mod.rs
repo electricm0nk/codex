@@ -11955,6 +11955,103 @@ pub(crate) fn table_class_id(class_id_str: &str) -> Option<ClassId> {
     }
 }
 
+// ---------------------------------------------------------------------------
+// SD-31 wave 27 -- prestige-class investigation (CRB shape), NOT a
+// Monk-shaped gap. Dispatched to establish whether the 10 CRB prestige
+// classes (Arcane Archer, Assassin, Duelist, Shadowdancer, Eldritch Knight,
+// Dragon Disciple, Loremaster, Mystic Theurge, Pathfinder Chronicler,
+// Arcane Trickster) could reach `Computed` the same way Monk did above --
+// data already present, only a `table_class_id` string mapping missing.
+// They cannot, for two independent reasons, each confirmed against the
+// pinned corpus rather than assumed. No functional code change follows
+// this note: the finding itself is this lane's deliverable, reported to
+// the wave 27 orchestrator directly (this lane's write scope did not cover
+// `progress.md`).
+//
+// 1. MONK-SHAPED CENSUS: ZERO OF TEN. Monk's fix worked because
+//    `class_tables()` (`rules_tables/crb/class_tables.rs`) already carried
+//    a real, corpus-backed row for Monk and `table_class_id` was the only
+//    missing link. No such row exists for any prestige class in ANY of the
+//    five class-id enums this dispatch chain reads (`ClassId::ALL`,
+//    `ApgClassId::ALL`, `AcgClassId::ALL`, `UcClassId::ALL`,
+//    `PuClassId::ALL` -- none names a single prestige class; confirmed by
+//    direct enum-body read, not inference). Worse, the `class` kind's own
+//    doneness gate (`src/bin/v06_work_inventory.rs`'s
+//    `modelled_class_books()`, consulted by `Kind::Class`'s verdict arm)
+//    enumerates precisely those five enums -- so even a fully-correct
+//    chassis dispatch added inside `pilot_compute` cannot move a prestige
+//    class off `not-ingested`, because the instrument asks "does some
+//    registered `ClassId`-family enum name this class" BEFORE it ever asks
+//    whether a real character reaches a delta. That enum registration
+//    lives in `rules_tables/crb/class_tables.rs` (a new sibling enum,
+//    following the ACG/APG/PU/UC precedent) and the
+//    `modelled_class_books()` loop in `src/bin/v06_work_inventory.rs`, both
+//    OUTSIDE this lane's granted write scope (`src/rules_core/
+//    pilot_compute/` and its tests only). Confirmed directly:
+//    `data/corpus/core_rulebook/class/` holds exactly the 11 base-class
+//    JSON records; grepping the pinned `cr_classes.lst` for `^CLASS:`
+//    returns those 11 plus 10 prestige classes, 2 `Ex-`variants, and 5 NPC
+//    classes (Adept/Aristocrat/Commoner/Expert/Warrior) -- all 17 non-base
+//    entries show `not-ingested` in `docs/work-inventory.json` today,
+//    matching the wave brief's figure exactly, and none of them can be
+//    moved from inside this file alone.
+//
+// 2. A REAL ARCHITECTURAL GAP, INDEPENDENT OF (1): six of the ten grant
+//    spellcasting that advances an EXISTING class the character already
+//    has, and nothing in this codebase can express that. `CharacterClassLevel`
+//    (`character_input.rs`) is `{class_id: String, level: u8}` -- a flat,
+//    independent entry with no field linking one class's levels to
+//    another class's spell progression. Every spells-per-day function in
+//    this file (`wizard_base_spells_per_day`, `cleric_total_spells_per_day`,
+//    and every sibling) takes only that one class's own `level`;
+//    `compute_multiclass_base_chassis` sums BAB/saves per class
+//    independently but never touches spellcasting at all. Confirmed
+//    against the corpus, not memory: `data/corpus/core_rulebook/
+//    class_feature/dragon_disciple/spells_per_day.json`'s `DESC:` reads
+//    verbatim "a dragon disciple gains new spells per day as if he had
+//    also gained a level in an arcane spellcasting class he belonged to
+//    before adding the prestige class" -- exactly the shape this codebase
+//    cannot represent. Mystic Theurge's `combined_spells.json`/
+//    `spell_synthesis.json` confirm the same family (dual-class variant).
+//    PCGen's own encoding of this (`<Class>_CFP_Level` `DEFINE`/
+//    `BONUS:VAR` tokens, present on EVERY prestige class record checked,
+//    Duelist included) is a generic class-feature-point counter, NOT
+//    itself the stacking mechanism -- a false lead ruled out by checking
+//    Duelist (confirmed non-stacking by its own class_feature roster: no
+//    `spells_per_day`-shaped record, matching its real PF1 rules text) and
+//    finding the same token there too. The three of ten confirmed
+//    corpus-side to have NO caster-stacking feature at all (Duelist,
+//    Shadowdancer, Arcane Archer -- each checked for a "spell"-shaped
+//    `class_feature` record) are structurally closer to the ACG/APG/PU/UC
+//    precedent and would need only (1) resolved, plus a real, PF1-rules
+//    entry-requirement check this codebase also does not have anywhere
+//    today (`CharacterInput` never validates that a character qualifies to
+//    hold a class level -- no BAB/feat/skill gate on class entry exists
+//    for ANY class, base or prestige; harmless for base classes, which
+//    have no entry requirement, but silently wrong for a prestige class if
+//    skipped).
+//
+// CONCLUSION, stated the way the wave brief asked for: do not force a
+// prestige class through this chassis. Six of ten (Eldritch Knight, Dragon
+// Disciple, Loremaster, Mystic Theurge, Pathfinder Chronicler, Arcane
+// Trickster) need a caster-level-stacking mechanism that does not exist in
+// any form in this codebase, and building it correctly is new evaluator
+// work, not a dispatch fix -- exactly the "genuinely cannot represent it"
+// case the brief pre-authorized flagging over hacking. The other three
+// (Duelist, Shadowdancer, Arcane Archer) plus Assassin (its own
+// independent, not-yet-corpus-confirmed-here spell progression) are
+// architecturally closer to buildable, but even they cannot bank a single
+// `class`-kind unit from a `pilot_compute`-only write scope, because the
+// doneness instrument's class-membership gate is registered entirely
+// outside this directory. NEEDS AN OPERATOR/ORCHESTRATOR RULING: either
+// widen a future prestige-class lane's write scope to include
+// `rules_tables/crb/class_tables.rs` (or a new sibling enum) and
+// `src/bin/v06_work_inventory.rs`'s `modelled_class_books()`, or route
+// class-enum registration through the census lane / an integration cycle
+// once this lane's (or a future one's) chassis logic is ready to consume
+// it.
+// ---------------------------------------------------------------------------
+
 /// Table-driven base-attack-bonus / base-save chassis pillar for any class
 /// `table_class_id` recognizes besides Fighter (v0.6 alpha swarm, task 4).
 /// Mirrors `compute_wizard_chassis`'s exact shape: reads
