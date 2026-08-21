@@ -1,6 +1,15 @@
 //! PCGen domain-power formula interpreter (SD-31 wave 25, OPERATOR-RULINGS
 //! 2026-08-21 section 20 overturning SD-27 decisions.md section 24.1's "no
-//! formula interpreter" ban, for this package only).
+//! formula interpreter" ban, for this package only). SD-31 wave 26 widened
+//! [`DOMAIN_POWER_CATALOG`] from Good/War/Strength to five entries
+//! (+Destruction's Destructive Smite, +Glory's Touch of Glory) and wired
+//! Cleric's own domain-power branch (previously Good/Healing-only, unlike
+//! Inquisitor's already-generic one) onto the same shared catalog -- see
+//! `explain_cleric_level1_spell_baseline` in `pilot_compute/mod.rs`. Before
+//! widening the catalog, this lane confirmed the interpreted path still
+//! reproduces Good and Healing's pre-existing pinned values exactly (no
+//! `fixture_check_tests` change was needed for either -- they were, and
+//! remain, green).
 //!
 //! Before this seam, `ground_or_block_cleric_domain_power`'s equivalent (the
 //! inline block inside `explain_cleric_level1_spell_baseline`) and
@@ -331,6 +340,18 @@ pub(super) struct DomainPowerSpec {
     /// A short, honest label for what the magnitude number IS -- reused in
     /// this power's grounded explanation text.
     pub magnitude_label: &'static str,
+    /// Verbatim-accurate framing of this power's own duration/trigger, as
+    /// the corpus `DESC` text states it -- substituted into the shared
+    /// "actively using {power} ... {effect_duration_phrase}" explanation
+    /// sentence. Added SD-31 wave 26 when widening past Good/War/Strength
+    /// (all three genuinely "for 1 round" per their own DESC text) surfaced
+    /// a real accuracy gap: Destructive Smite is a single declared attack
+    /// with no duration at all, and Touch of Glory's own DESC states "for
+    /// one hour, or until the creature touched elects to apply the bonus
+    /// to a roll" -- reusing a hardcoded "for 1 round" for either would be
+    /// a plausible-looking but WRONG sentence, exactly the failure mode
+    /// this seam exists to avoid.
+    pub effect_duration_phrase: &'static str,
     // Provenance-only: read by this module's own `fixture_check_tests` (`catalog_provenance_
     // matches_the_corpus_records_own_source_citation`, below) against the corpus's own `source`
     // object, never by any PRODUCTION/runtime code path -- `cargo build --lib` (the non-test
@@ -363,6 +384,7 @@ pub(super) const DOMAIN_POWER_CATALOG: &[DomainPowerSpec] = &[
         ability_id: TOUCH_OF_GOOD_ABILITY_ID,
         magnitude_formula: "max(DomainGoodLVL/2,1)",
         magnitude_label: "sacred bonus",
+        effect_duration_phrase: "for 1 round",
         upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
         upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
         upstream_line: 713,
@@ -375,6 +397,7 @@ pub(super) const DOMAIN_POWER_CATALOG: &[DomainPowerSpec] = &[
         ability_id: BATTLE_RAGE_ABILITY_ID,
         magnitude_formula: "max(DomainWarLVL/2,1)",
         magnitude_label: "melee damage bonus",
+        effect_duration_phrase: "for 1 round",
         upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
         upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
         upstream_line: 747,
@@ -387,9 +410,60 @@ pub(super) const DOMAIN_POWER_CATALOG: &[DomainPowerSpec] = &[
         ability_id: STRENGTH_SURGE_ABILITY_ID,
         magnitude_formula: "max(DomainStrengthLVL/2,1)",
         magnitude_label: "enhancement bonus",
+        effect_duration_phrase: "for 1 round",
         upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
         upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
         upstream_line: 739,
+    },
+    // SD-31 wave 26 (OPERATOR-RULINGS-2026-08-21.md section 20; "PROVE BEFORE YOU
+    // EXTEND" satisfied first -- see this module's own `fixture_check_tests`, which
+    // reproduce Good/War/Strength's pinned values before either entry below is
+    // added). Both scanned corpus-wide for the SAME self-application-safe shape
+    // Good/War/Strength already establish (a beneficial effect on a touched/self
+    // target, a single non-dice `DESC`-embedded magnitude formula, a real
+    // `Domain<X>LVL`/`Domain<X>Times` header chain) -- confirmed against
+    // `data/corpus/core_rulebook/class_feature/destruction/destruction.json` and
+    // `.../glory/glory.json` respectively, both carrying the identical
+    // `BONUS:VAR|Domain<X>LVL|DomainLVL|TYPE=Domain` /
+    // `BONUS:VAR|Domain<X>Times|DomainPowerTimes|TYPE=Domain` chain Good/War/
+    // Strength's own fixture test already verifies for those three.
+    DomainPowerSpec {
+        selection_id: DESTRUCTION_DOMAIN_SELECTION,
+        domain_slug: "destruction",
+        domain_display_name: "Destruction",
+        granted_power_name: "Destructive Smite",
+        ability_id: DESTRUCTIVE_SMITE_ABILITY_ID,
+        magnitude_formula: "max(DomainDestructionLVL/2,1)",
+        magnitude_label: "morale bonus on damage rolls",
+        // Corpus DESC: "the supernatural ability to make a single melee attack
+        // with a +%1 morale bonus on damage rolls. You must declare the
+        // destructive smite before making the attack." No round-based duration
+        // at all -- unlike Good/War/Strength, this is a single declared attack,
+        // not a buff that persists for a round.
+        effect_duration_phrase: "on a single melee attack, which must be declared before the attack roll is made",
+        upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+        upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+        upstream_line: 703,
+    },
+    DomainPowerSpec {
+        selection_id: GLORY_DOMAIN_SELECTION,
+        domain_slug: "glory",
+        domain_display_name: "Glory",
+        granted_power_name: "Touch of Glory",
+        ability_id: TOUCH_OF_GLORY_ABILITY_ID,
+        // Bare `DomainGloryLVL` -- no `max(.../2,1)` wrap, unlike Good/War/
+        // Strength/Destruction. Verified byte-identical to the corpus DESC's
+        // own first formula segment by this module's own fixture test.
+        magnitude_formula: "DomainGloryLVL",
+        magnitude_label: "bonus to a single Charisma-based skill check or Charisma ability check",
+        // Corpus DESC: "This ability lasts for one hour or until the creature
+        // touched elects to apply the bonus to a roll." A real, different
+        // duration shape from Good/War/Strength's "for 1 round".
+        effect_duration_phrase:
+            "for one hour, or until the creature touched elects to apply the bonus to a roll",
+        upstream_lst: "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst",
+        upstream_lst_sha256: "b2ce1a9db06e3921c0d6169040a21f85bec23e8ddfff0eda608247c04359a282",
+        upstream_line: 711,
     },
 ];
 
@@ -630,6 +704,18 @@ mod fixture_check_tests {
     const STRENGTH_SURGE_JSON: &str = include_str!(
         "../../../data/corpus/core_rulebook/class_feature/domain_power/strength_surge.json"
     );
+    // SD-31 wave 26 additions.
+    const DESTRUCTION_HEADER_JSON: &str = include_str!(
+        "../../../data/corpus/core_rulebook/class_feature/destruction/destruction.json"
+    );
+    const GLORY_HEADER_JSON: &str =
+        include_str!("../../../data/corpus/core_rulebook/class_feature/glory/glory.json");
+    const DESTRUCTIVE_SMITE_JSON: &str = include_str!(
+        "../../../data/corpus/core_rulebook/class_feature/domain_power/destructive_smite.json"
+    );
+    const TOUCH_OF_GLORY_JSON: &str = include_str!(
+        "../../../data/corpus/core_rulebook/class_feature/domain_power/touch_of_glory.json"
+    );
 
     fn parse(json: &str) -> serde_json::Value {
         serde_json::from_str(json).expect("committed corpus JSON must parse")
@@ -652,12 +738,18 @@ mod fixture_check_tests {
     /// ACTUALLY states for every domain this module grounds, rather than an
     /// assumption carried over from Good alone. Also confirms the
     /// uses-per-day chain (`Domain<X>Times|DomainPowerTimes|TYPE=Domain`)
-    /// for the same three.
+    /// for all five. SD-31 wave 26 widened this from three (Good/War/
+    /// Strength) to five (+Destruction/Glory) -- same assertion, more
+    /// domains, per this lane's "prove before you extend" requirement.
     #[test]
-    fn good_war_strength_headers_share_the_domainlvl_and_domainpowertimes_chain() {
-        for (json, domain) in
-            [(GOOD_HEADER_JSON, "Good"), (WAR_HEADER_JSON, "War"), (STRENGTH_HEADER_JSON, "Strength")]
-        {
+    fn catalog_domain_headers_share_the_domainlvl_and_domainpowertimes_chain() {
+        for (json, domain) in [
+            (GOOD_HEADER_JSON, "Good"),
+            (WAR_HEADER_JSON, "War"),
+            (STRENGTH_HEADER_JSON, "Strength"),
+            (DESTRUCTION_HEADER_JSON, "Destruction"),
+            (GLORY_HEADER_JSON, "Glory"),
+        ] {
             let doc = parse(json);
             let bonuses = bonus_values(&doc);
             assert!(
@@ -705,6 +797,8 @@ mod fixture_check_tests {
             (TOUCH_OF_GOOD_JSON, GOOD_DOMAIN_SELECTION),
             (BATTLE_RAGE_JSON, WAR_DOMAIN_SELECTION),
             (STRENGTH_SURGE_JSON, STRENGTH_DOMAIN_SELECTION),
+            (DESTRUCTIVE_SMITE_JSON, DESTRUCTION_DOMAIN_SELECTION),
+            (TOUCH_OF_GLORY_JSON, GLORY_DOMAIN_SELECTION),
         ] {
             let doc = parse(json);
             let desc = doc["data"]["raw_tokens"]
@@ -741,6 +835,8 @@ mod fixture_check_tests {
             (TOUCH_OF_GOOD_JSON, GOOD_DOMAIN_SELECTION),
             (BATTLE_RAGE_JSON, WAR_DOMAIN_SELECTION),
             (STRENGTH_SURGE_JSON, STRENGTH_DOMAIN_SELECTION),
+            (DESTRUCTIVE_SMITE_JSON, DESTRUCTION_DOMAIN_SELECTION),
+            (TOUCH_OF_GLORY_JSON, GLORY_DOMAIN_SELECTION),
         ] {
             let doc = parse(json);
             let spec = resolve_domain_power(selection_id).expect("must be catalogued");
@@ -767,17 +863,21 @@ mod fixture_check_tests {
 
     /// Guarantee 4: expected values computed BY HAND from PF1 Core Rulebook
     /// Domains' own granted-power rule text ("half the domain's effective
-    /// level, minimum 1" -- Good, War, and Strength all share this exact
-    /// magnitude shape per their own `DESC` text, independently confirmed
-    /// this cycle), never read back from [`eval_expr`] or
+    /// level, minimum 1" -- Good, War, Strength, and Destruction all share
+    /// this exact magnitude shape per their own `DESC` text, independently
+    /// confirmed this cycle), never read back from [`eval_expr`] or
     /// [`domain_power_magnitude`]. A mutated evaluator (e.g. `Div` swapped
     /// for `Mul`, or `Max` swapped for `Min`) fails this test even though it
     /// would still satisfy the transcription-only tests above.
     #[test]
     fn interpreted_magnitude_matches_a_hand_computed_table_derived_from_pf1_rule_text() {
         let half_level_min_one = |level: u8| -> i16 { (i16::from(level) / 2).max(1) };
-        for selection_id in [GOOD_DOMAIN_SELECTION, WAR_DOMAIN_SELECTION, STRENGTH_DOMAIN_SELECTION]
-        {
+        for selection_id in [
+            GOOD_DOMAIN_SELECTION,
+            WAR_DOMAIN_SELECTION,
+            STRENGTH_DOMAIN_SELECTION,
+            DESTRUCTION_DOMAIN_SELECTION,
+        ] {
             let spec = resolve_domain_power(selection_id).expect("must be catalogued");
             for level in [1u8, 2, 3, 4, 7, 12, 20] {
                 let expected = half_level_min_one(level);
@@ -789,6 +889,32 @@ mod fixture_check_tests {
                     spec.domain_display_name
                 );
             }
+        }
+    }
+
+    /// Guarantee 4, Glory's own shape: unlike the four half-level-minimum-one
+    /// entries above, Touch of Glory's own `DESC` formula segment is the bare
+    /// `DomainGloryLVL` (no `max(.../2,1)` wrap) -- read directly off the
+    /// pinned corpus text (`granted_power_magnitude_formulas_are_byte_
+    /// identical_to_the_corpus`, above, already pins this exact string), not
+    /// re-derived from an external source this session had no access to
+    /// verify against. `DomainGloryLVL` chains 1:1 to `DomainLVL` (the
+    /// granting class's own level, per `catalog_domain_headers_share_the_
+    /// domainlvl_and_domainpowertimes_chain` above) with no division at all,
+    /// so the expected value here is simply the character level, unhalved.
+    /// A mutated evaluator that silently divided this bare variable by 2
+    /// (the Good/War/Strength/Destruction shape) would still parse and run,
+    /// but fails THIS hand-computed table.
+    #[test]
+    fn interpreted_magnitude_for_glory_matches_a_hand_computed_table_derived_from_pf1_rule_text() {
+        let spec = resolve_domain_power(GLORY_DOMAIN_SELECTION).expect("Glory must be catalogued");
+        for level in [1u8, 2, 3, 4, 7, 12, 20] {
+            let expected = i16::from(level);
+            let interpreted = domain_power_magnitude(spec, level, &AbilityModifiers::default());
+            assert_eq!(
+                interpreted, expected,
+                "Glory magnitude at level {level}: expected the bare cleric level = {expected}"
+            );
         }
     }
 }
