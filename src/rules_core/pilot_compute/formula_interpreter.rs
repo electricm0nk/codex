@@ -108,14 +108,22 @@
 //!
 //! - An identifier used as a value that has no binding in the supplied `vars` map (never silently
 //!   treated as `0`).
-//! - A function name outside `{min, max, floor, ceil, abs, if, classlevel}` (named in the error),
-//!   INCLUDING real PCGen functions this module has not implemented — `var(...)`, `count(...)`,
-//!   `mastervar(...)`/`MASTERVAR(...)`, `charbonusto(...)`, `cl(...)` (PJEP's deprecated alias for
-//!   `classlevel`), and `skillinfo(...)` all name real `plugin/jepcommands/*Command.java` classes
+//! - A function name outside `{min, max, floor, ceil, abs, if, classlevel, skillinfo}` (named in
+//!   the error), INCLUDING real PCGen functions this module has not implemented — `var(...)`,
+//!   `count(...)`, `mastervar(...)`/`MASTERVAR(...)`, `charbonusto(...)`, `cl(...)` (PJEP's
+//!   deprecated alias for `classlevel`) all name real `plugin/jepcommands/*Command.java` classes
 //!   in the pinned oracle and all refuse cleanly here rather than being silently mishandled.
+//!   `skillinfo(...)` is now PARTIALLY implemented — see [`Expr::SkillInfoTotalRank`]'s own doc —
+//!   and refuses cleanly on the five other real first-argument keywords it does not cover.
 //! - A mixed-case function name (see point 5 above) — refused, not accepted.
 //! - Wrong argument counts for any function, division by zero, an unterminated string literal, a
-//!   character outside `[0-9a-zA-Z_." ()+-*/,<>=]`, or trailing tokens after a complete expression.
+//!   character outside `[0-9a-zA-Z_." ()+-*/,<>=&]`, or trailing tokens after a complete
+//!   expression. (`&` only ever appears as the pair `&&`; a lone `&` refuses — see the tokenizer's
+//!   own comment.)
+//! - `if(...)`'s condition still refuses a bare numeric value (real PCGen's `if(SomeVar,1,0)`
+//!   form) — wave 26 widened what counts as a valid condition (a `&&`-chain of comparisons, not
+//!   only a single one) but did not touch this restriction; see point 4 above and `parse_call`'s
+//!   `"if"` arm.
 //! - **`classlevel(...)` does NOT verify its class-name argument against anything — this is a
 //!   real, currently-unfixed gap, not a refusal.** The real oracle's `classlevel("X")`
 //!   (`plugin/jepcommands/ClassLevelCommand.java`) looks up level in the SPECIFIC named class;
@@ -129,17 +137,49 @@
 //!   precondition in `OPEN-ISSUES.md`, not merely a documented limitation, because the failure
 //!   mode is exactly the "plausible number nobody checks" shape §24.1 exists to prevent.
 //!
+//! ## Wave 26 shape closure (`OPERATOR-RULINGS-2026-08-21.md` §20 follow-on)
+//!
+//! Three of the four shapes wave 25b's refusal list named are now implemented, each cited above
+//! at its own `Expr` variant: comparisons and `&&`-chains of comparisons as first-class
+//! boolean-as-numeric values ([`Expr::Cmp`], [`Expr::And`] — closes both "boolean-to-int
+//! coercion" and "the `&&` operator" as one grammar extension, since they are the same underlying
+//! gap), and `skillinfo("TOTALRANK", ...)` ([`Expr::SkillInfoTotalRank`]). Measured effect:
+//! `tests::corpus_shape_coverage`'s headline refusal count fell from 431 of 2,671 (16.1%) to the
+//! number this test now reports — re-run it for the current figure, don't trust a number
+//! transcribed into this comment.
+//!
+//! **The fourth named shape — "PREVARGTEQ-embedded conditional addends inside raw `BONUS:VAR`
+//! text" — does not exist in the real corpus, and closing it was a correction of the wave 25
+//! dispatch's own premise, not an implementation.** The dispatch brief's example,
+//! `"2 (+1 PREVARGTEQ:X,8) (+1 PREVARGTEQ:X,16)"`, is literally the wave 25b module doc's own
+//! prior text (see this file's git history) — which itself already disclosed that string as "a
+//! HAND translation ... not the literal corpus text." Direct verification during wave 26: every
+//! one of the 966 `BONUS`/`DEFINE` tokens in `data/corpus` containing `PREVARGTEQ` carries it as a
+//! TRAILING pipe field (`BONUS:VAR|<target>|<formula>|PREVARGTEQ:<var>,<threshold>`), never
+//! embedded inside the formula field itself (checked by splitting every such token's raw value on
+//! its formula-field boundary and confirming zero contain `PREVARGTEQ` on the formula side — see
+//! the wave receipt for the exact script). `extract_formula_field`'s existing positional heuristic
+//! already extracts a clean, independently-parseable formula from every one of those 966 tokens
+//! (e.g. `VAR|FamousPopulation|1|PREVARGTEQ:classlevel("Bard"),1` extracts `"1"`), which is why
+//! this shape contributes **zero** of the 431 pre-wave-26 refusals — it was never in the refused
+//! bucket to begin with. What IS real: the PRE-tag itself is silently DISCARDED by that
+//! extraction (never parsed, never applied), so a naive consumer summing every `BONUS:VAR` token
+//! sharing one target (`witch_ward_bonus`: three separate tokens, `2` + `1|PREVARGTEQ:...,8` +
+//! `1|PREVARGTEQ:...,16`, real oracle behaviour per `PlayerCharacter.getTotalBonusTo` ->
+//! `BonusManager.sumActiveBonusMap`: SUM only the entries whose own prerequisite currently passes)
+//! would silently over-count at every level below the gate. That is a real gap — just a
+//! summation-correctness gap for a future consumer, not a grammar-parsing refusal — and it is what
+//! the sibling `bonus_stack_reader` module (this lane's "new BonusObj-shape reader module") closes:
+//! given the raw `BONUS:VAR` tokens sharing one target and a character's current variable values,
+//! it evaluates each token's own formula (via this module) gated by its own `PREVARGTEQ` (or
+//! refuses, never silently drops, any OTHER PRE-tag kind it doesn't recognise), then sums only the
+//! qualifying ones — see its own module doc for the `PreVariableTester.java`/`BonusManager.java`
+//! citations.
+//!
 //! ## Not covered by this module (report this size in the wave receipt, not silently)
 //!
-//! - `BONUS:<TAG>|<target>|<formula>` envelope parsing / target-name resolution.
-//! - PRE-token gating and the `(+N PREVARGTEQ:X,V)` repeated-conditional-addend clauses embedded
-//!   directly in some raw corpus `BONUS:VAR` formula text (`witch_ward_bonus`'s real corpus token
-//!   is exactly this shape — the harness's own `raw_formula` field for that case is a HAND
-//!   translation into this module's `if(...)`-based grammar, not the literal corpus text; seen
-//!   directly: `git show worktree-wf_73cee402-845-2:.../formula_reproduction_harness.rs` line ~386
-//!   vs. its own `pcgen_token` field one line above it). This is a different PCGen subsystem
-//!   (`BonusObj`/`MultiTagBonusObj` applying a repeated conditional bonus stack), not the JEP
-//!   arithmetic grammar.
+//! - `BONUS:<TAG>|<target>|<formula>` envelope parsing / target-name resolution beyond the
+//!   positional heuristic in [`extract_formula_field`].
 //! - `%1`/`%N` parameter substitution in `DESC:` text (a text-rendering mechanism, not formula
 //!   arithmetic; its consumer is `description_completion.rs`/`pcgen_desc.rs`, out of this lane's
 //!   write scope).
@@ -148,15 +188,25 @@
 //! - Multiclass `classlevel("X")` resolution to a specific class's own level — see the refusal
 //!   list above; this is a silently-wrong gap, not a clean refusal, and is the single highest-
 //!   priority fix before any `classlevel`-bearing formula is banked.
-//! - **Found empirically by `tests::corpus_shape_coverage` (not in the 22 harness cases, not
-//!   implemented — flagged, not silently patched):** boolean-valued sub-expressions coerced to
-//!   `0`/`1` in arithmetic position, e.g. Kineticist's `"1+(KineticistLVL>=15)"` (a bare
-//!   parenthesised comparison used as a numeric term, not as an `if()` condition) and `&&`
-//!   boolean-AND inside such a term (Sorcerer bloodline-power gates:
-//!   `"if((X==0&&Y>=3),1,0)"`) — the same underlying gap as point 4 above (a comparison does not
-//!   yet produce a reusable numeric value); and `skillinfo("TOTALRANK","<skill>")`, a real
-//!   function (`plugin/jepcommands/SkillInfoCommand.java`, 2 args) reading a character's skill
-//!   ranks, which this module refuses as an unimplemented function rather than an unknown one.
+//! - `classlevel("X", "APPLIEDAS=NONEPIC")` — a real 2-argument form (confirmed present in the
+//!   corpus, e.g. Monk unarmed-damage formulas) this module has not investigated; refuses today as
+//!   a parse error (`expected RParen, got Some(Comma)`), not silently mishandled, but its oracle
+//!   semantics are unverified — found during wave 26, out of this lane's four named shapes, not
+//!   attempted.
+//! - `skillinfo(...)`'s five other first-argument keywords (`modifier`, `rank`, `total`, `stat`,
+//!   `misc`) — verified against `SkillInfoCommand.java` (same citation as `TOTALRANK`) but not
+//!   corpus-exercised, so not implemented (see [`Expr::SkillInfoTotalRank`]'s own doc).
+//! - `var(...)`, `count(...)`, `mastervar(...)`, `charbonusto(...)`, `cl(...)` — real
+//!   `plugin/jepcommands/*Command.java` functions this module refuses as unimplemented: 31, 20, 3,
+//!   2, and 1 corpus-formula refusals respectively (57 total; these five plus `skillinfo` summed
+//!   to 80 "unrecognised function" refusals pre-wave-26 — `skillinfo` is the other 23, now
+//!   implemented for its one corpus-exercised first argument, see above).
+//! - Malformed corpus formula text that does not match ANY real JEP call shape regardless of this
+//!   module's own grammar coverage — e.g. `if(Bloodrager_Draconic_BloodlineProgressionLVL>=7),1,0`
+//!   (a real, literal `advanced_class_guide` corpus token: the closing `)` lands right after the
+//!   condition, with `,1,0` trailing outside any parens at all). Confirmed this is the literal
+//!   corpus byte content, not an extraction artifact. This module correctly refuses it; there is
+//!   no legitimate grammar under which to accept it without guessing what the author meant.
 
 use std::collections::BTreeMap;
 
@@ -184,6 +234,7 @@ enum Tok {
     Ne,
     Gt,
     Lt,
+    AndAnd,
 }
 
 fn tokenize(s: &str) -> Result<Vec<Tok>, FormulaEvalError> {
@@ -256,6 +307,29 @@ fn tokenize(s: &str) -> Result<Vec<Tok>, FormulaEvalError> {
                     return Err(FormulaEvalError(format!("bare '!' in {s:?}")));
                 }
             }
+            '&' => {
+                // wave 26 shape closure (`OPERATOR-RULINGS-2026-08-21.md` §20 follow-on): the
+                // real oracle's `&&` is `org.nfunk.jep.function.Logical` with id 0, registered as
+                // `OP_AND` in `org.nfunk.jep.OperatorSet` (verified by decompiling the pinned
+                // dependency jar itself, `org.scijava:jep:2.4.2` per `build.gradle:215` --
+                // `PJEP extends org.nfunk.jep.JEP` per `pcgen/util/PJEP.java`, so this IS the
+                // engine, not a guess at a third party's behaviour). `org.nfunk.jep.OperatorSet`
+                // bytecode: `new Logical(0)` -> field `OP_AND`; `new Logical(1)` -> field `OP_OR`.
+                // This module implements only `&&` (the only combinator any corpus formula uses --
+                // verified during wave 26 by categorising every one of the pre-fix 431
+                // `corpus_shape_coverage` refusal reasons: none is a bare `|`/`||` token, so there
+                // is no corpus evidence either way for `||`'s grammar position, and this module
+                // does not guess it) -- never guesses `||`. A single bare `&` is refused, matching
+                // the bare `=`/`!`
+                // pattern immediately above: real JEP has no single-`&` operator at all, so
+                // accepting one here would be inventing a token the oracle doesn't define.
+                if chars.get(i + 1) == Some(&'&') {
+                    out.push(Tok::AndAnd);
+                    i += 2;
+                } else {
+                    return Err(FormulaEvalError(format!("bare '&' in {s:?} — refusing rather than guessing '&&'")));
+                }
+            }
             '"' => {
                 let mut j = i + 1;
                 let mut buf = String::new();
@@ -316,12 +390,38 @@ enum Expr {
     Div(Box<Expr>, Box<Expr>),
     Call(String, Vec<Expr>),
     ClassLevel(String),
-    If(Box<Cond>, Box<Expr>, Box<Expr>),
-}
-
-#[derive(Debug, Clone, PartialEq)]
-enum Cond {
-    Cmp(Expr, CmpOp, Expr),
+    /// `if(cond, then, else)`. `cond` must itself be a [`Expr::Cmp`] or [`Expr::And`] node --
+    /// enforced in `parse_call`'s `"if"` arm, not here -- preserving the module's existing,
+    /// documented "bare numeric condition refuses" restriction (module doc point 4) even though
+    /// comparisons are now a general-purpose numeric value elsewhere in the grammar.
+    If(Box<Expr>, Box<Expr>, Box<Expr>),
+    /// A bare comparison used as a value, not only as `if()`'s condition -- wave 26 shape closure.
+    /// Confirmed to evaluate to a plain `Double` `1.0`/`0.0` (never a `java.lang.Boolean`) by
+    /// decompiling `org.nfunk.jep.function.Comparative.run()` in the pinned `org.scijava:jep:2.4.2`
+    /// dependency jar (`build.gradle:215`): the bytecode pushes `new Double(1.0)` on a pass and
+    /// `new Double(0.0)` on a fail directly, with no `Boolean` boxing step at all. This is why
+    /// `1+(KineticistLVL>=15)` needs no special coercion in the real engine -- the comparison
+    /// operator was ALREADY numeric-valued, and `Add` never sees anything but two `Double`s.
+    Cmp(Box<Expr>, CmpOp, Box<Expr>),
+    /// `&&` combining two comparison values -- wave 26 shape closure. Confirmed by decompiling
+    /// `org.nfunk.jep.function.Logical.run()` (id 0 = `OP_AND`, per `OperatorSet`'s bytecode) in
+    /// the same pinned jar: both operands are popped and coerced to `double` (a `Number` via
+    /// `doubleValue()`, or a `Boolean` via `booleanValue() ? 1.0 : 0.0` -- never reached here since
+    /// `Cmp` already returns `Double`), ANDed as `(a != 0.0) && (b != 0.0)`, and the result pushed
+    /// as `Double` `1.0`/`0.0`. Both operands are always evaluated -- this is a stack-based postfix
+    /// evaluator, so the two operands are already popped off the stack before `Logical.run()`'s
+    /// AND/OR switch ever runs; there is no short-circuit to reproduce.
+    And(Box<Expr>, Box<Expr>),
+    /// `skillinfo("TOTALRANK", "<skill name>")` -- wave 26 shape closure. Only the `"TOTALRANK"`
+    /// first argument (case-insensitive, matching the real oracle's
+    /// `"totalrank".equalsIgnoreCase(param1)`) is implemented; every other real
+    /// `plugin/jepcommands/SkillInfoCommand.java` first-argument keyword (`modifier`, `rank`,
+    /// `total`, `stat`, `misc`) is refused at parse time -- narrower than the real function, but
+    /// `"TOTALRANK"` is the only first argument any corpus formula actually uses (confirmed:
+    /// `tests::corpus_shape_coverage`'s full refusal listing names zero others), and this module's
+    /// own discipline is to implement only what is both oracle-verified AND corpus-exercised, the
+    /// same restriction already applied to `min`/`max`/`floor`/`ceil`/`abs`/`if`/`classlevel`.
+    SkillInfoTotalRank(String),
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]
@@ -413,7 +513,12 @@ impl<'a> Parser<'a> {
         match self.bump() {
             Some(Tok::Num(n)) => Ok(Expr::Num(n)),
             Some(Tok::LParen) => {
-                let v = self.parse_expr()?;
+                // wave 26 shape closure: a parenthesised group may hold a plain arithmetic
+                // expression (as before) OR a boolean-valued one (`(X>=15)`, `(X==0&&Y>=3)`) used
+                // as a numeric primary -- see `parse_arith_or_bool`'s own doc for the oracle
+                // citations. Parens are transparent either way: the returned `Expr` is exactly
+                // whatever was inside, never wrapped in an extra node.
+                let v = self.parse_arith_or_bool()?;
                 self.expect(&Tok::RParen)?;
                 Ok(v)
             }
@@ -464,13 +569,62 @@ impl<'a> Parser<'a> {
                 }
             }
             "if" => {
-                let cond = self.parse_cond()?;
+                // wave 26 shape closure: the condition may now be a chain of comparisons joined
+                // by `&&` (`if((X==0&&Y>=3),1,0)`), not only a single bare comparison
+                // (`if(X>=8,1,0)`) as before -- both are parsed by the same
+                // `parse_arith_or_bool` used for arithmetic primaries. What is still refused,
+                // unchanged from the module's pre-existing documented restriction (point 4): a
+                // condition that reduces to a plain numeric `Expr` rather than an `Expr::Cmp`/
+                // `Expr::And` -- real PCGen's bare-numeric-condition `if()` form remains
+                // unimplemented and logged to `OPEN-ISSUES.md`, not silently accepted here.
+                let cond = self.parse_arith_or_bool()?;
+                if !matches!(cond, Expr::Cmp(..) | Expr::And(..)) {
+                    return Err(FormulaEvalError(
+                        "if(...)'s condition must be a comparison or `&&`-chain of comparisons \
+                         — a bare numeric condition (real PCGen's if(SomeVar,1,0) form) is not yet \
+                         implemented; refusing rather than guessing its truthiness"
+                            .to_string(),
+                    ));
+                }
                 self.expect(&Tok::Comma)?;
                 let a = self.parse_expr()?;
                 self.expect(&Tok::Comma)?;
                 let b = self.parse_expr()?;
                 self.expect(&Tok::RParen)?;
                 Ok(Expr::If(Box::new(cond), Box::new(a), Box::new(b)))
+            }
+            "skillinfo" => {
+                // wave 26 shape closure — see `Expr::SkillInfoTotalRank`'s own doc for scope
+                // (`"TOTALRANK"` only, case-insensitive on the first argument per the real
+                // `plugin/jepcommands/SkillInfoCommand.java`'s `equalsIgnoreCase` checks).
+                let kind = match self.bump() {
+                    Some(Tok::Str(s)) => s,
+                    other => {
+                        return Err(FormulaEvalError(format!(
+                            "skillinfo(...) expects a string literal first argument, got {other:?}"
+                        )))
+                    }
+                };
+                self.expect(&Tok::Comma)?;
+                let skill = match self.bump() {
+                    Some(Tok::Str(s)) => s,
+                    other => {
+                        return Err(FormulaEvalError(format!(
+                            "skillinfo(...) expects a string literal second argument, got {other:?}"
+                        )))
+                    }
+                };
+                self.expect(&Tok::RParen)?;
+                if !kind.eq_ignore_ascii_case("totalrank") {
+                    return Err(FormulaEvalError(format!(
+                        "skillinfo({kind:?}, ...) — only the \"TOTALRANK\" first argument is \
+                         implemented (the only one any corpus formula uses); \
+                         plugin/jepcommands/SkillInfoCommand.java also defines \"modifier\", \
+                         \"rank\", \"total\", \"stat\", \"misc\", none corpus-exercised, so none \
+                         guessed at here"
+                    )));
+                }
+                Ok(Expr::SkillInfoTotalRank(skill))
             }
             "min" | "max" | "floor" | "ceil" | "abs" => {
                 let mut args = vec![self.parse_expr()?];
@@ -502,23 +656,58 @@ impl<'a> Parser<'a> {
         }
     }
 
-    fn parse_cond(&mut self) -> Result<Cond, FormulaEvalError> {
-        let a = self.parse_expr()?;
-        let op = match self.bump() {
-            Some(Tok::Ge) => CmpOp::Ge,
-            Some(Tok::Le) => CmpOp::Le,
-            Some(Tok::Eq) => CmpOp::Eq,
-            Some(Tok::Ne) => CmpOp::Ne,
-            Some(Tok::Gt) => CmpOp::Gt,
-            Some(Tok::Lt) => CmpOp::Lt,
-            other => {
-                return Err(FormulaEvalError(format!(
-                    "expected a comparison operator (>=, <=, ==, !=, >, <), got {other:?}"
-                )))
-            }
-        };
-        let b = self.parse_expr()?;
-        Ok(Cond::Cmp(a, op, b))
+    /// Parses a plain arithmetic expression and, if a comparison operator follows, upgrades it
+    /// to a boolean-valued [`Expr::Cmp`] node, then continues folding any further `&&`-joined
+    /// comparison terms into [`Expr::And`] nodes. This is the ONE grammar rule used everywhere a
+    /// boolean-as-numeric value can appear: as `if()`'s condition, inside a parenthesised
+    /// arithmetic primary (`1+(X>=15)`), and as an entire bare top-level formula (`RangerLVL>=6`)
+    /// — see each call site's own comment for why unifying them is safe rather than an
+    /// unverified precedence guess: every corpus occurrence of a comparison used as a value sits
+    /// at exactly one of those three positions, never embedded at an arbitrary point inside a
+    /// larger arithmetic expression (confirmed by `tests::corpus_shape_coverage`'s full refusal
+    /// listing), so this module does not need to — and does not — invent a general operator
+    /// precedence between comparisons and `+`/`-`/`*`//` that the real oracle's grammar was never
+    /// exercised against here.
+    fn parse_arith_or_bool(&mut self) -> Result<Expr, FormulaEvalError> {
+        let mut lhs = self.parse_expr()?;
+        if let Some(op) = Self::peek_cmp_op(self.peek()) {
+            self.bump();
+            let rhs = self.parse_expr()?;
+            lhs = Expr::Cmp(Box::new(lhs), op, Box::new(rhs));
+        }
+        while let Some(Tok::AndAnd) = self.peek() {
+            self.bump();
+            let a2 = self.parse_expr()?;
+            let op2 = match self.bump() {
+                Some(Tok::Ge) => CmpOp::Ge,
+                Some(Tok::Le) => CmpOp::Le,
+                Some(Tok::Eq) => CmpOp::Eq,
+                Some(Tok::Ne) => CmpOp::Ne,
+                Some(Tok::Gt) => CmpOp::Gt,
+                Some(Tok::Lt) => CmpOp::Lt,
+                other => {
+                    return Err(FormulaEvalError(format!(
+                        "expected a comparison operator after '&&' (every corpus `&&` use joins \
+                         two comparisons, never a bare value), got {other:?}"
+                    )))
+                }
+            };
+            let b2 = self.parse_expr()?;
+            lhs = Expr::And(Box::new(lhs), Box::new(Expr::Cmp(Box::new(a2), op2, Box::new(b2))));
+        }
+        Ok(lhs)
+    }
+
+    fn peek_cmp_op(tok: Option<&Tok>) -> Option<CmpOp> {
+        match tok {
+            Some(Tok::Ge) => Some(CmpOp::Ge),
+            Some(Tok::Le) => Some(CmpOp::Le),
+            Some(Tok::Eq) => Some(CmpOp::Eq),
+            Some(Tok::Ne) => Some(CmpOp::Ne),
+            Some(Tok::Gt) => Some(CmpOp::Gt),
+            Some(Tok::Lt) => Some(CmpOp::Lt),
+            _ => None,
+        }
     }
 }
 
@@ -529,7 +718,11 @@ impl<'a> Parser<'a> {
 fn parse(formula: &str) -> Result<Expr, FormulaEvalError> {
     let tokens = tokenize(formula)?;
     let mut p = Parser { tokens: &tokens, pos: 0 };
-    let expr = p.parse_expr()?;
+    // `parse_arith_or_bool`, not the plain arithmetic `parse_expr`, so a bare top-level boolean
+    // formula (`RangerLVL>=6`, no wrapping parens — a real, corpus-confirmed shape; see
+    // `tests::bare_top_level_comparison_is_a_valid_formula`) is a recognised shape rather than
+    // "trailing tokens after a complete expression."
+    let expr = p.parse_arith_or_bool()?;
     if p.pos != p.tokens.len() {
         return Err(FormulaEvalError(format!(
             "trailing tokens after a complete expression in {formula:?} (parsed {} of {} tokens)",
@@ -569,7 +762,7 @@ fn eval_expr(expr: &Expr, vars: &BTreeMap<String, i64>) -> Result<f64, FormulaEv
             FormulaEvalError("classlevel(...) needs a __LEVEL__ binding".to_string())
         }),
         Expr::If(cond, a, b) => {
-            if eval_cond(cond, vars)? {
+            if eval_expr(cond, vars)? != 0.0 {
                 eval_expr(a, vars)
             } else {
                 eval_expr(b, vars)
@@ -590,21 +783,47 @@ fn eval_expr(expr: &Expr, vars: &BTreeMap<String, i64>) -> Result<f64, FormulaEv
                 other => Err(FormulaEvalError(format!("unreachable: parser accepted unknown function {other:?}"))),
             }
         }
+        // wave 26 shape closure — see `Expr::Cmp`'s own doc for the oracle citation
+        // (`org.nfunk.jep.function.Comparative.run()` pushes a plain `Double` `1.0`/`0.0`).
+        Expr::Cmp(a, op, b) => {
+            let av = eval_expr(a, vars)?;
+            let bv = eval_expr(b, vars)?;
+            let truth = match op {
+                CmpOp::Ge => av >= bv,
+                CmpOp::Le => av <= bv,
+                CmpOp::Eq => av == bv,
+                CmpOp::Ne => av != bv,
+                CmpOp::Gt => av > bv,
+                CmpOp::Lt => av < bv,
+            };
+            Ok(if truth { 1.0 } else { 0.0 })
+        }
+        // wave 26 shape closure — see `Expr::And`'s own doc for the oracle citation
+        // (`org.nfunk.jep.function.Logical.run()`, id 0 = `OP_AND`): both sides always evaluated
+        // (no short-circuit — the real engine is a postfix/stack evaluator that has already
+        // popped both operands before the AND/OR switch runs), ANDed as "nonzero is true".
+        Expr::And(a, b) => {
+            let av = eval_expr(a, vars)?;
+            let bv = eval_expr(b, vars)?;
+            Ok(if av != 0.0 && bv != 0.0 { 1.0 } else { 0.0 })
+        }
+        // wave 26 shape closure — see `Expr::SkillInfoTotalRank`'s own doc for scope. No PC-skill
+        // context is threaded through this evaluator's flat `vars` map (mirrors `classlevel`'s own
+        // single `__LEVEL__` convention, module doc point on `classlevel`'s per-class gap) — a
+        // consumer wiring this must bind the character's total ranks in the named skill under
+        // this exact key before calling `evaluate`. Unbound refuses, exactly like every other
+        // variable reference in this module — the real oracle's own silent "character doesn't
+        // have the skill -> 0" default (`SkillInfoCommand.java`) is a PC-state fact a caller must
+        // supply, not a default this module invents.
+        Expr::SkillInfoTotalRank(skill) => {
+            let key = format!("SKILLINFO_TOTALRANK::{skill}");
+            vars.get(&key).map(|v| *v as f64).ok_or_else(|| {
+                FormulaEvalError(format!(
+                    "skillinfo(\"TOTALRANK\", {skill:?}) needs a {key:?} binding"
+                ))
+            })
+        }
     }
-}
-
-fn eval_cond(cond: &Cond, vars: &BTreeMap<String, i64>) -> Result<bool, FormulaEvalError> {
-    let Cond::Cmp(a, op, b) = cond;
-    let av = eval_expr(a, vars)?;
-    let bv = eval_expr(b, vars)?;
-    Ok(match op {
-        CmpOp::Ge => av >= bv,
-        CmpOp::Le => av <= bv,
-        CmpOp::Eq => av == bv,
-        CmpOp::Ne => av != bv,
-        CmpOp::Gt => av > bv,
-        CmpOp::Lt => av < bv,
-    })
 }
 
 /// The real evaluator: implements `formula_reproduction_harness::FormulaEvaluator` by parsing
@@ -735,6 +954,156 @@ mod tests {
         let v = vars(&[("__LEVEL__", 7)]);
         assert_eq!(e.evaluate("classlevel(\"Summoner\")", &v).unwrap(), 7);
         assert_eq!(e.evaluate("10+(X/2)+INT", &vars(&[("X", 7), ("INT", 3)])).unwrap(), 16);
+    }
+
+    // -- 1b. wave 26 shape closure: comparisons/`&&` as first-class numeric values, and
+    //    skillinfo("TOTALRANK", ...) — each grounded in the module doc's own citations above.
+    // -------------------------------------------------------------------------------------------
+
+    #[test]
+    fn bare_comparison_as_a_value_matches_the_kineticist_corpus_shape() {
+        // The exact corpus formula (`data/corpus` Kineticist infusion tokens):
+        // "1+(KineticistLVL>=15)". Below the threshold it's 1; at/above, 2 — proving this is a
+        // real coercion, not merely "the parser accepts it and returns something."
+        let e = PcgenFormulaEvaluator;
+        assert_eq!(e.evaluate("1+(KineticistLVL>=15)", &vars(&[("KineticistLVL", 14)])).unwrap(), 1);
+        assert_eq!(e.evaluate("1+(KineticistLVL>=15)", &vars(&[("KineticistLVL", 15)])).unwrap(), 2);
+        assert_eq!(e.evaluate("1+(KineticistLVL>=15)", &vars(&[("KineticistLVL", 20)])).unwrap(), 2);
+        // The longer chained corpus shape: 8 additive gates.
+        let f = "1+(KineticistLVL>=3)+(KineticistLVL>=5)+(KineticistLVL>=9)+(KineticistLVL>=11)+\
+                 (KineticistLVL>=13)+(KineticistLVL>=17)+(KineticistLVL>=19)";
+        assert_eq!(e.evaluate(f, &vars(&[("KineticistLVL", 1)])).unwrap(), 1);
+        assert_eq!(e.evaluate(f, &vars(&[("KineticistLVL", 10)])).unwrap(), 4); // base+3+5+9
+        assert_eq!(e.evaluate(f, &vars(&[("KineticistLVL", 19)])).unwrap(), 8); // all 7 gates pass
+    }
+
+    #[test]
+    fn bare_top_level_comparison_is_a_valid_formula() {
+        // Real corpus shape: an entire `DEFINE`/`BONUS` formula that IS just a comparison, e.g.
+        // "RangerLVL>=6" — no wrapping parens, no surrounding arithmetic. Confirmed in
+        // `advanced_players_guide`/`ultimate_combat` DEFINE tokens.
+        let e = PcgenFormulaEvaluator;
+        assert_eq!(e.evaluate("RangerLVL>=6", &vars(&[("RangerLVL", 5)])).unwrap(), 0);
+        assert_eq!(e.evaluate("RangerLVL>=6", &vars(&[("RangerLVL", 6)])).unwrap(), 1);
+    }
+
+    #[test]
+    fn and_combines_two_comparisons_matching_the_sorcerer_bloodline_gate_shape() {
+        // The exact corpus formula shape (Sorcerer/Bloodrager bloodline-power gates):
+        // "if((PowerAlreadyTaken==0&&ProgressionLVL>=N),1,0)" — grants the power exactly once,
+        // at or after the level gate, never before, never a second time.
+        let e = PcgenFormulaEvaluator;
+        let f = "if((Sorcerer_CF_BloodlinePower3==0&&Sorcerer_Psychic_BloodlineProgressionLVL>=3),1,0)";
+        assert_eq!(
+            e.evaluate(f, &vars(&[("Sorcerer_CF_BloodlinePower3", 0), ("Sorcerer_Psychic_BloodlineProgressionLVL", 2)]))
+                .unwrap(),
+            0,
+            "below the level gate: not yet granted"
+        );
+        assert_eq!(
+            e.evaluate(f, &vars(&[("Sorcerer_CF_BloodlinePower3", 0), ("Sorcerer_Psychic_BloodlineProgressionLVL", 3)]))
+                .unwrap(),
+            1,
+            "at the level gate and not already taken: granted"
+        );
+        assert_eq!(
+            e.evaluate(f, &vars(&[("Sorcerer_CF_BloodlinePower3", 1), ("Sorcerer_Psychic_BloodlineProgressionLVL", 5)]))
+                .unwrap(),
+            0,
+            "already taken (tracked by the other side of the &&): not granted again"
+        );
+    }
+
+    #[test]
+    fn and_both_sides_always_evaluate_no_short_circuit() {
+        // `org.nfunk.jep.function.Logical.run()` pops both stack operands unconditionally before
+        // its AND/OR switch ever runs (module doc, `Expr::And`) — there is no short-circuit to
+        // reproduce. Proven here the only way that's observable: the RIGHT side references an
+        // unbound variable even when the LEFT side is already false, and this must still refuse
+        // (a short-circuiting implementation would instead return `0` without ever touching the
+        // unbound variable).
+        let e = PcgenFormulaEvaluator;
+        let err = e
+            .evaluate("if((X==1&&NeverBound>=1),1,0)", &vars(&[("X", 0)]))
+            .unwrap_err();
+        assert!(err.0.contains("unbound variable"), "got: {}", err.0);
+    }
+
+    #[test]
+    fn if_condition_still_refuses_a_bare_numeric_value() {
+        // Unchanged restriction (module doc point 4) — wave 26 widened WHAT KIND of comparison
+        // chain a condition may be, not whether a non-comparison numeric value is accepted.
+        let e = PcgenFormulaEvaluator;
+        let err = e.evaluate("if(X,1,0)", &vars(&[("X", 1)])).unwrap_err();
+        assert!(err.0.contains("condition must be a comparison"), "got: {}", err.0);
+    }
+
+    #[test]
+    fn skillinfo_totalrank_reads_the_bound_skill_rank() {
+        let e = PcgenFormulaEvaluator;
+        let v = vars(&[("SKILLINFO_TOTALRANK::Knowledge (Religion)", 12)]);
+        assert_eq!(e.evaluate("if(skillinfo(\"TOTALRANK\",\"Knowledge (Religion)\")>=10,4,2)", &v).unwrap(), 4);
+        let v2 = vars(&[("SKILLINFO_TOTALRANK::Knowledge (Religion)", 3)]);
+        assert_eq!(e.evaluate("if(skillinfo(\"TOTALRANK\",\"Knowledge (Religion)\")>=10,4,2)", &v2).unwrap(), 2);
+    }
+
+    #[test]
+    fn skillinfo_totalrank_case_insensitive_first_argument_matching_the_oracle() {
+        // `SkillInfoCommand.java`: `"totalrank".equalsIgnoreCase(param1)`.
+        let e = PcgenFormulaEvaluator;
+        let v = vars(&[("SKILLINFO_TOTALRANK::Swim", 5)]);
+        assert_eq!(e.evaluate("skillinfo(\"totalrank\",\"Swim\")", &v).unwrap(), 5);
+        assert_eq!(e.evaluate("skillinfo(\"TotalRank\",\"Swim\")", &v).unwrap(), 5);
+    }
+
+    #[test]
+    fn skillinfo_unbound_skill_refuses_not_defaults_to_zero() {
+        // The real oracle defaults to 0.0 when the character lacks the skill entirely
+        // (`SkillInfoCommand.java`'s `hasSkill` check) — but that is a PC-state fact a consumer
+        // must supply, not a default this evaluator invents (see `Expr::SkillInfoTotalRank`'s own
+        // doc). No consumer is wired yet, so there is no such fact available here; refuse.
+        let e = PcgenFormulaEvaluator;
+        let err = e.evaluate("skillinfo(\"TOTALRANK\",\"Swim\")", &BTreeMap::new()).unwrap_err();
+        assert!(err.0.contains("needs a") && err.0.contains("binding"), "got: {}", err.0);
+    }
+
+    #[test]
+    fn skillinfo_other_first_arguments_refuse_not_implemented() {
+        let e = PcgenFormulaEvaluator;
+        for kind in ["modifier", "rank", "total", "stat", "misc"] {
+            let err = e
+                .evaluate(&format!("skillinfo(\"{kind}\",\"Swim\")"), &BTreeMap::new())
+                .unwrap_err();
+            assert!(err.0.contains("only the \"TOTALRANK\""), "kind {kind:?} got: {}", err.0);
+        }
+    }
+
+    /// Decision 1(a) mutation proof, scoped to wave 26's own additions: a deliberately wrong `&&`
+    /// (implemented as OR) MUST be caught by the concrete assertions above, not merely by "did not
+    /// error." Exercised directly here rather than via the 22-case harness (none of those 22
+    /// hand-modelled functions use `&&`, so the harness's own reproduction test cannot catch this
+    /// class of mistake — this test is the gate for wave 26's new grammar specifically).
+    #[test]
+    fn mutated_and_as_or_is_caught_by_the_bloodline_gate_assertion() {
+        let e = PcgenFormulaEvaluator;
+        let f = "if((Sorcerer_CF_BloodlinePower3==0&&Sorcerer_Psychic_BloodlineProgressionLVL>=3),1,0)";
+        // Already-taken (left side false) AND below-level (right side false): real AND -> 0.
+        // A mutant OR would also give 0 here, so this input alone can't distinguish them —
+        // the discriminating case is left-false/right-true, asserted next.
+        let already_taken_below_level =
+            vars(&[("Sorcerer_CF_BloodlinePower3", 1), ("Sorcerer_Psychic_BloodlineProgressionLVL", 1)]);
+        assert_eq!(e.evaluate(f, &already_taken_below_level).unwrap(), 0);
+        // Already-taken (left side false) but AT/above level (right side true): real AND -> 0
+        // (correctly withholds a second grant); a mutant OR would wrongly return 1 here. This is
+        // the exact case `and_combines_two_comparisons_matching_the_sorcerer_bloodline_gate_shape`
+        // above already asserts against — restated here as the explicit mutation-proof case.
+        let already_taken_above_level =
+            vars(&[("Sorcerer_CF_BloodlinePower3", 1), ("Sorcerer_Psychic_BloodlineProgressionLVL", 5)]);
+        assert_eq!(
+            e.evaluate(f, &already_taken_above_level).unwrap(),
+            0,
+            "a mutant implementing && as || would wrongly return 1 here — proves the test discriminates"
+        );
     }
 
     // -- 2. refusals: mutation-style proof that unrecognised shapes never guess -----------------
