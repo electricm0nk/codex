@@ -10814,14 +10814,17 @@ fn explain_samsaran_flat_override_race_trait(
 /// `~ Speed` (`:17`, `BONUS:VAR|MOVEBASE|30`), `~ Vision` (`:18`,
 /// `BONUS:VAR|HasRacialVision|1`, binary), `~ Armored Scales` (`:19`,
 /// `BONUS:VAR|AC_Natural_Armor|1|TYPE=Base` — a UNIVERSAL, unconditional
-/// natural armor bonus; no natural-armor-for-an-arbitrary-race consuming
-/// total exists anywhere in this codebase — `baseline_armor_class` is
-/// scoped to the Fighter-level-1 Chain-Shirt/Dodge/no-shield deterministic
-/// posture only, confirmed by reading its own doc comment above, and never
-/// reads a race_trait natural-armor value for any race — so this is
-/// grounded as a standalone recognition value, the same posture Dwarf's own
-/// ability-modifier records already take for a UNIVERSAL racial number with
-/// no consuming total), `~ Resistant` (`:20`, `BONUS:VAR|
+/// natural armor bonus. A real natural-armor consuming total DOES exist in
+/// this codebase (`FeatDerivedPillarContributions::natural_armor_bonus`,
+/// summed into both the armor-class total and touch-AC exclusion, and
+/// already accepting contributions from three other sources — Alchemist
+/// Mutagen, Sorcerer Draconic Bloodline, ARG Armor of the Pit); this race
+/// trait is not wired into it (that is a real, separate follow-on, logged
+/// to `OPEN-ISSUES.md`), so it is grounded here as a standalone recognition
+/// value rather than folded into a total it does not yet feed — corrected
+/// during the wave-27 integration cycle after adversarial review found the
+/// original comment's "no consuming total exists anywhere" claim false),
+/// `~ Resistant` (`:20`, `BONUS:VAR|
 /// SaveBonus_vs_MindAffecting,SaveBonus_vs_Poison|2|TYPE=Racial` —
 /// CONDITIONAL, an effect-type subset per Decision 7 REFINED), `~
 /// Serpent's Sense` (`:21`, `BONUS:SITUATION|Handle Animal=against
@@ -10836,6 +10839,22 @@ fn explain_samsaran_flat_override_race_trait(
 /// save_dc`/`witch_hex_save_dc` DC-function idiom this file already uses
 /// throughout for class features).
 ///
+/// **`~ Hypnotic Gaze` is an ALTERNATE trait, not a default one — fixed
+/// during the wave-27 integration cycle.** `nagaji_hypnotic_gaze.json` sets
+/// `is_racial_default: false` and `sets_replace_flags:
+/// ["Nagaji_ReplaceSerpentsSense"]`; `race_resolver.rs`'s
+/// `ALTERNATE_TRAIT_REPLACE_FLAGS` table registers `("Nagaji ~ Hypnotic
+/// Gaze", &["Nagaji_ReplaceSerpentsSense"])`. It REPLACES `~ Serpent's
+/// Sense`, the same shape Gillman's Throwback and Vanara's Tree Stranger
+/// use for Speed above — selecting it should suppress Serpent's Sense and
+/// emit Hypnotic Gaze instead; leaving both unselected should keep
+/// Serpent's Sense as the default and emit no Hypnotic Gaze record at all.
+/// The original version of this function emitted Hypnotic Gaze
+/// unconditionally for every nagaji regardless of selection, alongside
+/// Serpent's Sense (the trait it is supposed to replace) — gated below via
+/// `replaced_by_alternate_trait`, the exact function Gillman/Vanara already
+/// use for this shape.
+///
 /// `~ Ability Scores` already grounds through the generic ability-adjustment
 /// chassis consumer (`probe_race_creation_roster`), same as Samsaran.
 /// `~ Languages`, `~ Size`, `~ Type` are zero-magnitude prose already
@@ -10845,6 +10864,7 @@ const NAGAJI_BASE_SPEED_FEET: i16 = 30;
 const NAGAJI_ARMORED_SCALES_NATURAL_ARMOR: i16 = 1;
 const NAGAJI_RESISTANT_SAVE_BONUS: i16 = 2;
 const NAGAJI_SERPENTS_SENSE_SKILL_BONUS: i16 = 2;
+const NAGAJI_REPLACE_SERPENTS_SENSE_FLAG: &str = "Nagaji_ReplaceSerpentsSense";
 /// PF1 SLA save DC base: `11 + the nagaji's Charisma modifier`, transcribed
 /// verbatim from `nagaji_hypnotic_gaze.json`'s own `description` field
 /// (`arg_abilities_race.lst:985`'s `DESC:` token) — a real formula stated in
@@ -10902,12 +10922,15 @@ fn explain_nagaji_flat_override_race_trait(
              {NAGAJI_ARMORED_SCALES_NATURAL_ARMOR:+} natural armor bonus from scaly flesh \
              (nagaji_abilities_race.lst:19 \
              BONUS:VAR|AC_Natural_Armor|{NAGAJI_ARMORED_SCALES_NATURAL_ARMOR}|TYPE=Base). A \
-             UNIVERSAL, unconditional AC modifier under Decision 7 REFINED, but no \
-             natural-armor-for-an-arbitrary-race consuming total exists anywhere in this \
-             codebase — `baseline_armor_class` is scoped to the deterministic Fighter-level-1 \
-             Chain-Shirt/Dodge/no-shield posture only and never reads a race_trait natural-armor \
-             value for any race. Grounded as a standalone recognition value, not folded into an \
-             AC total this engine does not compute for a Nagaji character"
+             UNIVERSAL, unconditional AC modifier under Decision 7 REFINED. A real natural-armor \
+             consuming total DOES exist in this codebase \
+             (`FeatDerivedPillarContributions::natural_armor_bonus`, already summed into both \
+             the armor-class total and the touch-AC exclusion, and already accepting \
+             contributions from three other sources — Alchemist Mutagen, Sorcerer Draconic \
+             Bloodline, ARG Armor of the Pit) — but this race trait is not wired into it; that \
+             is a genuine, separate follow-on (logged to OPEN-ISSUES.md), not a missing \
+             consumer. Grounded here as a standalone recognition value, not folded into an AC \
+             total this specific trait does not yet feed"
         ),
     });
 
@@ -10925,57 +10948,71 @@ fn explain_nagaji_flat_override_race_trait(
         ),
     });
 
-    explanations.push(ComputationExplanation {
-        id: "race.nagaji.trait_bundle.serpents_sense".to_owned(),
-        value: NAGAJI_SERPENTS_SENSE_SKILL_BONUS,
-        detail: format!(
-            "Nagaji racial trait bundle — Serpent's Sense: PF1 Advanced Race Guide Nagaji \
-             gains a {NAGAJI_SERPENTS_SENSE_SKILL_BONUS:+} racial bonus on Handle Animal checks \
-             against reptiles and a {NAGAJI_SERPENTS_SENSE_SKILL_BONUS:+} racial bonus on \
-             Perception checks (nagaji_abilities_race.lst:21 \
-             BONUS:SITUATION|Handle Animal=against reptiles|{NAGAJI_SERPENTS_SENSE_SKILL_BONUS}, \
-             BONUS:SKILL|Perception|{NAGAJI_SERPENTS_SENSE_SKILL_BONUS}|TYPE=Racial). Handle \
-             Animal and Perception are both named in `ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`'s \
-             own doc comment as skills this codebase computes no total for; \
-             `SelectedSkillModifiers` totals only Climb, Intimidate, and Swim. Grounded as a \
-             standalone recognition value, not folded into a skill total this engine cannot \
-             resolve"
-        ),
-    });
+    // `~ Hypnotic Gaze` REPLACES `~ Serpent's Sense` (both are gated on the
+    // same `Nagaji_ReplaceSerpentsSense` flag `race_resolver.rs`'s
+    // `ALTERNATE_TRAIT_REPLACE_FLAGS` table registers for the `"Nagaji ~
+    // Hypnotic Gaze"` selection key) — the same mutually-exclusive shape
+    // Gillman's Throwback and Vanara's Tree Stranger use for Speed above.
+    // Fixed during the wave-27 integration cycle: the original code emitted
+    // both records unconditionally for every nagaji.
+    if replaced_by_alternate_trait(input, NAGAJI_REPLACE_SERPENTS_SENSE_FLAG) {
+        let total_character_level: i16 =
+            input.chosen.class_levels.iter().map(|c| i16::from(c.level)).sum();
+        let hypnotic_gaze_dc = nagaji_hypnotic_gaze_dc(ability_modifiers.charisma);
+        explanations.push(ComputationExplanation {
+            id: "race.nagaji.alternate_trait.hypnotic_gaze.dc".to_owned(),
+            value: hypnotic_gaze_dc,
+            detail: format!(
+                "Nagaji alternate racial trait — Hypnotic Gaze (Advanced Race Guide p.??): the \
+                 chosen `Nagaji ~ Hypnotic Gaze` alternate replaces the standard Nagaji `~ \
+                 Serpent's Sense` record (arg_abilities_race.lst:985, gated \
+                 PREFACT:1,ABILITIES,{NAGAJI_REPLACE_SERPENTS_SENSE_FLAG}=True, which `Nagaji ~ \
+                 Hypnotic Gaze` sets). Its spell-like ability (as hypnotism) has a DC equal to \
+                 {NAGAJI_HYPNOTIC_GAZE_DC_BASE} + the nagaji's Charisma modifier \
+                 (DESC:\"...The DC of this effect is equal to 11 + the nagaji's Charisma \
+                 modifier...\"). This character's Charisma modifier is {cha_mod:+}, so DC = \
+                 {NAGAJI_HYPNOTIC_GAZE_DC_BASE} + ({cha_mod:+}) = {hypnotic_gaze_dc}. A REAL \
+                 computed value, not a recognition record — mirrors the \
+                 `alchemist_extract_save_dc`/`witch_hex_save_dc` DC-function idiom this file \
+                 already uses for class features. The standard Serpent's Sense record is \
+                 therefore NOT emitted for this character",
+                cha_mod = ability_modifiers.charisma,
+            ),
+        });
 
-    let total_character_level: i16 =
-        input.chosen.class_levels.iter().map(|c| i16::from(c.level)).sum();
-    let hypnotic_gaze_dc = nagaji_hypnotic_gaze_dc(ability_modifiers.charisma);
-    explanations.push(ComputationExplanation {
-        id: "race.nagaji.trait_bundle.hypnotic_gaze_dc".to_owned(),
-        value: hypnotic_gaze_dc,
-        detail: format!(
-            "Nagaji racial trait bundle — Hypnotic Gaze DC: PF1 Advanced Race Guide Nagaji's \
-             Hypnotic Gaze spell-like ability (as hypnotism) has a DC equal to \
-             {NAGAJI_HYPNOTIC_GAZE_DC_BASE} + the nagaji's Charisma modifier \
-             (arg_abilities_race.lst:985 DESC:\"...The DC of this effect is equal to 11 + the \
-             nagaji's Charisma modifier...\"). This character's Charisma modifier is \
-             {cha_mod:+}, so DC = {NAGAJI_HYPNOTIC_GAZE_DC_BASE} + ({cha_mod:+}) = \
-             {hypnotic_gaze_dc}. A REAL computed value, not a recognition record — mirrors the \
-             `alchemist_extract_save_dc`/`witch_hex_save_dc` DC-function idiom this file already \
-             uses for class features",
-            cha_mod = ability_modifiers.charisma,
-        ),
-    });
-
-    explanations.push(ComputationExplanation {
-        id: "race.nagaji.trait_bundle.hypnotic_gaze_caster_level".to_owned(),
-        value: total_character_level,
-        detail: format!(
-            "Nagaji racial trait bundle — Hypnotic Gaze caster level: PF1 Advanced Race Guide \
-             Nagaji's Hypnotic Gaze has \"caster level equal to the nagaji's Hit Dice\" \
-             (arg_abilities_race.lst:985). A player character's Hit Dice total equals character \
-             level (PF1 core rule; a nagaji PC has no separate racial Hit Dice progression), so \
-             this is modelled as the character's total class level ({total_character_level}, \
-             summed across `input.chosen.class_levels`). A REAL computed value, not a \
-             recognition record"
-        ),
-    });
+        explanations.push(ComputationExplanation {
+            id: "race.nagaji.alternate_trait.hypnotic_gaze.caster_level".to_owned(),
+            value: total_character_level,
+            detail: format!(
+                "Nagaji alternate racial trait — Hypnotic Gaze caster level: has \"caster level \
+                 equal to the nagaji's Hit Dice\" (arg_abilities_race.lst:985). A player \
+                 character's Hit Dice total equals character level (PF1 core rule; a nagaji PC \
+                 has no separate racial Hit Dice progression), so this is modelled as the \
+                 character's total class level ({total_character_level}, summed across \
+                 `input.chosen.class_levels`). A REAL computed value, not a recognition record"
+            ),
+        });
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "race.nagaji.trait_bundle.serpents_sense".to_owned(),
+            value: NAGAJI_SERPENTS_SENSE_SKILL_BONUS,
+            detail: format!(
+                "Nagaji racial trait bundle — Serpent's Sense: PF1 Advanced Race Guide Nagaji \
+                 gains a {NAGAJI_SERPENTS_SENSE_SKILL_BONUS:+} racial bonus on Handle Animal \
+                 checks against reptiles and a {NAGAJI_SERPENTS_SENSE_SKILL_BONUS:+} racial \
+                 bonus on Perception checks (nagaji_abilities_race.lst:21 \
+                 BONUS:SITUATION|Handle Animal=against reptiles|\
+                 {NAGAJI_SERPENTS_SENSE_SKILL_BONUS}, \
+                 BONUS:SKILL|Perception|{NAGAJI_SERPENTS_SENSE_SKILL_BONUS}|TYPE=Racial). Handle \
+                 Animal and Perception are both named in `ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`'s \
+                 own doc comment as skills this codebase computes no total for; \
+                 `SelectedSkillModifiers` totals only Climb, Intimidate, and Swim. Grounded as a \
+                 standalone recognition value, not folded into a skill total this engine cannot \
+                 resolve. This is the default record; NOT emitted if the character has selected \
+                 the `Nagaji ~ Hypnotic Gaze` alternate trait, which replaces it (see above)"
+            ),
+        });
+    }
 }
 
 #[cfg(test)]
@@ -11181,12 +11218,15 @@ mod flat_override_race_trait_tests {
         assert!(shards.detail.contains("LIST"));
     }
 
-    /// Nagaji gets all seven real explanation records: five recognition
-    /// values (speed, senses, Armored Scales, Resistant, Serpent's Sense)
-    /// plus a REAL two-value computation for Hypnotic Gaze (DC and caster
-    /// level), each citing the real mechanism.
+    /// Nagaji with NO alternate trait selected gets the five default
+    /// recognition records (speed, senses, Armored Scales, Resistant,
+    /// Serpent's Sense) and NO Hypnotic Gaze record — Hypnotic Gaze is an
+    /// alternate trait that REPLACES Serpent's Sense, not a default one.
+    /// Fixed during the wave-27 integration cycle: the original test built
+    /// exactly this input (no alternates) and asserted Hypnotic Gaze was
+    /// present anyway, which pinned the bug rather than catching it.
     #[test]
-    fn nagaji_gets_all_seven_explanations_including_the_real_hypnotic_gaze_computation() {
+    fn nagaji_default_gets_five_recognition_records_and_no_hypnotic_gaze() {
         let computation = compute_pilot_base_chassis(&input_for_race("nagaji", &[]));
 
         let speed = computation
@@ -11223,17 +11263,43 @@ mod flat_override_race_trait_tests {
             .explanations
             .iter()
             .find(|e| e.id == "race.nagaji.trait_bundle.serpents_sense")
-            .expect("nagaji must produce a Serpent's Sense explanation");
+            .expect("nagaji must produce a Serpent's Sense explanation by default");
         assert_eq!(serpents_sense.value, 2);
         assert!(serpents_sense.detail.contains("Perception"));
+
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with("race.nagaji.alternate_trait.hypnotic_gaze")),
+            "Hypnotic Gaze must NOT appear for a nagaji who has not selected it"
+        );
+    }
+
+    /// Selecting `Nagaji ~ Hypnotic Gaze` REPLACES the default Serpent's
+    /// Sense record with the real two-value Hypnotic Gaze computation (DC
+    /// and caster level) -- a real override, not an addition: Serpent's
+    /// Sense's own id must be absent once Hypnotic Gaze is selected.
+    #[test]
+    fn nagaji_hypnotic_gaze_alternate_replaces_the_default_serpents_sense_record() {
+        let computation =
+            compute_pilot_base_chassis(&input_for_race("nagaji", &["Nagaji ~ Hypnotic Gaze"]));
+
+        assert!(
+            !computation
+                .explanations
+                .iter()
+                .any(|e| e.id == "race.nagaji.trait_bundle.serpents_sense"),
+            "Serpent's Sense must NOT appear once Hypnotic Gaze is selected"
+        );
 
         // Hypnotic Gaze DC = 11 + Charisma modifier. The fixture's Charisma
         // score is 8 (floor(8/2) - 5 = -1), so DC = 11 + (-1) = 10.
         let dc = computation
             .explanations
             .iter()
-            .find(|e| e.id == "race.nagaji.trait_bundle.hypnotic_gaze_dc")
-            .expect("nagaji must produce a Hypnotic Gaze DC explanation");
+            .find(|e| e.id == "race.nagaji.alternate_trait.hypnotic_gaze.dc")
+            .expect("nagaji must produce a Hypnotic Gaze DC explanation once selected");
         assert_eq!(dc.value, 10);
         assert!(dc.detail.contains("REAL computed value"));
 
@@ -11242,8 +11308,8 @@ mod flat_override_race_trait_tests {
         let cl = computation
             .explanations
             .iter()
-            .find(|e| e.id == "race.nagaji.trait_bundle.hypnotic_gaze_caster_level")
-            .expect("nagaji must produce a Hypnotic Gaze caster level explanation");
+            .find(|e| e.id == "race.nagaji.alternate_trait.hypnotic_gaze.caster_level")
+            .expect("nagaji must produce a Hypnotic Gaze caster level explanation once selected");
         assert_eq!(cl.value, 1);
     }
 
@@ -11251,13 +11317,13 @@ mod flat_override_race_trait_tests {
     /// this is a real per-character computation, not a hardcoded literal.
     #[test]
     fn nagaji_hypnotic_gaze_dc_tracks_a_different_charisma_score() {
-        let mut input = input_for_race("nagaji", &[]);
+        let mut input = input_for_race("nagaji", &["Nagaji ~ Hypnotic Gaze"]);
         input.chosen.ability_scores.charisma = 18; // modifier = floor(18/2) - 5 = 4
         let computation = compute_pilot_base_chassis(&input);
         let dc = computation
             .explanations
             .iter()
-            .find(|e| e.id == "race.nagaji.trait_bundle.hypnotic_gaze_dc")
+            .find(|e| e.id == "race.nagaji.alternate_trait.hypnotic_gaze.dc")
             .expect("nagaji must produce a Hypnotic Gaze DC explanation");
         assert_eq!(dc.value, 15, "DC = 11 + 4 = 15 with an 18 Charisma score");
     }
