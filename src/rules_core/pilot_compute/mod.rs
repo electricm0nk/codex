@@ -67930,25 +67930,39 @@ mod monk_and_summoner_chassis_recognition_tests {
     }
 }
 
-/// SD-31 wave 20 (chassis-coverage lane): `compute_class_chassis` has
+/// SD-31 wave 20 (chassis-coverage lane): `compute_class_chassis` had
 /// dispatched Ultimate Combat's three classes (Gunslinger, Ninja, Samurai)
 /// to `compute_uc_class_chassis` since `SD31-E4-F1-002`/`-005` --
 /// `class_ultimate_combat.rs`'s own tests prove the resulting
-/// `class_chassis.*` explanations carry the right numbers. But
+/// `class_chassis.*` explanations carry the right numbers -- but
 /// `has_supported_class_chassis` (the SEPARATE gate `compute_total_saves`,
 /// `compute_combat_baseline` and `compute_selected_skill_modifiers` each
-/// check independently) was never widened to recognize `UcClassId` --
-/// unlike the Monk/Summoner fix above, no OR-chain arm here ever tests
-/// `UcClassId::from_class_id_str`. The result: every one of these three
-/// classes emits `class_chassis.base_attack_bonus` etc. correctly and
-/// STILL never reaches `HeadlessReceiptStatus::Computed`, because
-/// `defense.total_save.unsupported` (and its two siblings) fire a
-/// `claim_blocking: true` diagnostic anyway. This is exactly the
+/// check independently) had not yet been widened to recognize `UcClassId`,
+/// so every one of these three classes emitted `class_chassis.base_attack_bonus`
+/// etc. correctly and still never reached `HeadlessReceiptStatus::Computed`,
+/// because `defense.total_save.unsupported` (and its two siblings) fired a
+/// `claim_blocking: true` diagnostic anyway. That was exactly the
 /// consumer-delta probe's `NoSnapshotDeltaVsClasslessBaseline`/
-/// `NeverReachesComputed` outcome shape, and it is why `docs/work-inventory.json`
-/// still shows Gunslinger/Ninja/Samurai as `class` kind `not-ingested`
-/// despite a real, tested, corpus-verified chassis table existing for all
-/// three.
+/// `NeverReachesComputed` outcome shape.
+///
+/// **Fixed the same wave** by the `is_supported_uc_single_class` arm on
+/// `has_supported_class_chassis` above -- `all_three_uc_classes_pass_the_
+/// chassis_gate_at_every_level_one_through_twenty` and `the_four_chassis_
+/// integration_blockers_are_gone_for_all_three_uc_classes` below both
+/// assert the fix directly and stay green. Confirmed still current as of
+/// SD-31 wave 27 (chassis-coverage census, `cargo test
+/// ultimate_combat_chassis_gate_tests`, 4 passed).
+///
+/// **What is genuinely still open, and why this is NOT a chassis/dispatch
+/// gap:** Ninja and Samurai still never reach `Computed` (Gunslinger does),
+/// but the one remaining claim-blocker is `combat.baseline_weapon_
+/// proficiency_unknown` -- `rules_tables::crb::weapon_tables::
+/// CLASS_WEAPON_PROFICIENCIES` carries no row for either class
+/// (`weapon_tables.rs`'s own doc comment explains why Gunslinger's
+/// proficiency tier was unambiguous to add this cycle and Ninja/Samurai's
+/// were deliberately left open). `gunslinger_alone_reaches_computed_status`
+/// below pins exactly this shape. Closing it is a `weapon_tables.rs`
+/// change, outside this file's granted scope for the wave that found it.
 #[cfg(test)]
 mod ultimate_combat_chassis_gate_tests {
     use super::{
