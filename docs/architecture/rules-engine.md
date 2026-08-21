@@ -250,6 +250,43 @@ real corpus shape, unverified, refuses cleanly; `var`/`count`/`mastervar`/`charb
 refusals) remain unimplemented; comparisons/`&&`/`skillinfo(TOTALRANK)` are no longer gaps (closed
 this wave).
 
+### 3c. Wave 27 — the interpreter's second consumer (ability modifiers), and the class-chassis census
+
+Wave 27's dispatch reframed the program's remaining wall as "features for characters that cannot
+exist" and asked how many of the 157 not-done `class` units are Monk-shaped — a chassis table
+present, only the `table_class_id` dispatch mapping missing. **The census answer is zero**: every
+class with a real chassis table anywhere in the codebase (34 total, across CRB/APG/ACG/Pathfinder
+Unchained/Ultimate Combat) is already dispatched. See [status.md](./status.md)'s wave 27 section for
+the full breakdown of where the remaining 157 classes actually sit (prestige entry-requirement gap,
+net-new base-class tables, structurally-non-PC-class records, unstarted books).
+
+- **`class_feature_grant_consumer.rs`'s `resolve_pcgen_var_chain` now seeds the six ability-modifier
+  abbreviations** (STR/DEX/CON/INT/WIS/CHA) before its fixed-point `BONUS:VAR` pass, so a
+  `class_feature` `DESC:` formula referencing a bare ability modifier (not just the character's class
+  level) can resolve. Two units newly clear the `derived`+`fixture-verified` bar: Ranger ~ Master
+  Hunter, Rogue ~ Master Strike — both riding on pre-existing CRB chassis dispatch, not new class
+  support. **Reachability caveat, same shape as wave 26's row 366**: `already_computed_slugs`
+  suppresses both new rows in production (a pre-existing hand-modelled `value:0` explanation already
+  occupies each slug), so neither value newly reaches a live character sheet this wave — confirmed by
+  driving `compute_pilot_base_chassis` across 165 synthetic characters and finding zero
+  interpreter-resolved lines. `OPEN-ISSUES.md` row 375 names the concrete unblock
+  (`pathfinder_unchained::rogue_features::master_strike_dc` already proves the pattern for the
+  Unchained Rogue in the same file).
+- **The flat-override `race_trait` seam grew to 5 races** (Rougarou, Gillman, Vanara, **Samsaran,
+  Nagaji**), each requiring full per-record coverage of the race's reachable `computed` population
+  before being added to `FLAT_OVERRIDE_RACE_TRAIT_RACES` — a direct, disclosed response to wave 26's
+  Undine GAMED finding (row 365's partial-coverage shape). One real bug was caught and fixed during
+  integration: Nagaji's Hypnotic Gaze is an alternate trait that replaces Serpent's Sense
+  (`Nagaji_ReplaceSerpentsSense`, already registered in `race_resolver.rs`'s
+  `ALTERNATE_TRAIT_REPLACE_FLAGS`), but the merged seam emitted both unconditionally — fixed by
+  gating on `replaced_by_alternate_trait`, mirroring `explain_gillman_flat_override_race_trait`/
+  `explain_vanara_flat_override_race_trait`. The credit mechanism itself (`is_seamed`, race-level not
+  record-level) still banks all 10 Samsaran+Nagaji units regardless of this fix — see `OPEN-ISSUES.md`
+  row 365/378/380 for why that coarseness was left as-is rather than patched piecemeal for one race.
+- **No change to `formula_interpreter.rs`, `class_tables.rs`, or any `ClassId`-family enum this
+  wave.** Both class-scoped lanes (a corpus-wide census, and a CRB-prestige-class architecture
+  investigation) were comment-only diffs; zero classes were made buildable.
+
 ### 4. `src/rules_core/pilot_compute_corpus.rs` — the corpus-aware wrapping seam
 
 `compute_pilot_with_corpus(input: &CharacterInput, corpus: &SourcePackageContent) ->

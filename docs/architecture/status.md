@@ -1145,6 +1145,93 @@ independent of, and never calling, `formula_interpreter.rs`.
   the sound parts logged for a future wave to re-land cleanly — see `OPEN-ISSUES.md` row 365 for the
   two remediation paths a future wave can choose between.
 
+## Corpus coverage, corpus-wide — re-derived 2026-08-21 (SD-31 wave 27, integration cycle)
+
+**Wave 27's dispatch framed the program's real remaining wall as a class-dispatch problem — "we have
+been building features for characters that cannot exist" — and asked how many of the 157 not-done
+`class` units are Monk-shaped (chassis table present, only the `table_class_id` string mapping
+missing). The census answer, independently re-derived by this integration cycle from
+`docs/work-inventory.json`: ZERO.** `table_class_id`/`compute_class_chassis`/
+`has_supported_class_chassis` already dispatch every one of the 34 classes that has a real chassis
+table anywhere in the codebase (CRB 11, APG 6, ACG 10, Pathfinder Unchained 4, Ultimate Combat 3) —
+the Monk-shaped pattern was exhausted by prior waves before wave 27 started. Board: **13,444 →
+13,456/38,372 (35.0360% → 35.0673%)**, **+12**, denominator unchanged. `class` stays flat at
+**28/185 — zero classes made buildable this wave**, confirmed independently by two lanes and this
+integration cycle's own regen.
+
+**Where the 157 not-done classes actually sit, corrected during this integration cycle after
+adversarial review found 2 of 10 CRB prestige classes misclassified** (Arcane Archer wrongly filed
+as needing no caster-stacking mechanism when 7 of its 10 levels carry `ADD:SPELLCASTER|Arcane`;
+Pathfinder Chronicler wrongly filed as needing one when it has no spellcasting at all — both fixed
+in-code, `7f2b0d4fd`): 77 prestige classes (CRB 10 + APG + Ultimate Psionics 19) need an
+entry-requirement gating mechanism this codebase does not have at all, and 6 of the CRB 10
+specifically (Arcane Archer, Arcane Trickster, Dragon Disciple, Eldritch Knight, Loremaster, Mystic
+Theurge) additionally need a caster-level-stacking mechanism (advancing an EXISTING class's spell
+progression from prestige levels) that also does not exist anywhere in this codebase —
+`CharacterClassLevel` is a flat `{class_id, level}` with no cross-class link field. 48 units are
+structurally not player-selectable base classes at all (33 Monster creature-type HD progressions, 7
+Monster.Companion, 3 Psionic power-list menus, 3 untyped edge records, 2 Vigilante-identity Support
+records) — kept in the denominator per standing no-scope-cuts precedent (`OPEN-ISSUES.md` row 372).
+22 real base classes (Antipaladin, Magus, Vigilante, Shifter, the 6 Occult Adventures classes, the
+10 Ultimate Psionics base classes) have zero chassis table anywhere and need net-new table
+construction. 5 CRB NPC classes (Adept/Aristocrat/Commoner/Expert/Warrior) are real, untabled, and —
+per two independent adversarial reviews this wave — the CHEAPEST remaining `class`-kind throughput in
+the program: the pinned oracle already carries their complete BAB/save progressions in the exact
+`classlevel()`-arithmetic shape the wave-25 interpreter reads, architecturally identical to the
+~30-line Gunslinger chassis row wave 20 already shipped (`OPEN-ISSUES.md` row 373). 28 are in books
+with no compiled rule set at all (`adventurers_guide` 25, `inner_sea_magic` 3). 2 (Ninja, Samurai) have
+complete, correctly-dispatched chassis already and are blocked only by a missing weapon-proficiency
+table row (`weapon_tables.rs`, outside every wave-27 lane's granted scope).
+
+**Where the +12 actually came from — both units of movement genuinely landed, but neither is a
+class-dispatch story:**
+
+* **`class_feature` 330 → 332 (+2): Ranger Master Hunter, Rogue Master Strike.** Wires ability
+  modifiers (STR/DEX/CON/INT/WIS/CHA) into `class_feature_grant_consumer.rs`'s formula-interpreter
+  resolver, both riding on chassis that already existed (Ranger/Rogue are pre-existing CRB
+  dispatches). Both are `derived`+`fixture-verified`, clearing Ruling §20's bar — but adversarial
+  review drove the real production entry point (`compute_pilot_base_chassis`) across 165 synthetic
+  characters and found the resolved value reaches ZERO of them: `already_computed_slugs` correctly
+  suppresses the new row because a pre-existing hand-modelled `value:0` explanation already occupies
+  each slug. The board credit is legitimate under the shipped bar (same shape as wave 26's row 366);
+  the player-visible number is, and remains, the pre-existing hand-modelled one. `OPEN-ISSUES.md` row
+  375 names the concrete, small unblock for a future wave.
+* **`race_trait` 540 → 550 (+10): Samsaran (4/4 records) and Nagaji (6/6 records), full per-record
+  coverage** — directly answering wave 26's Undine GAMED finding (row 365's 3-of-20 partial-coverage
+  shape). One real defect was found and fixed during this integration cycle: Nagaji's Hypnotic Gaze
+  is an ALTERNATE trait that replaces Serpent's Sense, but the merged seam emitted both unconditionally
+  for every nagaji — fixed by gating both on `replaced_by_alternate_trait`, the same pattern
+  `explain_gillman_flat_override_race_trait`/`explain_vanara_flat_override_race_trait` already use
+  (`b49054eb9`). The board still banks the full +10 (not adversarial review's suggested +9) because
+  the credit mechanism (`probe_race_trait_corpus`'s `is_seamed`) is race-level, not record-level —
+  identical to the already-shipped, never-challenged Gillman Throwback / Vanara Tree Stranger
+  precedent; mutation-proven this cycle (reverting the seam's race list reverts exactly these 10
+  units and nothing else). `OPEN-ISSUES.md` row 380 has the full account.
+
+### What wave 27's integration cycle changed in the architecture, not just in the counts
+
+* **A durable, in-code architectural finding was corrected before it could become the next wave's
+  false premise.** The prestige-class lane's stacking/non-stacking split (comment-only, `mod.rs`
+  after `table_class_id`) had Arcane Archer and Pathfinder Chronicler backwards — caught by
+  adversarial review re-checking the pinned oracle directly rather than trusting the lane's own
+  `data/corpus/.../class_feature/<class>/` directory-listing probe, which is structurally blind to
+  advancement encoded as `ADD:SPELLCASTER` directly on the `CLASS:` line. Corrected in both the
+  in-code comment and the retro deferral event (append-only correction row, original left intact).
+* **A real correctness bug was found and fixed in a unit already headed for the board.** Nagaji
+  Hypnotic Gaze/Serpent's Sense mutual exclusivity (above) — the lane's own test built the exact
+  input that should have caught this (no alternates selected) and asserted the bug's behavior instead
+  of catching it; replaced with two tests, one per branch.
+* **A false "no consumer exists" claim was corrected without over-claiming a fix that wasn't made.**
+  Nagaji Armored Scales' doc comment said no natural-armor consuming total exists in this codebase;
+  `FeatDerivedPillarContributions::natural_armor_bonus` is real and already sums three other sources.
+  The record is not yet wired into it (a genuine, disclosed follow-on), and the doc comment now says
+  so honestly instead of claiming a gap that isn't there.
+* **A cross-cutting instrument blind spot was found and logged, not silently trusted.** A separate
+  doneness dump (`v06_class_state_dump`, not the gate that actually banks units) omits all 3 Ultimate
+  Combat classes from its roster and reports `blocked_count: 0` — a gate that cannot fail for classes
+  it never enumerates. The real gate (`v06_work_inventory`'s `modelled_class_books()`) is unaffected
+  and correct. `OPEN-ISSUES.md` row 374.
+
 ### Desktop app: character sheet and update actions
 
 | Item | Status | Where (re-verified) |
