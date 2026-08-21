@@ -14722,8 +14722,25 @@ mod class_feature_consumer_delta_tests {
     /// [`CLASS_FEATURE_POOLS`] entry under [`class_feature_pool_group_matches`]
     /// with an owner this run's real [`modelled_class_books`] registers --
     /// the EXACT population this fallback moves out of `unknown`.
+    ///
+    /// **SD31-W29-INTEGRATE correction (adversarial-review CONFIRMED
+    /// finding): this test was guaranteed to fail on the very regen it
+    /// exists to validate, and the lane's own report never disclosed it.**
+    /// The `612` pin above was correct ONLY against the PRE-fix committed
+    /// inventory, used once to prove the figure before the wiring landed.
+    /// The wave-29 integration cycle's own guarded regen (the one that
+    /// actually applies this fallback and commits the result) moves all
+    /// 612 off `status == "unknown"` by construction -- so this same test,
+    /// read against the POST-regen committed inventory, now measures
+    /// something else entirely: whether any pool-catalog-resolvable
+    /// `class_feature` unit is STILL wrongly stuck at `unknown` after the
+    /// fix shipped. Re-run against the actual committed wave-29 inventory:
+    /// zero. Repinned at 0 as a forward-looking regression lock -- if a
+    /// future corpus addition or a regression in the fallback chain ever
+    /// leaves a pool-catalog-resolvable unit at `unknown` again, this goes
+    /// red.
     #[test]
-    fn independent_recount_of_the_612_unmeasurable_bucket_a_figure() {
+    fn no_pool_catalog_resolvable_class_feature_is_still_stuck_at_unknown() {
         let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
         let class_books = modelled_class_books();
         let inventory = std::fs::read_to_string(repo_root.join(OUTPUT_RELATIVE_PATH))
@@ -14746,17 +14763,14 @@ mod class_feature_consumer_delta_tests {
         }
         eprintln!(
             "independent recount: {} class_feature units currently `unknown` and \
-             pool-catalog-resolvable",
+             pool-catalog-resolvable (must be 0 post wave-29 regen)",
             matched.len()
         );
-        // Pinned at the value re-derived this wave. If a future corpus
-        // change moves this, re-derive by hand before touching the
-        // assertion -- this is exactly the number-must-ship-with-its-
-        // command discipline `AGENTS.md`'s Concurrency section requires.
         assert_eq!(
             matched.len(),
-            612,
-            "re-derived count does not match THE-BOX.md's filed 612 -- matched keys: {matched:?}"
+            0,
+            "pool-catalog-resolvable class_feature unit(s) still stuck at `unknown` after the \
+             wave-29 fallback landed -- re-derive by hand before touching this assertion: {matched:?}"
         );
     }
 

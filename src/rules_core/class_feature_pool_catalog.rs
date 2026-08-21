@@ -113,30 +113,53 @@ const ENGINE_EFFECT_TOKEN_KEYS: &[&str] =
     &["ABILITY", "CSKILL", "SELECT", "AUTO", "SAB", "BONUS", "DEFINE", "ADD", "SPELLS", "DR", "SR"];
 
 /// SD31-W29-INTEGRATE (Ruling §18, `OPERATOR-RULINGS-2026-08-21.md`):
-/// *"we need to show only valid choices."* A PCGen `PRE*` token (
-/// `PREABILITY`, `PREVARGTEQ`, `PREMULT`, `PRESKILL`, `PRELEVEL`,
-/// `PREFACT`, `PRECLASS`, `PREFEAT`, ...) is a prerequisite gate: the
-/// option is not available to every character of the pool's owning class,
-/// only to the subset who satisfies it (an archetype, a minimum level, a
-/// skill rank, ...). This catalog has no character to check a prerequisite
-/// against -- it is a book-wide reference walk, not a per-character
-/// query -- so it cannot tell a qualifying character from a disqualified
-/// one. Wave 29's adversarial review found 126 already-registered records
-/// (both Rogue Talent and Rage Power) carry a `PRE*` token and are served
-/// wholesale regardless, which is exactly the "listing a pool wholesale"
-/// shape Ruling §18 forbids ("the next pool-touching cycle must confirm
-/// the shipped catalog honours that rather than listing a pool wholesale.
-/// That check has not been done" -- it has now). Refusing here is the
-/// doctrinal fix: an option this catalog cannot prove is a VALID choice is
-/// not served, full stop, same posture as [`has_no_engine_effect_token`]
-/// refusing a record with a live mechanical token this catalog cannot
-/// safely narrate. A future cycle that wants these records back needs
-/// real per-character prerequisite evaluation in the picker itself
-/// (`class_feature_pool_picker.rs`), not a wider catalog.
-fn has_no_prerequisite_token(raw_tokens: &Value) -> bool {
-    let Some(tokens) = raw_tokens.as_array() else { return true };
-    !tokens.iter().any(|t| {
-        t.get("key").and_then(|k| k.as_str()).is_some_and(|k| k.starts_with("PRE"))
+/// *"we need to show only valid choices."*
+///
+/// **Corrected mid-cycle, by this same integration pass, after a blanket
+/// "any `PRE*` token" version of this guard broke three pre-existing,
+/// correctly-served real records** (`core_rulebook: Rage Power ~ Clear
+/// Mind` — `PREVARGTEQ:RagePowersPrereqLVL,8`; `advanced_class_guide:
+/// Rage Power ~ Elemental Blood (Greater)` and `~ Linnorm Death Curse
+/// (Crag)` — `PRELEVEL:MIN=4`/`MIN=8`). A blanket refusal conflates two
+/// UNRELATED PF1e shapes:
+///
+/// * **A level/chain/skill gate within the pool's OWN class** (`PRELEVEL`,
+///   `PREVARGTEQ` against a class-internal counter, most `PREABILITY
+///   CATEGORY=Special Ability` chain prerequisites like "Greater" requiring
+///   the character already hold "Lesser") — every character who stays in
+///   this class and levels up CAN eventually take this option. It is a
+///   real, valid, standing member of an OPEN pool (exactly what Ruling
+///   §18's own worked answer already calls Rage Power/Rogue Talent: "any
+///   [class] can eventually take any [option]") — the catalog is not
+///   lying by listing it, the same way a feat reference list is not lying
+///   by listing a feat the character does not qualify for YET.
+/// * **A permanent, structural exclusion from the base class itself** — a
+///   PCGen `PREABILITY` token whose value carries `CATEGORY=Archetype`,
+///   meaning the option belongs to a specific ARCHETYPE swap
+///   (`Barbarian Archetype ~ Giant Stalker`, etc.), not to the base class
+///   the pool's `REGISTERED_POOL_GROUPS` entry is keyed against. A
+///   character who never takes that archetype can NEVER take this option
+///   at any level — this is the genuinely EXCLUSIVE-shaped case Ruling §18
+///   forbids serving wholesale (confirmed: `adventurers_guide`'s
+///   `giant_stalker_defense`/`topple_giant`/`underfoot`, all three
+///   `PREABILITY = 1,CATEGORY=Archetype,Barbarian Archetype ~ Giant
+///   Stalker`).
+///
+/// So the refusal is scoped to exactly the second shape: a `PREABILITY`
+/// token whose value contains `CATEGORY=Archetype`. This catalog has no
+/// character to check a level/skill prerequisite against, but it does not
+/// need one to know an archetype-locked option is not a standing member of
+/// the base class's own pool. A future cycle that wants real per-character
+/// LEVEL/skill gating (so the picker can grey out, not just list,
+/// not-yet-qualified options) needs that in the picker itself
+/// (`class_feature_pool_picker.rs`), not a wider refusal here.
+fn is_archetype_locked(raw_tokens: &Value) -> bool {
+    let Some(tokens) = raw_tokens.as_array() else { return false };
+    tokens.iter().any(|t| {
+        t.get("key").and_then(|k| k.as_str()) == Some("PREABILITY")
+            && t.get("value")
+                .and_then(|v| v.as_str())
+                .is_some_and(|v| v.contains("CATEGORY=Archetype"))
     })
 }
 
@@ -368,7 +391,7 @@ pub fn load_pool_catalog(repo_root: &Path) -> Vec<PoolCatalogEntry> {
             if !has_no_engine_effect_token(&data["raw_tokens"]) {
                 continue;
             }
-            if !has_no_prerequisite_token(&data["raw_tokens"]) {
+            if is_archetype_locked(&data["raw_tokens"]) {
                 continue;
             }
             if raw_tokens_carry_more_than_one_desc_segment(&data["raw_tokens"]) {
@@ -698,19 +721,42 @@ mod tests {
         assert!(!has_no_engine_effect_token(&with_select));
     }
 
-    // SD31-W29-INTEGRATE (Ruling §18): a pool option gated by a prerequisite
-    // the catalog cannot evaluate must not be served wholesale.
+    // SD31-W29-INTEGRATE (Ruling §18): only an ARCHETYPE-lock (a permanent,
+    // structural exclusion from the base class) is refused -- an ordinary
+    // level/chain/skill prerequisite within the pool's own class is not,
+    // because every character of that class can eventually satisfy it.
     #[test]
-    fn has_no_prerequisite_token_refuses_any_pre_star_key_but_allows_a_plain_desc_only_record() {
+    fn is_archetype_locked_refuses_only_a_preability_category_archetype_token() {
         let clean = serde_json::json!([{"key": "KEY", "value": "x"}, {"key": "DESC", "value": "x"}]);
-        assert!(has_no_prerequisite_token(&clean));
-        for pre_key in ["PREABILITY", "PREVARGTEQ", "PREMULT", "PRESKILL", "PRELEVEL", "PREFACT"] {
-            let gated = serde_json::json!([{"key": pre_key, "value": "1,whatever"}]);
+        assert!(!is_archetype_locked(&clean));
+
+        // Ordinary within-class prerequisites -- must NOT be refused. Real
+        // shapes: `core_rulebook: Rage Power ~ Clear Mind`
+        // (`PREVARGTEQ:RagePowersPrereqLVL,8`), `advanced_class_guide:
+        // Rage Power ~ Linnorm Death Curse (Crag)` (`PRELEVEL:MIN=4`), and
+        // a `PREABILITY CATEGORY=Special Ability` chain prerequisite (e.g.
+        // "Greater" requiring "Lesser" already held), all of which stay
+        // served today.
+        for (key, value) in [
+            ("PREVARGTEQ", "RagePowersPrereqLVL,8"),
+            ("PRELEVEL", "MIN=4"),
+            ("PRESKILL", "1,Knowledge (Arcana)=5"),
+            ("PREFACT", "Deity,Zon-Kuthon"),
+            ("PREMULT", "1,[PRELEVEL:MIN=8],[PREABILITY:1,CATEGORY=Special Ability,X]"),
+            ("PREABILITY", "1,CATEGORY=Special Ability,Rage Power ~ Elemental Blood (Lesser)"),
+        ] {
+            let ungated = serde_json::json!([{"key": key, "value": value}]);
             assert!(
-                !has_no_prerequisite_token(&gated),
-                "{pre_key} must be recognised as a prerequisite gate"
+                !is_archetype_locked(&ungated),
+                "{key}={value} is an ordinary within-class prerequisite, not an archetype lock"
             );
         }
+
+        // The genuinely EXCLUSIVE shape -- must be refused.
+        let archetype_gated = serde_json::json!([
+            {"key": "PREABILITY", "value": "1,CATEGORY=Archetype,Barbarian Archetype ~ Giant Stalker"}
+        ]);
+        assert!(is_archetype_locked(&archetype_gated));
     }
 
     #[test]
