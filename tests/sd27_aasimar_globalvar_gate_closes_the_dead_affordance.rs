@@ -364,7 +364,7 @@ fn the_two_gate_sources_agree_wherever_both_speak() {
 
     assert_eq!(
         from_row,
-        346,
+        354,
         "rows whose own !PREFACT declares the gate (166 -> 223: SD-31 Epic 1-F2's 57 new \
          standard rows, 2026-08-15, all of which declare their own !PREFACT; 223 -> 232: the \
          Skinwalker follow-on batch's 9 standard rows, all of which also declare their own \
@@ -377,7 +377,8 @@ fn the_two_gate_sources_agree_wherever_both_speak() {
          `Shards of the Past`, whose own row carries `!PREFACT:1,ABILITIES,Samsaran_\
          ReplaceShardsOfThePast=True` even though its SECOND gate statement in the globalvar \
          file is a `BONUS:ABILITYPOOL` grant rather than an `ABILITY:` one -- see \
-         `ingest_races.rs`'s `globalvar_prevareq_flags`)"
+         `ingest_races.rs`'s `globalvar_prevareq_flags`; 346 -> 354: SD-31 wave-24's \
+         Rougarou (Bestiary 6, 2026-08-20), 8 standard rows, same shape, all self-gated)"
     );
     assert_eq!(from_globalvar, 9, "Aasimar's nine, whose only declaration is the globalvar file");
 }

@@ -1218,6 +1218,14 @@ fn reach_of(family: &Family) -> Option<Reach> {
             "B5",
             crate::race_catalog::ingested_race_ids_for_book("bestiary_5"),
         )),
+        // SD-31 wave-24 integration cycle (2026-08-20). Rougarou's chassis:
+        // same mechanism as CRB/B1/B2/B5 above, once `race_catalog::
+        // RACE_CORPUS_BOOKS` and `RACE_CATALOG_BOOKS` both carry
+        // `"bestiary_6"`/`B6`.
+        ("bestiary_6", "races") => Some(races_reach(
+            "B6",
+            crate::race_catalog::ingested_race_ids_for_book("bestiary_6"),
+        )),
         // SD-31-E6-F4-002 (2026-08-16). Advanced Race Guide's own 6-race
         // chassis batch (Catfolk, Kitsune, Ratfolk, Strix, Suli, Wayang) --
         // same mechanism as CRB/B1/B2/B5 above, once `race_catalog::
@@ -1265,6 +1273,13 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // (see `ingest_races.rs`'s `skinwalker` doc comment), so there is
         // no separate alternate-trait claim to add here yet.
         ("bestiary_5", "race_traits") => Some(race_traits_reach("B5", "bestiary_5")),
+        // SD-31 wave-24 integration cycle (2026-08-20). Rougarou's 8
+        // standard-tier racial-trait records, filed under `bestiary_6` by
+        // `ingest_races` -- same claim shape as `bestiary_2`/`bestiary_5`
+        // above. No heritage/alternate content exists for this race in the
+        // pinned oracle (confirmed: no `*_subrace.lst` file), so there is no
+        // separate alternate-trait claim to add here.
+        ("bestiary_6", "race_traits") => Some(race_traits_reach("B6", "bestiary_6")),
         ("advanced_race_guide", "race_traits") => {
             Some(race_traits_reach("ARG", "advanced_race_guide"))
         }
@@ -2595,6 +2610,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     ("ultimate_intrigue", "class_features", "Gap: 651 Ultimate Intrigue class_feature records are ingested corpus-wide (first data/corpus/ultimate_intrigue/ directory this book has ever had, same shape as Ultimate Combat above). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
     ("inner_sea_magic", "class_features", "Gap: 198 Inner Sea Magic class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
     ("inner_sea_taverns", "class_features", "Gap: 11 Inner Sea Taverns class_feature records are ingested corpus-wide (first corpus JSON this book has ever had, any kind). No per-class mechanism wiring has landed for this book's classes yet. Remedy: same as ACG above."),
+    ("bestiary_6", "spells", "Gap: Bestiary 6's own `rules_tables::bestiary_6::spell_list` table is real (2 records, transcribed from `b6_spells.lst`, byte-verified) and IS chained into `spell_resolver::spell_catalog_rows()` (SD-31 wave 24), but both of its rows are verbatim reprints of spells Ultimate Wilderness already ships (same `DESC:`, same Bestiary-6 `SOURCEPAGE:` citation inside `uw_spells.lst`). The resolver's cross-book dedup pass (added this same cycle to protect the pre-existing `no_key_is_served_twice_so_a_selection_resolves_unambiguously` product invariant in `apps/desktop/src-tauri/src/spell_catalog.rs`) keeps only the first-chained book's copy -- Ultimate Wilderness, registered in wave 19 -- so no row ever carries `book==\"B6\"` in the SERVED catalog, even though the content reaches a player under UW's own book label. Remedy: a real cross-book-reprint crediting design (Decision 10's Supersession Register, proposed but not applied, is the natural home for this policy question) so a book whose own content is verbatim-duplicated elsewhere can still claim its own reach without double-serving the catalog. See docs/release/SD-31-corpus-closure-grind/artifacts/BESTIARY-6-LEDGER.md."),
 ];
 
 /// Records that reach a real surface carrying nothing but their own key.

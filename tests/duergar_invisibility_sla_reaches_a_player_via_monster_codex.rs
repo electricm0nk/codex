@@ -98,6 +98,11 @@ const LOADED_BOOKS: &[&str] = &[
     // SD-31 Epic 1 follow-on batch (2026-08-15): Skinwalker's chassis. FOURTH
     // time this exact test has caught this exact omission.
     "bestiary_5",
+    // SD-31 wave-24 integration cycle (2026-08-20): Rougarou's chassis
+    // (Bestiary 6). FIFTH time this exact test has caught this exact
+    // omission -- edited in the same commit that adds the book to
+    // `RACE_CORPUS_BOOKS`, per this file's own standing rule above.
+    "bestiary_6",
 ];
 
 fn corpus_dirs() -> Vec<(&'static str, PathBuf)> {
