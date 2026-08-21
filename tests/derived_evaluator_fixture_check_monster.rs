@@ -149,6 +149,17 @@ fn reference_derivation_refuses_what_it_cannot_parse() {
 /// wrapped `(max(TL,1))`) OR a monster-specific literal override (Couatl:
 /// `9` against 12 HD). This function reads `corpus_field`'s own trailing
 /// value and applies whichever the row states.
+///
+/// W26-INTERPRETER-INTEGRATE widened it a third time, for the one corpus
+/// shape that is a real arithmetic formula over `HD` rather than a bare
+/// literal: `HD*<N>/<M>` (Demon (Vermlek)'s `HD*3/4`). Deliberately its OWN
+/// tiny hand-rolled parser for exactly that one shape -- never a call into
+/// `formula_interpreter::PcgenFormulaEvaluator`, which is the production
+/// evaluator this guarantee exists to catch disagreeing with. Truncates
+/// toward zero via integer division, matching this crate's own
+/// `PcgenFormulaEvaluator::evaluate` boundary contract (module doc point 1
+/// of `formula_interpreter.rs`) -- both operands are non-negative on every
+/// corpus row this shape covers, so truncation and floor agree here.
 fn reference_spell_like_ability_caster_level(
     corpus_field: &str,
     monster_class_token: &str,
@@ -157,8 +168,28 @@ fn reference_spell_like_ability_caster_level(
     let hd = reference_hd_from_monster_class(monster_class_token)?;
     match sla_value {
         "HD" | "max(TL,1)" | "(max(TL,1))" => Some(hd),
-        literal => literal.trim().parse::<i32>().ok(),
+        literal => literal
+            .trim()
+            .parse::<i32>()
+            .ok()
+            .or_else(|| reference_hd_multiply_divide(literal.trim(), hd)),
     }
+}
+
+/// The one arithmetic shape this file's reference derivation reads:
+/// `HD*<N>/<M>`, `N`/`M` plain non-negative integer literals. Anything else
+/// -- a different operand order, a `+`/`-`, a second variable -- refuses,
+/// never guesses; this is a narrow independent check, not a second formula
+/// interpreter.
+fn reference_hd_multiply_divide(expr: &str, hd: i32) -> Option<i32> {
+    let rest = expr.strip_prefix("HD*")?;
+    let (numerator_str, denominator_str) = rest.split_once('/')?;
+    let numerator: i32 = numerator_str.trim().parse().ok()?;
+    let denominator: i32 = denominator_str.trim().parse().ok()?;
+    if denominator == 0 {
+        return None;
+    }
+    Some(hd * numerator / denominator)
 }
 
 #[test]
@@ -183,9 +214,20 @@ fn reference_caster_level_derivation_covers_both_the_generic_rule_and_a_literal_
         reference_spell_like_ability_caster_level("BONUS:VAR|SLA_CL|9", "Couatl Outsider:12"),
         Some(9)
     );
-    // An unparseable formula refuses rather than guesses.
+    // The real Demon (Vermlek) worked example: `HD*3/4` is a real arithmetic
+    // formula this file's own independent parser now reads (`4*3/4 = 3`,
+    // exact -- no truncation ambiguity).
     assert_eq!(
-        reference_spell_like_ability_caster_level("BONUS:VAR|SLA_CL|HD*3/4", "Outsider:16"),
+        reference_spell_like_ability_caster_level(
+            "BONUS:VAR|SLA_CL|HD*3/4",
+            "Outsider (Fort/Will):4"
+        ),
+        Some(3)
+    );
+    // A shape neither this file's `HD*<N>/<M>` parser nor the generic/literal
+    // rules above cover still refuses rather than guesses.
+    assert_eq!(
+        reference_spell_like_ability_caster_level("BONUS:VAR|SLA_CL|HD+3", "Outsider:16"),
         None
     );
 }

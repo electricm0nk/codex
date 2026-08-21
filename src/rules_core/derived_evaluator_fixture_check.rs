@@ -26,6 +26,8 @@ use std::path::{Path, PathBuf};
 use crate::rules_core::character_input::{ActiveState, EquipmentSelection};
 use crate::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
 use crate::rules_core::equipment_effects::compute_equipment_effects;
+use crate::rules_core::pilot_compute::formula_interpreter::PcgenFormulaEvaluator;
+use crate::rules_core::pilot_compute::formula_reproduction_harness::FormulaEvaluator;
 use crate::rules_core::rules_tables::companion_chassis::companion_book;
 use crate::rules_core::rules_tables::monster_chassis::{MonsterStatBlock, MONSTER_BOOKS};
 
@@ -316,13 +318,32 @@ pub fn spell_like_ability_caster_level(monster: &MonsterStatBlock) -> Option<i32
         // rather than silently losing its caster level.
         Some("HD") | Some("max(TL,1)") | Some("(max(TL,1))") | None => Some(hd),
         // Every other value is the row's own STATED override -- trust the
-        // corpus over the generic rule. A plain integer parses directly; an
-        // unparseable formula (e.g. `HD*3/4`, `book_of_the_damned_volume_2`'s
-        // Demon (Vermlek)) has no computable value without a formula
-        // interpreter this repo does not have, and returns `None` rather
-        // than a guess -- the same "honest absence" contract this
-        // function's other early returns already keep.
-        Some(raw) => raw.trim().parse::<i32>().ok(),
+        // corpus over the generic rule. A plain integer parses directly.
+        //
+        // W26-INTERPRETER-INTEGRATE (`OPERATOR-RULINGS-2026-08-21.md` §20):
+        // a value that is not a plain integer is no longer an automatic
+        // refusal -- `formula_interpreter::PcgenFormulaEvaluator` reads real
+        // PCGen arithmetic now, and `HD*3/4`
+        // (`book_of_the_damned_volume_2`'s Demon (Vermlek)) is exactly such
+        // a formula: multiply and divide over the monster's OWN Hit Dice,
+        // which this function already read two lines above to apply the
+        // generic rule. `TL` is bound to the same value as `HD` (PCGen's own
+        // `TL` == "total levels", which for a monster with only a
+        // `MONSTERCLASS:` token and no PC class levels sums to exactly the
+        // racial HD -- the same equivalence
+        // `monster_ability_formula_save_dc`'s own `parse_formula_base_plus_
+        // ability` already establishes and cites for this corpus). The
+        // interpreter refuses -- returns `Err`, never a guess -- on any
+        // identifier this repo has not bound (a race-specific bonus name
+        // with no `DEFINE:` on the row, say), so `.ok()` below is still the
+        // same honest-absence contract every other arm of this function
+        // keeps: `Some(value)` only when the formula both parses AND
+        // evaluates against the two variables this function can honestly
+        // supply.
+        Some(raw) => raw.trim().parse::<i32>().ok().or_else(|| {
+            let vars = BTreeMap::from([("HD".to_string(), i64::from(hd)), ("TL".to_string(), i64::from(hd))]);
+            PcgenFormulaEvaluator.evaluate(raw.trim(), &vars).ok().and_then(|v| i32::try_from(v).ok())
+        }),
     }
 }
 
@@ -2676,14 +2697,46 @@ mod monster_seam_tests {
         assert_eq!(spell_like_ability_caster_level(&block), Some(9));
     }
 
-    // An unparseable formula (the real Demon (Vermlek) worked example,
-    // `book_of_the_damned_volume_2`, `BONUS:VAR|SLA_CL|HD*3/4`) has no
-    // computable value without a formula interpreter this repo does not
-    // have -- an honest `None`, never a guess at what `HD*3/4` might round
-    // to.
+    // W26-INTERPRETER-INTEGRATE (`OPERATOR-RULINGS-2026-08-21.md` §20):
+    // `HD*3/4` -- the real Demon (Vermlek) worked example,
+    // `book_of_the_damned_volume_2`, `BONUS:VAR|SLA_CL|HD*3/4` -- is a real
+    // arithmetic formula over the monster's own Hit Dice, which
+    // `formula_interpreter::PcgenFormulaEvaluator` can now read (`HD*3/4`
+    // is plain multiply/divide, no unbound identifier). This test used to
+    // assert `None` under §24.1's "no formula interpreter" ban; the
+    // arithmetic is genuinely `16*3/4 = 12`, and refusing an evaluable
+    // formula once the interpreter exists would be exactly the "leave a
+    // real answer on the table" failure mode the ruling exists to fix. The
+    // exact real-corpus value (`HD=4` -> `3`) is pinned separately by
+    // `hd_times_three_quarters_matches_the_real_demon_vermlek_worked_example`
+    // below and by `monster_entries`'s own
+    // `book_of_the_damned_volume_2:monster:demon_vermlek` fixture row.
     #[test]
-    fn an_unparseable_sla_cl_formula_refuses_rather_than_guesses() {
+    fn a_multiply_divide_sla_cl_formula_now_evaluates_via_the_interpreter() {
         let block = stat_block_full(Some("Outsider:16"), true, Some("HD*3/4"));
+        assert_eq!(spell_like_ability_caster_level(&block), Some(12));
+    }
+
+    // The real Demon (Vermlek) worked example itself
+    // (`book_of_the_damned_volume_2/botd2_races.lst:7`,
+    // `MONSTERCLASS:Outsider (Fort/Will):4`, `BONUS:VAR|SLA_CL|HD*3/4`) --
+    // `4*3/4 = 3` exactly, no truncation ambiguity. Pinned independently by
+    // `monster_entries`'s own fixture row for this unit.
+    #[test]
+    fn hd_times_three_quarters_matches_the_real_demon_vermlek_worked_example() {
+        let block = stat_block_full(Some("Outsider (Fort/Will):4"), true, Some("HD*3/4"));
+        assert_eq!(spell_like_ability_caster_level(&block), Some(3));
+    }
+
+    // An interpreter refusal (an unbound identifier the corpus has never
+    // shown this repo, e.g. a race-specific bonus name with no `DEFINE:`
+    // anywhere on the row) must still surface as `None`, never a guess --
+    // the interpreter's own "never default to zero" contract, restated at
+    // this seam's boundary so a future formula shape this repo cannot bind
+    // fails exactly as honestly as an unparseable one always has.
+    #[test]
+    fn an_sla_cl_formula_naming_an_unbound_identifier_still_refuses() {
+        let block = stat_block_full(Some("Outsider:16"), true, Some("HD*SomeRaceSpecificBonus"));
         assert_eq!(spell_like_ability_caster_level(&block), None);
     }
 
