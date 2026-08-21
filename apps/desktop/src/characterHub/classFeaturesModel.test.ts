@@ -388,6 +388,58 @@ function verifiesAChasisRecordWithNoClassTokenNeverAttachesADescription() {
   );
 }
 
+/**
+ * SD-31 wave 29 (THE-BOX.md §2.1 F1, load-bearing negative finding, RE-
+ * CONFIRMED against this file rather than assumed): a `ClassFeatureDescriptionDto`
+ * the corpus-description catalog (`class_feature_descriptions.rs`) can render
+ * for a record does NOT, by itself, put that record on the character sheet.
+ * `buildClassFeatureSurface` only ever creates a `features`/`notComputed` row
+ * by iterating `explanations` (see the `for (const explanation of
+ * explanations)` loop above) -- `descriptions` is consulted only as
+ * enrichment on a row that already exists. A record with no matching
+ * `ExplanationDto` (exactly what `v06_work_inventory.rs`'s G1/G2 groups are)
+ * produces ZERO rows, no matter how permissive `classify()`'s eligibility
+ * check becomes or how many corpus descriptions the catalog can render for
+ * it.
+ *
+ * This pins the reason wave 29's F1 widening (crediting `class_feature`
+ * `text-complete` off `class_feature_descriptions.rs`'s render catalog alone,
+ * the same way `class_feature_pool_catalog_holds` already credits pool
+ * members) was correctly declined: unlike
+ * `ClassFeaturePoolReferenceSection` (`CharacterSheet.tsx`), which renders
+ * `loadClassFeaturePoolOptions()`'s FULL catalog independent of
+ * `props.explanations`, there is no equivalent browsable reference surface
+ * for `loadClassFeatureDescriptions()` -- it is wired ONLY as the
+ * `corpusDescription` join inside this function. Widening `classify()` to
+ * treat the catalog's presence as proof-of-holds without first building that
+ * surface would credit `done` for a description no player screen ever
+ * shows -- the exact gap Decision 7 condition 3 / DoD-8 forbid crediting on.
+ *
+ * If a future cycle builds that reference surface, THIS test's assertion
+ * flips (0 -> a real row count) and should be revisited alongside it, not
+ * deleted quietly.
+ */
+function verifiesADescriptionWithNoMatchingExplanationProducesNoRowAtAllRegardlessOfHowManyDescriptionsExist() {
+  const surface = buildClassFeatureSurface(
+    [], // no engine explanations at all -- exactly the G1/G2 shape
+    ROGUE,
+    [
+      descriptionDto('rogue', 'sneak_attack', SNEAK_ATTACK_DESC),
+      descriptionDto('rogue', 'evasion', 'Some other real rogue feature description.'),
+    ]
+  );
+  assertEqual(
+    surface.features.length,
+    0,
+    'a description with no matching explanation must not manufacture a feature row'
+  );
+  assertEqual(
+    surface.notComputed.length,
+    0,
+    'a description with no matching explanation must not manufacture a not-computed notice either'
+  );
+}
+
 async function main() {
   verifiesALevel11RoguesSneakAttackKeepsItsMagnitudeAndCitation();
   verifiesTheDetailTextIsNeverRewritten();
@@ -408,6 +460,7 @@ async function main() {
   verifiesNoMatchingCandidateLeavesCorpusDescriptionNull();
   verifiesAWrongClassCandidateNeverAttachesEvenWithTheSameFeatureSlug();
   verifiesAChasisRecordWithNoClassTokenNeverAttachesADescription();
+  verifiesADescriptionWithNoMatchingExplanationProducesNoRowAtAllRegardlessOfHowManyDescriptionsExist();
 }
 
 main().catch((error: unknown) => {
