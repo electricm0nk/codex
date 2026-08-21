@@ -664,6 +664,27 @@ fn zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown() {
             unit["status"], "not-ingested",
             "{id}: zero-magnitude option-pool class_feature confirmed unheld by the engine must be not-ingested, not unknown or text-complete"
         );
+        // NEXT RE-PICK WARNING, wave 29 lane 2 (`THE-BOX.md` §3 item #2):
+        // `classify()` gained a THIRD owner-resolution fallback,
+        // `class_feature_owner_via_pool_catalog`, which now resolves
+        // "Discovery" to "alchemist" via `CLASS_FEATURE_POOLS` (it was
+        // previously unresolvable by any fallback, landing this record on
+        // the "no owner at all" branch). The `status` above is UNCHANGED
+        // (still `not-ingested` -- the fallback can never manufacture
+        // `text-complete`/`grounded` on its own, proven by
+        // `class_feature_consumer_delta_tests::
+        // a_pool_catalog_recovered_owner_can_never_ground_a_record_even_with_a_matching_explanation_id`
+        // in `src/bin/v06_work_inventory.rs`), but the committed `evidence`
+        // string below is STILL the pre-fix value because this lane, per
+        // its own build-lane discipline, did not run the guarded regen --
+        // the fixed `classify()` would now emit
+        // `class_feature_owner_matched_by_name_but_record_not_held_by_engine`
+        // instead (the same "owner resolved but pool catalog does not hold
+        // it" evidence the OWNED "Rogue Talent" case already carries). The
+        // NEXT wave that runs the guarded regen with this fix landed must
+        // re-pick this assertion to the new string, exactly as the comment
+        // above this loop already did for "Rage Power" -> "Discovery" --
+        // this is that same kind of assumption drift, not a new one.
         assert_eq!(
             unit["evidence"],
             "class_feature_option_pool_record_not_held_by_engine"
