@@ -8287,6 +8287,7 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         class_feature_grant_consumer::push_generic_class_feature_grant_records(
             &class_level.class_id,
             class_level.level,
+            &ability_modifiers,
             &mut explanations,
         );
     }

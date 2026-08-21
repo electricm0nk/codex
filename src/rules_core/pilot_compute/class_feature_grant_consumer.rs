@@ -160,7 +160,7 @@ use serde_json::Value;
 
 use super::formula_interpreter::PcgenFormulaEvaluator;
 use super::formula_reproduction_harness::FormulaEvaluator as _;
-use super::{ComputationExplanation, pu_feature_slug};
+use super::{AbilityModifiers, ComputationExplanation, pu_feature_slug};
 
 /// The four classes this module refuses to emit for -- see this module's
 /// own doc comment, section 2, for the full citation (three named by
@@ -686,25 +686,53 @@ pub(crate) fn class_level_variable_name(class: &str) -> String {
     out
 }
 
+/// Every ability-abbreviation identifier PCGen's own formula tokens reference bare (`STR`,
+/// `DEX`, `CON`, `INT`, `WIS`, `CHA`), seeded from the character's real, already-computed
+/// [`AbilityModifiers`] -- SD-31 wave 27's widening of [`resolve_pcgen_var_chain`], named as the
+/// scoped, cheap follow-on wave 26 explicitly deferred (its own doc comment below, prior
+/// version: "No ability-modifier binding exists yet ... Widening to ability modifiers is real,
+/// scoped follow-on work (`ability_modifiers` is already in scope at this module's one call
+/// site, `compute_class_chassis`)"). These six identifiers are always bound, regardless of
+/// whether the record being resolved actually references any of them -- an unreferenced
+/// identifier sitting unused in the seed map changes nothing (the evaluator only ever reads an
+/// identifier a formula names), and it costs nothing to seed all six once rather than special-
+/// case which records need which ability.
+fn ability_modifier_seed_vars(ability_modifiers: &AbilityModifiers) -> BTreeMap<String, i64> {
+    let mut out = BTreeMap::new();
+    out.insert("STR".to_string(), i64::from(ability_modifiers.strength));
+    out.insert("DEX".to_string(), i64::from(ability_modifiers.dexterity));
+    out.insert("CON".to_string(), i64::from(ability_modifiers.constitution));
+    out.insert("INT".to_string(), i64::from(ability_modifiers.intelligence));
+    out.insert("WIS".to_string(), i64::from(ability_modifiers.wisdom));
+    out.insert("CHA".to_string(), i64::from(ability_modifiers.charisma));
+    out
+}
+
 /// Resolves every `bonus_vars` identifier this record's own `BONUS:VAR` tokens can reach, seeded
-/// with the SINGLE fact this module actually knows about one character: their level in the
-/// granting class, bound to `class_level_var`. A fixed-point pass over the record's own token
+/// with the two facts this module actually knows about one character: their level in the
+/// granting class (bound to `class_level_var`) and their six ability modifiers (bound to the
+/// bare `STR`/`DEX`/`CON`/`INT`/`WIS`/`CHA` abbreviations PCGen's own formula tokens use --
+/// [`ability_modifier_seed_vars`], SD-31 wave 27). A fixed-point pass over the record's own token
 /// set: repeatedly evaluates any not-yet-bound formula whose every identifier is already known,
 /// through the real [`PcgenFormulaEvaluator`], until a full pass adds nothing further (capped at
 /// 16 passes -- generous headroom over the longest chain this corpus has ever shown, 2 hops).
 ///
-/// An identifier this loop cannot reach (an ability modifier, a sibling record's own variable, a
-/// shape the interpreter refuses -- e.g. the documented bare-comparison-as-numeric-term gap) is
-/// simply never bound -- never guessed, never defaulted. [`resolved_description_for`]'s own
-/// downstream `render_pcgen_desc_with_values` call then drops (and reports) any `%N` that still
-/// names it, exactly the way it already treats any other unresolved argument.
+/// An identifier this loop cannot reach (a sibling record's own variable, a `classlevel(...)`
+/// argument -- deliberately never bound here, per `formula_interpreter.rs`'s own standing
+/// precondition that no consumer may bank through a `classlevel(...)`-bearing formula until its
+/// cross-class gap is resolved -- or a shape the interpreter refuses, e.g. the documented
+/// bare-comparison-as-numeric-term gap) is simply never bound -- never guessed, never defaulted.
+/// [`resolved_description_for`]'s own downstream `render_pcgen_desc_with_values` call then drops
+/// (and reports) any `%N` that still names it, exactly the way it already treats any other
+/// unresolved argument.
 pub(crate) fn resolve_pcgen_var_chain(
     bonus_vars: &BTreeMap<String, String>,
     class_level_var: &str,
     level: u8,
+    ability_modifiers: &AbilityModifiers,
 ) -> BTreeMap<String, i64> {
     let evaluator = PcgenFormulaEvaluator;
-    let mut vars: BTreeMap<String, i64> = BTreeMap::new();
+    let mut vars: BTreeMap<String, i64> = ability_modifier_seed_vars(ability_modifiers);
     vars.insert(class_level_var.to_string(), i64::from(level));
     let mut progressed = true;
     let mut guard = 0;
@@ -728,12 +756,17 @@ pub(crate) fn resolve_pcgen_var_chain(
 /// substituted in place of every `%N`, or `None` when the chain does not fully resolve -- exactly
 /// the "drop and report, never guess" contract `render_pcgen_desc_with_values` already enforces,
 /// extended here only by WHERE the values come from (the real formula interpreter over this
-/// record's own `BONUS:VAR` chain, seeded with the character's real class level) rather than a
-/// hand-modelled function.
-pub(crate) fn resolved_description_for(key: &str, level: u8) -> Option<String> {
+/// record's own `BONUS:VAR` chain, seeded with the character's real class level and real ability
+/// modifiers) rather than a hand-modelled function.
+pub(crate) fn resolved_description_for(
+    key: &str,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+) -> Option<String> {
     let record = class_feature_record_tokens().get(key)?;
     let class_level_var = class_level_variable_name(&record.class);
-    let resolved_vars = resolve_pcgen_var_chain(&record.bonus_vars, &class_level_var, level);
+    let resolved_vars =
+        resolve_pcgen_var_chain(&record.bonus_vars, &class_level_var, level, ability_modifiers);
     let mut values = crate::rules_core::pcgen_desc::PcgenDisplayValues::new();
     for (name, value) in &resolved_vars {
         values.set(name, *value);
@@ -763,6 +796,7 @@ pub(crate) fn resolved_description_for(key: &str, level: u8) -> Option<String> {
 pub(super) fn push_generic_class_feature_grant_records(
     class_id_str: &str,
     level: u8,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     let Some(owner) = class_id_str.strip_prefix("class:") else { return };
@@ -826,7 +860,7 @@ pub(super) fn push_generic_class_feature_grant_records(
             if let Some(name) = descriptions.get(key) {
                 (name.as_str(), None)
             } else if let Some(record) = class_feature_record_tokens().get(key) {
-                match resolved_description_for(key, level) {
+                match resolved_description_for(key, level, ability_modifiers) {
                     Some(text) => (record.name.as_str(), Some(text)),
                     None => continue,
                 }
@@ -1026,7 +1060,8 @@ mod tests {
             push_generic_class_feature_grant_records(
                 &format!("class:{gated}"),
                 20,
-                &mut explanations,
+                &AbilityModifiers::default(),
+            &mut explanations,
             );
             assert!(
                 explanations.is_empty(),
@@ -1042,7 +1077,7 @@ mod tests {
         // Level 0 cannot meet any real grant's `granted_at` (PCGen's own
         // minimum class level is 1), so this must always be empty for any
         // class this module serves.
-        push_generic_class_feature_grant_records("class:fighter", 0, &mut explanations);
+        push_generic_class_feature_grant_records("class:fighter", 0, &AbilityModifiers::default(), &mut explanations);
         assert!(explanations.is_empty());
     }
 
@@ -1055,7 +1090,7 @@ mod tests {
         // `v06_work_inventory.rs`'s `class_feature_exact_suffix_grounded`
         // requires to ever credit it.
         let mut explanations = Vec::new();
-        push_generic_class_feature_grant_records("class:fighter", 20, &mut explanations);
+        push_generic_class_feature_grant_records("class:fighter", 20, &AbilityModifiers::default(), &mut explanations);
         for explanation in &explanations {
             assert!(
                 explanation.id.starts_with("class_feature.fighter.corpus_record."),
@@ -1080,7 +1115,7 @@ mod tests {
     #[test]
     fn a_vanilla_rogue_never_receives_an_archetype_only_replacement_feature() {
         let mut explanations = Vec::new();
-        push_generic_class_feature_grant_records("class:rogue", 20, &mut explanations);
+        push_generic_class_feature_grant_records("class:rogue", 20, &AbilityModifiers::default(), &mut explanations);
         let ids: Vec<&str> = explanations.iter().map(|e| e.id.as_str()).collect();
         assert!(
             !ids.iter().any(|id| id.ends_with(".careful_disarm") || id.ends_with(".poison_use")),
@@ -1105,7 +1140,7 @@ mod tests {
             value: 1,
             detail: "the real, hand-wired Bravery morale bonus".to_owned(),
         }];
-        push_generic_class_feature_grant_records("class:fighter", 20, &mut explanations);
+        push_generic_class_feature_grant_records("class:fighter", 20, &AbilityModifiers::default(), &mut explanations);
         assert_eq!(
             explanations.iter().filter(|e| e.id.rsplit('.').next() == Some("bravery")).count(),
             1,
@@ -1136,6 +1171,7 @@ mod tests {
         push_generic_class_feature_grant_records(
             "class:unchained_barbarian",
             20,
+            &AbilityModifiers::default(),
             &mut explanations,
         );
         // Gate-weakening review finding (SD-31 wave 23 integration cycle):
@@ -1170,7 +1206,7 @@ mod tests {
                 continue;
             }
             let mut explanations = Vec::new();
-            push_generic_class_feature_grant_records(&format!("class:{class}"), 20, &mut explanations);
+            push_generic_class_feature_grant_records(&format!("class:{class}"), 20, &AbilityModifiers::default(), &mut explanations);
             for explanation in &explanations {
                 any_emitted = true;
                 assert!(
@@ -1212,7 +1248,8 @@ mod tests {
         let mut bonus_vars = BTreeMap::new();
         bonus_vars.insert("AssassinPoisonSaveBonus".to_string(), "AssassinLVL/2".to_string());
         for (level, expected) in [(2u8, 1i64), (3, 1), (4, 2), (10, 5), (20, 10)] {
-            let vars = resolve_pcgen_var_chain(&bonus_vars, "AssassinLVL", level);
+            let vars =
+                resolve_pcgen_var_chain(&bonus_vars, "AssassinLVL", level, &AbilityModifiers::default());
             assert_eq!(
                 vars.get("AssassinPoisonSaveBonus"),
                 Some(&expected),
@@ -1232,26 +1269,54 @@ mod tests {
         bonus_vars.insert("TrapfindingLVL".to_string(), "RogueLVL".to_string());
         bonus_vars.insert("TrapfindingBonus".to_string(), "max(TrapfindingLVL/2,1)".to_string());
         for (level, expected) in [(1u8, 1i64), (2, 1), (3, 1), (4, 2), (5, 2), (10, 5), (20, 10)] {
-            let vars = resolve_pcgen_var_chain(&bonus_vars, "RogueLVL", level);
+            let vars =
+                resolve_pcgen_var_chain(&bonus_vars, "RogueLVL", level, &AbilityModifiers::default());
             assert_eq!(vars.get("TrapfindingBonus"), Some(&expected), "level {level}");
         }
     }
 
-    /// An identifier the chain can never reach (here: a made-up ability-modifier-shaped name,
-    /// standing in for the real, currently-unsupported case) is never bound -- no entry, no
-    /// guessed `0`, no panic.
+    /// An identifier the chain can never reach (here: a made-up sibling-record variable name,
+    /// standing in for the real, currently-unsupported cross-record-alias case) is never bound --
+    /// no entry, no guessed `0`, no panic.
     #[test]
     fn resolve_pcgen_var_chain_never_binds_an_unreachable_identifier() {
         let mut bonus_vars = BTreeMap::new();
+        bonus_vars.insert("SomeBonus".to_string(), "10+(SomeLVL/2)+SiblingRecordOwnVariable".to_string());
+        bonus_vars.insert("SomeLVL".to_string(), "RogueLVL".to_string());
+        let vars =
+            resolve_pcgen_var_chain(&bonus_vars, "RogueLVL", 10, &AbilityModifiers::default());
+        assert_eq!(vars.get("SomeLVL"), Some(&10));
+        assert!(
+            vars.get("SomeBonus").is_none(),
+            "a formula referencing an unbound identifier (a sibling record's own variable) must \
+             never resolve to a guessed number: {vars:?}"
+        );
+    }
+
+    /// SD-31 wave 27: an ability-modifier-dependent formula (the EXACT real shape `Rogue ~
+    /// Master Strike`'s corpus row carries, `10+(MasterStrikeLVL/2)+INT`) now resolves once the
+    /// character's real `AbilityModifiers` are seeded -- this is the widening the prior test's
+    /// old body (before this wave) proved deliberately did NOT happen.
+    #[test]
+    fn resolve_pcgen_var_chain_now_binds_a_real_ability_modifier() {
+        let mut bonus_vars = BTreeMap::new();
         bonus_vars.insert("MasterStrikeDC".to_string(), "10+(MasterStrikeLVL/2)+INT".to_string());
         bonus_vars.insert("MasterStrikeLVL".to_string(), "RogueLVL".to_string());
-        let vars = resolve_pcgen_var_chain(&bonus_vars, "RogueLVL", 10);
-        assert_eq!(vars.get("MasterStrikeLVL"), Some(&10));
-        assert!(
-            vars.get("MasterStrikeDC").is_none(),
-            "a formula referencing an unbound identifier (INT) must never resolve to a guessed \
-             number: {vars:?}"
+        let ability_modifiers = AbilityModifiers { intelligence: 3, ..AbilityModifiers::default() };
+        let vars = resolve_pcgen_var_chain(&bonus_vars, "RogueLVL", 20, &ability_modifiers);
+        assert_eq!(vars.get("MasterStrikeLVL"), Some(&20));
+        assert_eq!(
+            vars.get("MasterStrikeDC"),
+            Some(&23),
+            "10 + (20/2) + 3 = 23, real production INT modifier now seeded: {vars:?}"
         );
+        // A DIFFERENT ability abbreviation the formula does not reference is seeded too (all six
+        // always are, see `ability_modifier_seed_vars`) but changing it must not move this
+        // formula's own result.
+        let ability_modifiers_wis_only =
+            AbilityModifiers { intelligence: 3, wisdom: 99, ..AbilityModifiers::default() };
+        let vars2 = resolve_pcgen_var_chain(&bonus_vars, "RogueLVL", 20, &ability_modifiers_wis_only);
+        assert_eq!(vars2.get("MasterStrikeDC"), Some(&23), "an unreferenced WIS seed must not leak in");
     }
 
     /// End-to-end against the LIVE corpus record and the LIVE grant data: `resolved_description_for`
@@ -1266,10 +1331,10 @@ mod tests {
         // mutation-proof pass (temporarily seeding `level + 1`): a level-4-only check here missed
         // it by coincidence (5/2 truncates to the same 2 as 4/2), while level 3 does not
         // (4/2=2 != 3/2=1).
-        let text3 = resolved_description_for("Assassin ~ Save against Poisons", 3)
+        let text3 = resolved_description_for("Assassin ~ Save against Poisons", 3, &AbilityModifiers::default())
             .expect("Assassin ~ Save against Poisons must resolve at level 3 against the live corpus");
         assert_eq!(text3, "The assassin gains a +1 saving throw bonus against poisons.");
-        let text4 = resolved_description_for("Assassin ~ Save against Poisons", 4)
+        let text4 = resolved_description_for("Assassin ~ Save against Poisons", 4, &AbilityModifiers::default())
             .expect("Assassin ~ Save against Poisons must resolve at level 4 against the live corpus");
         assert_eq!(text4, "The assassin gains a +2 saving throw bonus against poisons.");
         assert!(!text3.contains('%') && !text4.contains('%'), "no unresolved %N argument may survive");
@@ -1278,14 +1343,14 @@ mod tests {
     /// The same, for the two-hop `max()` shape, against the live `Rogue ~ Trapfinding` record.
     #[test]
     fn resolved_description_for_produces_the_real_sentence_for_the_two_hop_live_record() {
-        let text = resolved_description_for("Rogue ~ Trapfinding", 1)
+        let text = resolved_description_for("Rogue ~ Trapfinding", 1, &AbilityModifiers::default())
             .expect("Rogue ~ Trapfinding must resolve at level 1 against the live corpus");
         assert_eq!(
             text,
             "You add +1 to Perception skill checks made to locate traps and to Disable Device \
              skill checks. You can use the Disable Device skill to disarm magical traps."
         );
-        let text4 = resolved_description_for("Rogue ~ Trapfinding", 4)
+        let text4 = resolved_description_for("Rogue ~ Trapfinding", 4, &AbilityModifiers::default())
             .expect("Rogue ~ Trapfinding must resolve at level 4 against the live corpus");
         assert!(text4.starts_with("You add +2 to Perception"), "got {text4:?}");
     }
@@ -1297,6 +1362,19 @@ mod tests {
     /// wave still cannot resolve -- WHY, split by cause, so a future wave knows what it is
     /// planning against. Pinned as a concrete assertion (not merely printed) so a regression in
     /// either count is caught, not silently drifted.
+    ///
+    /// **SD-31 wave 27 update.** `resolved_description_for` (probed here with
+    /// `AbilityModifiers::default()`, i.e. a structural "does the chain reach a value at all"
+    /// probe, not a specific character's real scores) now also seeds the six bare ability
+    /// abbreviations (`ability_modifier_seed_vars`), so three MORE records resolve than at wave
+    /// 26's close: `newly_resolved` gains `Arcane Archer ~ Arrow of Death` (CHA),
+    /// `Ranger ~ Master Hunter` (WIS), `Rogue ~ Master Strike` (INT) (12 -> 15), and
+    /// `class_excluded_otherwise_resolvable` gains `Monk ~ Quivering Palm` (WIS),
+    /// `Paladin ~ Lay on Hands` (CHA), `Sorcerer ~ Spells` (CHA) (8 -> 11) -- confirmed by hand,
+    /// one record at a time, against the live corpus (`check_excluded_formulas.py`-style probe,
+    /// this wave's own investigation), not merely accepted because the assertion below now
+    /// passes. `chain_unresolvable` drops by the same six records (20 -> 14). No count outside
+    /// these two buckets moved.
     #[test]
     fn the_live_scale_of_this_waves_widening_is_measured_and_pinned() {
         let descriptions = corpus_records_with_real_description();
@@ -1321,7 +1399,7 @@ mod tests {
             // at the record's own granted level is representative and also the level a
             // just-qualifying character actually has.
             let probe_level = granted_at.max(1);
-            let resolves = resolved_description_for(key, probe_level);
+            let resolves = resolved_description_for(key, probe_level, &AbilityModifiers::default());
             // Class exclusion is checked FIRST, matching `push_generic_class_feature_grant_records`'s
             // own early return for an excluded class -- a record whose chain resolves but whose
             // class is gate-excluded is NEVER actually emitted in production, so it must not be
@@ -1350,7 +1428,7 @@ mod tests {
         // report them, don't silently update the pin without checking why they moved.
         assert_eq!(
             (already_admitted, newly_resolved, class_excluded_otherwise_resolvable, chain_unresolvable, no_record_at_all),
-            (137, 12, 8, 20, 36),
+            (137, 15, 11, 14, 36),
             "live scale moved -- already_admitted={already_admitted} newly_resolved={newly_resolved} \
              class_excluded_otherwise_resolvable={class_excluded_otherwise_resolvable} \
              chain_unresolvable={chain_unresolvable} no_record_at_all={no_record_at_all} \
@@ -1361,7 +1439,7 @@ mod tests {
     /// A key with no corpus record at all resolves to `None`, never a panic or a guess.
     #[test]
     fn resolved_description_for_returns_none_for_an_unknown_key() {
-        assert_eq!(resolved_description_for("Not A Real Class ~ Not A Real Feature", 5), None);
+        assert_eq!(resolved_description_for("Not A Real Class ~ Not A Real Feature", 5, &AbilityModifiers::default()), None);
     }
 
     /// End-to-end THROUGH the emission function this wave widens: `Assassin ~ Save against
@@ -1375,7 +1453,7 @@ mod tests {
         // corpus_record`'s own comment for why this specific level is what makes the assertion
         // sensitive to an off-by-one in the seeded class level.
         let mut explanations = Vec::new();
-        push_generic_class_feature_grant_records("class:assassin", 3, &mut explanations);
+        push_generic_class_feature_grant_records("class:assassin", 3, &AbilityModifiers::default(), &mut explanations);
         let found = explanations
             .iter()
             .find(|e| e.id == "class_feature.assassin.corpus_record.save_against_poisons")
@@ -1416,7 +1494,7 @@ mod tests {
             value: 2,
             detail: "the real, hand-wired Damage Reduction magnitude and derivation".to_owned(),
         }];
-        push_generic_class_feature_grant_records("class:barbarian", 20, &mut explanations);
+        push_generic_class_feature_grant_records("class:barbarian", 20, &AbilityModifiers::default(), &mut explanations);
         assert_eq!(
             explanations.iter().filter(|e| e.id.rsplit('.').next() == Some("damage_reduction")).count(),
             1,
@@ -1431,7 +1509,7 @@ mod tests {
     #[test]
     fn push_generic_class_feature_grant_records_still_withholds_below_the_grant_level() {
         let mut explanations = Vec::new();
-        push_generic_class_feature_grant_records("class:assassin", 1, &mut explanations);
+        push_generic_class_feature_grant_records("class:assassin", 1, &AbilityModifiers::default(), &mut explanations);
         assert!(
             !explanations.iter().any(|e| e.id.contains("save_against_poisons")),
             "a character below the grant level must not see this feature at all: {explanations:?}"
@@ -1444,7 +1522,7 @@ mod tests {
     #[test]
     fn the_pre_existing_no_placeholder_branch_detail_text_is_unchanged() {
         let mut explanations = Vec::new();
-        push_generic_class_feature_grant_records("class:fighter", 2, &mut explanations);
+        push_generic_class_feature_grant_records("class:fighter", 2, &AbilityModifiers::default(), &mut explanations);
         let bravery_roster_id = "class_feature.fighter.corpus_record.bravery";
         // Fighter's OWN hand-wired chassis code normally pushes a real `bravery` explanation
         // first and this module defers to it (see the `already_computed_slugs` guard above) --
