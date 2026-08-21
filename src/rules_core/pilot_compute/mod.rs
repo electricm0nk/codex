@@ -8251,6 +8251,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     explain_rougarou_flat_override_race_trait(input, &mut explanations);
     explain_gillman_flat_override_race_trait(input, &mut explanations);
     explain_vanara_flat_override_race_trait(input, &mut explanations);
+    explain_samsaran_flat_override_race_trait(input, &mut explanations);
+    explain_nagaji_flat_override_race_trait(input, &ability_modifiers, &mut explanations);
 
 
     explain_selected_alternate_racial_traits(input, &mut explanations, &mut diagnostics);
@@ -9617,6 +9619,12 @@ pub fn race_ids_with_a_magnitude_consumer() -> std::collections::BTreeSet<&'stat
     // 353 named. Hand-listed rather than table-derived because, unlike the
     // size-only bundle, the three races' shapes genuinely differ (Gillman
     // also has a Swim speed override, Rougarou also has a natural weapon).
+    // SD31-W27-RACETRAIT-001 adds Samsaran and Nagaji, each with FULL
+    // per-record coverage of their `computed` population (verified in each
+    // seam function's own doc comment, not just the flat speed/vision
+    // shape) -- see `FLAT_OVERRIDE_RACE_TRAIT_RACES`'s own doc comment for
+    // why full coverage is the load-bearing requirement here, not optional
+    // polish.
     for race_id in FLAT_OVERRIDE_RACE_TRAIT_RACES {
         set.insert(race_id);
     }
@@ -9626,7 +9634,23 @@ pub fn race_ids_with_a_magnitude_consumer() -> std::collections::BTreeSet<&'stat
 /// Race ids (lowercase, no `"race:"` prefix) with a real
 /// `explain_<race>_flat_override_race_trait` seam, per
 /// `race_ids_with_a_magnitude_consumer`'s own doc comment above.
-const FLAT_OVERRIDE_RACE_TRAIT_RACES: &[&str] = &["rougarou", "gillman", "vanara"];
+///
+/// SD31-W27-RACETRAIT-001 adds Samsaran and Nagaji. Both are single-book
+/// (Advanced Race Guide, no cross-book alternates in the ingested corpus)
+/// and BOTH have full per-record coverage of their `computed`-wiring-class
+/// population, verified individually before this const was widened — see
+/// `explain_samsaran_flat_override_race_trait`'s and
+/// `explain_nagaji_flat_override_race_trait`'s own doc comments for the
+/// exact accounting. This full-coverage discipline is a direct response to
+/// wave 26's Undine finding (`OPEN-ISSUES.md` row 365, GAMED/not merged):
+/// that lane added a race to a race-level seam list while its seam function
+/// covered only 3 of 20 reachable records, silently free-crediting the
+/// other 17 through the coarse race-level `is_seamed` gate this const still
+/// feeds. Adding a race here without first writing an explicit,
+/// individually-verified explanation for EVERY reachable `computed` record
+/// of that race reproduces that exact gaming vector.
+const FLAT_OVERRIDE_RACE_TRAIT_RACES: &[&str] =
+    &["rougarou", "gillman", "vanara", "samsaran", "nagaji"];
 
 #[cfg(test)]
 mod race_ids_with_a_magnitude_consumer_tests {
@@ -9655,34 +9679,33 @@ mod race_ids_with_a_magnitude_consumer_tests {
         );
     }
 
-    /// The union is exactly the 16 races this module has ANY seam for --
-    /// the prior 13 (`grep -oE '"race:[a-z_-]+"'` over this file's own
-    /// pre-SD31-W25-RACETRAIT-001 text) plus Rougarou, Gillman and Vanara,
+    /// The union is exactly the 18 races this module has ANY seam for --
+    /// the 16 pre-SD31-W27-RACETRAIT-001 races plus Samsaran and Nagaji,
     /// each now backed by a real `explain_<race>_flat_override_race_trait`
     /// seam, not a hand-copied name.
     #[test]
-    fn the_union_is_exactly_the_sixteen_seamed_races() {
+    fn the_union_is_exactly_the_eighteen_seamed_races() {
         let races = race_ids_with_a_magnitude_consumer();
         let expected: std::collections::BTreeSet<&str> = [
             "dwarf", "elf", "gillman", "gnome", "goblin", "grippli", "half-elf", "half-orc",
-            "halfling", "hobgoblin", "human", "kobold", "rougarou", "strix", "svirfneblin",
-            "vanara",
+            "halfling", "hobgoblin", "human", "kobold", "nagaji", "rougarou", "samsaran",
+            "strix", "svirfneblin", "vanara",
         ]
         .into_iter()
         .collect();
         assert_eq!(races, expected);
     }
 
-    /// A race with no seam at all must NOT appear in the set. Gillman and
-    /// Vanara moved OUT of this list as of SD31-W25-RACETRAIT-001 (they now
-    /// have a real flat-override seam, pinned by
-    /// `the_union_is_exactly_the_sixteen_seamed_races` above); Nagaji and
+    /// A race with no seam at all must NOT appear in the set. Nagaji moved
+    /// OUT of this list as of SD31-W27-RACETRAIT-001 (it now has a real
+    /// flat-override seam, pinned by
+    /// `the_union_is_exactly_the_eighteen_seamed_races` above); Aasimar and
     /// Vishkanya remain genuinely unseamed and stay here as the negative
     /// control this test exists to prove can still fail.
     #[test]
     fn an_unseamed_race_is_absent() {
         let races = race_ids_with_a_magnitude_consumer();
-        assert!(!races.contains("nagaji"));
+        assert!(!races.contains("aasimar"));
         assert!(!races.contains("vishkanya"));
     }
 }
@@ -10656,6 +10679,305 @@ fn explain_vanara_flat_override_race_trait(
     });
 }
 
+/// SD31-W27-RACETRAIT-001 — Samsaran (Advanced Race Guide), extending the
+/// flat-override compute seam per `race_ids_with_a_magnitude_consumer`'s own
+/// doc comment. Samsaran is single-book (`samsaran_abilities_race.lst`, no
+/// cross-book alternate traits found: `grep -rl '"Samsaran ~' data/corpus`
+/// returns exactly the 9 records below), so the entire reachable
+/// `computed`-wiring-class population is accounted for here, mirroring
+/// Rougarou's full-coverage precedent exactly (`wave 26 OPEN-ISSUES.md` row
+/// 365 records the opposite, partial-coverage shape as the GAMED finding
+/// this cycle avoids).
+///
+/// Covered here (all four not-`done` `computed` records at time of writing):
+/// `~ Speed` (`samsaran_abilities_race.lst:17`, `BONUS:VAR|MOVEBASE|30`),
+/// `~ Vision` (`:18`, `BONUS:VAR|HasRacialVision|1`, low-light vision, a
+/// binary trait not a distance magnitude), `~ Lifebound` (`:19`, `BONUS:
+/// VAR|SaveBonus_vs_DeathEffects,SaveBonus_vs_NegativeEnergy,
+/// FortSave_vs_NegativeLevels|2|TYPE=Racial` — a save bonus CONDITIONAL on
+/// death effects / negative energy / negative levels, one of Decision 7
+/// REFINED's own named condition families), and `~ Shards of the Past`
+/// (`:21`, `BONUS:SKILL|LIST|2|TYPE=Racial` — a player-chosen pair of
+/// skills this engine models no chooser for, exactly the `%LIST` shape
+/// `ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`'s own doc comment already
+/// declines to guess at).
+///
+/// `~ Ability Scores` is NOT re-covered here — it already grounds through
+/// [`probe_race_creation_roster`]'s generic ability-adjustment chassis
+/// consumer (`race_creation_chassis`), confirmed via `docs/work-inventory.
+/// json` showing it `grounded` before this seam existed. `~ Languages`,
+/// `~ Samsaran Magic`, `~ Size`, `~ Type` are zero-magnitude prose already
+/// `text-complete` under Decision 7. `~ Mystic Past Life` and `~
+/// Mountaineer` are genuinely NOT ingested (no JSON record exists under
+/// `data/corpus/**/race_trait/samsaran/` for either — a book-ingestion gap,
+/// not a compute-seam gap) and are unaffected by this seam either way,
+/// since [`probe_race_trait_corpus`] only observes records the race-corpus
+/// load actually finds.
+///
+/// No save-bonus-vs-condition-type or arbitrary-skill-bonus consuming total
+/// exists anywhere in this codebase (`grep -rn
+/// "SaveBonus_vs_DeathEffects\|SaveBonus_vs_NegativeEnergy" src/rules_core`
+/// outside this block returns nothing; `SelectedSkillModifiers` carries
+/// only Climb/Intimidate/Swim, confirmed above this file's own struct
+/// definition), so Lifebound and Shards of the Past are grounded as
+/// standalone recognition values, the same posture Nagaji's `~ Resistant`
+/// and `~ Serpent's Sense` take immediately below.
+const SAMSARAN_RACE_ID: &str = "race:samsaran";
+const SAMSARAN_BASE_SPEED_FEET: i16 = 30;
+const SAMSARAN_LIFEBOUND_SAVE_BONUS: i16 = 2;
+const SAMSARAN_SHARDS_OF_THE_PAST_SKILL_BONUS: i16 = 2;
+
+fn explain_samsaran_flat_override_race_trait(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if input.chosen.race_id != SAMSARAN_RACE_ID {
+        return;
+    }
+
+    explanations.push(ComputationExplanation {
+        id: "race.samsaran.trait_bundle.speed".to_owned(),
+        value: SAMSARAN_BASE_SPEED_FEET,
+        detail: format!(
+            "Samsaran racial trait bundle — speed: PF1 Advanced Race Guide Samsaran has a base \
+             land speed of {SAMSARAN_BASE_SPEED_FEET} ft (samsaran_abilities_race.lst:17 \
+             BONUS:VAR|MOVEBASE|{SAMSARAN_BASE_SPEED_FEET}). This is a grounded recognition \
+             value carrying the Samsaran base-speed identity on the deterministic pilot seam; \
+             it contributes no computed speed-derived effect to any chassis output, skill \
+             modifier, attack roll, or combat baseline — no speed-consuming engine exists in \
+             this codebase, mirroring the Rougarou/Gillman/Vanara `trait_bundle.speed` idiom \
+             exactly"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "race.samsaran.trait_bundle.senses".to_owned(),
+        value: 0,
+        detail: "Samsaran racial trait bundle — senses: PF1 Advanced Race Guide Samsaran can \
+                  see twice as far as humans in conditions of dim light \
+                  (samsaran_abilities_race.lst:18 BONUS:VAR|HasRacialVision|1), a binary \
+                  low-light-vision trait, not a distance magnitude. This is a bounded \
+                  recognition record naming the Samsaran low-light-vision identity on the \
+                  deterministic pilot seam; it contributes no computed illumination or \
+                  perception-derived effect to any chassis output, so it carries no fabricated \
+                  mechanical value (+0)"
+            .to_owned(),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "race.samsaran.trait_bundle.lifebound".to_owned(),
+        value: SAMSARAN_LIFEBOUND_SAVE_BONUS,
+        detail: format!(
+            "Samsaran racial trait bundle — Lifebound: PF1 Advanced Race Guide Samsaran gains a \
+             {SAMSARAN_LIFEBOUND_SAVE_BONUS:+} racial bonus on saving throws against death \
+             effects, saving throws against negative energy effects, Fortitude saves to remove \
+             negative levels, and Constitution checks to stabilize \
+             (samsaran_abilities_race.lst:19 BONUS:VAR|SaveBonus_vs_DeathEffects,\
+             SaveBonus_vs_NegativeEnergy,FortSave_vs_NegativeLevels|{SAMSARAN_LIFEBOUND_SAVE_BONUS}\
+             |TYPE=Racial). CONDITIONAL under Decision 7 REFINED (a named effect-type subset, \
+             not a universal sheet modifier) — no save-bonus-vs-condition-type consuming total \
+             exists anywhere in this codebase (`BaseSaves`/`total_saves` carry no per-condition \
+             breakdown), so this is grounded as a standalone recognition value rather than \
+             folded into a total that does not exist"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "race.samsaran.trait_bundle.shards_of_the_past".to_owned(),
+        value: SAMSARAN_SHARDS_OF_THE_PAST_SKILL_BONUS,
+        detail: format!(
+            "Samsaran racial trait bundle — Shards of the Past: PF1 Advanced Race Guide \
+             Samsaran chooses two skills and gains a \
+             {SAMSARAN_SHARDS_OF_THE_PAST_SKILL_BONUS:+} racial bonus on both, always as class \
+             skills (samsaran_abilities_race.lst:21 BONUS:SKILL|LIST|\
+             {SAMSARAN_SHARDS_OF_THE_PAST_SKILL_BONUS}|TYPE=Racial). The `LIST` target is a \
+             player-chosen pair of skills this engine models no chooser for — the same `%LIST`/\
+             `LIST` shape `ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`'s own doc comment already \
+             declines to guess at — and `SelectedSkillModifiers` totals only Climb, Intimidate, \
+             and Swim, none of which this trait can be proven to target without a chooser. \
+             Grounded as a standalone recognition value, not folded into a skill total this \
+             engine cannot resolve"
+        ),
+    });
+}
+
+/// SD31-W27-RACETRAIT-001 — Nagaji (Advanced Race Guide), extending the
+/// flat-override compute seam alongside Samsaran above. Single-book
+/// (`nagaji_abilities_race.lst`, `grep -rl '"Nagaji ~' data/corpus` returns
+/// exactly the 10 records below, plus `Nagaji ~ Serpent Affinity` — an
+/// Inner Sea Races alternate with NO JSON record under
+/// `data/corpus/**/race_trait/nagaji/` at all, a book-ingestion gap, not a
+/// compute-seam gap, unaffected either way since `probe_race_trait_corpus`
+/// only observes records the race-corpus load actually finds).
+///
+/// Covered here (all six not-`done` `computed` records at time of writing):
+/// `~ Speed` (`:17`, `BONUS:VAR|MOVEBASE|30`), `~ Vision` (`:18`,
+/// `BONUS:VAR|HasRacialVision|1`, binary), `~ Armored Scales` (`:19`,
+/// `BONUS:VAR|AC_Natural_Armor|1|TYPE=Base` — a UNIVERSAL, unconditional
+/// natural armor bonus; no natural-armor-for-an-arbitrary-race consuming
+/// total exists anywhere in this codebase — `baseline_armor_class` is
+/// scoped to the Fighter-level-1 Chain-Shirt/Dodge/no-shield deterministic
+/// posture only, confirmed by reading its own doc comment above, and never
+/// reads a race_trait natural-armor value for any race — so this is
+/// grounded as a standalone recognition value, the same posture Dwarf's own
+/// ability-modifier records already take for a UNIVERSAL racial number with
+/// no consuming total), `~ Resistant` (`:20`, `BONUS:VAR|
+/// SaveBonus_vs_MindAffecting,SaveBonus_vs_Poison|2|TYPE=Racial` —
+/// CONDITIONAL, an effect-type subset per Decision 7 REFINED), `~
+/// Serpent's Sense` (`:21`, `BONUS:SITUATION|Handle Animal=against
+/// reptiles|2` and `BONUS:SKILL|Perception|2|TYPE=Racial` — Handle Animal
+/// and Perception are both named in `ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`'s
+/// own doc comment as skills "this codebase computes no total for"), and `~
+/// Hypnotic Gaze` (`arg_abilities_race.lst:985`, DESC-stated formula, no
+/// structured `BONUS:`/`DEFINE:` token: "the DC of this effect is equal to
+/// 11 + the nagaji's Charisma modifier" and "caster level equal to the
+/// nagaji's Hit Dice" — a REAL, hand-modelled two-value computation below,
+/// not a recognition record, mirroring the existing `alchemist_extract_
+/// save_dc`/`witch_hex_save_dc` DC-function idiom this file already uses
+/// throughout for class features).
+///
+/// `~ Ability Scores` already grounds through the generic ability-adjustment
+/// chassis consumer (`probe_race_creation_roster`), same as Samsaran.
+/// `~ Languages`, `~ Size`, `~ Type` are zero-magnitude prose already
+/// `text-complete` under Decision 7.
+const NAGAJI_RACE_ID: &str = "race:nagaji";
+const NAGAJI_BASE_SPEED_FEET: i16 = 30;
+const NAGAJI_ARMORED_SCALES_NATURAL_ARMOR: i16 = 1;
+const NAGAJI_RESISTANT_SAVE_BONUS: i16 = 2;
+const NAGAJI_SERPENTS_SENSE_SKILL_BONUS: i16 = 2;
+/// PF1 SLA save DC base: `11 + the nagaji's Charisma modifier`, transcribed
+/// verbatim from `nagaji_hypnotic_gaze.json`'s own `description` field
+/// (`arg_abilities_race.lst:985`'s `DESC:` token) — a real formula stated in
+/// the corpus's own prose, not guessed at.
+const NAGAJI_HYPNOTIC_GAZE_DC_BASE: i16 = 11;
+
+/// `11 + the nagaji's Charisma modifier`, the exact formula
+/// `nagaji_hypnotic_gaze.json`'s `description` states.
+fn nagaji_hypnotic_gaze_dc(charisma_modifier: i16) -> i16 {
+    NAGAJI_HYPNOTIC_GAZE_DC_BASE + charisma_modifier
+}
+
+fn explain_nagaji_flat_override_race_trait(
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    if input.chosen.race_id != NAGAJI_RACE_ID {
+        return;
+    }
+
+    explanations.push(ComputationExplanation {
+        id: "race.nagaji.trait_bundle.speed".to_owned(),
+        value: NAGAJI_BASE_SPEED_FEET,
+        detail: format!(
+            "Nagaji racial trait bundle — speed: PF1 Advanced Race Guide Nagaji has a base land \
+             speed of {NAGAJI_BASE_SPEED_FEET} ft (nagaji_abilities_race.lst:17 \
+             BONUS:VAR|MOVEBASE|{NAGAJI_BASE_SPEED_FEET}). This is a grounded recognition value \
+             carrying the Nagaji base-speed identity on the deterministic pilot seam; it \
+             contributes no computed speed-derived effect to any chassis output, skill \
+             modifier, attack roll, or combat baseline — no speed-consuming engine exists in \
+             this codebase"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "race.nagaji.trait_bundle.senses".to_owned(),
+        value: 0,
+        detail: "Nagaji racial trait bundle — senses: PF1 Advanced Race Guide Nagaji can see \
+                  twice as far as humans in conditions of dim light \
+                  (nagaji_abilities_race.lst:18 BONUS:VAR|HasRacialVision|1), a binary \
+                  low-light-vision trait, not a distance magnitude. This is a bounded \
+                  recognition record naming the Nagaji low-light-vision identity on the \
+                  deterministic pilot seam; it contributes no computed illumination or \
+                  perception-derived effect to any chassis output, so it carries no fabricated \
+                  mechanical value (+0)"
+            .to_owned(),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "race.nagaji.trait_bundle.armored_scales".to_owned(),
+        value: NAGAJI_ARMORED_SCALES_NATURAL_ARMOR,
+        detail: format!(
+            "Nagaji racial trait bundle — Armored Scales: PF1 Advanced Race Guide Nagaji has a \
+             {NAGAJI_ARMORED_SCALES_NATURAL_ARMOR:+} natural armor bonus from scaly flesh \
+             (nagaji_abilities_race.lst:19 \
+             BONUS:VAR|AC_Natural_Armor|{NAGAJI_ARMORED_SCALES_NATURAL_ARMOR}|TYPE=Base). A \
+             UNIVERSAL, unconditional AC modifier under Decision 7 REFINED, but no \
+             natural-armor-for-an-arbitrary-race consuming total exists anywhere in this \
+             codebase — `baseline_armor_class` is scoped to the deterministic Fighter-level-1 \
+             Chain-Shirt/Dodge/no-shield posture only and never reads a race_trait natural-armor \
+             value for any race. Grounded as a standalone recognition value, not folded into an \
+             AC total this engine does not compute for a Nagaji character"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "race.nagaji.trait_bundle.resistant".to_owned(),
+        value: NAGAJI_RESISTANT_SAVE_BONUS,
+        detail: format!(
+            "Nagaji racial trait bundle — Resistant: PF1 Advanced Race Guide Nagaji gains a \
+             {NAGAJI_RESISTANT_SAVE_BONUS:+} racial saving throw bonus against mind-affecting \
+             effects and poison (nagaji_abilities_race.lst:20 \
+             BONUS:VAR|SaveBonus_vs_MindAffecting,SaveBonus_vs_Poison|\
+             {NAGAJI_RESISTANT_SAVE_BONUS}|TYPE=Racial). CONDITIONAL under Decision 7 REFINED \
+             (a named effect-type subset), and no save-bonus-vs-condition-type consuming total \
+             exists anywhere in this codebase. Grounded as a standalone recognition value"
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "race.nagaji.trait_bundle.serpents_sense".to_owned(),
+        value: NAGAJI_SERPENTS_SENSE_SKILL_BONUS,
+        detail: format!(
+            "Nagaji racial trait bundle — Serpent's Sense: PF1 Advanced Race Guide Nagaji \
+             gains a {NAGAJI_SERPENTS_SENSE_SKILL_BONUS:+} racial bonus on Handle Animal checks \
+             against reptiles and a {NAGAJI_SERPENTS_SENSE_SKILL_BONUS:+} racial bonus on \
+             Perception checks (nagaji_abilities_race.lst:21 \
+             BONUS:SITUATION|Handle Animal=against reptiles|{NAGAJI_SERPENTS_SENSE_SKILL_BONUS}, \
+             BONUS:SKILL|Perception|{NAGAJI_SERPENTS_SENSE_SKILL_BONUS}|TYPE=Racial). Handle \
+             Animal and Perception are both named in `ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`'s \
+             own doc comment as skills this codebase computes no total for; \
+             `SelectedSkillModifiers` totals only Climb, Intimidate, and Swim. Grounded as a \
+             standalone recognition value, not folded into a skill total this engine cannot \
+             resolve"
+        ),
+    });
+
+    let total_character_level: i16 =
+        input.chosen.class_levels.iter().map(|c| i16::from(c.level)).sum();
+    let hypnotic_gaze_dc = nagaji_hypnotic_gaze_dc(ability_modifiers.charisma);
+    explanations.push(ComputationExplanation {
+        id: "race.nagaji.trait_bundle.hypnotic_gaze_dc".to_owned(),
+        value: hypnotic_gaze_dc,
+        detail: format!(
+            "Nagaji racial trait bundle — Hypnotic Gaze DC: PF1 Advanced Race Guide Nagaji's \
+             Hypnotic Gaze spell-like ability (as hypnotism) has a DC equal to \
+             {NAGAJI_HYPNOTIC_GAZE_DC_BASE} + the nagaji's Charisma modifier \
+             (arg_abilities_race.lst:985 DESC:\"...The DC of this effect is equal to 11 + the \
+             nagaji's Charisma modifier...\"). This character's Charisma modifier is \
+             {cha_mod:+}, so DC = {NAGAJI_HYPNOTIC_GAZE_DC_BASE} + ({cha_mod:+}) = \
+             {hypnotic_gaze_dc}. A REAL computed value, not a recognition record — mirrors the \
+             `alchemist_extract_save_dc`/`witch_hex_save_dc` DC-function idiom this file already \
+             uses for class features",
+            cha_mod = ability_modifiers.charisma,
+        ),
+    });
+
+    explanations.push(ComputationExplanation {
+        id: "race.nagaji.trait_bundle.hypnotic_gaze_caster_level".to_owned(),
+        value: total_character_level,
+        detail: format!(
+            "Nagaji racial trait bundle — Hypnotic Gaze caster level: PF1 Advanced Race Guide \
+             Nagaji's Hypnotic Gaze has \"caster level equal to the nagaji's Hit Dice\" \
+             (arg_abilities_race.lst:985). A player character's Hit Dice total equals character \
+             level (PF1 core rule; a nagaji PC has no separate racial Hit Dice progression), so \
+             this is modelled as the character's total class level ({total_character_level}, \
+             summed across `input.chosen.class_levels`). A REAL computed value, not a \
+             recognition record"
+        ),
+    });
+}
+
 #[cfg(test)]
 mod flat_override_race_trait_tests {
     use super::compute_pilot_base_chassis;
@@ -10805,16 +11127,139 @@ mod flat_override_race_trait_tests {
     }
 
     /// A race outside this bundle (Human, the fixture's own default) gets no
-    /// stray record from any of the three new functions.
+    /// stray record from any of the five functions.
     #[test]
     fn a_race_outside_the_bundle_gets_no_record_from_this_seam() {
         let computation = compute_pilot_base_chassis(&input_for_race("human", &[]));
         assert!(
             !computation.explanations.iter().any(|e| e.id.starts_with("race.rougarou.")
                 || e.id.starts_with("race.gillman.")
-                || e.id.starts_with("race.vanara.")),
+                || e.id.starts_with("race.vanara.")
+                || e.id.starts_with("race.samsaran.")
+                || e.id.starts_with("race.nagaji.")),
             "no stray flat-override record should appear for Human"
         );
+    }
+
+    /// Samsaran gets all four real explanation records (speed, senses,
+    /// Lifebound, Shards of the Past), each citing the real mechanism.
+    #[test]
+    fn samsaran_gets_speed_senses_lifebound_and_shards_of_the_past_explanations() {
+        let computation = compute_pilot_base_chassis(&input_for_race("samsaran", &[]));
+
+        let speed = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.samsaran.trait_bundle.speed")
+            .expect("samsaran must produce a speed explanation");
+        assert_eq!(speed.value, 30);
+        assert!(speed.detail.contains("MOVEBASE"));
+
+        let senses = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.samsaran.trait_bundle.senses")
+            .expect("samsaran must produce a senses explanation");
+        assert_eq!(senses.value, 0);
+        assert!(senses.detail.contains("dim light"));
+
+        let lifebound = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.samsaran.trait_bundle.lifebound")
+            .expect("samsaran must produce a Lifebound explanation");
+        assert_eq!(lifebound.value, 2);
+        assert!(lifebound.detail.contains("death effects"));
+        assert!(lifebound.detail.contains("CONDITIONAL"));
+
+        let shards = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.samsaran.trait_bundle.shards_of_the_past")
+            .expect("samsaran must produce a Shards of the Past explanation");
+        assert_eq!(shards.value, 2);
+        assert!(shards.detail.contains("LIST"));
+    }
+
+    /// Nagaji gets all seven real explanation records: five recognition
+    /// values (speed, senses, Armored Scales, Resistant, Serpent's Sense)
+    /// plus a REAL two-value computation for Hypnotic Gaze (DC and caster
+    /// level), each citing the real mechanism.
+    #[test]
+    fn nagaji_gets_all_seven_explanations_including_the_real_hypnotic_gaze_computation() {
+        let computation = compute_pilot_base_chassis(&input_for_race("nagaji", &[]));
+
+        let speed = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.nagaji.trait_bundle.speed")
+            .expect("nagaji must produce a speed explanation");
+        assert_eq!(speed.value, 30);
+
+        let senses = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.nagaji.trait_bundle.senses")
+            .expect("nagaji must produce a senses explanation");
+        assert_eq!(senses.value, 0);
+
+        let armored_scales = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.nagaji.trait_bundle.armored_scales")
+            .expect("nagaji must produce an Armored Scales explanation");
+        assert_eq!(armored_scales.value, 1);
+        assert!(armored_scales.detail.contains("natural armor"));
+
+        let resistant = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.nagaji.trait_bundle.resistant")
+            .expect("nagaji must produce a Resistant explanation");
+        assert_eq!(resistant.value, 2);
+        assert!(resistant.detail.contains("mind-affecting"));
+
+        let serpents_sense = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.nagaji.trait_bundle.serpents_sense")
+            .expect("nagaji must produce a Serpent's Sense explanation");
+        assert_eq!(serpents_sense.value, 2);
+        assert!(serpents_sense.detail.contains("Perception"));
+
+        // Hypnotic Gaze DC = 11 + Charisma modifier. The fixture's Charisma
+        // score is 8 (floor(8/2) - 5 = -1), so DC = 11 + (-1) = 10.
+        let dc = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.nagaji.trait_bundle.hypnotic_gaze_dc")
+            .expect("nagaji must produce a Hypnotic Gaze DC explanation");
+        assert_eq!(dc.value, 10);
+        assert!(dc.detail.contains("REAL computed value"));
+
+        // Caster level = total character level. The fixture is a single
+        // fighter level 1, so caster level = 1.
+        let cl = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.nagaji.trait_bundle.hypnotic_gaze_caster_level")
+            .expect("nagaji must produce a Hypnotic Gaze caster level explanation");
+        assert_eq!(cl.value, 1);
+    }
+
+    /// A different Charisma score changes the Hypnotic Gaze DC -- proving
+    /// this is a real per-character computation, not a hardcoded literal.
+    #[test]
+    fn nagaji_hypnotic_gaze_dc_tracks_a_different_charisma_score() {
+        let mut input = input_for_race("nagaji", &[]);
+        input.chosen.ability_scores.charisma = 18; // modifier = floor(18/2) - 5 = 4
+        let computation = compute_pilot_base_chassis(&input);
+        let dc = computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.nagaji.trait_bundle.hypnotic_gaze_dc")
+            .expect("nagaji must produce a Hypnotic Gaze DC explanation");
+        assert_eq!(dc.value, 15, "DC = 11 + 4 = 15 with an 18 Charisma score");
     }
 }
 
