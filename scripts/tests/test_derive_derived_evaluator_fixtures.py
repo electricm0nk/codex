@@ -322,5 +322,81 @@ class HeldStatusesRegressionTests(unittest.TestCase):
         self.assertEqual(after, before)
 
 
+class OwnDocumentFieldsDesyncTests(unittest.TestCase):
+    """SD31-W29-INTEGRATE (adversarial-review CONFIRMED finding, MEDIUM):
+    the write step used to hand-maintain a separate `OWN_KEYS` set that
+    had to be kept in sync BY EYE with the literal keys in the
+    `document = {...}` dict -- proven able to desync by mutation (removing
+    one key from `OWN_KEYS` left a stale `preserved` value silently
+    overriding a freshly-derived one, with zero test catching it).
+    `own_document_fields()` is now the SINGLE source both the exclusion
+    set and the write step build from, making that desync structurally
+    impossible. These tests prove the invariant holds, not merely that it
+    was intended to."""
+
+    def test_own_document_fields_keys_are_stable_regardless_of_entries_content(self):
+        empty = set(gen.own_document_fields([]))
+        nonempty = set(gen.own_document_fields([{"unit_id": "x"}]))
+        self.assertEqual(
+            empty, nonempty,
+            "the KEY SET must not depend on the entries payload -- OWN_KEYS is "
+            "derived by calling this with an empty list specifically so it never "
+            "needs a real `entries` value to compute the exclusion set",
+        )
+        self.assertIn("entries", empty)
+        self.assertIn("schema", empty)
+
+    def test_a_stale_preserved_value_for_an_own_key_can_never_win(self):
+        """The real-world manifestation of the desync this class guards
+        against: a pre-existing fixture on disk carries a STALE value for
+        one of this generator's own keys (e.g. `derivation` text from a
+        previous version of the docstring). Because `own_document_fields()`
+        is now the only source of truth for what counts as \"own\", that
+        stale value can never leak through `preserved` and override the
+        freshly-computed one -- proven by seeding the sandbox with a
+        deliberately wrong `derivation` string and confirming the written
+        output carries today's real one, not the stale one."""
+        with open(SCRIPT, encoding="utf-8") as fh:
+            fixed_text = fh.read()
+        with open(FIXTURE, encoding="utf-8") as fh:
+            real_committed = json.load(fh)
+
+        with tempfile.TemporaryDirectory() as sandbox:
+            os.makedirs(os.path.join(sandbox, "scripts"))
+            os.makedirs(os.path.join(sandbox, "docs"))
+            os.makedirs(os.path.join(sandbox, "tests", "fixtures", "rules_core"))
+            script_path = os.path.join(sandbox, "scripts", "derive_derived_evaluator_fixtures.py")
+            with open(script_path, "w", encoding="utf-8") as fh:
+                fh.write(fixed_text)
+            os.symlink(INVENTORY, os.path.join(sandbox, "docs", "work-inventory.json"))
+            sandbox_fixture = os.path.join(
+                sandbox, "tests", "fixtures", "rules_core", "derived-evaluator-fixtures.json"
+            )
+            # Seed with the real committed document, but with a deliberately
+            # STALE value for one of this generator's own keys.
+            stale = dict(real_committed)
+            stale["derivation"] = "STALE VALUE FROM A PRIOR VERSION -- must not survive a run"
+            with open(sandbox_fixture, "w", encoding="utf-8") as fh:
+                json.dump(stale, fh)
+
+            env = dict(os.environ)
+            env["PCGEN_CORPUS_ROOT"] = _pcgen_root()
+            result = subprocess.run(
+                [sys.executable, script_path], capture_output=True, text=True,
+                cwd=sandbox, env=env,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            with open(sandbox_fixture, encoding="utf-8") as fh:
+                written = json.load(fh)
+
+        self.assertNotEqual(
+            written["derivation"], stale["derivation"],
+            "a stale value for an OWN key leaked through `preserved` and "
+            "overrode the freshly-computed one -- the desync this class "
+            "exists to prevent is back",
+        )
+        self.assertEqual(written["derivation"], gen.own_document_fields([])["derivation"])
+
+
 if __name__ == "__main__":
     unittest.main()

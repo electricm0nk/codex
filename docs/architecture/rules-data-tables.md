@@ -1,7 +1,7 @@
 # Rules Data Tables
 
 > Scope: the hand-transcribed, per-book Paizo table store rules-core queries for class chassis, race traits, feats, spells, equipment, and monster stat blocks.
-> Last verified: **2026-08-19 against `tranche/11`** (SD-31 wave 15, `SD31-W15-INTEGRATE-001`) for §"Chassis fields carry the TOKEN, never a computed number"; prior pass 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle)
+> Last verified: **2026-08-19 against `tranche/11`** (SD-31 wave 15, `SD31-W15-INTEGRATE-001`) for §"Chassis fields carry the TOKEN, never a computed number"; prior pass 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle). **Touched 2026-08-21 (SD-31 wave 29, integration cycle)**: added `RuleSetId::AdventurersGuide` (Adventurer's Guide's first compiled rule set, spell family only — `rules_tables::adventurers_guide::spell_list`) to the enum block below; every other row unchanged.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Purpose
@@ -183,6 +183,9 @@ pub enum RuleSetId {
     B4,             // Bestiary 4                   (SD-29 E5 r6; monster + monster_ability)
     Isb,            // Inner Sea Bestiary           (SD-29 E5 r7)
     Isg,            // Inner Sea Gods               (SD-29 E5 r9)
+    Oa,             // Occult Adventures            (SD31-E6-F2-003; spells)
+    Mythic,         // Mythic Adventures            (SD31-E6-F2-007; feats)
+    AdventurersGuide, // Adventurer's Guide         (SD-31 wave 29; spells only — feat/equipment/class_feature-chassis families still not compiled)
 }
 ```
 

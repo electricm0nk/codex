@@ -1,15 +1,67 @@
 ---
 canonical: true
 wave: 28
+wave_29_addendum: true
 purpose: >
   The consolidated map of the whole box. Six lanes looked at every not-done unit corpus-wide,
   banked nothing, and named what they found. Two independent adversarial reviews stress-tested
   every count. This document merges the two, applies every correction, reconciles the piles
   against the board total, and ranks what to do next. It is the wave's entire deliverable.
-board_at_close: "13,456 / 38,372 (35.07%) — UNCHANGED from wave start, confirmed §0"
+board_at_close: "13,456 / 38,372 (35.07%) at wave 28 close; 13,458 / 38,372 (35.08%) at wave 29 close — see the wave-29 addendum immediately below"
 ---
 
 # THE BOX — SD-31 wave 28 consolidated visibility map
+
+## Wave 29 addendum (2026-08-21) — what this wave actually proved or disproved against §3's ranked list
+
+**#1, fix the self-erasing fixture generator — DONE, and genuinely proven dead, not merely
+patched.** Reproduced the exact defect this map named (2,110 rows, 8 families, one run from
+committed state — the map's own "~2,109" was one unit low, corrected here). The landed fix had
+TWO root causes, not the one this map's own filed "obvious one-line fix" theory assumed:
+preserve-by-exclusion (fixes the write step rebuilding the whole document and dropping every
+sibling family) is what actually restores all 8 families; `HELD_STATUSES` missing
+`fixture-verified` is a real, separate, independently-necessary bug, but adding `literal-verified`
+alongside it (the integration lane's first attempt) restores **zero** additional rows — it is
+structurally unreachable (`literal-verified` only stamps `wiring_class == static`; this generator
+only ever selects `wiring_class == "derived"`). Corrected in `todo/defects.md` D7 / `todo/sweeps.md`
+S6. Both real causes are now independently mutation-proven (module-level `assert` +
+`main()`-level FATAL guard for the `HELD_STATUSES` half, `shrunk_families` for the preserve half) —
+run twice from the merged state by the integration cycle itself, byte-identical both times. Ruling
+§20's interpreter-scale regen can now proceed against this seam.
+
+**#2, wire `class_feature_pool_group_matches()` — DONE, exactly as sized.** 612 units moved
+`unmeasurable` → mostly `not-started` (610) / `deferred` (2). Confirmed SOUND by a THIRD independent
+review (this map's own #2 already called it SOUND; wave 29's own adversarial review re-confirmed
+via full guarded regen, catching two self-inflicted test breaks the lane itself had not disclosed,
+both fixed by integration). Zero doneness gain from this lever alone, as predicted.
+
+**#3, book onboarding — STARTED, not finished, and it surfaced Ruling §18's #1 residual risk.**
+`adventurers_guide` registered via its spell family (45/49 base spells; PI-screened, 4 correctly
+dropped). All 973 `adventurers_guide` units moved off the `no_compiled_rule_set_for_book` gate this
+map's G4 group named. But unblocking the book also unblocked 5 archetype-adjacent Rage Power
+`class_feature` records that reached `done` through the SAME pool-catalog seam this map's §2.2 #2
+lever uses — 3 of the 5 are genuinely archetype-locked (`PREABILITY CATEGORY=Archetype`, a
+character who never takes that archetype can never take the option) and would have been a real,
+if small, Ruling §18 violation if left uncaught. **This is the first live-fire case of `blocked.md`
+B3** ("has anyone checked whether the shipped pool catalog honours §18's prerequisite condition") —
+answered this cycle: `is_archetype_locked()` now refuses any `PREABILITY ... CATEGORY=Archetype`
+record corpus-wide (6 of 300 Rogue Talent/Rage Power records total), with **zero regression to any
+of the 123 units already banked through this same catalog** — the fix is scoped precisely enough
+that it costs nothing already shipped. B3 closed with a real corpus-wide count, not a proposal.
+Remaining 3 books (`inner_sea_magic`, `inner_sea_temples`, `inner_sea_taverns`) and this book's own
+feat/equipment/class_feature-chassis families are still open, ≥1,300 units behind the same gate
+shape — see `todo/levers.md` L10.
+
+**New this wave, not on the wave-28 map at all**: F2 (the class_feature→feat cross-reference
+bridge, `todo/levers.md` L9) was built, tested, and independently re-verified to identify 471 real
+records — but adversarial review found the render path it rides cannot reach ANY current character
+sheet (0 of 471, not "up to 471"; only 1 of 471 even names a holdable class token, and that one has
+no engine explanation to attach to). Filed as a corrected, explicitly-guarded lever rather than a
+ready-to-hook doneness lever — the wrong hook here would have been a 471-unit manufactured-credit
+trap. L8 (F1's render-surface gap) reconfirmed unchanged: still genuinely blocked on a new frontend
+surface, not a `classify()` change. Full detail: `progress.md`'s wave 29 receipt.
+
+---
 
 ## 0. Board state (confirm unchanged)
 

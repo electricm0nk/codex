@@ -202,6 +202,49 @@ def shrunk_families(before, after):
     }
 
 
+def own_document_fields(entries):
+    """This script's own top-level fixture keys, and ONLY those keys.
+
+    SD31-W29-INTEGRATE (adversarial-review CONFIRMED finding, MEDIUM):
+    `main()` used to keep a hand-maintained `OWN_KEYS` set that had to be
+    kept in sync BY EYE with the literal keys in the `document = {...}`
+    dict built further down -- proven able to desync by mutation (removing
+    one key from that set left a stale `preserved` value silently
+    overriding a freshly-derived one, with zero test catching it). Making
+    this function the SINGLE SOURCE for both the exclusion set (`main()`
+    computes `OWN_KEYS = frozenset(own_document_fields([]))`, needing only
+    the key NAMES, not real values) and the actual written document
+    (`main()` builds `{**own_document_fields(entries), **preserved}`)
+    makes a desync structurally impossible: there is only one place the
+    key list is written, ever.
+    """
+    return {
+        "schema": 1,
+        "generated_by": "scripts/derive_derived_evaluator_fixtures.py",
+        "pcgen_corpus_relative_root": CORPUS_RELATIVE_ROOT,
+        "token_family": "BONUS:STAT",
+        "derivation": (
+            "PCGen `BONUS:STAT|<comma-separated ability list>|<integer value>"
+            "[|<extra qualifiers>]`. `expected.abilities` is the ability list "
+            "split on commas; `expected.bonus` is the integer value. Trailing "
+            "qualifiers (`TYPE=Enhancement`, ...) select a stacking type and do "
+            "not change the magnitude. Read straight out of the upstream PCGen "
+            "`.lst` bytes named by `upstream_lst`/`upstream_line`."
+        ),
+        "independence": (
+            "Every value here is a function of the upstream PCGen `.lst` bytes "
+            "alone. The generator imports no engine module, runs no engine "
+            "binary, and opens no file under `data/corpus/` -- which is the "
+            "ingest the engine actually evaluates, and therefore the artifact "
+            "this fixture must stay independent of. `docs/work-inventory.json` "
+            "is read for unit identity and source-line provenance only. This "
+            "fixture is committed before the check that consumes it is written "
+            "(SD-32 E6-F1)."
+        ),
+        "entries": entries,
+    }
+
+
 def pcgen_data_root():
     root = os.environ.get("PCGEN_CORPUS_ROOT")
     if root:
@@ -405,10 +448,10 @@ def main():
     # allowlist at all. Fixed by adopting that same shape: preserve by
     # EXCLUDING this script's own keys, not by including a hardcoded prefix,
     # so a brand-new sibling family added later needs no matching edit here.
-    OWN_KEYS = {
-        "schema", "generated_by", "pcgen_corpus_relative_root",
-        "token_family", "derivation", "independence", "entries",
-    }
+    # `OWN_KEYS` is derived from `own_document_fields()` itself (not a
+    # separately hand-maintained set) so it can never desync from the keys
+    # the write step actually emits -- see that function's own docstring.
+    OWN_KEYS = frozenset(own_document_fields([]))
     existing = {}
     if os.path.exists(FIXTURE):
         with open(FIXTURE, encoding="utf-8") as fh:
@@ -490,32 +533,10 @@ def main():
             "otherwise silently paper over"
         )
 
-    document = {
-        "schema": 1,
-        "generated_by": "scripts/derive_derived_evaluator_fixtures.py",
-        "pcgen_corpus_relative_root": CORPUS_RELATIVE_ROOT,
-        "token_family": "BONUS:STAT",
-        "derivation": (
-            "PCGen `BONUS:STAT|<comma-separated ability list>|<integer value>"
-            "[|<extra qualifiers>]`. `expected.abilities` is the ability list "
-            "split on commas; `expected.bonus` is the integer value. Trailing "
-            "qualifiers (`TYPE=Enhancement`, ...) select a stacking type and do "
-            "not change the magnitude. Read straight out of the upstream PCGen "
-            "`.lst` bytes named by `upstream_lst`/`upstream_line`."
-        ),
-        "independence": (
-            "Every value here is a function of the upstream PCGen `.lst` bytes "
-            "alone. The generator imports no engine module, runs no engine "
-            "binary, and opens no file under `data/corpus/` -- which is the "
-            "ingest the engine actually evaluates, and therefore the artifact "
-            "this fixture must stay independent of. `docs/work-inventory.json` "
-            "is read for unit identity and source-line provenance only. This "
-            "fixture is committed before the check that consumes it is written "
-            "(SD-32 E6-F1)."
-        ),
-        "entries": entries,
-        **preserved,
-    }
+    # `own_document_fields()` is the SAME function `OWN_KEYS` above was
+    # derived from -- the write step and the exclusion set can no longer
+    # desync, by construction (see that function's own docstring).
+    document = {**own_document_fields(entries), **preserved}
 
     # Final, unconditional safety net -- over EVERY family, not just the one
     # this run touched. The merge above already makes `entries` itself

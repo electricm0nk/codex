@@ -1668,6 +1668,20 @@ closed separately.
 
 **Authority:** operator ruling, 2026-08-21, verbatim above (`OPERATOR-RULINGS-2026-08-21.md` §18).
 
+**Update, SD-31 wave 29 integration (2026-08-21):** the prerequisite check named above as
+undischarged has now been done, discharging this decision's own "not yet discharged" clause. A
+narrow `is_archetype_locked()` guard (`src/rules_core/class_feature_pool_catalog.rs`) refuses any
+Rogue Talent/Rage Power record carrying a `PREABILITY` token whose value contains
+`CATEGORY=Archetype` — a permanent, structural exclusion from the pool's base class, not merely a
+level/skill gate every character of that class could eventually satisfy (which stays served; see
+the function's own doc comment for the corrected OPEN-vs-EXCLUSIVE distinction this decision's own
+text already draws, applied here to individual pool OPTIONS rather than whole pools). Corpus-wide:
+6 of 300 Rogue Talent/Rage Power records are archetype-locked; 3 were already correctly excluded
+for an unrelated reason, 3 (`adventurers_guide`'s `giant_stalker_defense`/`topple_giant`/
+`underfoot`) are newly refused by this fix with zero regression to any of the 123 previously-banked
+records through this same catalog. Full account: `docs/release/SD-31-corpus-closure-grind/todo/blocked.md`
+B3 (closed) and `progress.md`'s wave 29 receipt.
+
 ---
 
 ## Decision 19 — Cross-book verbatim reprints: settled doctrine, close it — CITES §13, NOT §10 (operator ruling 2026-08-21)
