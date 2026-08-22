@@ -326,6 +326,49 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   binding-layer family, then run each engine corpus-wide. Gate 2's cycles should consume this
   ledger's per-unit `rows` (`family` + `join_status`) as their starting per-unit map.
 
+### Cycle 1 — Gate 2 / Card 7 `gate-2-engines-f10-binding`
+
+- **Card ID:** `gate-2-engines-f10-binding`
+- **Commit SHA:** `d730bc2c5`
+- **Files touched:** `src/rules_core/pilot_compute/bonus_stack_reader.rs` (generalised),
+  `artifacts/gate-2-engines/007_cycle_receipt.md` (new), `docs/retro/events/gate-2-f10-binding.jsonl`
+  (new, one `verification` event from the fresh worktree's oracle preflight self-heal).
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`.
+- **Wired-integration audit result:** `OK_NO_TOKENS`.
+- **Acceptance criterion:** AT-32-G2-001 (`acceptance-and-verification.md` Gate 2 — engine named:
+  the generalised `bonus_stack_reader.rs`).
+- **Status:** complete
+- **Notes:** Generalised the wave-26 single-record accumulator (`extract_addends`/
+  `evaluate_stack`, unchanged, still green) into a data-driven, corpus-wide producer-chain
+  resolver: new `extract_define_base`, `ProducerChain`, `resolve_producer_chain_corpus_wide`,
+  `evaluate_producer_chain`. Reaches the F10 binding-layer family
+  (`epic-breakdown.md` Epic 1 F2 / `MEASURE-TWICE.md` §3.1 — 77.2%, 893 of 1,156 distinct custom
+  identifiers). Proven against real corpus bytes, not synthetic fixtures: `AlchemistBombLVL`'s
+  full producer chain (`DEFINE:AlchemistBombLVL|0` + `BONUS:VAR|AlchemistBombLVL|AlchemistLVL` on
+  `advanced_players_guide/class_feature/alchemist/bomb.json`, PLUS a disjoint third producer,
+  `BONUS:VAR|AlchemistBombLVL|MasterChymistLVL`, on a DIFFERENT record,
+  `.../master_chymist/bomb_thrower.json`) resolves to 8 at `AlchemistLVL=6, MasterChymistLVL=2`.
+  Mutation proof: resolving from the single `alchemist/bomb.json` record alone (the wave-26
+  reader's own scope) silently undercounts to 6, proving the multi-record scan is load-bearing.
+  No-regression proof: the generalised entry point run over exactly the wave-26 module's own token
+  set (`WitchWardBonus`/`ward.json`) reproduces the pre-existing addends and evaluated totals
+  exactly. RED→GREEN: none of `extract_define_base`/`ProducerChain`/
+  `resolve_producer_chain_corpus_wide`/`evaluate_producer_chain` existed at the pinned base
+  (`git show HEAD:...bonus_stack_reader.rs | grep -c ...` → 0); 18/18 module tests pass now (7
+  pre-existing + 11 new), 830/830 `pilot_compute` suite passes (no regression). **Not yet
+  claimed:** AT-32-G2-002 (fixture-check clearance) and a `--bin bonus_stack_reader` CLI target —
+  both acceptance-and-verification.md itself and this cycle's own receipt note these are still
+  open (no per-engine `src/bin/` target exists yet for either Gate 2 engine); flagged explicitly,
+  not silently claimed. AT-32-G2-004 (corpus-wide run) is card 8's own criterion, gated on this
+  card per the pipeline in `workflow-instruction.md §2.4`. Full detail:
+  `artifacts/gate-2-engines/007_cycle_receipt.md`.
+- **Discovery forwards:** none new.
+- **Next-cycle plan:** card 6 (`gate-2-engines-f1-f9`, confirming `formula_interpreter.rs` reaches
+  the nine non-binding families with fixtures) runs independently per the pipeline's two parallel
+  engine chains; card 8 (`gate-2-corpus-wide-runs`) then runs this engine corpus-wide against the
+  closed Gate 1 census (AT-32-G2-004), which is also the natural place for the still-open
+  `--bin`/fixture-check items above to land.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
