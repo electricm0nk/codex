@@ -171,6 +171,7 @@ use super::rules_tables::RuleSetId;
 pub(crate) mod class_feature_grant_consumer;
 mod class_slayer;
 mod class_ultimate_combat;
+pub mod prestige_class_entry_gate;
 /// SD-31 wave 25's interpreter reproduction harness (`OPERATOR-RULINGS-2026-08-21.md` §20) --
 /// see its own module doc. A sibling of the three submodules above, not a call-site consumer of
 /// them: it reads their functions through `super::` the same way `mod.rs`'s own inline
@@ -26003,6 +26004,44 @@ fn compute_class_chassis(
             explanations,
             diagnostics,
         )
+    } else if let Some(gate) =
+        prestige_class_entry_gate::evaluate_prestige_class_entry(&class_level.class_id, input)
+    {
+        // SD-32 Epic 3 (`epic-3-class-reachability`, AT-32-E3-001):
+        // real entry-requirement gating for a prestige class this dispatch
+        // does not (yet) compute a chassis for. No chassis magnitude is
+        // produced -- the caller's existing `class_chassis.unsupported`
+        // diagnostic still fires for `None`, same as any other unsupported
+        // class id -- but the gate genuinely runs and reports whether the
+        // character's real chosen feats/skills/etc. satisfy the class's
+        // real corpus PRE-token entry requirements, fixture-checked in
+        // `prestige_class_entry_gate`'s own tests.
+        diagnostics.push(ComputationDiagnostic {
+            id: if gate.qualifies {
+                "class_chassis.prestige_entry_gate.met".to_owned()
+            } else {
+                "class_chassis.prestige_entry_gate.unmet".to_owned()
+            },
+            message: if gate.qualifies {
+                format!(
+                    "{} ({}): entry requirements met ({} clause(s) satisfied, {} unmodelled); \
+                     chassis magnitude still unsupported (see class_chassis.unsupported)",
+                    gate.display_name,
+                    class_level.class_id,
+                    gate.met.len(),
+                    gate.unmodelled.len()
+                )
+            } else {
+                format!(
+                    "{} ({}): entry requirements NOT met -- {}",
+                    gate.display_name,
+                    class_level.class_id,
+                    gate.unmet.join("; ")
+                )
+            },
+            claim_blocking: true,
+        });
+        None
     } else {
         None
     }
@@ -46917,6 +46956,85 @@ mod chassis_unsupported_diagnostics_name_the_real_gate_tests {
                  list (missing {supported_class_name}): {message}"
             );
         }
+    }
+}
+
+/// SD-32 Epic 3 (`epic-3-class-reachability`, AT-32-E3-001): proves the
+/// prestige-class entry-requirement gate really runs through the real
+/// `compute_pilot_base_chassis` → `compute_class_chassis` call site (not a
+/// direct unit call on `prestige_class_entry_gate` alone) for a real
+/// corpus-derived prestige class, `class:arcane_archer`.
+#[cfg(test)]
+mod prestige_class_entry_gate_wiring_tests {
+    use super::{compute_pilot_base_chassis, PilotBaseChassisComputation};
+    use crate::rules_core::character_input::{load_character_input_fixture, CharacterInput};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn arcane_archer_input(feats: Vec<String>) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty(), "fixture should load cleanly: {:?}", result.diagnostics);
+        let mut input = result
+            .character_input
+            .expect("valid fixture should produce a character input record");
+        input.chosen.class_levels[0].class_id = "class:arcane_archer".to_owned();
+        input.chosen.class_levels[0].level = 1;
+        input.chosen.selected_feats = feats;
+        input
+    }
+
+    fn diagnostic<'a>(
+        computation: &'a PilotBaseChassisComputation,
+        id: &str,
+    ) -> Option<&'a str> {
+        computation
+            .diagnostics
+            .iter()
+            .find(|d| d.id == id)
+            .map(|d| d.message.as_str())
+    }
+
+    /// RED, confirmed manually before this wiring landed (SD-31 wave 27's
+    /// own investigation note above `compute_generic_table_chassis`): the
+    /// `else { None }` arm produced no diagnostic at all for a
+    /// `class:arcane_archer` single-class input -- entry requirements were
+    /// simply never asked about. GREEN below.
+    #[test]
+    fn prestige_class_dispatch_still_leaves_chassis_unsupported() {
+        let input = arcane_archer_input(vec![]);
+        let computation = compute_pilot_base_chassis(&input);
+        assert_eq!(computation.base_attack_bonus, 0);
+        assert!(
+            diagnostic(&computation, "class_chassis.unsupported").is_some(),
+            "the generic unsupported-chassis diagnostic must still fire: {:?}",
+            computation.diagnostics
+        );
+    }
+
+    #[test]
+    fn missing_feats_surfaces_the_unmet_entry_gate_diagnostic() {
+        let input = arcane_archer_input(vec![]);
+        let computation = compute_pilot_base_chassis(&input);
+        let message = diagnostic(&computation, "class_chassis.prestige_entry_gate.unmet")
+            .unwrap_or_else(|| panic!("expected unmet entry-gate diagnostic: {:?}", computation.diagnostics));
+        assert!(message.contains("Arcane Archer"));
+        assert!(diagnostic(&computation, "class_chassis.prestige_entry_gate.met").is_none());
+    }
+
+    #[test]
+    fn real_feats_surface_the_met_entry_gate_diagnostic() {
+        let input = arcane_archer_input(vec![
+            "Point-Blank Shot".to_owned(),
+            "Precise Shot".to_owned(),
+            "Weapon Focus (Longbow)".to_owned(),
+        ]);
+        let computation = compute_pilot_base_chassis(&input);
+        let message = diagnostic(&computation, "class_chassis.prestige_entry_gate.met")
+            .unwrap_or_else(|| panic!("expected met entry-gate diagnostic: {:?}", computation.diagnostics));
+        assert!(message.contains("Arcane Archer"));
+        assert!(diagnostic(&computation, "class_chassis.prestige_entry_gate.unmet").is_none());
     }
 }
 
