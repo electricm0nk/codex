@@ -1,7 +1,11 @@
 # Architecture overview
 
 > Scope: what Codex is, its three top-level planes, and how a character's data flows from raw PCGen corpus text to a rendered sheet cell.
-> Last verified: 2026-07-23 against tranche/5-4 (SD-26 Epic 6 closure)
+> Last verified: 2026-07-23 against tranche/5-4 (SD-26 Epic 6 closure). **Path correction
+> 2026-08-22** (SD-32 closure epilogue, `workflow-instruction.md §13`): the source-tree map's
+> `sd16/` row and `pilot_compute.rs` cites were renamed away (see README.md's provenance note and
+> `docs/architecture/rules-engine.md`'s own path correction) — fixed below; no other content in
+> this doc re-verified.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## What Codex is
@@ -156,7 +160,7 @@ shaped the way it is:
   [rules-engine.md](./rules-engine.md)).
 - **The GUI never computes rules.** Every computed value the desktop app
   renders comes from `apps/desktop/src-tauri/src/character_hub.rs`'s calls
-  into `build_pilot_headless_receipt` (`src/rules_core/pilot_compute.rs`)
+  into `build_pilot_headless_receipt` (`src/rules_core/pilot_compute/mod.rs`)
   and `compute_pilot_with_corpus` (`src/rules_core/pilot_compute_corpus.rs`),
   surfaced as `src/rules_core/pilot_view_model.rs`'s `PilotSnapshot`. No
   frontend code, and no `apps/desktop/src-tauri/` command, calls a
@@ -191,7 +195,7 @@ shaped the way it is:
 | `src/homebrew_authoring/`, `src/oracle_validation/` | Bounded homebrew package-authoring slice; the oracle-parity harness (comparator, normalization, parity-report writer, PCGen-runner wrapper) | [homebrew-and-oracle.md](./homebrew-and-oracle.md) |
 | `data/corpus/`, `data/stubs/` | Repo-resident JSON corpus cache — now six book directories (CRB, APG, ACG, Bestiary 1, Advanced Race Guide, Pathfinder Unchained; `ultimate_campaign` has no cache dir yet), written by eight distinct writers and stamped with `wiring_class` + PI-screened `license`/`pi_field`/`pi_marker`; `book_stub` future-state placeholders for the remaining out-of-scope books | [rules-data-tables.md](./rules-data-tables.md), [status.md](./status.md) |
 | `apps/desktop/` (frontend + `src-tauri/`) | React/Tauri desktop shell, Tauri command inventory, boundary layer | [desktop-app.md](./desktop-app.md) |
-| `apps/desktop/src/sd16/`, `apps/desktop/src-tauri/src/update/` | Self-update chain; `apps/desktop/src/testerWorkbench/feedback/`, `sd16/feedback/` | [update-and-feedback.md](./update-and-feedback.md) |
+| `apps/desktop/src/feedback/`, `apps/desktop/src/update/`, `apps/desktop/src-tauri/src/update/` | Self-update chain; `apps/desktop/src/testerWorkbench/feedback/`, `apps/desktop/src/testerWorkbench/update/` | [update-and-feedback.md](./update-and-feedback.md) |
 | `.github/workflows/`, `scripts/release/`, `tools/release/`, `schemas/update/` | Publish pipeline, branch-promotion gates, manifest schemas | [release-pipeline.md](./release-pipeline.md) |
 | `tests/`, `apps/desktop/scripts/run-tests.mjs`, `apps/desktop/src/**/*.test.ts` | Full verification command set and fixture conventions | [testing.md](./testing.md) |
 | (cross-cutting) | Idiom catalog: fail-honest, DI seams, store shape, boundary rule, etc. | [conventions.md](./conventions.md) |
