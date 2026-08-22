@@ -1757,3 +1757,64 @@ superseding wave 28's six-pile framing) and `progress.md`'s wave-30 entry.
 
 **Full gate: `./scripts/verify.sh -j 8` (the real script).** Full account: `progress.md`'s wave 30
 entry, "Full gate" section.
+
+## Board after wave 31 (`SD31-W31-MEASURE-001`, 2026-08-22) — root-cause taxonomy + compute-shape clustering, board frozen, one dispatch figure retracted
+
+| Kind | Population | Population (excl.) | Done | Done (excl.) | Δ done |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 28 (15.1351%) | 28 (15.1351%) | +0 |
+| class_feature | 15,439 | 15,439 | 334 (2.1634%) | 334 (2.1634%) | +0 |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,313 (85.5831%) | 5,313 (85.5831%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 516 (32.6582%) | 516 (32.6582%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 989 (77.8740%) | 989 (77.8740%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,790 (60.8430%) | 1,790 (60.8430%) | +0 |
+| race | 95 | 95 | 35 (36.8421%) | 35 (36.8421%) | +0 |
+| race_trait | 3,504 | 3,504 | 550 (15.6963%) | 550 (15.6963%) | +0 |
+| spell | 2,843 | 2,843 | 1,573 (55.3289%) | 1,573 (55.3289%) | +0 |
+| **TOTAL** | **38,372** | **38,372** | **13,458 (35.0724%)** | **13,458 (35.0724%)** | **+0** |
+
+**Zero movement, confirmed** — `docs/work-inventory.json` md5 `d64ddfc677fd1683f5b7638889a25c54`
+identical before the first lane started and after this integration cycle's own last commit. This
+wave's entire mandate was measurement: a twelve-shape root-cause taxonomy answering "is this program
+mostly blocked by our own plumbing or by genuine rules complexity," and a compute-shape clustering
+census answering "is a compute library worth building." Full answers, at the top, with numbers:
+`artifacts/MEASURE-TWICE.md`.
+
+**(a) Plumbing vs. rules, corrected.** First filed at 4:1–5:1 plumbing-favoring. An adversarial
+reviewer measured the one input the filing lane had declared unmeasurable (overlap between the
+8,243-unit `data.class`-misattribution bucket and the 2,453-unit unmodelled-class-chassis bucket) and
+found it at 1,354–2,124 units, not the ~532 assumed — correcting the ratio to ~3.3:1–4.4:1. The
+operator's suspicion survives; the filed precision does not.
+
+**(b) Compute library, corrected.** Ten real families exist and reproduce exactly; the grammar to
+evaluate nine of them already exists (Ruling §20's interpreter) and a wave-26 accumulator module
+(`bonus_stack_reader.rs`) already proves the binding pattern the tenth needs, reaching 77.2% of
+distinct custom identifiers — corrected from a first-filed 46.8% for a narrower mechanism. The
+ceiling on what it can close is 3,201 of 24,914 not-done units (12.8%), not the 4,948 (19.9%) first
+filed. The operator's own flagship example, dice notation, has zero instances in the population any
+lane measured.
+
+**One dispatch figure retracted**: "33,830 formula tokens reduce to 1,049 shapes, top 15 covering
+80%" — the first two components reproduce exactly, the third does not reproduce under any
+normalisation two independent lanes tried. Consequential: this figure was already written into the
+next package's own committed scope document (`docs/release/SD-32-compute-library-and-cause-closure/`,
+opened mid-wave by a separate session, before this wave's measurement returned) as settled fact —
+named loudly here rather than silently inherited; correcting that document is out of this cycle's
+write scope.
+
+**Adversarial review outcome**: 6 lanes, 2 independent reviewers. One lane's specific closure claim
+(`sweeps.md` S2, "equipment/spell/feat cannot host the Monk shape at all") returned GAMED and was not
+carried forward — its live race/monster tests and a genuine new Monk-shaped equipment instance
+(APG's `Equipmods` gap) are preserved separately. Every other lane returned PARTIAL with at least one
+load-bearing correction, none GAMED overall.
+
+**`todo/` reconciled (fifth run)**: 5 new levers (L22–L26), 4 new sweeps (S17–S20, one closed
+same-cycle), 1 new defect (D14), 1 new blocked item (B16), 2 sweeps corrected in place (S8's
+numerator and internal split, S9's own miscounted reproduction command), 1 defect corrected in place
+before it could sit as measured fact (D2's reach). `THE-BOX.md` gains a wave-31 addendum; the
+46-group partition itself is unchanged.
+
+**Full gate: `./scripts/verify.sh -j 8` (the real script).** Full account: `progress.md`'s wave 31
+entry, "Full gate" section.

@@ -1,6 +1,7 @@
 ---
 canonical: true
 wave: 30
+last_amended: "wave 31 — see 'Wave 31 addendum' at the top of the body below; the 46-group partition itself is UNCHANGED (no new evidence codes discovered), only dispositions/counts within existing groups were corrected"
 supersedes: "wave 28 (+ wave 29 addendum) six-pile framing — see 'What changed since wave 28' below"
 purpose: >
   The complete inventory. Wave 28 mapped six piles and left 298 units in no lane at all; naming that
@@ -12,6 +13,72 @@ board_at_close: "13,458 / 38,372 (35.07%) — UNCHANGED from wave 29 close. This
 ---
 
 # THE BOX — SD-31 wave 30 complete inventory
+
+## Wave 31 addendum — what this wave proved or disproved about the 46 groups
+
+**The partition itself is untouched: still 46 groups, still 24,914 population, still `uncovered: 0,
+overlap: 0`.** Wave 31 was a root-cause and compute-shape measurement wave (see
+`MEASURE-TWICE.md`, the wave's primary deliverable) and did not add, remove, split, or re-key any
+group. What changed is depth within specific groups, and one important correction to how the groups
+relate to each other.
+
+- **`class_feature_owner_matched_by_name_but_record_not_held_by_engine` + the `data.class` field
+  underneath it (S8's population).** The anchor (11,502) re-confirms exactly. The numerator, flagged
+  since wave 30 as "the 71.4% breakdown itself was not re-run," WAS re-run this wave: **8,243 of
+  11,502 (71.7%)**, not 8,210/71.4%. New: only **2,360 of the 8,243 (28.6%) are cleanly
+  prefix-remappable plumbing**; the remaining **5,883 are a MIX of category-label plumbing and
+  genuine unmodelled-class content**. Do not read this group's whole count as "plumbing" going
+  forward — see the next point.
+- **`class_feature_of_unmodelled_corpus_class:*` (2,453 units, the L1/T12 "genuine missing
+  mechanism" group) overlaps the group above by a MEASURED 1,354 units (floor) to ~2,124 (scaled),
+  not the ~532 wave 30 assumed.** This is the single most consequential correction this wave made:
+  these two groups were treated as disjoint contributions to a plumbing-vs-complexity split, and they
+  are not. The overlap units are named, real classes (Psychic, Vigilante, Medium, Magus, Shifter,
+  Kineticist, Spiritualist, Occultist) that need to be modelled, not relabeled. Full arithmetic:
+  `MEASURE-TWICE.md` §2, filed as `sweeps.md` S20 (CLOSED, measured).
+- **`race_trait_race_not_modelled` (S3, 2,472) and `no_compiled_rule_set_for_book` (L10, 422)**
+  re-confirm exactly, unchanged.
+- **`class_feature_group_names_no_class_at_all` (S12)** re-confirms at 1,321 of 12,114 (not the
+  intermediate 1,377 some prior citations carried).
+- **The `no_explanation_id_and_no_diagnostic_names_this_feature` group (G3/L6, 3,320)** is now cross-
+  referenced against the compute-shape families (`MEASURE-TWICE.md` §3): its ~2,287
+  formula-interpretable-but-unconsumed sub-population is not evenly hard — some of it (ability-
+  modifier-derived, clamped-scaling) has fully-covered grammar and only needs consumer wiring; some
+  of it (`classlevel(...)`-derived, 211 units program-wide) is blocked on a real interpreter bug
+  (`defects.md` D2, reach now measured at 1,957/523 names, corrected from a first-filed 2,340/616).
+- **The L20 residual (6,966 units, 32 families, NAMED not EXAMINED)** is now partially informed by
+  the compute-shape census: a compute library, even fully built, closes at most **3,201 of the
+  24,914 not-done population (12.8%)** — meaning most of L20's 6,966 units are NOT formula-shaped
+  work at all and will not be touched by any compute-library investment, however good.
+- **A 447-unit gap in a prior wave's "absent from X table" narrative was corrected**, not a gap in
+  THE-BOX's own partition: `race_trait_absent_from_race_traits` (238), `class_absent_from_ClassId_ALL_
+  and_book_class_id_enums` (152), and `race_absent_from_the_character_creation_roster` (57) were
+  always inside the 46-group total, just narrated separately from a wave-31 lane's own 6-family
+  "onboarding backlog" summary, which silently excluded them. Restated in full in `MEASURE-TWICE.md`
+  §1's T9 row.
+- **A wave-31 lane attempted to close `sweeps.md` S2 (generalizing the Monk shape beyond classes) on
+  a false architectural claim and was reviewed GAMED; reverted to PARTIAL.** A genuine new
+  Monk-shaped instance was found live in equipment (APG's `Equipmods` table-variant gap, ~35 records,
+  mostly mitigated already) — the sweep's own open question (does this shape recur outside the 3
+  enum-mediated kinds already checked?) is now MORE open, not less, than wave 30 left it. Full
+  account: `MEASURE-TWICE.md` §4, `sweeps.md` S2.
+- **Board confirmed unchanged**: `md5sum docs/work-inventory.json` = `d64ddfc677fd1683f5b7638889a25c54`,
+  identical to wave 30's close and wave 31's own start and end. Nothing banked, nothing reclassified,
+  no regen run.
+
+**One retraction, named loudly per this wave's own instruction.** The wave-31 dispatch brief's own
+cited figure — "33,830 formula tokens reduce to 1,049 shapes, the top 15 covering 80%" — has its
+first two components (33,830; 14,752 distinct raw values) reproduced exactly, but the third (1,049
+shapes / 80%) did NOT reproduce under any normalisation two independent measurement lanes tried.
+**Treat "1,049 shapes / top-15 / 80%" as retracted**, including everywhere it may already have been
+cited as settled fact in downstream planning (see `MEASURE-TWICE.md` §6).
+
+Full detail, every corrected number's reproduction command, the twelve root-cause shapes, the ten
+compute-shape families, and the ranked automation candidate list: `MEASURE-TWICE.md` (this wave's
+primary deliverable — read that first, this addendum is the map-maintenance summary).
+
+---
+
 
 ## Answer to the operator's question, first: is the inspection now complete?
 

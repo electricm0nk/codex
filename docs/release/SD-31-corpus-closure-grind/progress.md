@@ -34906,3 +34906,154 @@ lane runs (`w30-adventurers-guide`, `w30-booklane`, `w30-booklane-desktop`, `w30
 housekeeping, same pattern as wave 29's leftover cleanup. This integration cycle's own
 `w30-integrate` target directory deleted after the gate run completed. `sd31/racetrait4-SD31-E6-F4-005`
 — untouched, not read, not gated, per the standing instruction.
+
+## 2026-08-22 — SD-31 wave 31: measurement-only census — root-cause taxonomy + compute-shape clustering (6 lanes + 2 adversarial reviews)
+
+**Purpose, in the operator's own words**: *"I really feel like it shouldn't be taking this long to
+convert rewritten Java logic into rust... let's keep measuring."* Two questions, answered at the top
+of `artifacts/MEASURE-TWICE.md` (this wave's primary deliverable, read that first): (a) what are the
+recurring blocker shapes, corpus-wide, and is the program mostly blocked by our own plumbing or by
+genuine rules complexity; (b) is a compute library worth building, and how much of the remaining
+work would it actually close. **Hard rule, honored**: this wave banks nothing. `docs/work-inventory.json`
+confirmed byte-identical (`d64ddfc677fd1683f5b7638889a25c54`) before the first lane started and after
+this integration cycle's own last commit.
+
+### Base anomaly, reported per this program's own discipline
+
+The dispatch instructed verifying the worktree base was `a62e8e055` (tranche/11 tip). At the start of
+this integration cycle, `tranche/11`'s tip was **`c93b87ddb`, one commit past `a62e8e055`** — a
+docs-only commit (`docs(sd32): open the package and write the session handoff`) opening the next
+package's scope document and retrospective log, explicitly written to be finalized once this wave's
+own numbers returned. The tree was also not fully clean: two automated `reclaim.sh` retro-log entries
+were appended by ambient tooling between sessions. **Per this program's own instruction ("if your
+tree is NOT clean, stop and report — do not discard work") and per `AGENTS.md`'s "never discard
+work," this integration cycle did NOT `git reset --hard`.** The deviation was investigated, not
+reset: `c93b87ddb` touches only `docs/release/SD-32-compute-library-and-cause-closure/` and
+`docs/retro/events/sd31-orchestrator.jsonl` — nothing under this package's own tree — so it does not
+conflict with this cycle's write scope. Consequential finding, not incidental: that SD-32 scope
+document's own text states as settled fact the dispatch's third headline figure ("33,830 formula
+tokens reduce to 1,049 shapes... top 15 covering 80 percent") — the exact figure this wave's own
+measurement retracts (see below). It was written down before this wave's measurement returned, is
+now known wrong, and has not yet been corrected — named loudly here and in `MEASURE-TWICE.md` §6,
+correction itself is out of this cycle's write scope (SD-31's own tree only).
+
+### (a) Root-cause taxonomy — twelve shapes, corrected ratio
+
+Twelve recurring blocker shapes, each carrying a corpus-wide count (full table:
+`MEASURE-TWICE.md` §1). The headline plumbing-vs-rules ratio, as first filed by one lane, was
+**4:1–5:1 plumbing-favoring**. An adversarial reviewer measured the one input that lane had declared
+"could not determine" (the overlap between the largest plumbing bucket, 8,243 units of
+`data.class` misattribution, and the largest genuine-complexity bucket, 2,453 units of
+unmodelled-class chassis work) and found it at **1,354–2,124 units, not the ~532 assumed** —
+correcting the ratio to **~3.3:1–4.4:1**. The operator's suspicion survives; the precision claimed
+for it does not. Full arithmetic: `MEASURE-TWICE.md` §2, filed as `sweeps.md` S20 (CLOSED, measured).
+
+A thirteenth Monk-shaped instance was found live this wave, in equipment (APG's `EquipmentCategory`
+omits the `Equipmods` variant seven other book directories carry, ~35 corpus records, mostly
+mitigated by a separate gap table) — disproving one lane's own claim that equipment/spell/feat
+cannot host this shape at all. That claim's closure attempt on `sweeps.md` S2 was reviewed **GAMED**
+and reverted to PARTIAL; its live counterexample is preserved.
+
+### (b) Compute library — confirmed in shape, overstated in reach
+
+Ten real semantic families exist (reproduced exactly by an independent reviewer, script-for-script).
+The grammar to evaluate nine of them already exists (`formula_interpreter.rs`, Ruling §20) and a
+wave-26 accumulator module (`bonus_stack_reader.rs`, 329 lines, confirmed present and unmodified this
+wave) already proves the binding pattern the tenth needs, generalizable to **77.2% of the corpus's
+1,156 distinct custom identifiers** — corrected from a first-filed 46.8% (a narrower mechanism's
+overclaimed reach) that had also silently undercounted the true bespoke residual (263, not 530).
+
+**The ceiling on what a compute library can close is 3,201 of 24,914 not-done units (12.8%)**, not
+the 4,948 (19.9%) first filed — the largest single family (flat literal constants, 1,747 units) gets
+zero benefit from any shared function, by the finding lane's own admission. The operator's own
+flagship example, dice notation ("1d6 per level"), has **zero instances** in the population any lane
+measured — it lives in a different corpus surface (DESC/NATURALATTACKS/DAMAGE/SPROP/ASPECT/ALTDAMAGE,
+4,911 raw hits), sized for the first time this wave but never clustered, filed as `sweeps.md` S17.
+
+**One dispatch figure retracted.** "33,830 formula tokens reduce to 1,049 shapes, top 15 covering
+80%" — the first two components reproduce exactly; the third does not reproduce under any
+normalisation two independent lanes tried. Treat it as withdrawn, not a planning input (see the base
+anomaly note above — it was already inherited as fact downstream before the retraction existed).
+
+### Automation candidates, ranked (full 4-column table: `MEASURE-TWICE.md` §5)
+
+1. **TYPE-facet/group-name triage tool** (new `levers.md` L22) — half-day build, trivially checkable
+   (raw corpus token, byte-for-byte), 0 units closed directly but corrects up to 1,321 mis-evidenced
+   units and at least 3 other named census proxies. **BUILD.**
+2. **Generic formula-binding accumulator** (new `levers.md` L23, generalizing `bonus_stack_reader.rs`)
+   — medium build, gated on the same `derived_evaluator_fixture_check` condition Ruling §20 already
+   requires, ~1,500–1,900 units eventually addressable (not a guaranteed close). **BUILD, sequence
+   `defects.md` D2's fix first.**
+3. **Generator self-erasure lint** (new `levers.md` L25, cross-ref `defects.md` D9/`sweeps.md` S6) —
+   low build, deterministic pass/fail check, 0 units closed but protects ~1,600+ records from a
+   future silent regression and finishes S6's 17-binary triage. **BUILD.**
+4. **Race-trait compound-key matcher fix** (`sweeps.md` S3) — up to 2,472 units reclassified (not
+   closed), but cost is unscoped after 7 waves of the sweep sitting open. **SCOPE FIRST, do not build
+   blind.**
+
+Rejected with reasons (6 candidates, unchanged or corrected from prior filings) and one named-but-
+not-ranked item pending an operator ruling (a generic bonus-stacking mechanism restricted to
+TYPE-driven stacking-suppression, new `levers.md` L26 / `blocked.md` B16 — the same posture the
+interpreter itself had before Ruling §20): full list in `MEASURE-TWICE.md` §5.
+
+### `todo/` reconciled (fifth run)
+
+**New**: 5 levers (L22–L26), 4 sweeps (S17–S20, S20 closed same-cycle), 1 defect (D14), 1 blocked
+item (B16). **Corrected in place**: `defects.md` D2 (reach 2,340/616 → 1,957/523, a first-pass
+lane's own claim corrected by review before it could sit as measured fact); `sweeps.md` S8 (numerator
+8,210/71.4% → 8,243/71.7%, plus a new internal split — 2,360 clean-plumbing vs. 5,883 mixed — that
+had never been run); `sweeps.md` S9 (an "EXHAUSTIVE" upgrade attempt's own reproduction command
+miscounted itself, 42 vs. the real 49 — left at PARTIAL, not upgraded); `sweeps.md` S2 (a CLOSED
+attempt reviewed GAMED, reverted to PARTIAL with the live equipment counterexample preserved).
+**Restated, not silently re-narrowed**: T9's "absent from X table" onboarding-backlog family, first
+filed at 2,651/6 families, corrected to the full 3,098/10 families it always was within the 46-group
+partition — the missing 447 units were never lost from the board, only from one lane's own narrative
+sum.
+
+### `THE-BOX.md` updated
+
+A new "Wave 31 addendum" section at the top of the body (frontmatter `last_amended: wave 31`) records
+every correction above against the specific one of the 46 groups it touches. **The partition itself
+is unchanged** — still 46 groups, still 24,914 population, still `uncovered: 0, overlap: 0` — no new
+evidence code was discovered this wave; only within-group depth and one important cross-group
+relationship (the S8/L1 overlap) were corrected.
+
+### Board state (confirm unchanged)
+
+```
+md5sum docs/work-inventory.json
+d64ddfc677fd1683f5b7638889a25c54  (matches wave-30 close, matches wave-31 start, matches wave-31 close)
+```
+
+| Kind | Population | Population (excl.) | Done | Done (excl.) | Δ done |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 28 (15.1351%) | 28 (15.1351%) | +0 |
+| class_feature | 15,439 | 15,439 | 334 (2.1634%) | 334 (2.1634%) | +0 |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,313 (85.5831%) | 5,313 (85.5831%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 516 (32.6582%) | 516 (32.6582%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 989 (77.8740%) | 989 (77.8740%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,790 (60.8430%) | 1,790 (60.8430%) | +0 |
+| race | 95 | 95 | 35 (36.8421%) | 35 (36.8421%) | +0 |
+| race_trait | 3,504 | 3,504 | 550 (15.6963%) | 550 (15.6963%) | +0 |
+| spell | 2,843 | 2,843 | 1,573 (55.3289%) | 1,573 (55.3289%) | +0 |
+| **TOTAL** | **38,372** | **38,372** | **13,458 (35.0724%)** | **13,458 (35.0724%)** | **+0** |
+
+**Units banked: 0, by design.** Confirmed independently by two adversarial reviewers across all 6
+lanes: every lane's git diff is new files under `artifacts/`/`todo/` (documents) — `src/`, `data/`,
+and `docs/work-inventory.json` byte-identical to base in every one of the 6 lane worktrees.
+
+### Adversarial review outcome
+
+Two independent reviewers (lanes 7 and 8). **Zero of 6 lanes GAMED overall; one lane's specific
+closure claim (`sweeps.md` S2) returned GAMED and was not carried forward** — the distinction matters:
+the lane's live race/monster tests and S9 re-derivation are real and preserved, only the closure
+argument and its supporting "0 of 3 kinds" claim are discarded. Every other lane returned PARTIAL,
+with at least one load-bearing correction each — most consequentially the T2/T12 overlap measurement
+(§(a) above) and the binding-layer reach correction in both directions (§(b) above). Both reviewers
+independently found the wave-31 dispatch's own third headline figure (1,049 shapes/80%) does not
+reproduce, corroborating each other without collaboration.
+
+### Full gate — `./scripts/verify.sh -j 8`, isolated `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w31-integrate`
+
