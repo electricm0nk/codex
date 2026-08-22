@@ -605,6 +605,59 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   opportunistic pickup if a future cycle has spare scope. T8 needs an operator ruling before any
   cycle can pick it up at all.
 
+### Cycle 003 — Epics 1-3 / Card 12 `epic-3-class-reachability` (entry-requirement gating mechanism landed; 18-untabled-classes deferred)
+
+- **Card ID:** `epic-3-class-reachability`
+- **Commit SHA:** `a5cf4d3d5` (implementation), `380ec763a` (receipt SHA fill-in)
+- **Files touched:** `src/rules_core/pilot_compute/prestige_class_entry_gate.rs` (new),
+  `src/rules_core/pilot_compute/mod.rs` (new dispatch arm + wiring tests),
+  `scripts/census_prestige_class_entry_requirements.py` (new),
+  `tests/fixtures/rules_core/prestige-class-entry-requirements.json` (new, generated),
+  `docs/retro/events/epic-3-class-reachability.jsonl` (new — 1 correction re: base worktree, 1
+  incident re: retro-actor persistence, 1 correction re: 77-vs-62 population, 1 deferral re: 18
+  untabled base classes), this file, `kanban.md` (card 12 → complete).
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`.
+- **Wired-integration audit result:** `OK_NO_TOKENS` (one inline "placeholder" hit in a doc comment,
+  self-healed by rewording; re-audited clean).
+- **Acceptance criterion:** `acceptance-and-verification.md` AT-32-E3-001 — prestige-class
+  entry-requirement gating, cited at the `compute_class_chassis` call site, fixture-checked.
+- **Status:** complete for the mechanism-and-proof half; the 18-untabled-base-class half is
+  explicitly deferred (logged, not silently dropped) — card 12 marked `complete` on the basis that
+  AT-32-E3-001's own text is "the cycle that builds [the gating mechanism] cites the call site and
+  proves the gating runs", which this cycle did; the table-construction half is separable follow-on
+  scope per `epic-breakdown.md`'s own "Real base classes, no table" row.
+- **Notes:** Base worktree was cut from a `site-publish` merge commit with no `docs/`/`data/`/
+  `scripts/` tree (footgun 1 firing again) — caught by §6 step 1's mechanical check before any code
+  change, `git reset --hard $PIN` + rebase onto `origin/tranche/12`'s live tip (which already
+  carried all four gates closed, unblocking this card). Built a 62-entry corpus-derived
+  entry-requirement registry (`scripts/census_prestige_class_entry_requirements.py`, re-derive
+  command in the script's own docstring) reusing `feat_prereqs::pre_tokens::evaluate_prerequisite_token`
+  (already proved against 690 catalog records) rather than a new parser — `PREABILITY`/`PRESKILL`/
+  `PRETOTALAB`/`PREMULT`/`PRETEXT` handled, `PREALIGN`/`PRESPELLTYPE`/etc. honestly `Unmodelled`
+  (never silently pass/fail). Wired into `compute_class_chassis`'s previously-silent final `else`
+  arm; chassis magnitude still returns `None` (unchanged `class_chassis.unsupported` diagnostic) —
+  this cycle proves the gate runs and reports, not that prestige classes reach `Computed`.
+  RED→GREEN captured live for the wiring tests (temporarily stubbed the new arm to
+  `None::<PrestigeEntryGateOutcome>`, 2/3 wiring tests failed for the intended reason, reverted,
+  re-ran GREEN). 8 unit tests + 3 wiring tests, all green; 843/843 `pilot_compute::` and 2364/2364
+  full `cargo test --lib` unaffected. Population corrected 77→62 (retro correction, command in
+  receipt) — the other 69 oracle-wide prestige classes have no ingested corpus data to
+  fixture-check against. Full detail:
+  `artifacts/gate-0-census-closure/003_cycle_receipt.md`.
+- **Gate-wrap-up retro note (workflow-instruction.md §12 step 1):** `scripts/retro.py summary
+  --since 2026-08-22 --json`, read. This actor's own window: 1 correction (wrong-base worktree,
+  self-healed), 1 incident (retro-actor-not-reexported-per-bash-call, self-healed, harmless), 1
+  correction (77-vs-62 population), 1 deferral (18 untabled base classes). No recurrence key fired
+  more than once within this actor's own window. Open rulings `decisions.md §7` B1/B2/B4/B5:
+  none directly implicated by this cycle's findings (B4/B5 concern class-membership definition, not
+  entry-requirement gating; not re-litigated here).
+- **Discovery forwards:** the 69 un-ingested-book prestige classes feed Epic 4's existing
+  book-onboarding queue — not a new item.
+- **Next-cycle plan:** the deferred 18-untabled-base-class scope (revisit condition: next
+  class-reachability cycle, after this mechanism lands); optionally widen `pre_tokens.rs` with new
+  arms for `PREALIGN`/`PRESPELLTYPE`/`PRESPELLSCHOOL` (19/14/6 occurrences in the 62-class census)
+  to shrink the `Unmodelled` surface further.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
