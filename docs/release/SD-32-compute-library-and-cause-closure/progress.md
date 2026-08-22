@@ -723,7 +723,32 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
      card id, what failed, the command that shows it, named owner. Empty at launch. -->
 
-(none)
+### Card 11 `epic-2-cause-closure` — remaining blocker shapes (filed at closure-epilogue final-acceptance scan, 2026-08-22)
+
+- **Cycle:** Cycle 1 (`gate-3-closure-invariant/epic-2-cause-closure_cycle-1_cycle_receipt.md`),
+  filed under Open blockers by the Closure epilogue cycle (card 13) per
+  `workflow-instruction.md §13` step 1 / `acceptance-and-verification.md` AT-32-CLOSE-001 ("every
+  Epic 1-5 card complete or filed under `## Open blockers` with a named owner").
+- **What failed / what remains:** Card 11's own cycle closed T1 corpus-wide and cited T5/T3; it
+  explicitly did not attempt T2a (8,243 units), T2b (2,472 units), T9 (2,651 units), T4 (up to
+  2,763 units, needs re-derivation), T12 (overlaps T2a by 1,354–2,124 units — cannot close
+  independently), T7 (4 units, fix site identified, not implemented), or T8 (12 units, blocked on
+  an operator ruling). Each of T2a/T2b/T9/T4/T12 is independently a multi-thousand-unit population
+  needing its own measurement+close cycle (Gate 2's own cards 6/7/8 precedent: three cycles for a
+  narrower ten-family scope) — not attemptable inside a single closure-epilogue cycle without
+  fabricating numbers, which the no-stub doctrine refuses.
+- **Command that shows it:** `grep -A2 '^| 11 ' docs/release/SD-32-compute-library-and-cause-closure/kanban.md`
+  (status `returned-to-backlog`); full per-shape reasoning in
+  `artifacts/gate-3-closure-invariant/epic-2-cause-closure_cycle-1_cycle_receipt.md`.
+- **Named owner:** a successor SD-N bundle (`forward-scope-register.md` C2.5). T8 additionally
+  needs an operator ruling on write-scope for `scripts/observer/pf1e_dashboard_producer.py` before
+  any cycle can touch it; T2a and T12 need one combined cycle, not two independent half-measures.
+- **Retro event:** `scripts/retro.py deferral` (`docs/retro/events/closure-epilogue.jsonl`).
+- **Does this block bundle closure?** No — `decisions.md §2` / `kanban.md` line 4: closure fires
+  on the Definition of Done, the four gates (G0-G3), all of which are met
+  (`progress.md` Cycles 2/3, Gate 1 Cycle 1, Gate 2 Cycles, Gate 3 Cycle 1, below). AT-32-CLOSE-001's
+  "complete or filed under Open blockers" condition is satisfied by this filing, not by closing the
+  card's remaining scope.
 
 ## DISCOVERED
 
