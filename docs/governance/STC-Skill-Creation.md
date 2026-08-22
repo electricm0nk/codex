@@ -264,6 +264,12 @@ recommendation.
   relationships to other skills. A contributor without profile access should read this
   document; a contributor with profile access should read the live skills directly because they
   are the canonical implementation, not this interface description.
+- **A Claude-Code-native rendering of this contract also lives in-repo** at
+  `.claude/skills/stc-authoring/SKILL.md` — a project-scoped skill (not a personal one) so any
+  Claude Code session working in this repo picks it up automatically. It condenses this
+  document's six rules into an actionable form for generating a new bundle's chassis or auditing
+  an existing one for content completeness. Update it alongside this document when the interface
+  contract changes; the two should never drift.
 - **Not a substitute for reading the templates.** A contributor's skill that reads only this
   document and not `docs/release/template/template.md` will produce bundles that violate the
   chassis shape. The templates are the contract; this document is the meta-commentary.
