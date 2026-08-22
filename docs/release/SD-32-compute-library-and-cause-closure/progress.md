@@ -225,6 +225,54 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
   `inner_sea_taverns`, `inner_sea_temples`) — sequenced behind this cycle per `kanban.md`. Gate 0
   is not closed until card 4 also lands.
 
+### Cycle 3 — Gate 0 / Card 4 `gate-0-book-onboarding-precondition`
+
+- **Card ID:** `gate-0-book-onboarding-precondition`
+- **Commit SHA:** `a50b7da04` (implementation); `21b348ed9` (retro-log append after the
+  `verify.sh --only reach` run).
+- **Files touched:** `src/rules_core/rules_tables/mod.rs` (4 new `RuleSetId` variants),
+  `src/rules_core/rules_tables/{inner_sea_faiths,inner_sea_magic,inner_sea_temples}/{mod.rs,
+  spell_list.rs}` (new), `src/bin/ingest_inner_sea_setting_spells.rs` (new),
+  `src/bin/gen_feat_gap_tables.rs` + `src/rules_core/rules_tables/feat_gap_tables.rs` (new
+  `inner_sea_taverns` gap-row lane), `src/rules_core/rules_tables/feats_all.rs`,
+  `src/rules_core/spell_resolver.rs`, `src/bin/v06_work_inventory.rs`,
+  `src/bin/v06_content_state_dump.rs`, `apps/desktop/src-tauri/src/{spell_catalog.rs,
+  reach_gate.rs,corpus_ingest_diagnostic.rs,feat_catalog.rs,character_hub.rs}`,
+  `src/rules_core/{feat_prereqs.rs,feat_identity.rs}`, three `tests/*.rs` integration files
+  (pinned-count sweep), `docs/retro/events/gate-0-book-onboarding.jsonl` (new). Full list, with
+  the reason for each: `artifacts/gate-0-census-closure/002_cycle_receipt.md`.
+- **Identifier audit result:** OK_NO_BUNDLE_TAGS.
+- **Wired-integration audit result:** OK_NO_TOKENS.
+- **Acceptance criterion:** AT-32-G0-003 (the four unbuilt books land their compiled rule sets
+  before Gate 0 is declared closed).
+- **Status:** complete
+- **Notes:** All four books (`inner_sea_faiths`, `inner_sea_magic`, `inner_sea_taverns`,
+  `inner_sea_temples`) land their first compiled `RuleSetId` — three via a new `spell_list`
+  module (faiths 2 entries, magic 34, temples 21, re-derived and cross-checked against
+  `epic-breakdown.md`'s 422-unit Epic 4 figure: 3+335+20+64=422), one (`inner_sea_taverns`, no
+  `*_spells.lst` in this book) via the existing generalised feat gap-row generator (9 entries),
+  the same shape `RuleSetId::Mythic` already uses. All four families verified reaching a player
+  through the real `reach_gate.rs` claims against live `build_spell_catalog()`/
+  `build_feat_catalog()` responses. Every catalog total that moved (feat gap lane 531→540, feat
+  catalog 2109→2118, spell catalog 2056→2113) was swept across every file that pinned it and
+  re-derived from the actual failing-test mismatch, not guessed. `cargo test --locked --lib`
+  (root): 2341 passed; `cargo test --locked --bins` (desktop): 515 passed (0 failed once
+  committed — the one pre-commit failure was `last_ingested_at_is_a_real_git_derived_timestamp_
+  when_available`, gated on git history existing for the new directories, resolved by this
+  cycle's own commit). `scripts/verify.sh --only reach`: PASS (30/30). `docs/work-inventory.json`
+  was **not** regenerated this cycle — the binary's fail-closed guard (protecting 8,246
+  verification stamps) is the same one Cycle 2 hit and correctly did not force past; AT-32-G0-003
+  is met independently via the reach-gate/test evidence, and the inventory regeneration is
+  deferred to whichever cycle next runs the sweep+fixture-check pipeline. A genuine intra-book
+  duplicate declaration in `isf_spells.lst` was caught by the desktop's own
+  `mapping_helpers_agree_with_the_registry` test and fixed at the ingest source (first-
+  declaration-wins dedup); logged as a `scripts/retro.py rework` event. Full detail, including
+  every re-derivation command: `artifacts/gate-0-census-closure/002_cycle_receipt.md`.
+- **Discovery forwards:** none new — both Cycle 2 `## DISCOVERED` items remain open, untouched by
+  this cycle.
+- **Next-cycle plan:** Gate 0 is closed (AT-32-G0-001/002/003 all met). Card 5
+  (`gate-1-shape-closure`) opens next per `kanban.md`'s gated order.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,

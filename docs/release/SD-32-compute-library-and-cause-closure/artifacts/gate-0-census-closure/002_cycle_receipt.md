@@ -1,7 +1,8 @@
 # Cycle 3 — Gate 0 census closure / Criterion AT-32-G0-003
 
 - **Card ID:** `gate-0-book-onboarding-precondition`
-- **Commit SHA:** (recorded after push — see `progress.md`'s Cycle 3 entry for the final SHA)
+- **Commit SHA:** `a50b7da04` (implementation); `21b348ed9` (retro-log append after the
+  `verify.sh --only reach` run)
 - **Files touched:**
   - `src/rules_core/rules_tables/mod.rs` (new `RuleSetId` variants: `InnerSeaFaiths`,
     `InnerSeaMagic`, `InnerSeaTaverns`, `InnerSeaTemples`; three new `pub mod` registrations)
