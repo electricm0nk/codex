@@ -89,13 +89,16 @@ test "$(jq -r '.unclassified_count' artifacts/gate-1-shape-closure/ledger.json)"
 python3 scripts/shape_ledger.py --inventory /dev/null 2>&1 | grep -q "no coverage" \
   && echo "GATE_G1_FAILS_CLOSED_ON_EMPTY_OK"
 
-# Per-family unit counts match epic-breakdown.md
+# Per-family unit counts match epic-breakdown.md (hand cross-check, not JSON diff --
+# epic-breakdown.md is prose/markdown, not a machine-readable file)
 python3 -c "
 import json
 l=json.load(open('artifacts/gate-1-shape-closure/ledger.json'))
-e=json.load(open('epic-breakdown.md'))  # parsed family table
-assert l['families'] == e['families'], 'family counts drifted'
+print(l['families'])
 "
+# then diff the printed per-family counts against the F1..F10 table in
+# epic-breakdown.md Epic 1 by eye; a cycle that finds a mismatch stops and reports it,
+# it does not silently update whichever side is more convenient
 ```
 
 ## Gate 2 — Engines

@@ -43,6 +43,12 @@ mandatory at planning time — cycles load them when they need them.
 | `kanban-worker` | Any cycle that needs the local-file kanban pattern (this bundle uses the pattern) |
 | `kanban-handoff-projection-audit` | Any cycle that needs to audit which handoff files belong on which cards |
 
+## Retrospectives
+
+| Path | What it carries | When a SD-32 cycle reads it |
+|---|---|---|
+| `../../../retro/sd31-retrospective.md` | The SD-31 retrospective, grounded in the 1,940-event log. Our own written artifacts (briefs, dispatch prompts, README/kanban bodies) are the most frequently wrong thing in the program — not code, not people. Two infrastructure failures (disk-full 120x + disk-pressure 16x; wrong-base-worktree 27x) went unfixed for 30 waves. | First cycle of every gate, and any cycle authoring a dispatch prompt or planning-doc figure — this is the source for why the dual-audit gate and re-derive-don't-transcribe rules exist. |
+
 ## Sibling bundles
 
 | Path | Bundle | Relationship to SD-32 |
