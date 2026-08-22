@@ -165,6 +165,58 @@ cargo run --locked --bin derived_evaluator_fixture_check -- \
 # Receipt cites: grep PCGEN_ORACLE_SHA scripts/pcgen-oracle-pin.env
 ```
 
+### AT-32-G2-003 entry — `formula_interpreter.rs` / families F1..F9 (kanban `#6`)
+
+Per AT-32-G2-003's own text ("each engine's `acceptance-and-verification.md` entry ... states"),
+appended here rather than in a separate file, since `formula_interpreter.rs` is a library module,
+not a `src/bin/` target (`technical-design.md` Gate 2).
+
+* **Family it handles:** F1..F9 — `scripts/shape_ledger.py`'s nine sequentially-numbered shape
+  families the interpreter's grammar reaches directly, with no binding layer. F10 (the
+  binding-layer family `bonus_stack_reader.rs` generalises) is kanban card 7's own scope, not
+  this card's.
+* **Proof's unit population (measured):** per Gate 1's `artifacts/gate-1-shape-closure/ledger.json`
+  family rollup (re-derivable: `python3 -c "import json; d=json.load(open('artifacts/gate-1-shape-closure/ledger.json')); print({k:v['count'] for k,v in d['families'].items()})"`
+  from `docs/release/SD-32-compute-library-and-cause-closure/`, or re-run the ledger fresh via
+  `python3 scripts/shape_ledger.py --inventory docs/work-inventory.json --output /tmp/ledger.json`
+  from the repo root and read `/tmp/ledger.json` the same way), F1=1,790, F2=1,490, F3=303,
+  F4=570, F5=361, F6=211, F7=5, F8=41, F9=27 — **4,798 not-done units** across the nine in-scope
+  families (24,914-unit not-done population).
+* **Proof width — what this card's fixture-check does NOT cover:** one real corpus formula sample
+  per family (9 total), not every one of the 4,798 units' own formula text. This is a **grammar
+  reach** proof ("the interpreter's parser+evaluator accepts and correctly computes this family's
+  shape, on a representative real sample"), not a claim that all 4,798 units individually clear
+  the fixture-check — that corpus-wide, per-unit claim is AT-32-G2-004's own criterion, carried by
+  kanban card 8 (`gate-2-corpus-wide-runs`), not this card. Known narrower gaps inherited from the
+  engine's own module doc (`formula_interpreter.rs` lines 99-212, unchanged by this cycle):
+  `classlevel(...)` does not verify its class-name argument (single `__LEVEL__` binding only, no
+  per-class environment) — the F6 fixture entry below is written to be correct under that known
+  restriction (single-class formula), not a claim the restriction is fixed; `skillinfo(...)`
+  implements only the `"TOTALRANK"` first argument; `if(...)`'s condition still refuses a bare
+  numeric value; five real PCGen functions (`var`, `count`, `mastervar`, `charbonusto`, `cl`) are
+  refused as unimplemented, never guessed.
+* **Fixture sample size and how it was chosen:** 9 entries, one per in-scope family, each a real
+  `BONUS`/`DEFINE` formula segment pulled from `data/corpus/**/*.json`'s `raw_tokens` (via
+  `extract_formula_field`, the same positional heuristic Gate 1's ledger and
+  `tests::corpus_shape_coverage` both use) and independently confirmed byte-identical against the
+  pinned PCGen oracle checkout at authoring time (`sha256sum`/`sed` against the named upstream
+  `.lst` file and line — see the fixture's own `"derivation"` field and the cycle receipt).
+  Selection was **first real match found** walking `data/corpus` in filesystem order per family
+  (a deterministic, reproducible procedure, not a hand-picked "nice" example) — the script that
+  produced the walk is
+  `docs/release/SD-32-compute-library-and-cause-closure/artifacts/gate-2-engines/001_cycle_receipt.md`'s
+  own commands.
+* **Re-derive command:**
+  ```bash
+  cargo test --locked --test formula_interpreter_family_fixture_check
+  ```
+  Fixture: `tests/fixtures/rules_core/formula-interpreter-family-fixtures.json`. Test:
+  `tests/formula_interpreter_family_fixture_check.rs`. There is no `--bin formula_interpreter`
+  target yet (technical-design.md's own note that the per-engine binary is a still-open Gate 2
+  deliverable) — this `cargo test` invocation is today's real re-derive command for this card's
+  own AT-32-G2-001/002/003 claim; AT-32-G2-004's corpus-wide run and its own binary/CLI target are
+  kanban card 8's scope.
+
 ## Gate 3 — Closure invariant
 
 **AT-32-G3-001.** A standing test exists (`scripts/shape_coverage_standing_gate.py` or wired into
