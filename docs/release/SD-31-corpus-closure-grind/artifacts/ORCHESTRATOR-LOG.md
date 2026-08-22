@@ -1646,3 +1646,64 @@ committed copy — same as any prior wave's document-only changes would). Fixed 
 `./scripts/publish-site-dashboard.sh` and committing the regen; `docs/work-inventory.json` confirmed
 byte-identical before and after. Second run: full account in `progress.md`'s wave 28 entry, "Full
 gate" section.
+
+## Board after wave 29 (`SD31-W29-INTEGRATE-001`, 2026-08-21) — fixture destroyer killed for real, 5-lane grind on THE-BOX's ranked list, Ruling §18 (B3) closed
+
+**The fixture destroyer (THE-BOX.md §3 #1) is genuinely dead, proven by this integration cycle
+itself, not taken on a lane's word.** Reproduced the 2,110-row/8-family self-erasure exactly, then
+found and fixed a false root-cause claim (`literal-verified` in `HELD_STATUSES` restores zero rows,
+not 83 — it is structurally unreachable) and an unguarded half of the real fix (reverting
+`HELD_STATUSES` alone left every test green and the fixture byte-identical, masked by the
+carry-forward merge) before allowing the merge to proceed. Re-ran the generator twice from the
+merged state: byte-identical both times. Ruling §20's interpreter-scale regen can now proceed
+against this seam.
+
+Merged 5 lanes; zero GAMED. Lane 5's book onboarding (`adventurers_guide`, first `RuleSetId` of any
+kind) surfaced Ruling §18's B3 live: 3 of its 5 credited `class_feature` units were archetype-locked
+Rage Power options served wholesale. Closed B3 with a real corpus-wide fix (`is_archetype_locked()`,
+`class_feature_pool_catalog.rs`) — refuses only a `PREABILITY ... CATEGORY=Archetype` token (a
+permanent, structural exclusion from the base class), not any prerequisite at all. **The first draft
+of this fix was too broad** (refused any `PRE*` token) and would have withdrawn 123 previously-banked
+units for no real reason — caught by 3 pre-existing tests going RED before it ever reached a regen,
+narrowed, and re-verified: zero regression to any of the 123.
+
+| Kind | Denominator before | Denominator after | Done before | Done after | Delta |
+|---|---:|---:|---:|---:|---:|
+| class | 185 | 185 | 28 (15.1351%) | 28 (15.1351%) | +0 |
+| class_feature | 15,439 | 15,439 | 332 (2.1504%) | 334 (2.1634%) | **+2** |
+| companion | 1,696 | 1,696 | 871 (51.3561%) | 871 (51.3561%) | +0 |
+| equipment | 6,208 | 6,208 | 5,313 (85.5831%) | 5,313 (85.5831%) | +0 |
+| equipment_modifier | 1,580 | 1,580 | 516 (32.6582%) | 516 (32.6582%) | +0 |
+| feat | 2,610 | 2,610 | 1,459 (55.9004%) | 1,459 (55.9004%) | +0 |
+| monster | 1,270 | 1,270 | 989 (77.8740%) | 989 (77.8740%) | +0 |
+| monster_ability | 2,942 | 2,942 | 1,790 (60.8430%) | 1,790 (60.8430%) | +0 |
+| race | 95 | 95 | 35 (36.8421%) | 35 (36.8421%) | +0 |
+| race_trait | 3,504 | 3,504 | 550 (15.6963%) | 550 (15.6963%) | +0 |
+| spell | 2,843 | 2,843 | 1,573 (55.3289%) | 1,573 (55.3289%) | +0 |
+| **TOTAL** | **38,372** | **38,372** | **13,456 (35.0672%)** | **13,458 (35.0724%)** | **+2** |
+
+**Units banked: +2** (both `adventurers_guide` Rogue Talent, genuinely unconditional). **Units
+reclassified between not-done verdicts, reported separately per standing instruction: 763**
+(lane 2's 612-unit `unmeasurable`→`not-started`/`deferred` wiring + lane 5's 151-unit book-gate
+re-verdicting). Denominator unchanged at 38,372. Full unit-by-unit join confirms exactly 2
+`not-done`→`done`, 0 `done`→`not-done`, no residue. Full decomposition, per-lane verdicts, and the
+corrected §18 fix's own RED→GREEN→RED→GREEN history: `progress.md`'s wave 29 entry.
+
+**Adversarial review outcome (carried from the dispatch, re-confirmed by this integration cycle's
+own independent re-derivation):** zero of five lanes GAMED. One SOUND as filed (lane 3). Four
+PARTIAL, each with at least one load-bearing correction: lane 1 (false root-cause claim + unguarded
+half, both fixed), lane 2 (two self-inflicted, undisclosed test breaks against the post-regen
+inventory, both fixed), lane 4 (`on_screen_evidence` false — 0 of 471 reachable, not "up to 471" —
+corrected in the re-filed lever), lane 5 (+5 `done` filed, +2 real, per Ruling §18).
+
+**`todo/` reconciliation (third run):** `sweeps.md` S6 CLOSED for all 10 Python
+`derive_*_fixtures.py` generators (Rust `cache_gen`/`enrich_*`/`gen_*`/`ingest_*` binaries carried
+forward as residual, out of every lane's file scope); S11 added (lane 4, `type_facet`-substring
+proxy drift). `blocked.md` B3 CLOSED with a real corpus-wide count (6 of 300 archetype-locked, not
+a proposal). `levers.md` L8/L9/L10 renumbered on merge (lanes 3, 4, and 5 each independently filed
+a lever numbered L8 in the same worktree round) and L9/L10 corrected to match the real reachable/
+banked figures. `defects.md` D7 CLOSED for real, its root-cause narrative corrected.
+
+**Full gate: `./scripts/verify.sh --full -j 8` (the real script).** Full account, including the
+first (too-broad) §18 fix's own gate failure and the corrected re-run: `progress.md`'s wave 29
+entry, "Full gate" section.

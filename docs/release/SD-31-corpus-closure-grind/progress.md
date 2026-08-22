@@ -34582,5 +34582,62 @@ CLEAN, 13 files scanned against 1,612 declared-PI names, zero leaked. `core_esse
 present in the book manifest with `"units": 0` (Decision 9's condition still discharged — no unit
 in the live corpus attributes to it).
 
-### Full gate
+### Full gate — `./scripts/verify.sh --full -j 8`, isolated `CARGO_TARGET_DIR=/home/ubuntu/cargo-targets/w29-verify`
+
+**RESULT: PASS — 34/34 stages, full account below, including the two real breaks this integration
+cycle found and fixed BEFORE this run, not smoothed over.**
+
+Run 1 (against the first, too-broad `is_archetype_locked`-precursor code — a blanket "refuse any
+`PRE*` token" version): FAILED at `root-lib`. Three pre-existing `class_feature_pool_catalog.rs`
+tests broke (`loads_a_real_clean_rage_power_from_the_live_corpus`,
+`elemental_blood_greater_is_refused_for_a_silently_truncated_multi_desc_row`,
+`a_linnorm_death_curse_variant_is_not_excluded_pending_the_operator_ruling`) — the exact signal
+that caught the over-broad first draft (see the §18 section above). Stopped, fixed, re-verified in
+isolation (18/18 `class_feature_pool_catalog` tests green), re-ran the guarded regen, re-committed.
+
+Run 2 (this run, against the corrected code): 34/34 PASS on the first try.
+
+```
+passed:  34  preflight-disk preflight-oracle oracle-pin-selftest producer-selftest
+             pi-redaction-selftest provenance-selftest site-dashboard-selftest
+             site-dashboard-check site-dashboard-pi-gate build-public-status-selftest
+             site-public-status-check site-public-status-pi-gate site-asset-stamp-check
+             reachability-audit-selftest reachability-audit groundtruth-guard-selftest
+             supersession-gate-selftest pi-sweep declared-pi-audit audit-selftest
+             reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full
+             desktop reach corpus-sweep supersession-gate frontend-install frontend-test
+             frontend-typecheck clippy class-dump
+```
+
+| Stage | Result |
+|---|---|
+| root-lib | PASS — 2336 passed (floor 2333, +3) |
+| root-full | PASS — 7469 passed across 580 suites, all 540 `tests/*.rs` suites executed (floor 7447, +22) |
+| desktop (apps/desktop/src-tauri) | PASS — 515 passed (floor 496, +19) — tested EXPLICITLY, per the wave's own instruction |
+| reach | PASS — 30 passed |
+| corpus-sweep | PASS — 26,500 records examined of 26,934 read, 255,531 tokens compared, 26,921 digests checked, 0 findings |
+| supersession-gate | PASS — 116 objects, all clean |
+| frontend-test | PASS — 100/100 files |
+| frontend-typecheck | PASS — `tsc --noEmit` clean |
+| clippy (BOTH crates) | PASS — root 50 warnings (ceiling 50), desktop 7 warnings (ceiling 7), 0 errors either crate |
+| class-dump | PASS — 31/31 computing |
+
+**Baseline notes** (not failures — `scripts/verify-baselines.env` floors/ceilings are updated
+deliberately, never silently): `BASELINE_ROOT_LIB_TESTS` 2333→2336, `BASELINE_ROOT_FULL_TESTS`
+7447→7469, `BASELINE_ROOT_TEST_BINARIES` 579→580 (`ingest_adventurers_guide_spells.rs`'s own
+`#[cfg(test)]` module), `BASELINE_DESKTOP_TESTS` 496→515 (`class_feature_feat_bridge.rs` +
+`feat_catalog.rs` new tests). No baseline moved DOWN anywhere — every number is real growth,
+confirmed against the actual `RESULT: PASS` log, not asserted.
+
+No `--allow-stamp-loss` used anywhere this cycle. `docs/work-inventory.json` is the real,
+regenerated, COMMITTED inventory (this is the integration cycle; it owns the regen, unlike a build
+lane which must revert).
+
+### Cleanup
+
+All 8 wave-29 worktrees (`.claude/worktrees/wf_47fb98cc-22a-1` through `-8`) and their branches
+removed; all content already merged into `tranche/11`. Every scratch `CARGO_TARGET_DIR` under
+`/home/ubuntu/cargo-targets/` deleted after use, including two stray leftovers from an earlier
+wave (`w28-integrate`, `w29-lane2`) found and cleaned up as part of this cycle's own housekeeping.
+`sd31/racetrait4-SD31-E6-F4-005` — untouched, not read, not gated, per the standing instruction.
 
