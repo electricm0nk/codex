@@ -182,6 +182,13 @@ pub mod formula_reproduction_harness;
 /// is wired this wave — see its own module doc's opening paragraph), and a private `mod` here
 /// would make every one of those items a genuine `dead_code` lint.
 pub mod formula_interpreter;
+/// SD-32 Gate 2 (`gate-2-corpus-wide-runs`, kanban `#8`) — the corpus-wide,
+/// closed-Gate-1-census-scoped run AT-32-G2-004 requires of
+/// `formula_interpreter.rs` (F1..F9). `pub` for the same reason as the three
+/// modules above: its non-test API's only caller today is
+/// `src/bin/formula_interpreter.rs`, a separate compilation unit, not this
+/// crate's own internals.
+pub mod formula_interpreter_corpus_wide;
 /// SD-31 wave 26's "BonusObj-shape reader" (`OPERATOR-RULINGS-2026-08-21.md` §20 follow-on) --
 /// see its own module doc. `pub` for the same reason as the two modules above: no unit-banking
 /// consumer is wired to it yet (this lane is scoped to closing interpreter refusals and reading
