@@ -549,7 +549,7 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
 ### Cycle 1 — Epic 2 / Card 11 `epic-2-cause-closure` (T1 closed; T2a/T2b/T9/T4/T12/T7/T8 scoped and deferred)
 
 - **Card ID:** `epic-2-cause-closure`
-- **Commit SHA:** see this cycle's own commit in git log (filled in at push time).
+- **Commit SHA:** `185027717`
 - **Files touched:** `apps/desktop/src-tauri/src/reach_gate.rs` (one new test),
   `docs/retro/events/epic-2-cause-closure.jsonl` (new — 1 correction, 3 deferrals), `kanban.md`
   (card 11 → in-progress, cycle 1), this file.

@@ -1,7 +1,7 @@
 # Cycle 1 — Epic 2 (cause closure) / Card 11 `epic-2-cause-closure`
 
 - **Card ID:** `epic-2-cause-closure`
-- **Commit SHA:** _filled in after push, see below_
+- **Commit SHA:** `185027717`
 - **Files touched:** `apps/desktop/src-tauri/src/reach_gate.rs` (one new test,
   `dispatch_gap_race_and_monster_families_all_have_book_level_reach_arms`),
   `docs/retro/events/epic-2-cause-closure.jsonl` (new — 1 correction, 3 deferrals),
