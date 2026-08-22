@@ -3,8 +3,8 @@
 > Scope: index and maintenance contract for the `docs/architecture/` living-documentation set.
 > Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure). **Path correction 2026-08-22**
 > (SD-32 closure epilogue, `workflow-instruction.md §13` architecture-docs refresh): the
-> provenance-note example and the update-and-feedback source-dirs row cited
-> `apps/desktop/src/sd16/`, renamed to `apps/desktop/src/feedback/` / `apps/desktop/src/update/`
+> provenance-note example and the update-and-feedback source-dirs row cited the old
+> apps/desktop/src/sd16/ directory, renamed to `apps/desktop/src/feedback/` / `apps/desktop/src/update/`
 > by `06d926e90` (2026-08-10) — fixed below; no other content in this doc re-verified.
 > Maintenance: updated at SD closure — see §Maintenance contract below
 
@@ -22,7 +22,7 @@ Modules, tests, and directories across this repo carry `sdNN`/`geNN`
 prefixes (e.g. `tests/sd25_sorcerer_level_up_explanation_coverage.rs`,
 `docs/retro/events/sd31-transcribe.jsonl`). A 2026-08-10 sweep (`feat(sd29): function-based naming
 sweep`) removed `sdNN`/`geNN` prefixes from directory and source-file names, so the still-current
-examples are test/log filenames, not directories — e.g. the former `apps/desktop/src/sd16/`
+examples are test/log filenames, not directories — e.g. the former apps/desktop/src/sd16/
 frontend directory is now `apps/desktop/src/feedback/` and `apps/desktop/src/update/`, un-prefixed.
 These prefixes name the
 originating spec-domain or grand-epic bundle that created the file — they

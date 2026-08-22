@@ -3,7 +3,7 @@
 > Scope: The headless PF1 rules-computation spine — from chosen character input through the deterministic chassis engine to the boundary contract the GUI consumes.
 > Last verified: 2026-08-21 against tranche/11 (SD-31 wave 26 — formula interpreter wired to its
 > first production consumers). **Path correction 2026-08-22** (SD-32 closure epilogue): all 12
-> `src/rules_core/pilot_compute.rs` cites updated to `src/rules_core/pilot_compute/mod.rs` — the
+> src/rules_core/pilot_compute.rs cites updated to `src/rules_core/pilot_compute/mod.rs` — the
 > module (still the deterministic chassis engine's own entry point) became a directory of 10 files
 > during SD-31 (`bonus_stack_reader.rs`, `formula_interpreter.rs`, and others alongside `mod.rs`);
 > no other content in this doc re-verified.

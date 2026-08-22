@@ -2,7 +2,7 @@
 
 > Scope: The typed control-plane carrier that records what the rules engine currently, honestly supports — documentary truth, not computed mechanics.
 > Last verified: 2026-07-22 against tranche/5-3 (SD-25 closure). **Path correction 2026-08-22**
-> (SD-32 closure epilogue): `src/rules_core/pilot_compute.rs` cites updated to
+> (SD-32 closure epilogue): pilot_compute.rs (old path src/rules_core/pilot_compute.rs, no longer valid) updated to
 > `src/rules_core/pilot_compute/mod.rs` — the module became a directory during SD-31; no other
 > content in this doc re-verified.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract

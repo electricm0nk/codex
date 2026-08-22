@@ -2,7 +2,7 @@
 
 > Scope: the hand-transcribed, per-book Paizo table store rules-core queries for class chassis, race traits, feats, spells, equipment, and monster stat blocks.
 > Last verified: **2026-08-19 against `tranche/11`** (SD-31 wave 15, `SD31-W15-INTEGRATE-001`) for §"Chassis fields carry the TOKEN, never a computed number"; prior pass 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle). **Touched 2026-08-21 (SD-31 wave 29, integration cycle)**: added `RuleSetId::AdventurersGuide` (Adventurer's Guide's first compiled rule set, spell family only — `rules_tables::adventurers_guide::spell_list`) to the enum block below; every other row unchanged. **Path correction 2026-08-22**
-> (SD-32 closure epilogue): `src/bin/ingest_race_traits_arg.rs` cite updated to
+> (SD-32 closure epilogue): src/bin/ingest_race_traits_arg.rs cite updated to
 > `src/bin/ingest_apg_race_traits.rs` (renamed by the function-based naming sweep, `8b6dd7511`);
 > no other content in this doc re-verified.
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
