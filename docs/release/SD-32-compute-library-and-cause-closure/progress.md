@@ -273,6 +273,59 @@ unpushed — pushed; (c) `scripts/verify.sh` auto-emits a retro event per run
 - **Next-cycle plan:** Gate 0 is closed (AT-32-G0-001/002/003 all met). Card 5
   (`gate-1-shape-closure`) opens next per `kanban.md`'s gated order.
 
+### Cycle 1 — Gate 1 shape closure
+
+- **Card ID:** `gate-1-shape-closure`
+- **Commit SHA:** `c3fee5e6f`
+- **Files touched:** `scripts/shape_ledger.py` (new, the Gate 1 deliverable),
+  `scripts/tests/test_shape_ledger.py` (new, 28 tests),
+  `artifacts/gate-1-shape-closure/ledger.json` (new, real run against the live inventory),
+  `artifacts/gate-1-shape-closure/001_cycle_receipt.md` (new), `docs/retro/events/gate-1-shape.jsonl`
+  (new, one correction event), `docs/retro/events/sd31-transcribe.jsonl` (one appended
+  `preflight-oracle` PASS line from this cycle's own env-block re-run, misattributed actor name —
+  see the receipt's Notes §5).
+- **Identifier audit result:** `OK_NO_BUNDLE_TAGS`.
+- **Wired-integration audit result:** `OK_NO_TOKENS` (scoped to `scripts/shape_ledger.py` +
+  `scripts/tests/test_shape_ledger.py`; the receipt's own verbatim quote of AT-32-G1-002 contains
+  the word "placeholder" as part of the criterion text, self-healable per §8, not shipping code).
+- **Acceptance criterion:** AT-32-G1-001/002/003 (`acceptance-and-verification.md` Gate 1 —
+  verbatim in the cycle receipt).
+- **Status:** complete
+- **Notes:** `unclassified_count` = 0 over the live not-done population (24,914 units — matches
+  `epic-breakdown.md`'s figure exactly, `jq -r '.unclassified_count' artifacts/gate-1-shape-closure/
+  ledger.json` → `0`). Fails closed on `/dev/null` and on an all-done/empty inventory (`grep -q "no
+  coverage"` → `GATE_G1_FAILS_CLOSED_ON_EMPTY_OK`). Two honest vocabulary extensions beyond the ten
+  SD-31 families: F0 no-formula-content (20,113 units — most not-done units carry no DEFINE/BONUS
+  token at all) and F8 residual (41 units — formula content this classifier's rule list does not
+  recognise, named rather than folded into F0). Every family (F0-F10) states a `proof_width` in the
+  committed ledger per AT-32-G1-003. Per-family counts are a first codification, not a byte-match
+  to SD-31's hand-derived MEASURE-TWICE.md §3 numbers (that measurement was explicitly not
+  committed as a script) — comparison table and rationale for every divergence in the cycle
+  receipt. RED→GREEN: temporarily disabled the classification rule loop, confirmed 9/12
+  family-assignment tests failed for the intended reason, restored to 50/50 passing (28 new + 22
+  pre-existing `coverage_ledger` tests, no regression). AT-32-G1-003's own cross-check instruction
+  ("diff ... against the F1..F10 table in `epic-breakdown.md` Epic 1") found that table does not
+  exist there — `epic-breakdown.md`'s F1/F2/F3 rows are work items, not the family list. Reported
+  per the criterion's own "stops and reports it" instruction, not silently fixed (outside this
+  card's write scope). Logged as a `scripts/retro.py correction`. The 2026-08-22 Cycle 2
+  `## DISCOVERED` item about the ten-kind vocabulary omitting `class_feature` is orthogonal to
+  this gate: `shape_ledger.py`'s population is kind-agnostic (it classifies every not-done unit
+  regardless of `kind`), so that open item neither blocks nor is resolved by Gate 1's closure.
+  Retro gate-wrap-up (§12 step 1): 10 corrections / 2 open deferrals / one recurring incident key
+  (`disk-full`, 3 occurrences) since bundle launch — full breakdown in the cycle receipt. Worktree
+  sweep (§12 step 2): Gate 1 dispatched no worktree-isolated cycle (ran serially in the primary
+  checkout per `workflow-instruction.md §2.4`), so there is nothing of this gate's own to sweep;
+  the one live worktree (`wf_efd6f5fc-a9c-1`) predates Gate 1 and is left for its own gate's
+  wrap-up. Open rulings check (§12 step 3): B1/B2/B4/B5 (`decisions.md §7`) — none touched or
+  triggered by shape classification. Full detail: `artifacts/gate-1-shape-closure/001_cycle_receipt.md`.
+- **Discovery forwards:** none new (the AT-32-G1-003 doc-mismatch is filed as a retro correction,
+  not a `## DISCOVERED` card — see receipt Note 4).
+- **Next-cycle plan:** Gate 1 is closed (AT-32-G1-001/002/003 all met). Gate 2 (cards 6, 7, then
+  8 per engine) opens next per `kanban.md`'s gated order — confirm `formula_interpreter.rs`
+  reaches the nine non-binding families with fixtures, generalise `bonus_stack_reader.rs` for the
+  binding-layer family, then run each engine corpus-wide. Gate 2's cycles should consume this
+  ledger's per-unit `rows` (`family` + `join_status`) as their starting per-unit map.
+
 ## Open blockers
 
 <!-- Non-self-healable failures (workflow-instruction.md §8): one entry per blocker — cycle id,
