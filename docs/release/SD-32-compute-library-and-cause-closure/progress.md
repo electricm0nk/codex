@@ -8,7 +8,7 @@ date: 2026-08-22
 # SD-32 Progress
 
 Per-cycle receipts land here, in the order they were completed. Each cycle appends one section
-under "## Cycles" below. The schema lives in `loop-instruction.md §7`.
+under "## Cycles" below. The schema lives in `workflow-instruction.md §7`.
 
 **At planning-ready time, this file is empty of cycle content.** The chassis is in place; no
 cycles have been run. The file's role is to be the durable audit trail once cycles start.
@@ -25,7 +25,7 @@ before the first cycle landed:
   first cycle.
 - Branch: `tranche/12` cut from `tranche/11` tip after SD-31 closure PR merges.
 - Build counter: `0.11.x` at chassis time; SD-32 first concrete build `0.12.<next>` (captured at
-  first cycle per `loop-instruction.md §11`).
+  first cycle per `workflow-instruction.md §11`).
 
 ## Cycles
 
@@ -37,7 +37,7 @@ before the first cycle landed:
 - **Commit SHA:** (recorded at first real cycle)
 - **Files touched:** `README.md` (promoted from draft to planning-ready), `scope-draft.md`
   (canonicalised), `epic-breakdown.md` (finalised against wave 31 measurement), `decisions.md`
-  (new), `loop-instruction.md` (new), `technical-requirements.md` (new), `technical-design.md`
+  (new), `workflow-instruction.md` (new), `technical-requirements.md` (new), `technical-design.md`
   (new), `acceptance-and-verification.md` (new), `risks-and-open-questions.md` (new),
   `forward-scope-register.md` (new), `release-notes.md` (new), `progress.md` (this file),
   `kanban.md` (new), `content-unit-inventory.md` (new), `artifacts/README.md` (new),
@@ -54,7 +54,7 @@ before the first cycle landed:
 - **Status:** complete
 - **Notes:** This is the chassis-only cycle, run by the operator session, not by a dispatched
   agent. From this point forward, all cycles are dispatched via the `Workflow` tool per
-  `loop-instruction.md §2` and follow §6's per-cycle procedure.
+  `workflow-instruction.md §2` and follow §6's per-cycle procedure.
 - **Discovery forwards:** none.
 - **Next-cycle plan:** Epic 5's protective sweep across all Rust generators
   (`scripts/derive_derived_evaluator_fixtures.py` precedent; see `artifacts/HANDOFF.md`). This

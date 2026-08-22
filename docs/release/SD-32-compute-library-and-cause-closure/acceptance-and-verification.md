@@ -208,6 +208,25 @@ sweep is out of protocol — the failure mode is documented in `artifacts/HANDOF
 (`scripts/derive_derived_evaluator_fixtures.py` was destroying 2,110 fixture entries per run
 before the fix).
 
+## Bundle closure criterion (in addition to the four gates and five epics)
+
+**AT-32-CLOSE-001 — The bundle closure epilogue actually ran, not just the PR.** Per
+`workflow-instruction.md §13`, closure requires, in order, before the PR opens:
+
+1. Every gate G0-G3 met and every Epic 1-5 card `complete` or filed under `## Open blockers` with
+   a named owner.
+2. `docs/retro/sd32-compute-library-and-cause-closure-retrospective.md` written (grounded in
+   `scripts/retro.py summary`, not recollection) **and cited from `references/README.md`** — a
+   retrospective that exists but isn't linked from this package is not a closed criterion.
+3. A full worktree/branch sweep for the whole bundle, with a real count (not "none found" without
+   having actually run `git worktree list`).
+
+Only after all three does the `tranche/12 → develop` PR open, architecture docs refresh, and
+release notes populate. A PR opened before step 2 or 3 completed is out of protocol — the
+verification command is simply running `workflow-instruction.md §13`'s steps in the stated order
+and checking each produced a real artifact (the retrospective file, the worktree-sweep count in
+`progress.md`) before the PR-open step.
+
 ## What does NOT close SD-32
 
 A figure in a release note. A green `scripts/verify.sh` exit code. A `gate-X` Slack post. None of

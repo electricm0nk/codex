@@ -8,7 +8,7 @@ date: 2026-08-22
 # SD-32 Artifacts — Index
 
 Per-cycle evidence lives here. Each cycle writes one receipt file under the appropriate gate
-subdirectory. The schema lives in `loop-instruction.md §7`.
+subdirectory. The schema lives in `workflow-instruction.md §7`.
 
 ## Subdirectories
 

@@ -180,7 +180,7 @@ is the *protective* self-erasure sweep across all 30 Rust generators, which fire
 because scaling engines over a generator that silently empties its own fixtures is how thousands
 of banked units disappear with the suite green.
 
-The file-disjointness claim is verified at `loop-instruction.md §3` (per-epic parallel/sequential
+The file-disjointness claim is verified at `workflow-instruction.md §3` (per-epic parallel/sequential
 map), not assumed.
 
 ## Decision 7 — Open operator rulings (B1/B2/B4/B5 from SD-31 `todo/blocked.md`)
@@ -210,7 +210,7 @@ down anywhere else. The five operator-pattern footguns it lists (wrong-base work
 -newermt` lies, omitted `model` on `agent()` calls, `git stash` taking the whole shared checkout,
 rulings not in force until committed) are not the bundle's scope, but they are the load-bearing
 **operator-pattern** knowledge the next session will need. They are mirrored into
-`loop-instruction.md §6/§7` and into `risks-and-open-questions.md §"Five footguns from the SD-31
+`workflow-instruction.md §6/§7` and into `risks-and-open-questions.md §"Five footguns from the SD-31
 session"`. The HANDOFF itself stays as the canonical source of record.
 
 ## Decision 9 — Build counter resolution at first cycle
@@ -223,5 +223,5 @@ the live version source of truth (`Cargo.toml` stays pinned at `0.1.0` and is no
 SD-32's first concrete build value is whatever `cargo run --locked --bin v06_work_inventory` or
 the equivalent version-derivation tool returns at cycle-0, written into the cycle-0 receipt —
 **not** left as `0.12.<build_at_launch>` in any shipped file. The `0.12.<build_at_launch>` form
-appears only in `README.md` "Bundle at a glance" and in `loop-instruction.md §1.7` as the
+appears only in `README.md` "Bundle at a glance" and in `workflow-instruction.md §1.7` as the
 template-time placeholder; both are replaced by the literal value at the first cycle.

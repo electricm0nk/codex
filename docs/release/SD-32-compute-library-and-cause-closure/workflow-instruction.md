@@ -3,15 +3,15 @@ canonical: true
 owner: god-emporer
 status: planning-ready (chassis completed 2026-08-22 from SD-31 session)
 date: 2026-08-22
-template_source: ../../governance/loop-instruction-template.md
+template_source: ../../governance/workflow-instruction-template.md
 ---
 
 # SD-32 Loop Instruction
 
-**This file is authored from `../../governance/loop-instruction-template.md` (Workflow-orchestrated
+**This file is authored from `../../governance/workflow-instruction-template.md` (Workflow-orchestrated
 dispatch) with this package's specific overrides.** Read the template once for the dispatch
 mechanism and dual-audit gate; read this file for everything bundle-specific. SD-31's own
-`loop-instruction.md` is a useful worked example of "governed by template + per-bundle overrides";
+`workflow-instruction.md` is a useful worked example of "governed by template + per-bundle overrides";
 this bundle follows the same shape.
 
 ## 0. Bundle at a glance
@@ -109,13 +109,79 @@ the target path under the bundle's implementation trees (e.g. `apps/desktop/`,
 `apps/desktop/src-tauri/`, `src/`, `scripts/`) or otherwise part of a criterion's RED→GREEN work?
 If yes, stop — that call belongs inside a dispatched `agent()`, not here. The orchestrating
 session's own direct tool calls are reserved for: read-only investigation/scoping, authoring or
-correcting this bundle's own planning docs (`loop-instruction.md`, `epic-breakdown.md`,
+correcting this bundle's own planning docs (`workflow-instruction.md`, `epic-breakdown.md`,
 `decisions.md`, `cycles/*.md`), and git plumbing on those planning-doc commits — never on the
 shipped-code diff itself.
 
 **Corollary:** mint kanban done-receipts inside the dispatched agent, not from the orchestrating
 session's own `Bash` calls. Kanban card completion is one more §6 per-cycle step; it happens
 inside the dispatched agent's scoped task, never as a bare orchestrating-session Bash call.
+
+### 2.3 Retrospective event logging (every cycle)
+
+Every dispatched cycle emits retro events during the work itself, not just a written summary at
+the end — per `AGENTS.md`'s "Retrospective Logging" discipline. Git records what landed; it says
+nothing about what nearly landed wrong or who caught it, and nothing survives the run except this
+log. SD-31's own retrospective (`docs/retro/sd31-retrospective.md`) is grounded in its 1,940-event
+log for exactly this reason.
+
+- **When you catch an error, hit an incident, defer work, or redo something**, emit the event via
+  `scripts/retro.py` at the moment it happens — not batched at cycle end.
+- **Correction:** `scripts/retro.py correction --subject <who-was-wrong> --claimed <value> --actual <value> --verified-by <command-or-check>`. `--verified-by` is required.
+- **Incident / deferral / rework:** `scripts/retro.py <type> ...` — `python3 scripts/retro.py help <type>` for that type's required fields.
+- **`RETRO_ACTOR` must already be set** (§2.1) so the by-actor breakdown resolves to a real role.
+- Full vocabulary: `docs/retro/schema.json`.
+
+### 2.4 Creating the Workflow script
+
+Dispatch is a script passed to the `Workflow` tool from the live orchestrating session — plain
+JavaScript, not a shell script, not `/loop`. This bundle's phases are **gates**, not epics (§3
+below): G0 → G1 → G2 → G3, with Epic 5's protective sweep firing before G0. A worked skeleton for
+this bundle's own shape:
+
+```javascript
+export const meta = {
+  name: 'sd32-dispatch',
+  description: 'SD-32 — compute library and cause closure, gate-sequenced dispatch',
+  phases: [
+    { title: 'Epic 5 (pre-G0) — protective sweep' },
+    { title: 'Gate 0 — census closure' },
+    { title: 'Gate 1 — shape closure' },
+    { title: 'Gate 2 — engines' },
+    { title: 'Gate 3 — closure invariant' },
+  ],
+}
+
+phase('Epic 5 (pre-G0) — protective sweep')
+await agent(protectiveSweepPrompt(), { model: 'sonnet', phase: 'Epic 5 (pre-G0) — protective sweep' })
+
+phase('Gate 0 — census closure')
+const g0 = await pipeline(
+  gate0Cards,                                 // [{id, prompt}, ...] from kanban.md, cards 2-4
+  c => agent(cycleProcedurePrompt(c), { model: 'sonnet', phase: 'Gate 0 — census closure' }),
+)
+
+phase('Gate 1 — shape closure')
+const g1 = await agent(cycleProcedurePrompt(gate1Card), { model: 'sonnet', phase: 'Gate 1 — shape closure' })
+
+phase('Gate 2 — engines')
+// isolation: 'worktree' — Gate 2 mutates src/rules_core/pilot_compute/*.rs in parallel, per §3
+const g2 = await parallel(
+  gate2Cards.map(c => () =>
+    agent(cycleProcedurePrompt(c), { model: 'sonnet', phase: 'Gate 2 — engines', isolation: 'worktree' })),
+)
+
+phase('Gate 3 — closure invariant')
+await agent(cycleProcedurePrompt(gate3Card), { model: 'sonnet', phase: 'Gate 3 — closure invariant' })
+```
+
+Every `agent()` call above sets `model: 'sonnet'` explicitly per §2's tiering — never omit it (a
+real SD-31 incident burned 97% of a week's Opus quota exactly this way). `cycleProcedurePrompt(c)`
+embeds §6's procedure verbatim plus the card's specific criterion; a dispatched agent starts with
+zero context of this bundle. Epics 1-3 (compute library, cause closure, class reachability) run
+**after** these four gates by construction (`decisions.md §2`) — they are not their own phases in
+this script; they are cards claimed once G1+G2 (or, for Epic 3, G0) are met, per `kanban.md`'s
+claim-priority order.
 
 ## 3. Per-gate parallel/sequential map
 
@@ -179,7 +245,14 @@ this program three times.
 **This procedure runs inside a dispatched `agent()`/`Workflow` call — see §2.2.** The orchestrating
 session never performs steps 1–9 itself with its own tool calls.
 
-1. Ensure the working tree/worktree is based on the latest bundle branch (§5's fetch+rebase).
+1. Ensure the working tree/worktree is based on the latest bundle branch (§5's fetch+rebase), **and
+   verify the base is real rather than assuming it** — footgun 1 below fired 27 times against a
+   prose warning alone. Run this and stop if it fails, before doing anything else:
+   ```bash
+   test -d docs && test -d data && test -d scripts \
+     || { echo 'WRONG BASE — reset before continuing'; exit 1; }
+   ```
+   On failure, `git reset --hard <pinned tranche/12 SHA>` and re-verify.
 2. `BASE_BRANCH=$(git merge-base HEAD origin/develop)` — define this before either grep block
    below, not between them.
    ```bash
@@ -246,10 +319,28 @@ actively using it); confirm via `git worktree list`'s lock annotation and via `g
 --porcelain`/`git log <branch>..origin/<branch>` showing no unmerged, uncommitted work before
 removing anything.
 
-## 9. The five footguns from the SD-31 session
+## 9. Standing lessons and the five footguns from the SD-31 session
 
-Mirrored from `artifacts/HANDOFF.md` so they sit alongside the cycle procedure rather than buried
-in an artifact. Every cycle should treat these as load-bearing context.
+Three additional standing lessons, carried from `docs/retro/sd31-retrospective.md`'s "Changes for
+SD-32" section (this bundle's own predecessor's retrospective) rather than from `HANDOFF.md`:
+
+- **A ruling that defers a capability must name the condition under which it is revisited, and
+  that condition must be checked, not remembered.** SD-31's no-formula-interpreter ruling sat
+  unexamined for ~18 waves after its own stated precondition had already landed. `decisions.md §7`'s
+  four open rulings (B1/B2/B4/B5) are exactly this shape — check them at every gate closure, not
+  only when a card happens to touch them.
+- **A headline figure written before the wave meant to establish it has returned is provisional.**
+  This bundle's own scope README already retracted one such figure ("1,049 formula shapes") before
+  finalising — the fixed version says "estimated" or cites the re-derive command; keep that
+  standard for every new figure this bundle produces.
+- **Recurring incidents get a mechanical control, not a better-worded warning.** §6 step 1 above is
+  the applied form of this lesson — a command with a nonzero exit code, not prose asking an agent
+  to be careful, because SD-31's own prose warning for the identical wrong-base-worktree failure
+  fired 27 times.
+
+**The five footguns**, mirrored from `artifacts/HANDOFF.md` so they sit alongside the cycle
+procedure rather than buried in an artifact. Every cycle should treat these as load-bearing
+context.
 
 1. **Worktrees are cut from the wrong base.** Every SD-31 wave since 15 had lanes land on a
    site-publish commit with no `docs/`, `data/`, `scripts/` or `schemas/` tree. Pin the base SHA
@@ -294,15 +385,45 @@ And write the resolved value into:
 
 - `README.md` "Bundle at a glance" — replacing `0.12.<build_at_launch>`.
 - `decisions.md §1` — same.
-- `loop-instruction.md §1.7` — capturing the literal `<next>` value with the command that
+- `workflow-instruction.md §1.7` — capturing the literal `<next>` value with the command that
   produced it.
 
 A bundle is not planning-ready until §1's checklist has been run end-to-end with this step
 producing a literal value rather than a template placeholder.
 
+## 12. Gate wrap-up (fires after every gate)
+
+Lightweight, and distinct from §13's bundle-final closure — this runs at the end of **every**
+gate (G0, G1, G2, G3) and after Epic 5's protective sweep, not just at the very end:
+
+1. **Retro summary for the gate's work window.** `scripts/retro.py summary --since <gate-start-date> --json`. Read it — don't just run it. Append a short "what the retro log shows" note to the gate's own closing cycle receipt: incident/correction/deferral counts, any recurrence key firing more than once.
+2. **Worktree sweep for this gate's worktrees only.** `git worktree list`; remove any worktree used by this gate's now-merged, no-longer-live cycles. Never remove one still `locked` or carrying unmerged commits — confirm via `git worktree list`'s lock annotation and `git log <branch>..origin/<branch>` showing nothing unmerged, per §8.
+3. **No PR here.** The bundle's single `tranche/12 → develop` PR is §13's job, fired once, as the bundle's own final epic.
+
+## 13. Bundle closure epilogue (fires once, as the bundle's final epic)
+
+The pattern every bundle since SD-21 has used (`SD-21-.../decisions.md §189`), with the retro
+write-up folded in:
+
+1. **Final-acceptance scan.** All four gates met, every Epic 1-5 card `complete` or filed under
+   `## Open blockers` with a named owner.
+2. **Write the bundle's retrospective:**
+   ```bash
+   scripts/retro.py summary --since <SD-32 launch date> --json
+   ```
+   Write `docs/retro/sd32-compute-library-and-cause-closure-retrospective.md` in the shape
+   `docs/retro/sd31-retrospective.md` uses, then **cite it from `references/README.md` in the same
+   closure cycle** — not as a follow-up (this bundle's own chassis review had to fix exactly that
+   gap for SD-31's retrospective; don't repeat it for this bundle's own).
+3. **Full worktree/branch sweep** for the whole bundle. Also close out `artifacts/UNMERGED-BRANCHES.md`'s
+   still-open dispositions if the `boundary-branch-review` card (`kanban.md` #2) hasn't already
+   resolved them.
+4. **Architecture-docs refresh, graphify, PR, merge-conflict resolution** — `docs/release/template/template.md §6`.
+5. **Release notes and version bump** — `release-notes.md`'s `[Populated at closure]` section.
+
 ## Cross-references
 
-- `../../governance/loop-instruction-template.md` — the per-cycle dispatch procedure this file
+- `../../governance/workflow-instruction-template.md` — the per-cycle dispatch procedure this file
   is authored from. Distinct scope: this template covers the per-cycle dispatch procedure;
   `docs/release/template/template.md` covers the release-folder's file index and bundle-snapshot
   table. Both must agree on the dispatch mechanism (`Workflow` tool, not `/loop /batch`) — if one
@@ -315,3 +436,9 @@ producing a literal value rather than a template placeholder.
 - `artifacts/UNMERGED-BRANCHES.md` — ten branches at the `tranche/11 → tranche/12` boundary and
   their recommended disposition order (genuine work first, GAMED branches alone, rescue branch
   untouched).
+- `AGENTS.md §Retrospective Logging`, `scripts/retro.py`, `docs/retro/schema.json` — the
+  event-logging discipline §2.3 points at.
+- `docs/retro/sd31-retrospective.md` — this bundle's predecessor's retrospective; the source of
+  §9's three standing lessons and the worked example §13 step 2 follows.
+- `.claude/skills/stc-authoring/SKILL.md` — the Claude-Code-native rendering of both canonical
+  templates, for a session auditing or authoring this bundle directly in this repo.

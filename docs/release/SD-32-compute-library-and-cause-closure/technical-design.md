@@ -74,7 +74,7 @@ This bundle's work touches five distinct surfaces, organised by the four gates t
   right; the engines it builds are surfaced via the same `reach_gate.rs` contract SD-30
   established.
 - **Identifier cleanup** — not a SD-32 epic. Source-identifier discipline is enforced by the
-  dual-audit gate in `loop-instruction.md §6` (the grep for `sd[0-9]+_` / `SD[0-9]+_` / `Sd[0-9]+`
+  dual-audit gate in `workflow-instruction.md §6` (the grep for `sd[0-9]+_` / `SD[0-9]+_` / `Sd[0-9]+`
   patterns), not by an epic. SD-32 inherits the discipline unchanged.
 
 ## File-disjointness
@@ -91,4 +91,4 @@ By construction, each gate's work touches a different surface:
 
 A cycle that finds itself editing a file outside this list should stop and check whether it has
 drifted out of scope. The parallel-within-gate work in Gate 0 / Gate 2 must use
-`isolation: 'worktree'` (`loop-instruction.md §3`); the other phases are serial by construction.
+`isolation: 'worktree'` (`workflow-instruction.md §3`); the other phases are serial by construction.

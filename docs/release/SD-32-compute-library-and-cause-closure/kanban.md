@@ -14,7 +14,7 @@ is one row; cycles update the `Status` column in place and append the receipt to
 Cards are ordered by **claim priority**, not by epic number. The pre-Epic-5 work (Epic 5's
 protective sweep) fires first because scaling Gate 2 engines over an unchecked generator is the
 failure class Gate 2 depends on not existing. After Epic 5, the gate ordering from
-`loop-instruction.md §3` applies: G0 → G1 → G2 → G3.
+`workflow-instruction.md §3` applies: G0 → G1 → G2 → G3.
 
 | # | Card ID | Gate / Epic | Title | Status | Cycle | Notes |
 |---|---|---|---|---|---|---|
@@ -30,7 +30,7 @@ failure class Gate 2 depends on not existing. After Epic 5, the gate ordering fr
 | 10 | `epic-1-compute-library` | Epic 1 | Build the library from proven code (F1/F2/F3 of `epic-breakdown.md`) | pending | — | Behind G1+G2 by construction. |
 | 11 | `epic-2-cause-closure` | Epic 2 | Close T2a/T2b/T3/T4/T5/T9/T12 by class | pending | — | Behind G1+G2 by construction. |
 | 12 | `epic-3-class-reachability` | Epic 3 | 77 prestige-class gating; 18 untabled base classes | pending | — | Behind Gate 0 by construction (chassis-blocked). |
-| 13 | `closure-epilogue` | Closure | Architecture-docs refresh, `tranche/12 → develop` PR, release-notes population | pending | — | Fires LAST. |
+| 13 | `closure-epilogue` | Closure | Write + cite `docs/retro/sd32-...-retrospective.md`; full worktree/branch sweep; architecture-docs refresh; `tranche/12 → develop` PR; release-notes population | pending | — | Fires LAST. Full sequence: `workflow-instruction.md §13`. |
 
 ## Status values
 
@@ -46,7 +46,7 @@ failure class Gate 2 depends on not existing. After Epic 5, the gate ordering fr
 
 There are no cross-SD gates for SD-32 to cite at launch (no sibling bundle is the precondition;
 the dependency on SD-31 is the closure PR being merged to develop, which is verified by
-`loop-instruction.md §1.3` rather than a per-cycle PI-screen citation). The PI-gate and
+`workflow-instruction.md §1.3` rather than a per-cycle PI-screen citation). The PI-gate and
 declared-PI reader are not consumed here because SD-32 does not produce records that ship into
 the player-facing app in its own right — the engines it builds are surfaced via
 `reach_gate.rs` from the existing ingest path that already carries the PI-gate.
@@ -55,4 +55,4 @@ the player-facing app in its own right — the engines it builds are surfaced vi
 
 The Hermes kanban board was retired 2026-08-01 (`SD-30-class-feature-archetype-bundle/decisions.md`
 Decision 14a); SD-30 and its successors use the local-file pattern. This is documented at
-`loop-instruction.md §1.1`, `loop-instruction.md §2`, and `loop-instruction.md §6.8`.
+`workflow-instruction.md §1.1`, `workflow-instruction.md §2`, and `workflow-instruction.md §6.8`.

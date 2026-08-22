@@ -46,14 +46,14 @@ date: 2026-08-22
    passed, failed, and were skipped (zero of the last).
 7. **The build counter `0.12.<build_at_launch>` is left as a template marker through Gate 0.**
    A bundle that ships with template markers is not planning-ready per the governance template's
-   §9 / §1.7. **Mitigation:** `loop-instruction.md §11` requires the literal next value to be
+   §9 / §1.7. **Mitigation:** `workflow-instruction.md §11` requires the literal next value to be
    resolved before the first cycle's commit, and `README.md`'s `build_version_target` is updated
    in the same commit.
 
 ## Five footguns from the SD-31 session
 
 Mirrored from `artifacts/HANDOFF.md` for visibility. The full pattern lives in the HANDOFF;
-`loop-instruction.md §9` carries the cycle-procedure-relevant subset. Each of these has bitten
+`workflow-instruction.md §9` carries the cycle-procedure-relevant subset. Each of these has bitten
 this program in real cycles; a SD-32 cycle that hits any of them is operating on a known landmine,
 not a surprise.
 
@@ -101,7 +101,7 @@ leveraged rulings on this list.
   missing; generic roster fails because the emission loop is generic but the data it needs is
   not. Neither is retried in SD-32.
 
-## Self-healable vs. non-self-healable split (mirrored from `loop-instruction.md §8`)
+## Self-healable vs. non-self-healable split (mirrored from `workflow-instruction.md §8`)
 
 - **Self-healable (resolve inline, exit GREEN):** dirty tree, single-token audit violation,
   unrelated test-setup breakage, build-counter out of sync, `## DISCOVERED` duplicates.

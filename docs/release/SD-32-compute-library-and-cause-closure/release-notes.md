@@ -17,7 +17,7 @@ owner, known issues stated rather than buried).
 Created 2026-08-22 from the SD-31 session handoff (`artifacts/HANDOFF.md`), after the SD-31 wave
 31 measurement returned its three findings (ten semantic families; plumbing beats rules
 complexity; class reachability is the gate). The chassis was filled out the same day:
-README + scope-draft + epic-breakdown + decisions + loop-instruction + acceptance-and-verification +
+README + scope-draft + epic-breakdown + decisions + workflow-instruction + acceptance-and-verification +
 risks + forward-scope + technical-requirements + technical-design + release-notes + progress +
 kanban + content-unit-inventory + artifacts/ + references/, all from the four source documents the
 SD-31 session produced.

@@ -16,16 +16,16 @@ initial-package-construction time only.
 
 | Path | What it carries | When a SD-32 cycle reads it |
 |---|---|---|
-| `../../../governance/no-stub-mvp-doctrine.md` | The doctrine that no stubs / mocks / "would" strings / empty onClick handlers ship in production code | Every cycle (dual-audit gate, `loop-instruction.md §6`) |
+| `../../../governance/no-stub-mvp-doctrine.md` | The doctrine that no stubs / mocks / "would" strings / empty onClick handlers ship in production code | Every cycle (dual-audit gate, `workflow-instruction.md §6`) |
 | `../../../governance/wired-integration-stubs-registry.md` | Operator-granted stub exceptions | Any cycle that needs to defer a wired-integration audit violation |
-| `../../../governance/loop-instruction-template.md` | The dispatch procedure this bundle's `loop-instruction.md` is authored from | First cycle of every bundle, for the dispatch mechanism |
+| `../../../governance/workflow-instruction-template.md` | The dispatch procedure this bundle's `workflow-instruction.md` is authored from | First cycle of every bundle, for the dispatch mechanism |
 | `../../../governance/ogl-pi-blacklist.md` | The Product Identity blacklist terms | Not consumed by SD-32 directly; consumed by `pi_screening::PI_BLACKLIST_TERMS` (SD-30 Epic 3 surface, read-only) |
 | `../../../governance/book-ingestion-playbook.md` | Per-book cycle procedure | Not consumed by SD-32 (SD-32 is not a book-ingestion bundle); useful for Epic 4's per-book cycles if the procedure is needed |
 | `../../../governance/deferral-revisit-doctrine.md` | When a deferred item comes back | Any cycle that proposes a `## Open blockers` entry or a `forward-scope-register.md` item |
 | `../../../governance/license-matrix.md` | Licensing per source | Epic 4 book-onboarding cycles that need to verify a book's licence before ingest |
 | `../../../governance/third-party-tier-licensing-survey.md` | Third-party publisher tiering (Dreamscarred Press, etc.) | Epic 4 if any third-party books are onboarded (per the operator-pinned 2026-08-01 amendment) |
 | `../../../governance/pi-sweep-baseline.tsv` | The PI-sweep baseline data | Not consumed by SD-32 directly; the linked reader (`pi_screening::*`) reads it |
-| `../../../doctrine-external/identifier-discipline.md` | The forbidden source-identifier patterns | Every cycle (dual-audit gate, `loop-instruction.md §6`) |
+| `../../../doctrine-external/identifier-discipline.md` | The forbidden source-identifier patterns | Every cycle (dual-audit gate, `workflow-instruction.md §6`) |
 | `../../../doctrine-external/spec-domain-lifecycle.md` | How spec-domain routing works | Not directly relevant to SD-32 (this is a research/CODE bundle, not a spec-domain routing decision); useful when defining how SD-32's outputs route into a successor spec-domain bundle |
 
 ## Skills (profile-local)
@@ -37,7 +37,7 @@ mandatory at planning time — cycles load them when they need them.
 |---|---|
 | `wired-integration-discipline` | Any cycle that touches production code and needs the four-check audit recipe (`OK_NO_TOKENS` / `OK_NO_NOOP_HANDLERS` / `OK_NO_MOCK_LEAKS` / `OK_NO_WOULD_STRINGS`) |
 | `identifier-discipline` | Any cycle that touches production code and needs the source-identifier audit recipe |
-| `graphify-update` | The closure epilogue cycle (architecture-docs refresh; `loop-instruction.md §6.4`) |
+| `graphify-update` | The closure epilogue cycle (architecture-docs refresh; `workflow-instruction.md §6.4`) |
 | `architecture-truth-up` | The closure epilogue cycle (architecture-docs refresh) |
 | `merge-conflict-resolution` | The closure epilogue cycle (PR open + merge-conflict resolution) |
 | `kanban-worker` | Any cycle that needs the local-file kanban pattern (this bundle uses the pattern) |
@@ -67,14 +67,14 @@ mandatory at planning time — cycles load them when they need them.
 |---|---|
 | `../../../AGENTS.md` | The repo-root conduct surface — non-negotiable rules, hard stops, retrospective-log discipline. Every cycle reads this once per bundle. |
 | `../../../CLAUDE.md` | Lightweight activation surface. Read for the project-specific pointers (file structure, tooling). |
-| `../../../architecture/` | Architecture docs; refreshed at closure per the closure pipeline (`loop-instruction.md §6` step 4). |
+| `../../../architecture/` | Architecture docs; refreshed at closure per the closure pipeline (`workflow-instruction.md §6` step 4). |
 | `../../../corpus-work-channels.md` | The 37-book workchannel map SD-32's Gate 0 census diff reads. |
 
 ## What is NOT in `references/`
 
 - Operator-ruling text — those live in `SD-31-corpus-closure-grind/artifacts/OPERATOR-RULINGS-*.md`
   and are read by reference, not duplicated here.
-- The anti-gaming apparatus itself — that lives in the cycle procedure (`loop-instruction.md §6`'s
+- The anti-gaming apparatus itself — that lives in the cycle procedure (`workflow-instruction.md §6`'s
   dual-audit gate) and the recipe (`SD-31-.../state-goals-and-lessons.md`). Duplication would
   drift; a reference is sufficient.
 - The form-interpreter PMMG build — referenced from `SD-30-.../state-goals-and-lessons.md §1.3`,

@@ -13,7 +13,7 @@ companion_to: ./scope-draft.md, ./decisions.md
 
 > ## ⚠️  OPERATING METHOD — REQUIRED FOR THIS BUNDLE  ⚠️
 >
-> **This bundle is operated via `Workflow`-orchestrated dispatch, invoked from a live session — NOT `/loop /batch` and NOT a one-shot task.** `/loop /batch` cannot run unattended (`/batch` requires a human to type it per invocation). The full per-cycle procedure, orchestration mode, concurrency map, and dual-audit gate live in `loop-instruction.md`'s body, authored from `../../governance/loop-instruction-template.md`. The scope-draft ([`./scope-draft.md`](./scope-draft.md)) is the canonical handoff *what*; the loop-instruction is the *how*.
+> **This bundle is operated via a `Workflow`-tool script, invoked from a live session — NOT `/loop /batch` and NOT a one-shot task.** `/loop /batch` cannot run unattended (`/batch` requires a human to type it per invocation). For how to actually **create** that script for this bundle's own gate structure, see `workflow-instruction.md §2.4`. The full per-cycle procedure, orchestration mode, concurrency map, dual-audit gate, retro-event-logging discipline, and gate/bundle closure steps live in `workflow-instruction.md`'s body, authored from `../../governance/workflow-instruction-template.md`. The scope-draft ([`./scope-draft.md`](./scope-draft.md)) is the canonical handoff *what*; the workflow-instruction is the *how*.
 
 ## Note on the directory name and the `SD-32` number
 
@@ -35,9 +35,9 @@ The dead `SD-32-instrument-coverage-and-consumer-wiring/` directory was cleaned 
 | Kanban board | **local-file** `kanban.md` (no Hermes board; per SD-30 decisions §14a, retired 2026-08-01) |
 | Epics / criteria | 5 epics / 4 gates (G0/G1/G2/G3) |
 | Target version | `0.12.<build_at_launch>` (operator ruling 2026-08-22) |
-| Dispatch mechanism | `Workflow` tool, invoked from a live session, per `loop-instruction.md §2` |
+| Dispatch mechanism | `Workflow` tool, invoked from a live session, per `workflow-instruction.md §2` |
 | Cadence | N/A — dispatch is a live `Workflow` session, not a timer loop |
-| Closure gate | `tranche/12 → develop` PR; architecture-docs refresh (§6); release-notes generation |
+| Closure gate | Retrospective written + cited; worktree/branch sweep; `tranche/12 → develop` PR; architecture-docs refresh (§6); release-notes generation — full sequence in `workflow-instruction.md §13` |
 
 ## Why this package exists
 
@@ -68,7 +68,7 @@ Load-bearing, and none of it should be rediscovered:
 * **A trustworthy grant-fact parser** and the merged grant data it produces.
 * **The anti-gaming apparatus**, which is the reason any of these numbers can be believed: four GAMED verdicts across waves 18–27, every one correct; integration cycles that re-derive rather than trust and have caught a load-bearing defect in every wave since 18.
 * **The todo directory** (`SD-31-corpus-closure-grind/todo/`) as the scheduling layer, reconciled every wave.
-* **Five operator-pattern footguns** captured in `artifacts/HANDOFF.md` from the SD-31 session — wrong-base worktrees, `find -newermt` lies, omitted `model` on `agent()` calls, `git stash` taking the whole shared checkout, rulings not in force until committed. These belong in `loop-instruction.md` §pitfalls, not in this README.
+* **Five operator-pattern footguns** captured in `artifacts/HANDOFF.md` from the SD-31 session — wrong-base worktrees, `find -newermt` lies, omitted `model` on `agent()` calls, `git stash` taking the whole shared checkout, rulings not in force until committed. These belong in `workflow-instruction.md` §pitfalls, not in this README.
 
 ## Epics
 
@@ -89,7 +89,7 @@ Sequencing lives in `scope-draft.md` §"Sequencing" — the hard ordering is `ce
 | `README.md` | Bundle index, why-it-exists, files in folder | operator |
 | `scope-draft.md` | Canonical handoff *what* — definition of done, four gates, sequencing | operator |
 | `decisions.md` | Bundle-specific ADRs (build version, gates, anti-gaming, ordering) | operator |
-| `loop-instruction.md` | Per-cycle launch *how* — eligibility, self-heal, post-mortem schema | operator |
+| `workflow-instruction.md` | Per-cycle launch *how* — eligibility, self-heal, post-mortem schema | operator |
 | `progress.md` | Live cycle-by-cycle progress + status matrix | loop |
 | `epic-breakdown.md` | Five epics with measured ceilings and per-class cycles | operator |
 | `acceptance-and-verification.md` | AT-32-* criteria + the four gates as closure gates | operator |
