@@ -21,9 +21,16 @@ They are right, and SD-31's own measurement waves (28, 30, 31) found why. Three 
 package, and none of them is "the rules are hard":
 
 **1. We solved the same problem thousands of times.** Across `data/corpus`, 33,830 formula-bearing
-tokens reduce to 14,752 distinct formulas — but only **1,049 normalised shapes, with the top 15
-covering 80% of all tokens** and the top two a quarter of the corpus each. A skill bonus and a
+tokens reduce to 14,752 distinct formulas — and those reduce to **ten semantic families**. Not forty,
+not one; ten, and that reduction survived independent re-derivation exactly. A skill bonus and a
 damage bonus are different nouns wrapped around the same arithmetic. The operator's framing:
+
+> **Correction, and it is the orchestrator's own.** This README first stated "1,049 normalised
+> shapes, top 15 covering 80%". The first two figures (33,830 tokens, 14,752 distinct formulas)
+> reproduce exactly; **the shape count does not reproduce under any normalisation two independent
+> lanes tried, and is retracted.** It was a crude syntactic normalisation written into this package
+> as settled fact *before* the measurement that was supposed to establish it returned — the exact
+> mistake SD-32 exists to stop. The real answer, ten semantic families, is better and smaller.
 
 > *"1d6 per level. or +2 damage on a dagger, or you get 3 spells at this level and 4 at that level.
 > those types of things repeat a lot. you shouldn't be trying to figure them out from scratch for
